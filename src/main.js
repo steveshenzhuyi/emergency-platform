@@ -9,7 +9,12 @@ import App from './App';
 import router from './router';
 import '../settings.js';
 
+<<<<<<< HEAD
 
+=======
+//多一行注释
+//develop
+>>>>>>> 05f75d82c12e191d4c8e52c27f91ab4e57e558cd
 axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] =
