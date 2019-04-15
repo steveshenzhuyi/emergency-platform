@@ -10,6 +10,7 @@ import router from './router';
 import '../settings.js';
 
 //多一行注释
+//develop
 axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] =
