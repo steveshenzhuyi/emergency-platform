@@ -1,0 +1,264 @@
+<template>
+  <div>
+    <mt-tab-container class="page-tabbar-container" v-model="selected">
+      <mt-tab-container-item id="病人">
+        <mt-header style="font-size:20px" title="病人列表">
+          <mt-button size="small" slot="right"
+            @click="$goRoute('/confirmh')"><small>接受病人</small></mt-button>
+          <hr>
+        </mt-header>
+        <mt-cell>
+          <p v-show="side">{{chooselevel}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosestate}}&nbsp;&nbsp;&nbsp;&nbsp;{{sortway}}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <mt-button size="small" type="primary" @click="refreshpatient()">刷新</mt-button>
+        </mt-cell>
+        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
+        <div v-for="(item,index) in dataclass1">
+            <a @click="getpatient(index)">
+            <b class="first">{{item.PatientId}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;<small>{{item.CreateTime}}</small><br>
+            <b class="second">{{item.Name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b>
+            {{item.Classification}} &nbsp;
+            {{item.StatusName}}</b><br><small>
+            {{item.Gender}} &nbsp; 
+            {{item.Age}} &nbsp;
+            {{item.OrganizationName}}&nbsp;&nbsp; &nbsp;&nbsp;
+            {{item.CarName}}&nbsp;
+            {{item.CarId}}
+            {{item.Pcost}}</small></a><hr>
+        </div>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="沟通">
+        <mt-header style="font-size:20px" title="信息列表">
+          <mt-button slot="left" @click="$goRoute('/')"><small>视频通话</small></mt-button>
+          <hr>
+          <mt-button slot="right" @click="$goRoute('/increaseCH')"><small>新增信息</small></mt-button>
+          <hr>
+        </mt-header>
+        <mt-cell>
+          <p v-show="side">{{choosesituation}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosesort}}&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <mt-button size="small" type="primary" @click="refreshreource()">刷新</mt-button>
+        </mt-cell>
+        <mt-picker :slots="slots1" @change="onMessagechange" :visible-item-count="3"></mt-picker><hr>
+        <div v-for=" (item,index) in data3">
+          <a @click="getMessage(index)">
+            <big><b>
+              {{item.MessageNo}}</b></big><br>
+              <b>{{item.MessageTitle}}</b><br>
+            <small>{{item.MessageDetail}}&nbsp;<br>
+              发送时间：{{item.SendTime}}</small>
+          </a><hr>
+        </div><br><br><br>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="个人">
+        <mt-header style="font-size:20px" title="个人信息">
+          <!-- <mt-button slot="right" @click="edit">修改</mt-button> -->
+        </mt-header>
+        <br>
+        <p>个人信息</p>
+          <mt-field label="姓名" v-model="Name" disabled="true"></mt-field>
+          <mt-field label="性别" v-model="Gender" disabled="true"></mt-field>
+          <mt-field label="年龄" v-model="Age" disabled="true"></mt-field>
+          <mt-field label="手机" v-model="Phone" disabled="true"></mt-field>
+          <mt-field label="邮箱" v-model="Email" disabled="true"></mt-field>
+          <mt-field label="单位" v-model="DepartmentName" disabled="true"></mt-field>
+          <mt-field label="职称" v-model="TitleName" disabled="true"></mt-field>
+          <hr>
+          <p>角色：医院组</p>
+          <mt-field label="所属小组" v-model="GroupName" disabled="true"></mt-field>
+          <mt-field label="组内职务" v-model="GroupPosition" disabled="true"></mt-field>
+          <mt-field label="责任区域" v-model="ManageArea" disabled="true"></mt-field>
+          <mt-field label="重点保障对象" v-model="GuaranteeObject" disabled="true"></mt-field><hr>
+          <mt-button size="large" type="primary">修改密码</mt-button><hr>
+          <mt-button size="large" @click="$goRoute('/Home')">退出登录</mt-button><hr>
+          <hr>
+          <br><br>
+      </mt-tab-container-item>
+    </mt-tab-container>
+    <div>
+      <mt-tabbar v-model= "selected" fixed>
+        <mt-tab-item id="病人">
+          <img slot="icon" src="./icon/病人.png"><b style="font-size:15px">病人</b>
+        </mt-tab-item>
+        <mt-tab-item id="沟通">
+          <img slot="icon" src="./icon/沟通.png"><b style="font-size:15px">沟通</b>
+        </mt-tab-item>
+        <mt-tab-item id="个人">
+          <img slot="icon" src="./icon/个人.png"><b style="font-size:15px">个人</b>
+        </mt-tab-item>
+      </mt-tabbar>
+    </div>
+    <router-view></router-view>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      userId: window.localStorage.getItem('USERID'),
+      groupNo: window.localStorage.getItem('GROUPNO'),
+      selected: '',
+      value: '',
+      value1: '',
+      Name: '',
+      TitleName: '',
+      DepartmentName: '',
+      Gender: '',
+      Age: '',
+      Phone: '',
+      Email: '',
+      GuaranteeObject: '',
+      GroupPosition: '',
+      GroupName: '',
+      ManageArea: '',
+      chooselevel: '',
+      choosestate: '',
+      choosekind: '',
+      choosenumber: '',
+      choosesituation: '',
+      choosesort: '',
+      sortway: '',
+      resourceNo: '',
+      slots1: [
+          {
+            flex: 3,
+            values: ['全部','紧急标识', '普通消息'],
+            className: 'slot6',
+          },
+          { 
+            flex: 3,
+            values: ['时间正序','时间倒序','未读在前', '已读在前'],
+            className: 'slot8',
+          },
+        ],
+      slots: [
+          { 
+            flex: 1,
+            values: ['选择分级','I级', 'II级', 'III级', 'IV级','V级'],
+            textAlign: 'left',
+            className: 'slot1',
+          },
+          {
+            flex: 1,
+            values: ['选择状态','处置中','待后送','已后送','处置完成'],
+            className: 'slot2',
+          },
+          { 
+            flex: 1,
+            values: ['分级排序','时间排序'],
+            textAlign: 'right',
+            className: 'slot3',
+          },
+        ],
+      PatientlistClass: [],
+      PatientlistTime: [],
+      dataclass1: [
+        {},  
+      ],
+      datatime1: [
+        {},
+      ],
+      data3: [
+        {},
+      ],
+    };
+  },
+  mounted() {
+    this.getpagelist()
+  },
+  methods: {
+    getpagelist() {
+      console.log(this.groupNo);
+      this.selected=this.$route.params.SELECTED2;
+      //获取病人列表分级
+      axios.post('/getPatientListHospitalClass',{
+        groupNo: this.groupNo
+      }).then((response) => {
+        this.PatientlistClass=response.data.results;
+        this.dataclass1=this.PatientlistClass
+        console.log(this.dataclass1);
+      }).catch(function(error){
+        console.log("error",error);
+      })
+      //获取病人列表时间排序
+      axios.post('/getPatientListHospitalCreatetime',{
+        groupNo: this.groupNo
+      }).then((response) => {
+        this.PatientlistTime=response.data.results;
+        console.log(this.dataclass1);
+      }).catch(function(error){
+        console.log("error",error);
+      })
+      //获取医院组信息列表
+      axios.post('/getHosMessage',{
+        groupNo: this.groupNo
+      }).then((response) => {
+        this.data3=response.data.results
+        console.log(response);
+        console.log(this.data3);
+      }).catch(function(error){
+        console.log("error",error);
+      })
+      //获取用户个人信息
+      axios.post('/getUserInfo',{
+        userId: this.userId
+      }).then((response) => {
+        this.TitleName=response.data.results[0].TitleName;
+        this.Name=response.data.results[0].Username;
+        this.DepartmentName=response.data.results[0].DepartmentName;
+        this.Gender=response.data.results[0].Gender;
+        this.Age=response.data.results[0].Age;
+        this.Phone=response.data.results[0].Phone;
+        this.Email=response.data.results[0].Email;
+        console.log(response)
+      })
+      axios.post('/getUserGroup',{
+        userId: this.userId
+      }).then((response) => {
+        this.GuaranteeObject=response.data.results[0].GuaranteeObject;
+        this.ManageArea=response.data.results[0].ManageArea;
+        this.GroupName=response.data.results[0].GroupName;
+        this.GroupPosition=response.data.results[0].GroupPosition;
+      })
+    },
+    //病人列表排序方法
+    onPatientlistChange(picker, values) {
+      this.chooselevel = values[0];
+      this.choosestate = values[1];
+      this.sortway = values[2];
+    },
+    onResourcelistChange(picker,values) {
+      this.choosekind = values[0];
+      this.choosenumber = values[1];
+    },
+    onMessagechange(picker,values) {
+      this.choosesituation = values[0];
+      this.choosesort = values[1];
+    },
+    //获取单一资源信息
+    // getResource:function(index){
+    //   console.log(index)
+    //   this.$router.push({name: 'B3',params:{RESOURCENO:this.data2[index].ResourceNo}});
+    // },
+    getMessage:function(index){
+      console.log(index)
+      this.$router.push({name: 'C3',params:{MESSAGENO:this.data3[index].MessageNo}});
+    },
+    getpatient:function(index){
+      console.log(index)
+      this.$router.push({name: 'H1',params:{PATIENTID:this.dataclass1[index].PatientId}})
+    }
+  },
+};
+</script>
+
+<style>
+  b{
+    font-size:20px;
+  }
+</style>
