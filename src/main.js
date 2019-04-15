@@ -8,13 +8,8 @@ import 'mint-ui/lib/style.css';
 import App from './App';
 import router from './router';
 import '../settings.js';
+import './assets/iconfont.js';
 
-<<<<<<< HEAD
-
-=======
-//多一行注释
-//develop
->>>>>>> 05f75d82c12e191d4c8e52c27f91ab4e57e558cd
 axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] =
@@ -32,7 +27,6 @@ Vue.prototype.$goRoute = function $goRoute(index) {
 Vue.config.productionTip = false;
 
 
-/* eslint-disable no-new */
 /* eslint-disable no-new */
 // document.addEventListener('deviceready',function(){
 //   new Vue({
