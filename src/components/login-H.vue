@@ -4,7 +4,7 @@
       <mt-tab-container-item id="病人">
         <mt-header style="font-size:20px" title="病人列表">
           <mt-button size="small" slot="right"
-            @click="$goRoute('/confirmh')"><small>接受病人</small></mt-button>
+            @click="$goRoute('/confirmh')"><small>接收病人</small></mt-button>
           <hr>
         </mt-header>
         <mt-cell>
@@ -33,7 +33,7 @@
         <mt-header style="font-size:20px" title="信息列表">
           <mt-button slot="left" @click="$goRoute('/')"><small>视频通话</small></mt-button>
           <hr>
-          <mt-button slot="right" @click="$goRoute('/increaseCH')"><small>新增信息</small></mt-button>
+          <!-- <mt-button slot="right" @click="$goRoute('/increaseCH')"><small>新增信息</small></mt-button> -->
           <hr>
         </mt-header>
         <mt-cell>
@@ -132,7 +132,7 @@ export default {
           },
           { 
             flex: 3,
-            values: ['时间正序','时间倒序','未读在前', '已读在前'],
+            values: ['时间正序','时间倒序'],
             className: 'slot8',
           },
         ],

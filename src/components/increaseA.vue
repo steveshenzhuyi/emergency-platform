@@ -92,6 +92,21 @@ export default {
     };
   },
   methods: {
+    getcamera(){
+      var that = this;
+      cordova.plugins.barcodeScanner.scan(
+        function (result) {
+          console.log(result)
+          alert("We got a barcode\n" +
+            "Result: " + result.text + "\n" +
+            "Format: " + result.format + "\n" +
+            "Cancelled: " + result.cancelled)
+        },
+        function (error) {
+          alert(error)
+        }
+      )
+    },
     onbloodChange(picker, values) {
        this.blood = values[0];
        this.type = values[1];
@@ -134,6 +149,7 @@ export default {
       }).then((response) => {
         console.log(response)
         if(response.data.results == "新建成功") {
+          Toast('新建成功');
           this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
         }else {
           Toast('创建失败');

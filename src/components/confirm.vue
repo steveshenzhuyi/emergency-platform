@@ -6,8 +6,7 @@
     </mt-header>
     <br>车辆端扫描此二维码，完成交接
     <div id="code-container" class="code-root">
-      <div id="qrcode"></div>  
-     <!-- <vue-qr style="float:left;margin-left:200px;"  :text="config.value" :size="200" :margin="0"></vue-qr> -->
+      <div id="qrcode"></div>
     </div>
     <hr>
     病人信息
@@ -38,11 +37,6 @@ export default {
       situation: '',
       car: this.$route.params.CARID,
       hospital:this.$route.params.HOSPITAL,
-      config: {
-          value: "111"//显示的值、跳转的地址
-          //必须是字符串，必须在同一行，不能带双引号
-          
-        }
     };
   },
 
@@ -90,8 +84,11 @@ export default {
       }).then((response) => {
         if(response.data.results == "上传成功") {
           Toast('确认送出');
+           this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",STATE1:"已后送",PATIENTID:this.patientid}})
+        }else{
+          Toast('送出失败');
         }
-        this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",STATE1:"已后送",PATIENTID:this.patientid}})
+       
       })
     }
   }
