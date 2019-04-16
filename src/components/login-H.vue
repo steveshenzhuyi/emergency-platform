@@ -39,7 +39,7 @@
         <mt-cell>
           <p v-show="side">{{choosesituation}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosesort}}&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-          <mt-button size="small" type="primary" @click="refreshreource()">刷新</mt-button>
+          <mt-button size="small" type="primary" @click="refreshmessage()">刷新</mt-button>
         </mt-cell>
         <mt-picker :slots="slots1" @change="onMessagechange" :visible-item-count="3"></mt-picker><hr>
         <div v-for=" (item,index) in data3">
@@ -118,12 +118,12 @@ export default {
       ManageArea: '',
       chooselevel: '',
       choosestate: '',
-      choosekind: '',
-      choosenumber: '',
       choosesituation: '',
       choosesort: '',
       sortway: '',
       resourceNo: '',
+      mark: '',
+      OrganizationCode: '',
       slots1: [
           {
             flex: 3,
@@ -163,6 +163,7 @@ export default {
       datatime1: [
         {},
       ],
+      message: [],
       data3: [
         {},
       ],
@@ -198,7 +199,8 @@ export default {
       axios.post('/getHosMessage',{
         groupNo: this.groupNo
       }).then((response) => {
-        this.data3=response.data.results
+        this.message=response.data.results
+        this.data3=this.message
         console.log(response);
         console.log(this.data3);
       }).catch(function(error){
@@ -232,10 +234,6 @@ export default {
       this.choosestate = values[1];
       this.sortway = values[2];
     },
-    onResourcelistChange(picker,values) {
-      this.choosekind = values[0];
-      this.choosenumber = values[1];
-    },
     onMessagechange(picker,values) {
       this.choosesituation = values[0];
       this.choosesort = values[1];
@@ -252,6 +250,47 @@ export default {
     getpatient:function(index){
       console.log(index)
       this.$router.push({name: 'H1',params:{PATIENTID:this.dataclass1[index].PatientId}})
+    },
+    refreshpatient() {
+      if(this.sortway == "时间排序") {
+        this.dataclass1=this.PatientlistTime
+      }else if(this.sortway == "分级排序"){
+        this.dataclass1=this.PatientlistClass
+      }
+      var tmp = new Array();
+      for(var i=0; i<this.dataclass1.length;i++) {
+        if (this.chooselevel != '选择分级') {
+          if (this.chooselevel != this.dataclass1[i].Classification) {
+            continue;
+          }
+        }
+        if (this.choosestate != '选择状态') {
+          if (this.choosestate != this.dataclass1[i].StatusName) {
+            continue;
+          }
+        }
+        tmp.push(this.dataclass1[i]);
+      }
+      this.dataclass1 = tmp;
+    },
+    refreshmessage() {
+      this.data3=this.message;
+      var tmp = new Array();
+      for(var i=0; i<this.data3.length;i++) {
+        if(this.choosesituation != '全部') {
+          if(this.choosesituation == '普通消息'){
+            this.mark = '0'
+          }
+          if(this.choosesituation == '紧急标识'){
+            this.mark = '1'
+          }
+          if(this.mark != this.data3[i].Mark) {
+            continue;
+          }
+        }
+        tmp.push(this.data3[i]);
+      }
+      this.data3 = tmp;
     }
   },
 };
