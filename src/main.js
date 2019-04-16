@@ -8,7 +8,10 @@ import 'mint-ui/lib/style.css';
 import App from './App';
 import router from './router';
 import '../settings.js';
+import VueQr from 'vue-qr';
 import './assets/iconfont.js';
+import QRCode from 'qrcodejs2';
+
 
 axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = true;
@@ -28,17 +31,18 @@ Vue.config.productionTip = false;
 
 
 /* eslint-disable no-new */
-// document.addEventListener('deviceready',function(){
-//   new Vue({
-//     el: '#app',
-//     router,
-//     store,
-//     render: h => h(App),
-//     components: { App },
-//     template: '<App/>',
-//   })
-//   window.navigator.splashscreen.hide()
-// },false);
+/* eslint-disable no-new */
+document.addEventListener('deviceready',function(){
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    render: h => h(App),
+    components: { App },
+    template: '<App/>',
+  })
+  window.navigator.splashscreen.hide()
+},false);
 
 new Vue({
   el: '#app',

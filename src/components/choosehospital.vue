@@ -43,6 +43,7 @@ import { Radio } from 'mint-ui';
 export default {
   data() {
     return {
+      patientid: window.localStorage.getItem('PATIENTNO'),
       picked: '',
       picked2: '',
       picked1: '',
@@ -132,25 +133,25 @@ export default {
       this.isShow = true
     },
     lookmap() {
-      this.$router.push({name: 'map'})
+      this.$router.push({name: 'map',params:{FLAG:"2"}})
     },
     ensure() {
       if(this.picked=="自行前往") {
-        this.$router.push({name: 'map',params:{HOSPITAL:this.hospital,CARNO:'',STATE:"待后送"}})
+        this.$router.push({name: 'map',params:{HOSPITAL:this.hospital,CARID:'',STATE:"待后送",FLAG:"2"}})
       }else
-      this.$router.push({name: 'map',params:{HOSPITAL:this.hospital,CARNO:this.car,STATE:"待后送"}})
+      this.$router.push({name: 'map',params:{HOSPITAL:this.hospital,CARID:this.car,STATE:"待后送",FLAG:"2"}})
     },
     ReturnA1() {
-      this.$router.push({name: 'A1',params:{SELECTED1:"病人去向"}})
+      this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",PATIENTID:this.patientid}})
     },
     choose() {
       if(this.value = "1") {
-        this.car=this.carNo
+        this.car=this.carID
       }
     },
     choose1() {
       if(this.value = "2") {
-        this.car=this.carNo1
+        this.car=this.carID1
       }
     },
     choose2() {
