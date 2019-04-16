@@ -6,7 +6,7 @@
           <mt-button size="small" icon="back" slot="left"
             @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right" v-show="isShow2"
-            @click="$goRoute('/confirm')"><small>后送</small></mt-button>
+            @click="confirm()"><small>后送</small></mt-button>
           <hr>
         </mt-header>
         <mt-navbar v-model="selected1">
@@ -165,25 +165,25 @@
           <mt-button size="small" icon="back" slot="left"
             @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right" v-show="isShow2"
-            @click="$goRoute('/confirm')"><small>后送</small></mt-button>
+            @click="confirm()"><small>后送</small></mt-button>
           <hr>
         </mt-header>
         <div>
           <p style="text-align: left">常用处置</p><hr>
             <mt-button size="small" @click="oxygen()" style="position:relative;right:40px"
-            type="primary" plain>吸氧处理</mt-button>
+            type="primary" plain>吸氧处置</mt-button>
             <mt-button size="small" @click="ECG()"
             type="primary" plain>心电检查</mt-button>
             <mt-button size="small" @click="bandage()" style="position:relative;left:40px"
             type="primary" plain>包扎止血</mt-button><br><br>
             <mt-button size="small" @click="stone()" style="position:relative;right:40px"
-            type="primary" plain>固定处理</mt-button>
+            type="primary" plain>固定处置</mt-button>
             <mt-button size="small" @click="drug()"
             type="primary" plain>口服药物</mt-button>
             <mt-button size="small" @click="dd()" style="position:relative;left:40px"
             type="primary" plain>静脉给药</mt-button><br><br>
             <mt-button size="small" @click="elseway()"
-            type="primary" plain>其他处理</mt-button> <hr>
+            type="primary" plain>其他处置</mt-button> <hr>
         </div>
         <div  class="map-box">
           {{methods}}<hr>
@@ -203,7 +203,7 @@
           <mt-button size="small" icon="back" slot="left"
             @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right" v-show="isShow2"
-            @click="$goRoute('/confirm')"><small>后送</small></mt-button>
+            @click="confirm()"><small>后送</small></mt-button>
           <hr>
         </mt-header>
         <h2>当前状态：{{state}}</h2><br>
@@ -212,18 +212,18 @@
         <mt-button plain type="primary" @click="changestate()">处置完成</mt-button><br><br>
         <mt-button plain type="danger" @click="$goRoute('/choosehospital')">去医院</mt-button>
         </div>
-        <mt-button v-show="isShow1" plain type="primary" @click="$goRoute('/map')">查看地图</mt-button>
+        <mt-button v-show="isShow1" plain type="primary" @click="map()">查看地图</mt-button>
         <hr>
         <div>
           <p style="text-align: left">添加医嘱</p><br>
           <mt-field placeholder="输入医嘱" v-model="doctortell" type="textarea"></mt-field><hr>
-          <mt-button size="small" type="primary" style="position:relative;right:55px" plain>
+          <mt-button size="small" type="primary" style="position:relative;right:40px" plain>
           <img src="./icon/录音.png" height="35" width="35" slot="icon">
                     语音输入</mt-button>
           <mt-button size="small" type="danger" plain>
           <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
           添加图片</mt-button>
-          <mt-button size="small" type="primary" style="position:relative;right:-55px"
+          <mt-button size="small" type="primary" style="position:relative;right:-40px"
           @click="save60()">保存</mt-button>
         </div>
       </mt-tab-container-item>
@@ -257,7 +257,7 @@ export default {
       selected: '',
       patientId: this.$route.params.PATIENTID,
       methods: '',
-      isShow: 'true',
+      isShow: '',
       isShow1: '',
       isShow2: '',
       selected1: '1',
@@ -266,7 +266,12 @@ export default {
       visible: false,
       state: this.$route.params.STATE1,
       StatusName: this.$route.params.STATUSNAME,
+      flag1: this.$route.params.FLAG1,
       message1: 'A医院',
+      hospital: '',
+      carId: '',
+      carNo: '',
+      hosNo: '',
       message2: 'xxxxxx',
       体征: '',
       主诉: '',
@@ -367,33 +372,38 @@ export default {
         this.Nation=response.data.results[0].Nation;
         this.bloodType=response.data.results[0].BloodType;
         this.Status=response.data.results[0].Status;
+        this.StatusName=response.data.results[0].StatusName;
         this.level=response.data.results[0].Classification;
-        console.log(this.Status)
-        if(this.Status="S01") {
-          this.state ="处置中"
+        this.hospital=response.data.results[0].OrganizationName;
+        this.carId=response.data.results[0].CarId;
+        this.carNo=response.data.results[0].CarNo;
+        this.hosNo=response.data.results[0].HosNo;
+        if(this.flag1 == "1") {
+          this.StatusName = "待后送"
+          this.isShow2 = true
+        }
+        this.state=this.StatusName;
+        console.log(this.StatusName)
+        if(this.StatusName == "处置中") {
+          this.isShow = true
           this.isShow1 = ''
-        }else if(this.Status = "S02") {
-          this.state = "处置完成";
+        }else if(this.StatusName == "处置完成") {
           this.isShow = !this.isShow;
           this.isShow1 = true
-        }else if(this.Status = "S03") {
-          this.state == "待后送"
+        }else if(this.StatusName == "待后送") {
           this.isShow = !this.isShow;
           this.isShow1 = true
-        }else if(this.Status="S04") {
-          this.state="已后送"
+        }else if(this.StatusName == "已后送") {
           this.isShow = !this.isShow;
           this.isShow1 = true
-        }else if(this.Status="S05") {
-          this.state="已后送"
+        }else if(this.StatusName == "已后送") {
           this.isShow = !this.isShow;
           this.isShow1 = true
-        }else if(this.Status="S06") {
-          this.state="已后送"
+        }else if(this.StatusName == "已后送") {
           this.isShow = !this.isShow;
           this.isShow1 = true
         }
-        if(this.state !="处置中") {
+        if(this.StatusName != "处置中") {
           this.isShow = !this.isShow;
           this.isShow1 = true
         }
@@ -407,9 +417,16 @@ export default {
       this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
     },
     changestate() {
-      this.state="处置完成";
-      this.isShow = !this.isShow;
-      this.isShow1 = true
+      axios.post('/assemblyOver',{
+        patientId:this.$route.params.PATIENTID
+      }).then((response) => {
+        if(response.data.results == "上传成功") {
+          Toast('处置完成');
+          this.state = "处置完成";
+          this.isShow = !this.isShow;
+          this.isShow1 = true
+        }
+      })
     },
     oxygen() {
       this.methods = "吸氧处理"
@@ -680,6 +697,14 @@ export default {
           // this.reload()
         }
       })
+    },
+    map() {
+      this.$router.push({name: 'map',
+      params:{HOSPITAL:this.hospital,CARID:this.carId,HOSNO:this.hosNo,CARNO:this.carNo,STATE:this.StatusName,FLAG:"1"}})
+    },
+    confirm() {
+      this.$router.push({name: 'confirm',
+      params:{HOSPITAL:this.hospital,CARID:this.carId}})
     }
   },
 };

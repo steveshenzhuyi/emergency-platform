@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="确认后送">
+    <mt-header style="font-size:20px" title="确认送达">
       <mt-button size="small" icon="back" slot="left"
         @click="$goRoute('/login-T')"><small>返回</small></mt-button>
     </mt-header>
