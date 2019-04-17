@@ -12,7 +12,11 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
           <mt-button size="small" type="primary" @click="refreshPatient()">刷新</mt-button>
         </mt-cell>
-        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>       
+        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker>
+        <mt-cell title="当前状态：">
+          <p>{{nowstate}}</p>
+        </mt-cell>
+        <hr>
         <div v-for="(item,index) in dataclass1">
             <a @click="getpatient(index)">
             <b class="first">{{item.PatientId}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -20,7 +24,7 @@
             <b class="second">{{item.Name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <b>
             {{item.Classification}} &nbsp;
-            {{item.StatusName}}</b><br><small>
+            {{item.StatusNameCar}}</b><br><small>
             {{item.Gender}} &nbsp; 
             {{item.Age}} &nbsp;
             {{item.OrganizationName}}&nbsp;&nbsp; &nbsp;&nbsp;
@@ -122,6 +126,8 @@ export default {
       selected: '',
       userId: window.localStorage.getItem('USERID'),
       groupNo: window.localStorage.getItem('GROUPNO'),
+      // flag: this.$route.params.FLAG,
+      nowstate: '',
       value: '',
       value1: '',
       name: '',
@@ -321,7 +327,8 @@ export default {
     },
     getpatient:function(index){
       console.log(index)
-      this.$router.push({name: 'T1',params:{PATIENTID:this.dataclass1[index].PatientId}})
+      this.$router.push({name: 'T1',
+      params:{PATIENTID:this.dataclass1[index].PatientId,CARSTATUS:this.CarStatus,SELECTED:'新增处置'}})
     },
     //刷新各指定页面
     refreshPatient() {
