@@ -10,7 +10,7 @@
         <mt-cell>
           <p v-show="side">{{chooselevel}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosestate}}&nbsp;&nbsp;&nbsp;&nbsp;{{sortway}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-          <mt-button size="small" type="primary" @click="refreshpatient()">刷新</mt-button>
+          <mt-button size="small" type="primary" @click="refreshPatient()">刷新</mt-button>
         </mt-cell>
         <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>       
         <div v-for="(item,index) in dataclass1">
@@ -59,7 +59,7 @@
         <mt-cell>
           <p v-show="side">{{choosesituation}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosesort}}&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-          <mt-button size="small" type="primary" @click="refreshreource()">刷新</mt-button>
+          <mt-button size="small" type="primary" @click="refreshmessage()">刷新</mt-button>
         </mt-cell>
         <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3"></mt-picker><hr>
         <div v-for=" (item,index) in data3">
@@ -85,9 +85,12 @@
         <p>本车信息</p>
         <mt-field label="车号" v-model="name" disabled="true"></mt-field>
         <mt-field label="所属单位" v-model="company" disabled="true"></mt-field>
-        <mt-field label="当前位置" v-model="location" disabled="true"></mt-field>
+
+        <mt-field label="当前状态" v-model="carstate" disabled="true"></mt-field>
+
         <!-- <mt-picker :slots="slots3" :visible-item-count="3"></mt-picker> -->
         <hr>
+        <mt-button v-show="isshow" size="large" type="danger" @click="confirmpatient()">确认接单</mt-button>
       </mt-tab-container-item>
     </mt-tab-container>
     <div>
@@ -123,7 +126,11 @@ export default {
       value1: '',
       name: '',
       company: '',
-      location: '调用手机GPS信息',
+      isshow: '',
+      carstate: '',
+      CarStatus: '',
+      assembly: '',
+      hospital: '',
       carNo: '',
       chooselevel: '',
       choosestate: '',
@@ -176,18 +183,18 @@ export default {
             className: 'slot8',
           },
         ],
-        slots3: [
-          {
-            flex: 4,
-            values: ['当前目的地'],
-            className: 'slot9',
-          },
-          { 
-            flex: 4,
-            values: ['会场','A医院'],
-            className: 'slot11',
-          },
-        ],
+        // slots3: [
+        //   {
+        //     flex: 4,
+        //     values: ['当前目的地'],
+        //     className: 'slot9',
+        //   },
+        //   { 
+        //     flex: 4,
+        //     values: ['会场','A医院'],
+        //     className: 'slot11',
+        //   },
+        // ],
       PatientlistClass: [],
       PatientlistTime: [],
       dataclass1: [
@@ -202,6 +209,7 @@ export default {
       data3: [
         {},
       ],
+      message: [],
     };
   },
   mounted() {
@@ -260,7 +268,8 @@ export default {
       axios.post('/getCarMessage',{
         groupNo: this.groupNo
       }).then((response) => {
-        this.data3=response.data.results
+        this.message=response.data.results
+        this.data3=this.message
         console.log(response);
         console.log(this.data3);
       }).catch(function(error){
@@ -276,6 +285,16 @@ export default {
         }).then((response) => {
           this.name=response.data.results[0].CarId
           this.company=response.data.results[0].OrganizationName
+          this.assembly=response.data.results[0].Assembly
+          this.hospital=response.data.results[0].Hospital
+          this.CarStatus=response.data.results[0].CarStatus
+          if(this.CarStatus == "0") {
+            this.carstate = "空闲"
+          }else if(this.CarStatus == "1") {
+            this.carstate = "正在去会场"
+          }else if(this.CarStatus == "2") {
+            this.carstate = "正在去医院"
+          }
         })
       })
     },
@@ -328,6 +347,34 @@ export default {
         tmp.push(this.dataclass1[i]);
       }
       this.dataclass1 = tmp;
+    },
+    refreshmessage() {
+      this.data3=this.message;
+      var tmp = new Array();
+      for(var i=0; i<this.data3.length;i++) {
+        if(this.choosesituation != '全部') {
+          if(this.choosesituation == '普通消息'){
+            this.mark = '0'
+          }
+          if(this.choosesituation == '紧急标识'){
+            this.mark = '1'
+          }
+          if(this.mark != this.data3[i].Mark) {
+            continue;
+          }
+        }
+        tmp.push(this.data3[i]);
+      }
+      this.data3 = tmp;
+    },
+    confirmpatient() {
+    
+    },
+    SEE() {
+
+    },
+    phone() {
+
     }
   },
 };

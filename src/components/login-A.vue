@@ -138,7 +138,7 @@ export default {
       TitleName: '',
       DepartmentName: '',
       GroupName: '',
-      GroupPosition: '',
+      GroupPosition: '', 
       ManageArea: '',
       GuaranteeObject: '',
       chooselevel: '',
@@ -207,7 +207,7 @@ export default {
       data3: [
         {},
       ],
-      
+      message: [],
     };
   },
   mounted() {
@@ -251,7 +251,8 @@ export default {
       axios.post('/getAssemblyMessage',{
         groupNo: this.groupNo
       }).then((response) => {
-        this.data3=response.data.results
+        this.message = response.data.results
+        this.data3=this.message
         console.log(response);
         console.log(this.data3);
       }).catch(function(error){
@@ -328,6 +329,25 @@ export default {
         tmp.push(this.dataclass1[i]);
       }
       this.dataclass1 = tmp;
+    },
+    refreshMessage() {
+      this.data3=this.message;
+      var tmp = new Array();
+      for(var i=0; i<this.data3.length;i++) {
+        if(this.choosesituation != '全部') {
+          if(this.choosesituation == '普通消息'){
+            this.mark = '0'
+          }
+          if(this.choosesituation == '紧急标识'){
+            this.mark = '1'
+          }
+          if(this.mark != this.data3[i].Mark) {
+            continue;
+          }
+        }
+        tmp.push(this.data3[i]);
+      }
+      this.data3 = tmp;
     }
   },
 };

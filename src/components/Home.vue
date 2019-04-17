@@ -2,16 +2,12 @@
   <div>
     <h2>重大活动急救保障平台</h2><hr>
     <img src="./pictrue/logo.png">
-    <mt-field label="用户名" placeholder="请输入手机号" v-model="userId"></mt-field>
+    <mt-field label="用户名" placeholder="请输入用户名" v-model="userId"></mt-field>
     <mt-field label="密码" placeholder="请输入密码" type="password" v-model="pwd"></mt-field>
     <hr>
     <br>
     <mt-button size="large" type="primary" @click="check()">登录</mt-button>
     <br>
-    <!-- <mt-button size="large" type="danger" @click="trans()">运输组登录</mt-button>
-    <br>
-    <mt-button size="large"  @click="hospital()">医院端登录</mt-button>
-    <br> -->
     <mt-button size="large" @click="$goRoute('/forget')">忘记密码</mt-button>
     <router-view></router-view>
   </div>
