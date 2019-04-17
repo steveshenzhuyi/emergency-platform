@@ -53,7 +53,7 @@
       <mt-tab-container-item id="沟通">
         <mt-header style="font-size:20px" title="信息列表">
           <mt-button slot="left" @click="phone()"><small>视频通话</small></mt-button>
-          <mt-button slot="right" @click="$goRoute('/increaseCT')"><small>新增信息</small></mt-button>
+          <!-- <mt-button slot="right" @click="$goRoute('/increaseCT')"><small>新增信息</small></mt-button> -->
           <hr>
         </mt-header>
         <mt-cell>
@@ -85,7 +85,9 @@
         <p>本车信息</p>
         <mt-field label="车号" v-model="name" disabled="true"></mt-field>
         <mt-field label="所属单位" v-model="company" disabled="true"></mt-field>
+
         <mt-field label="当前状态" v-model="carstate" disabled="true"></mt-field>
+
         <!-- <mt-picker :slots="slots3" :visible-item-count="3"></mt-picker> -->
         <hr>
         <mt-button v-show="isshow" size="large" type="danger" @click="confirmpatient()">确认接单</mt-button>
@@ -177,7 +179,7 @@ export default {
           },
           { 
             flex: 3,
-            values: ['时间正序','时间倒序','未读在前', '已读在前'],
+            values: ['时间正序','时间倒序'],
             className: 'slot8',
           },
         ],
@@ -214,6 +216,22 @@ export default {
     this.getpagelist()
   },
   methods: {
+    SEE(){
+      var that = this;
+      cordova.plugins.barcodeScanner.scan(
+        function (result) {
+          alert("We got a barcode\n" +
+            "Result: " + result.text + "\n" +
+            "Format: " + result.format + "\n" +
+            "Cancelled: " + result.cancelled)
+        
+        },
+        function (error) {
+          alert(error)
+        }
+      )
+
+    },
     getpagelist() {
       console.log(this.groupNo);
       this.selected=this.$route.params.SELECTED1;

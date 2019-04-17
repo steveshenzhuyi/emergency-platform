@@ -4,10 +4,9 @@
       <mt-button size="small" icon="back" slot="left"
         @click="$goRoute('/login-T')"><small>返回</small></mt-button>
     </mt-header>
-    <br>
+    <br>医院端扫描此二维码，完成交接
     <div id="code-container" class="code-root">
-      <div id="qrcode"></div>  
-     <!-- <vue-qr style="float:left;margin-left:200px;"  :text="config.value" :size="200" :margin="0"></vue-qr> -->
+      <div id="qrcode"></div>
     </div>
     <hr>
     病人信息
@@ -31,6 +30,7 @@ import axios from 'axios';
 import { Toast } from 'mint-ui';
 import QRCode from 'qrcodejs2';
 
+
 export default {
   data() {
     return {
@@ -46,6 +46,30 @@ export default {
       time: '',
     };
   },
+    methods: {
+  qrcode () {  
+      var that = this
+      let qrcode = new QRCode('qrcode', {  
+        width: 200,  
+        height: 200, // 高度  
+        text: "111"// 二维码内容  
+        // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas）  
+        // background: '#f0f'  
+        // foreground: '#ff0'  
+      })  
+      console.log(qrcode)  
+    },
+  }
 };
 </script>
 
+
+<style>
+  .code-root{
+    width:200px;
+    height:200px;
+    padding:5px;
+    border:1px solid black;
+    margin:0px;
+  }  
+</style>

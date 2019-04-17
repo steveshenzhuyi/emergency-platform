@@ -316,8 +316,8 @@ export default {
 </script>
 <style>
   .map-root{
-    width:100%;
-    height:500px;
+    width:96%;
+    height:400px;
     padding:5px;
     border:1px solid black;
     margin:0px;
