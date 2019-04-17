@@ -4,7 +4,7 @@
       <mt-tab-container-item id="病人">
         <mt-header style="font-size:20px" title="病人列表">
           <mt-button size="small" slot="right"
-            @click="$goRoute('/confirmh')"><small>接收病人</small></mt-button>
+            @click="SEE()"><small>接收病人</small></mt-button>
           <hr>
         </mt-header>
         <mt-cell>
@@ -173,6 +173,19 @@ export default {
     this.getpagelist()
   },
   methods: {
+     SEE(){
+      var that = this;
+      cordova.plugins.barcodeScanner.scan(
+        function (result) {
+          var res = result.text
+        that.$router.push({name: 'confirmh',params:{PATIENTID:res}});
+        },
+        function (error) {
+          alert(error)
+        }
+      )
+
+    },
     getpagelist() {
       console.log(this.groupNo);
       this.selected=this.$route.params.SELECTED2;

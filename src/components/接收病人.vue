@@ -7,7 +7,7 @@
     <br>
     <hr>
     病人信息
-    <mt-field label="编号" v-model="patientId" disabled="true"></mt-field>
+    <mt-field label="编号" v-model="this.$route.params.PATIENTID" disabled="true"></mt-field>
     <mt-field label="分级" v-model="classification" disabled="true"></mt-field>
     <mt-field label="姓名" v-model="name" disabled="true"></mt-field>
     <mt-field label="性别" v-model="gender" disabled="true"></mt-field>
@@ -45,6 +45,7 @@ export default {
   },
   methods: {
     getpatient() {
+      alert(this.patientId)
       if(this.patientId == this.patientId1) {
         isshow = true;
         Toast('请确认接收')
@@ -67,12 +68,14 @@ export default {
       this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
     },
     returnT1() {
-      axios.post('/confirmSend',{
-        patientId:this.patientId
+      axios.post('/carReceive',{
+        patientId:this.patientId,
+        carNo:window.localStorage.getItem(CARNO)
       }).then((response) => {
         if(response.data.results == "上传成功") {
+          Toast('接收成功')
           this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
-        }
+        }else Toast('接收失败')
       })      
     }
   }

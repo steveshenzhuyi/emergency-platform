@@ -220,11 +220,8 @@ export default {
       var that = this;
       cordova.plugins.barcodeScanner.scan(
         function (result) {
-          alert("We got a barcode\n" +
-            "Result: " + result.text + "\n" +
-            "Format: " + result.format + "\n" +
-            "Cancelled: " + result.cancelled)
-        
+          var res = result.text
+        that.$router.push({name: '接收病人',params:{PATIENTID:res}});
         },
         function (error) {
           alert(error)
@@ -280,6 +277,7 @@ export default {
         groupNo: this.groupNo
       }).then((response) => {
         this.carNo=response.data.results[0].CarNo
+        window.localStorage.setItem('CARNO',this.carNo);
          axios.post('/getCarInfo',{
           carNo:this.carNo
         }).then((response) => {
@@ -370,9 +368,7 @@ export default {
     confirmpatient() {
     
     },
-    SEE() {
 
-    },
     phone() {
 
     }
