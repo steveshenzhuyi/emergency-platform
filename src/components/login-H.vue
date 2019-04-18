@@ -304,6 +304,10 @@ export default {
         tmp.push(this.data3[i]);
       }
       this.data3 = tmp;
+    },
+    //调用摄像头扫码
+    SEE() {
+
     }
   },
 };
