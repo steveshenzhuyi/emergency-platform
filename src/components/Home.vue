@@ -15,6 +15,7 @@
 
 <script>
 import axios from 'axios';
+import { Toast } from 'mint-ui';
 
 export default {
   data() {
@@ -45,9 +46,9 @@ export default {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
               this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
+            }else{
+              Toast('用户名或密码错误！')
             }
-            // console.log(response);
-            // console.log(response.data.results);
           }).catch(function(error){
             console.log("error",error);
           });
@@ -62,9 +63,9 @@ export default {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
               this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
+            }else{
+              Toast('用户名或密码错误！')
             }
-            // console.log(response);
-            // console.log(response.data.results);
           }).catch(function(error){
             console.log("error",error);
           });
@@ -79,9 +80,9 @@ export default {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
               this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
+            }else{
+              Toast('用户名或密码错误！')
             }
-            // console.log(response);
-            // console.log(response.data.results);
           }).catch(function(error){
             console.log("error",error);
           })

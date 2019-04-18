@@ -71,7 +71,7 @@
             <mt-button size="small" @click="symptom()" style="position:relative;left:50px"
             type="primary" plain>其他</mt-button><br><br><hr>
             <div  class="map-box">
-              <b>{{体征}}</b><hr>
+              {{体征}}<hr>
               <mt-field placeholder="内容" v-model="content" type="textarea"></mt-field>
               <mt-button @click="add()" size="small">确定</mt-button>
             </div>

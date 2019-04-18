@@ -20,7 +20,7 @@
             <b class="second">{{item.Name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <b>
             {{item.Classification}} &nbsp;
-            {{item.StatusName}}</b><br><small>
+            {{item.StatusNameHos}}</b><br><small>
             {{item.Gender}} &nbsp; 
             {{item.Age}} &nbsp;
             {{item.OrganizationName}}&nbsp;&nbsp; &nbsp;&nbsp;

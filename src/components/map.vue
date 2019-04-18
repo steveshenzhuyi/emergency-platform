@@ -2,7 +2,9 @@
   <div align="center">
     <mt-header style="font-size:20px" title="病人去向">
       <mt-button size="small" icon="back" slot="left"
-        @click="$goRoute('/choosehospital')"><small>返回</small></mt-button>
+        @click="back()"><small>返回</small></mt-button>
+      <mt-button size="small" slot="right"
+        @click="Evacuation()"><small>后送</small></mt-button>
       <hr>
     </mt-header>
     <h2>当前状态：{{state}}</h2>
@@ -23,6 +25,7 @@
 <script>
 import { Header } from 'mint-ui';
 import axios from 'axios';
+import { Toast } from 'mint-ui';
 /* eslint-disable no-undef */
   // import AMap from 'AMap'
   // import AMapUI from 'AMapUI'
@@ -30,9 +33,13 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      state: window.localStorage.getItem('STATE'),
+      patientid: window.localStorage.getItem('PATIENTNO'),
+      state: this.$route.params.STATE,
       hospital:this.$route.params.HOSPITAL,
-      carNo:this.$route.params.CARNO,
+      carID:this.$route.params.CARID,
+      flag:this.$route.params.FLAG,
+      CarNo:this.$route.params.CARNO,
+      HosNo:this.$route.params.HOSNO,
       intervalid1:null
     };
   },
@@ -45,7 +52,28 @@ export default {
    this.intervalid1 = null
  },
   methods: {
-
+    Evacuation() {
+      console.log(this.CarNo)
+      console.log(this.HosNo)
+      axios.post('/prepareSend',{
+        patientId:this.patientid,
+        carNo:this.$route.params.CARNO,
+        hosNo:this.$route.params.HOSNO
+      }).then((response) => {
+        if(response.data.results == "上传成功") {
+          Toast('病人待后送');
+          this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carID}})
+        }
+      })
+    },
+    back() {
+      if(this.flag == "1") {
+        this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",STATE1:this.state,PATIENTID:this.patientid}})
+      }
+      if(this.flag == "2") {
+        this.$router.push({name: 'choosehospital'})
+      }
+    },
     initMap () {
       var that = this
       var carList=[{},];

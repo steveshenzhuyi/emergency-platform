@@ -19,7 +19,7 @@
           <mt-button size="small" icon="back" slot="left"
             @click="returnT()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
-            @click="$goRoute('/confirmt')"><small>送达</small></mt-button>
+            @click="situation()"><small>{{situations}}</small></mt-button>
           <hr>
         </mt-header>
         <div>
@@ -57,7 +57,7 @@
           <mt-button size="small" icon="back" slot="left"
             @click="returnT()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
-            @click="$goRoute('/confirmt')"><small>送达</small></mt-button>
+            @click="situation()"><small>{{situations}}</small></mt-button>
           <hr>
         </mt-header>
         <mt-navbar v-model="selected1">
@@ -216,12 +216,12 @@
           <mt-button size="small" icon="back" slot="left"
           @click="returnT()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
-          @click="$goRoute('/confirmt')"><small>送达</small></mt-button>
+          @click="situation()"><small>{{situations}}</small></mt-button>
           <hr>
         </mt-header>
-        <h2>当前状态：{{message}}</h2>
-        <h2>后送医院：{{message1}}</h2>
-        <h2>车号：{{message2}}&nbsp;&nbsp;&nbsp;&nbsp;
+        <h2>当前状态：{{StatusNameCar}}</h2>
+        <h2>后送医院：{{OrganizationName}}</h2>
+        <h2>车号：{{CarId}}&nbsp;&nbsp;&nbsp;&nbsp;
         <mt-button size="normal">
         <img src="./icon/语音通话.png" height="40" width="40" slot="icon">
         视频通话</mt-button>
@@ -236,13 +236,20 @@
 </template>
 
 <script>
-import axios from 'axios' 
+import axios from 'axios';
+import { Toast } from 'mint-ui';
 
 export default {
   data() {
     return {
       patientId: this.$route.params.PATIENTID,
-      selected: '新增处置',
+      CarStatus: this.$route.params.CARSTATUS,
+      OrganizationName: '',
+      LocationName: '',
+      CarId: '',
+      StatusNameCar: '',
+      situations: '',
+      selected: this.$route.params.SELECTED,
       selected1: '1',
       content1: '',
       methods: '',
@@ -255,6 +262,7 @@ export default {
   },
   methods: {
     getpatientrecord() {
+      console.log(this.CarStatus)
       axios.post('/getPatientRecord',{
         patientId:this.$route.params.PATIENTID
       }).then((response) => {
@@ -312,33 +320,47 @@ export default {
         this.Age=response.data.results[0].Age;
         this.Nation=response.data.results[0].Nation;
         this.bloodType=response.data.results[0].BloodType;
-        this.Status=response.data.results[0].Status;
+        this.StatusNameCar=response.data.results[0].StatusNameCar;
         this.level=response.data.results[0].Classification;
-        console.log(this.Status)
-        if(this.StatusName="处置中") {
-          this.isShow1 = false
-        }else if(this.StatusName="处置完成") {
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.StatusName="待后送") {
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.StatusName="待后送") {
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.StatusName="已后送") {
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.StatusName="已后送") {
-          this.isShow = !this.isShow;
-          this.isShow1 = true
+        this.LocationName = response.data.results[0].LocationName;
+        this.OrganizationName = response.data.results[0].OrganizationName
+        this.CarId = response.data.results[0].CarId
+        console.log(this.StatusName)
+        if(this.StatusNameCar == "待后送") {
+          if(this.CarStatus == "0"){
+            this.situations = "接单"
+          }else if(this.CarStatus == "1") {
+            this.situations = "接收"
+          }
+        }else if(this.StatusNameCar == "后送中") {
+          if(this.CarStatus == "2") {
+            this.situations = "送达"
+          }
+        }else if (this.StatusNameCar == "已送达") {
+          this.situations = ""
         }
-        if(this.StatusName !="处置中") {
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }
-        window.localStorage.setItem('STATE',this.state);
+        // window.localStorage.setItem('STATE',this.state);
       })
+    },
+    situation() {
+      if(this.situations == "接单") {
+        axios.post('/carPreparePatient',{
+          patientId:this.$route.params.PATIENTID,
+          carNo:window.localStorage.getItem(CARNO),
+          assembly:this.LocationName,
+          hospital:this.OrganizationName
+        }).then((response) => {
+          if(response.data.results == "上传成功") {
+            Toast('接单成功！');
+            window.localStorage.setItem('PATIENTID1',this.patientId);
+            this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
+          }
+        })
+      }else if(this.situations == "接收") {
+        this.$router.push({name: '接收病人',params:{PATIENTID1:this.patientId}});
+      }else if(this.situations == "送达") {
+        this.$router.push({name: 'confirmt'})
+      }
     },
     oxygen() {
       this.methods = "吸氧处理"

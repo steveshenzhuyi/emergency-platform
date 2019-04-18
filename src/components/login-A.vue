@@ -128,6 +128,8 @@ export default {
       groupNo: window.localStorage.getItem('GROUPNO'),
       StatusName: '',
       selected: '',
+      mark: '',
+      ResourceType: '',
       search: '',
       search1: '',
       Name: '',
@@ -208,6 +210,7 @@ export default {
         {},
       ],
       message: [],
+      resource: [],
     };
   },
   mounted() {
@@ -241,7 +244,8 @@ export default {
       axios.post('/getResourceListByGroup',{
         groupNo: this.groupNo
       }).then((response) => {
-        this.data2=response.data.results
+        this.resource=response.data.results
+        this.data2=this.resource
         console.log(response);
         console.log(this.data2);
       }).catch(function(error){
@@ -348,6 +352,28 @@ export default {
         tmp.push(this.data3[i]);
       }
       this.data3 = tmp;
+    },
+    refreshresource() {
+      this.data2=this.resource;
+      var tmp = new Array();
+      for(var i=0; i<this.data2.length; i++) {
+        if(this.choosekind != '全部') {
+          if(this.choosekind == '药品') {
+            this.ResourceType = '1'
+          }
+          if(this.choosekind == '器材') {
+            this.ResourceType = '2'
+          }
+          if(this.choosekind == '其他') {
+            this.ResourceType = '3'
+          }
+          if(this.ResourceType != this.data2[i].ResourceType) {
+            continue;
+          }
+        }
+        tmp.push(this.data2[i]);
+      }
+      this.data2 = tmp;
     }
   },
 };

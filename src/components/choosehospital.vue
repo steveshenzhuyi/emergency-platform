@@ -49,6 +49,8 @@ export default {
       picked1: '',
       hospital: '',
       car: '',
+      hosNo: '',
+      CarNo: '',
       value:'',
       value1: '',
       value3: '',
@@ -62,6 +64,8 @@ export default {
       carstate1: '',
       destination:'',
       destination1:'',
+      OrganizationCode: '',
+      OrganizationCode1: '',
       OrganizationName: '',
       OrganizationName1: '',
       LocationDescription: '',
@@ -84,6 +88,8 @@ export default {
         this.Hoslist = response.data.results
         this.OrganizationName = response.data.results[0].OrganizationName
         this.OrganizationName1 = response.data.results[1].OrganizationName
+        this.OrganizationCode = response.data.results[0].OrganizationCode
+        this.OrganizationCode1 = response.data.results[1].OrganizationCode
         this.LocationDescription = response.data.results[0].LocationDescription
         this.LocationDescription1 = response.data.results[1].LocationDescription
         this.ICUNum = response.data.results[0].ICUNum
@@ -137,9 +143,12 @@ export default {
     },
     ensure() {
       if(this.picked=="自行前往") {
-        this.$router.push({name: 'map',params:{HOSPITAL:this.hospital,CARID:'',STATE:"待后送",FLAG:"2"}})
-      }else
-      this.$router.push({name: 'map',params:{HOSPITAL:this.hospital,CARID:this.car,STATE:"待后送",FLAG:"2"}})
+        this.$router.push({name: 'map',
+        params:{HOSPITAL:this.hospital,CARID:'',STATE:"待后送",FLAG:"2",HOSNO:this.hosNo,CARNO:''}})
+      }else{
+        this.$router.push({name: 'map',
+        params:{HOSPITAL:this.hospital,CARID:this.car,STATE:"待后送",FLAG:"2",HOSNO:this.hosNo,CARNO:this.CarNo}})
+      }
     },
     ReturnA1() {
       this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",PATIENTID:this.patientid}})
@@ -147,21 +156,25 @@ export default {
     choose() {
       if(this.value = "1") {
         this.car=this.carID
+        this.CarNo = this.carNo
       }
     },
     choose1() {
       if(this.value = "2") {
         this.car=this.carID1
+        this.CarNo = this.carNo1
       }
     },
     choose2() {
       if(this.value = "1") {
         this.hospital=this.LocationDescription
+        this.hosNo = this.OrganizationCode
       }
     },
     choose3() {
       if(this.value = "2") {
         this.hospital=this.LocationDescription1
+        this.hosNo = this.OrganizationCode1
       }
     }
   }
