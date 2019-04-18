@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <h2>重大活动急救保障平台</h2><hr>
+  <div align="center">
     <img src="./pictrue/logo.png">
+    <h2>之江实验室</h2>
+    <h2>重大活动急救保障平台</h2><hr>
     <mt-field label="用户名" placeholder="请输入用户名" v-model="userId"></mt-field>
     <mt-field label="密码" placeholder="请输入密码" type="password" v-model="pwd"></mt-field>
     <hr>
