@@ -1,9 +1,10 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="消息详情">
+    <mt-header fixed style="font-size:20px" title="消息详情">
     <mt-button size="small" type="danger" slot="left" icon="back"
         @click="returnH()"><small>返回</small></mt-button>
     </mt-header>
+    <br><br>
     <hr>
     <b style="font-size:22px">编号：{{messageNo}}</b>
       <mt-badge v-show="showbadge" type="error">紧急</mt-badge>

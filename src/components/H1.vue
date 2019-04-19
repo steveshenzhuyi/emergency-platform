@@ -12,11 +12,14 @@
     </div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="既往病历">
-        <mt-header style="font-size:20px" title="既往病历">
+        <mt-header fixed style="font-size:20px" title="既往病历">
           <mt-button size="small" icon="back" slot="left"
             @click="returnH()"><small>返回</small></mt-button>
+          <mt-button v-show="isshow" size="small" slot="right"
+            @click="leaveHos()"><small>出院</small></mt-button>
           <hr>
         </mt-header>
+        <br><br>
         <mt-navbar v-model="selected1">
           <mt-tab-item id="1">主诉</mt-tab-item>
           <mt-tab-item id="2">现病史</mt-tab-item>
@@ -27,60 +30,60 @@
         </mt-navbar>
         <mt-tab-container v-model="selected1">
           <mt-tab-container-item id="1">
-            <p  style="text-align: left">语音</p>
-            <mt-button size="small" type="primary" plain>语音播放</mt-button>
-            <mt-button size="small" type="danger" plain>语音识别</mt-button><hr>
+            <div  style="text-align: left; margin-top: 10px">文字</div>
+            <!-- <mt-button size="small" type="primary" plain>语音播放</mt-button>
+            <mt-button size="small" type="danger" plain>语音识别</mt-button><hr> -->
             <span>时间：{{timevalue}}</span><br>
-            <mt-field type="textarea" v-model="主诉"></mt-field><hr>
-            <p style="text-align: left">图片</p>
+            <mt-field type="textarea" v-model="主诉" rows="3"></mt-field><hr>
+            <div  style="text-align: left; margin-top: 10px">图片</div>
             <span>时间：{{timevalue}}</span><br>
             <img src="./pictrue/logo.png"><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
             语音输入</mt-button>
-            <mt-button size="small"
+            <mt-button size="small" style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
             添加图片</mt-button>
-            <mt-button size="small" type="primary" style="position:relative;right:-55px"
+            <mt-button size="small" type="primary" style="float: right"
             @click="save10()">保存</mt-button>
           </mt-tab-container-item>
           <mt-tab-container-item id="2">
-            <p style="text-align: left">文字</p>
+            <div  style="text-align: left; margin-top: 10px">文字</div>
             <span>时间：{{timevalue1}}</span><br>
-            <mt-field type="textarea" placeholder="内容" v-model="现病史"></mt-field><hr>
-            <p style="text-align: left">图片</p>
+            <mt-field type="textarea" placeholder="内容" v-model="现病史" rows="3"></mt-field><hr>
+            <div  style="text-align: left; margin-top: 10px">图片</div>
             <span>时间：{{timevalue1}}</span><br>
             <img src="./pictrue/logo.png"><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
             语音输入</mt-button>
-            <mt-button size="small"
+            <mt-button size="small"  style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
             添加图片</mt-button>
-            <mt-button size="small" type="primary" style="position:relative;right:-55px"
+            <mt-button size="small" type="primary" style="float: right"
             @click="save20()">保存</mt-button>
           </mt-tab-container-item>
           <mt-tab-container-item id="3">
-            <p style="text-align: left">常用体征</p><hr>
-            <mt-button size="small" @click="heartrate()" style="position:relative;right:50px"
+            <div  style="text-align: left; margin-top: 10px">常用体征</div><hr>
+            <mt-button size="small" @click="heartrate()" style="position:relative;right:40px"
             type="primary" plain>心率</mt-button>
             <mt-button size="small" @click="bloodpressure()"
             type="primary" plain>血压</mt-button>
-            <mt-button size="small" @click="temprature()" style="position:relative;left:50px"
+            <mt-button size="small" @click="temprature()" style="position:relative;left:40px"
             type="primary" plain>体温</mt-button><br><br>
-            <mt-button size="small" @click="breath()" style="position:relative;right:50px"
+            <mt-button size="small" @click="breath()" style="position:relative;right:40px"
             type="primary" plain>呼吸</mt-button>
             <mt-button size="small" @click="bloodoxygen()"
             type="primary" plain>血氧</mt-button>
-            <mt-button size="small" @click="symptom()" style="position:relative;left:50px"
+            <mt-button size="small" @click="symptom()" style="position:relative;left:40px"
             type="primary" plain>其他</mt-button><br><br><hr>
-            <div  class="map-box">
+            <div  style=" padding:3px;border:1px solid blue;margin:3px;">
               {{体征}}<hr>
-              <mt-field placeholder="内容" v-model="content" type="textarea"></mt-field>
+              <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
               <mt-button @click="add()" size="small">确定</mt-button>
             </div>
             <div v-for="(item,index) in dataTZ">
@@ -92,58 +95,60 @@
             </div><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
-            <p style="text-align: left">过敏史</p><hr>
-            <mt-field type="textarea" placeholder="内容" v-model="过敏史"></mt-field><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            <div  style="text-align: left; margin-top: 10px">过敏史</div><hr>
+            <mt-field type="textarea" placeholder="内容" v-model="过敏史" rows="3"></mt-field><hr>
+            <div style="height: 33px"><mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
             语音输入</mt-button>
-            <mt-button size="small"
+            <mt-button size="small" style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
             添加图片</mt-button>
-            <mt-button size="small" style="position:relative;right:-55px"
-            type="primary" @click="save41()">保存</mt-button>
-            <p style="text-align: left">疾病史</p><hr>
-            <mt-field type="textarea" placeholder="内容" v-model="疾病史"></mt-field><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            <mt-button size="small" style="float: right"
+            type="primary" @click="save41()">保存</mt-button></div>
+            <div  style="text-align: left; margin-top: 10px">疾病史</div><hr>
+            <mt-field type="textarea" placeholder="内容" v-model="疾病史" rows="3"></mt-field><hr>
+            <div style="height: 33px">
+            <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
             语音输入</mt-button>
-            <mt-button size="small" 
+            <mt-button size="small"  style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
             添加图片</mt-button>
-            <mt-button size="small" type="primary" style="position:relative;right:-55px"
-            @click="save42()">保存</mt-button>
-            <p style="text-align: left">目前用药</p><hr>
-            <mt-field type="textarea" placeholder="内容" v-model="目前用药"></mt-field><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            <mt-button size="small" type="primary" style="float: right"
+            @click="save42()">保存</mt-button></div>
+            <div  style="text-align: left; margin-top: 10px">目前用药</div><hr>
+            <mt-field type="textarea" placeholder="内容" v-model="目前用药" rows="3"></mt-field><hr>
+            <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
             语音输入</mt-button>
-            <mt-button size="small" 
+            <mt-button size="small"  style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
             添加图片</mt-button>
-            <mt-button size="small" type="primary" style="position:relative;right:-55px"
+            <mt-button size="small" type="primary" style="float: right"
             @click="save43()">保存</mt-button>
+            <br><br><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="5">
-            <p style="text-align: left">初步诊断</p><hr>
+            <div  style="text-align: left; margin-top: 10px">初步诊断</div>
             <span>时间：{{timevalue2}}</span><br>
-            <mt-field type="textarea" placeholder="内容" v-model="初步诊断"></mt-field><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            <mt-field type="textarea" placeholder="内容" v-model="初步诊断" rows="3"></mt-field><hr>
+            <div style="height: 33px"><mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
             语音输入</mt-button>
-            <mt-button size="small"
+            <mt-button size="small"  style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
             添加图片</mt-button>
-             <mt-button size="small" type="primary" style="position:relative;right:-55px"
-            @click="save50()">保存</mt-button>
-            <p style="text-align: left">预检分级 </p>
+             <mt-button size="small" type="primary" style="float: right"
+            @click="save50()">保存</mt-button></div>
+            <div  style="text-align: left; margin-top: 10px">预检分级 </div>
             <b style="text-align: left">当前分级：{{level}}</b>
             <mt-button @click="setclass()">修改分级</mt-button>
             <hr>
@@ -168,15 +173,16 @@
           </mt-tab-container-item>
         </mt-tab-container>
       </mt-tab-container-item>
-      <mt-tab-container-item id="实时地图">
-        <mt-header style="font-size:20px" title="实时地图">
+      <mt-tab-container-item  id="实时地图">
+        <mt-header fixed style="font-size:20px" title="实时地图">
           <mt-button size="small" icon="back" slot="left"
           @click="returnH()"><small>返回</small></mt-button>
           <hr>
         </mt-header>
-        <h2>当前状态：{{message}}</h2>
-        <h2>后送医院：{{message1}}</h2>
-        <h2>车号：{{message2}}&nbsp;&nbsp;&nbsp;&nbsp;
+        <br><br>
+        <h2>当前状态：{{StatusNameHos}}</h2>
+        <h2>后送医院：{{hospital}}</h2>
+        <h2>车号：{{carId}}&nbsp;&nbsp;&nbsp;&nbsp;
         <mt-button size="normal">
         <img src="./icon/语音通话.png" height="40" width="40" slot="icon">
         视频通话</mt-button>
@@ -191,7 +197,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import { Toast } from 'mint-ui';
 
 export default {
   data() {
@@ -200,7 +207,13 @@ export default {
       selected: '既往病历',
       selected1: '1',
       content: '',
-      体征: '',
+      体征: '请选择体征',
+      isshow: false,
+      StatusNameHos: '',
+      carId: '',
+      hospital:'',
+      dataTZ: [],
+      patientrecord: [],
     };
   },
   mounted() {
@@ -265,38 +278,13 @@ export default {
         this.Age=response.data.results[0].Age;
         this.Nation=response.data.results[0].Nation;
         this.bloodType=response.data.results[0].BloodType;
-        this.Status=response.data.results[0].Status;
+        this.StatusNameHos = response.data.results[0].StatusNameHos;
+        this.hospital = response.data.results[0].OrganizationName;
         this.level=response.data.results[0].Classification;
-        console.log(this.Status)
-        if(this.Status=="S01") {
-          this.state="处置中"
-          this.isShow1 = false
-        }else if(this.Status=="S02") {
-          this.state="处置完成";
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.Status=="S03") {
-          this.state="待后送"
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.Status=="S04") {
-          this.state="已后送"
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.Status=="S05") {
-          this.state="已后送"
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.Status=="S06") {
-          this.state="已后送"
-          this.isShow = !this.isShow;
-          this.isShow1 = true
+        this.carId = response.data.results[0].CarId;
+        if(this.StatusNameHos == "已入院") {
+          this.isshow = true
         }
-        if(this.state !="处置中") {
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }
-        window.localStorage.setItem('STATE',this.state);
       })
     },
     heartrate() {
@@ -346,10 +334,7 @@ export default {
         if(response.data.results == "新建成功") {
           Toast('保存成功');
           console.log(this.dataTZ)
-          var tmp = new array ()
-          tmp.push(this.dataTZ);
         }
-        this.dataTZ = this.tmp;
       })
     },
     save41() {
@@ -514,6 +499,18 @@ export default {
     returnH() {
       this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
     },
+    leaveHos() {
+      axios.post('/leaveHos',{
+        patientId:this.$route.params.PATIENTID
+      }).then((response) => {
+        if(response.data.results == "上传成功") {
+          Toast('病人已出院');
+          this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
+        }else{
+          Toast('上传失败')
+        }
+      })
+    }
   }
 };
 </script>

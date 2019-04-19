@@ -1,9 +1,10 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="资源详情">
+    <mt-header fixed style="font-size:20px" title="资源详情">
       <mt-button size="small" type="danger" slot="left" icon="back"
         @click="returnA()"><small>返回</small></mt-button>
     </mt-header>
+    <br><br>
     <mt-field label="名称" v-model="name" :disabled="true"></mt-field>
     <mt-field label="编号" v-model="number" :disabled="true"></mt-field>
     <mt-field label="种类" v-model="type" :disabled="true"></mt-field>

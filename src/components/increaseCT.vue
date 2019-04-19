@@ -1,11 +1,12 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="新建消息">
+    <mt-header fixed style="font-size:20px" title="新建消息">
       <mt-button size="small" type="danger" slot="left" icon="back"
             @click="returnT()"><small>返回</small></mt-button>
       <mt-button slot="right" @click="$goRoute('/login-T')"><small>发送</small></mt-button>
       <hr>
     </mt-header>
+    <br><br>
     <mt-field label="标题" v-model="title"></mt-field><hr>
     <mt-picker :slots="slots" :visible-item-count="3"></mt-picker>
     <mt-radio v-model="radio" :options="['紧急标识']"></mt-radio>

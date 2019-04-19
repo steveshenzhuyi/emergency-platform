@@ -1,12 +1,13 @@
 <template>
   <div align="center">
-    <mt-header style="font-size:20px" title="病人去向">
+    <mt-header fixed style="font-size:20px" title="病人去向">
       <mt-button size="small" icon="back" slot="left"
         @click="back()"><small>返回</small></mt-button>
       <mt-button size="small" slot="right"
         @click="Evacuation()"><small>后送</small></mt-button>
       <hr>
     </mt-header>
+    <br><br>
     <h2>当前状态：{{state}}</h2>
     <h2>后送医院：{{hospital}}</h2>
     <h2>车号：{{carNo}}

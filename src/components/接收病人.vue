@@ -1,10 +1,10 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="接收病人">
+    <mt-header fixed style="font-size:20px" title="接收病人">
       <mt-button size="small" icon="back" slot="left"
         @click="returnT()"><small>返回</small></mt-button>
     </mt-header>
-    <br>
+    <br><br>
     <hr>
     病人信息
     <mt-field label="编号" v-model="this.$route.params.PATIENTID" disabled="true"></mt-field>

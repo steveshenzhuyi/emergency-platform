@@ -1,9 +1,10 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="选择后送医院">
+    <mt-header fixed style="font-size:20px" title="选择后送医院">
       <mt-button icon="back" slot="left" @click="ReturnA1()">
         <small>返回</small></mt-button>
     </mt-header>
+    <br><br>
     <h2 style="color:blue">已选医院：{{hospital}}</h2>
     <h2>车辆编号：{{car}}</h2><hr>
     前往方式：

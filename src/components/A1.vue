@@ -2,13 +2,14 @@
   <div align="center">
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="患者病历">
-        <mt-header style="font-size:20px" title="患者病历">
+        <mt-header fixed style="font-size:20px" title="患者病历">
           <mt-button size="small" icon="back" slot="left"
             @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right" v-show="isShow2"
             @click="confirm()"><small>后送</small></mt-button>
           <hr>
         </mt-header>
+        <br><br>
         <mt-navbar v-model="selected1">
           <mt-tab-item id="1">主诉</mt-tab-item>
           <mt-tab-item id="2">现病史</mt-tab-item>
@@ -162,13 +163,14 @@
         </mt-tab-container>
       </mt-tab-container-item>
       <mt-tab-container-item id="处置方案">
-        <mt-header style="font-size:20px" title="处置方案">
+        <mt-header fixed style="font-size:20px" title="处置方案">
           <mt-button size="small" icon="back" slot="left"
             @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right" v-show="isShow2"
             @click="confirm()"><small>后送</small></mt-button>
           <hr>
         </mt-header>
+        <br><br>
         <div>
           <div  style="text-align: left; margin-top: 10px">常用处置</div><hr>
             <mt-button size="small" @click="oxygen()" style="position:relative;right:30px"
@@ -200,13 +202,14 @@
         </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="病人去向">
-        <mt-header style="font-size:20px" title="病人去向">
+        <mt-header fixed style="font-size:20px" title="病人去向">
           <mt-button size="small" icon="back" slot="left"
             @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right" v-show="isShow2"
             @click="confirm()"><small>后送</small></mt-button>
           <hr>
         </mt-header>
+        <br><br>
         <h2>当前状态：{{state}}</h2><br>
         <div v-show="isShow">
           <p>选择病人去向</p><br>
@@ -330,6 +333,7 @@ export default {
         this.timevalue1=this.patientrecord.P02[0].OperationTime;
         //体征
         this.dataTZ=this.patientrecord.P03
+        console.log(this.dataTZ)
         //既往史
         for(var i=0; i<this.patientrecord.P04.length;i++) {
           if(this.patientrecord.P04[i].OperationCode == "P041") {

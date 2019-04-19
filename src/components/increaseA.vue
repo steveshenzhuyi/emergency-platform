@@ -1,12 +1,13 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="新建病人">
+    <mt-header fixed style="font-size:20px" title="新建病人">
       <mt-button size="small" type="danger" slot="left" icon="back"
             @click="returnA()"><small>返回</small></mt-button>
       <mt-button size="small" slot="right"
             @click="getcamera()"><small>扫码</small></mt-button>
       <hr>
     </mt-header>
+    <br><br>
     <!-- <mt-cell>
       <img src="components/picture/man.png">
       <mt-button size="small" type="primary" plain>

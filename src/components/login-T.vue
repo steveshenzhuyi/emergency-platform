@@ -2,11 +2,12 @@
   <div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
-        <mt-header style="font-size:20px" title="转运列表">
+        <mt-header fixed style="font-size:20px" title="转运列表">
           <mt-button size="small" slot="right"
             @click="SEE()"><small>扫描</small></mt-button>
           <hr>
         </mt-header>
+        <br><br>
         <mt-cell>
           <p v-show="side">{{chooselevel}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosestate}}&nbsp;&nbsp;&nbsp;&nbsp;{{sortway}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -33,11 +34,12 @@
         </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="资源">
-        <mt-header style="font-size:20px" title="资源列表">
+        <mt-header fixed style="font-size:20px" title="资源列表">
           <mt-button size="small" slot="right"
             @click="$goRoute('/increaseBT')"><small>新增资源</small></mt-button>
           <hr>
         </mt-header>
+        <br><br>
         <mt-cell>
           <p v-show="side">{{choosekind}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosenumber}}&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -54,11 +56,12 @@
         </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
-        <mt-header style="font-size:20px" title="信息列表">
+        <mt-header fixed style="font-size:20px" title="信息列表">
           <mt-button slot="left" @click="phone()"><small>视频通话</small></mt-button>
           <!-- <mt-button slot="right" @click="$goRoute('/increaseCT')"><small>新增信息</small></mt-button> -->
           <hr>
         </mt-header>
+        <br><br>
         <mt-cell>
           <p v-show="side">{{choosesituation}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosesort}}&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -76,10 +79,11 @@
         </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="个人">
-        <mt-header style="font-size:20px" title="本车信息">
+        <mt-header fixed style="font-size:20px" title="本车信息">
           <!-- <mt-button slot="right" @click="edit"><small>查看个人信息</small></mt-button>
           <hr> -->
         </mt-header>
+        <br><br>
         <br>
         <mt-cell title>
           <!-- <img slot="icon" src="./icon/个人.png"> -->
