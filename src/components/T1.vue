@@ -357,7 +357,7 @@ export default {
           }
         })
       }else if(this.situations == "接收") {
-        this.$router.push({name: '接收病人',params:{PATIENTID1:this.patientId}});
+        this.$router.push({name: '接收病人',params:{PATIENTID:this.patientId}});
       }else if(this.situations == "送达") {
         this.$router.push({name: 'confirmt'})
       }

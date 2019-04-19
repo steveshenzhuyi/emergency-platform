@@ -305,10 +305,6 @@ export default {
       }
       this.data3 = tmp;
     },
-    //调用摄像头扫码
-    SEE() {
-
-    }
   },
 };
 </script>

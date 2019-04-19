@@ -18,7 +18,7 @@
     <!-- <mt-field label="症状" v-model="situation" disabled="true"></mt-field> -->
     <mt-field label="接收时间" v-model="CarTime" disabled="true"></mt-field>
     <mt-field label="目标车号" v-model="carId" disabled="true"></mt-field>
-    <mt-field label="目标医院" v-model="hospital" disabled="true"></mt-field>
+    <mt-field label="目标医院" v-model="OrganizationName" disabled="true"></mt-field>
     <mt-field label="现在时间" v-model="HospitalTime" disabled="true"></mt-field><hr>
     <mt-button size="normal" @click="returnT1()">确认送达</mt-button>
     <router-view></router-view>
@@ -34,7 +34,7 @@ import QRCode from 'qrcodejs2';
 export default {
   data() {
     return {
-      patientId: window.localStorage.getItem(PATIENTID1),
+      patientId: window.localStorage.getItem('PATIENTID1'),
       classification: '',
       name: '',
       gender: '',
@@ -47,6 +47,7 @@ export default {
   },
   mounted() {
     this.getpatient()
+    this.qrcode()
   },
     methods: {
   qrcode () {  
@@ -54,7 +55,7 @@ export default {
       let qrcode = new QRCode('qrcode', {  
         width: 200,  
         height: 200, // 高度  
-        text: "111"// 二维码内容  
+        text: that.patientId// 二维码内容  
         // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas）  
         // background: '#f0f'  
         // foreground: '#ff0'  
@@ -71,7 +72,7 @@ export default {
         this.age = response.data.results[0].Age;
         this.carId = response.data.results[0].CarId;
         this.organizationName = response.data.results[0].OrganizationName;
-        this.carTime = response.data.results[0].CarTime;
+        this.CarTime = response.data.results[0].CarTime;
         this.HospitalTime = response.data.results[0].HospitalTime
       })
     },

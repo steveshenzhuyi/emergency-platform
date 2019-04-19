@@ -38,7 +38,7 @@ export default {
       HospitalTime: '',
       isshow: '',
       hosgroup: '',
-      hospitalGroup:window.localStorage.getItem(GROUPNO),
+      hospitalGroup:window.localStorage.getItem('GROUPNO'),
     };
   },
   mounted() {
@@ -51,7 +51,7 @@ export default {
     }).then((response) => {
       this.hosgroup = response.data.results[0].HosGroup
       if(this.hosgroup == this.hospitalGroup) {
-        isshow = true
+        this.isshow = true;
         Toast('请确认接收')
       }else {
         Toast('非本院病人')
@@ -71,7 +71,7 @@ export default {
     returnH1() {
       axios.post('/hosReceive',{
         patientId:this.patientId,
-        hospitalGroup:window.localStorage.getItem(HOSPITALGROUP)
+        hospitalGroup:window.localStorage.getItem('HOSPITALGROUP')
       }).then((response) => {
         if(response.data.results == "上传成功") {
           this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});

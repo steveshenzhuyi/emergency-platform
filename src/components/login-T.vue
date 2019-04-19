@@ -289,11 +289,13 @@ export default {
          axios.post('/getCarInfo',{
           carNo:this.carNo
         }).then((response) => {
+          console.log(response)
           this.name=response.data.results[0].CarId
           this.company=response.data.results[0].OrganizationName
           this.assembly=response.data.results[0].Assembly
           this.hospital=response.data.results[0].Hospital
           this.CarStatus=response.data.results[0].CarStatus
+          window.localStorage.setItem('PATIENTID1',response.data.results[0].NowPatient);
           if(this.CarStatus == "0") {
             this.carstate = "空闲"
           }else if(this.CarStatus == "1") {
