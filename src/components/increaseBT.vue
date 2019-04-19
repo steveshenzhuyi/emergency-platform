@@ -1,11 +1,12 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="新增资源项目">
+    <mt-header fixed style="font-size:20px" title="新增资源项目">
       <mt-button size="small" type="danger" slot="left" icon="back"
             @click="resourcetoT()"><small>返回</small></mt-button>
       <mt-button slot="right" @click="NewResource()"><small>确定</small></mt-button>
       <hr>
     </mt-header>
+    <br><br>
     <mt-field label="名称" v-model="resourceName"></mt-field>
     <mt-picker :slots="slots" @change="ontypeChange" :visible-item-count="3"></mt-picker>
     <mt-field label="规格" v-model="standard"></mt-field>

@@ -1,9 +1,10 @@
 <template>
   <div align="center">
-    <mt-header style="font-size:20px" title="确认后送">
+    <mt-header fixed style="font-size:20px" title="确认后送">
       <mt-button size="small" icon="back" slot="left"
         @click="returnA1()"><small>返回</small></mt-button>
     </mt-header>
+    <br><br>
     <br>车辆端扫描此二维码，完成交接
     <div id="code-container" class="code-root">
       <div id="qrcode"></div>

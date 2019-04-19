@@ -1,10 +1,11 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="本车信息">
+    <mt-header fixed style="font-size:20px" title="本车信息">
       <mt-button slot="left" icon="back" @click="returnT()"><small>返回</small></mt-button>
       <!-- <mt-button slot="right" @click="edit">修改</mt-button> -->
       <hr>
     </mt-header>
+    <br><br>
         <p style="text-align: left">个人信息</p>
         <mt-field label="姓名" v-model="name" disabled="true"></mt-field>
         <mt-field label="性别" v-model="sex" disabled="true"></mt-field>
@@ -76,7 +77,7 @@ export default {
       })
     },
     returnT() {
-      this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
+      this.$router.push({name: '转运列表',params:{SELECTED1:"个人"}});
     }
   }
 };

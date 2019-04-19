@@ -2,11 +2,12 @@
   <div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
-        <mt-header style="font-size:20px" title="病人列表">
+        <mt-header fixed style="font-size:20px" title="病人列表">
           <mt-button size="small" slot="right"
             @click="SEE()"><small>接收病人</small></mt-button>
           <hr>
         </mt-header>
+        <br><br>
         <mt-cell>
           <p v-show="flase">{{chooselevel}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosestate}}&nbsp;&nbsp;&nbsp;&nbsp;{{sortway}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -30,12 +31,13 @@
         </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
-        <mt-header style="font-size:20px" title="信息列表">
+        <mt-header fixed style="font-size:20px" title="信息列表">
           <mt-button slot="left" @click="$goRoute('/')"><small>视频通话</small></mt-button>
           <hr>
           <!-- <mt-button slot="right" @click="$goRoute('/increaseCH')"><small>新增信息</small></mt-button> -->
           <hr>
         </mt-header>
+        <br><br>
         <mt-cell>
           <p v-show="flase">{{choosesituation}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosesort}}&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -53,9 +55,10 @@
         </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="个人">
-        <mt-header style="font-size:20px" title="个人信息">
+        <mt-header fixed style="font-size:20px" title="个人信息">
           <!-- <mt-button slot="right" @click="edit">修改</mt-button> -->
         </mt-header>
+        <br><br>
         <br>
         <p style="text-align: left">个人信息</p>
           <mt-field label="姓名" v-model="Name" disabled="true"></mt-field>

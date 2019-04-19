@@ -1,9 +1,10 @@
 <template>
   <div align="center">
-    <mt-header style="font-size:20px" title="确认送达">
+    <mt-header fixed style="font-size:20px" title="确认送达">
       <mt-button size="small" icon="back" slot="left"
         @click="returnT()"><small>返回</small></mt-button>
     </mt-header>
+    <br><br>
     <br>医院端扫描此二维码，完成交接
     <div id="code-container" class="code-root">
       <div id="qrcode"></div>
@@ -77,7 +78,7 @@ export default {
       })
     },
     returnT() {
-      this.$router.push({name:'T1',params:{SELECTED:"新增处置"}})
+      this.$router.push({name:'T1',params:{SELECTED:"新增处置",PATIENTID:this.patientId}})
     },
     returnT1() {
       axios.post('/confirmArrive',{
