@@ -16,9 +16,8 @@
         <mt-cell title="当前状态：">
           <p>{{nowstate}}</p>
         </mt-cell>
-        <hr>
         <div v-for="(item,index) in dataclass1" align="left">
-            <a @click="getpatient(index)">
+            <hr><a @click="getpatient(index)">
             <b class="first">{{item.PatientId}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;<small>{{item.CreateTime}}</small><br>
             <b class="second">{{item.Name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -30,8 +29,8 @@
             {{item.OrganizationName}}&nbsp;&nbsp; 
             {{item.CarName}}&nbsp;
             {{item.CarId}}
-            {{item.Pcost}}</small></a><hr>
-        </div><br><br><br>
+            {{item.Pcost}}</small></a>
+        </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="资源">
         <mt-header style="font-size:20px" title="资源列表">
@@ -44,15 +43,15 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
           <mt-button size="small" type="primary" @click="refreshresource()">刷新</mt-button>
         </mt-cell>
-        <mt-picker :slots="slots1" @change="onResourcelistChange" :visible-item-count="3"></mt-picker><hr>
+        <mt-picker :slots="slots1" @change="onResourcelistChange" :visible-item-count="3"></mt-picker>
         <div v-for=" (item,index) in data2" :data2-index="{index}" align="left">
-          <a @click="getResource(index)">
+          <hr><a @click="getResource(index)">
           <b>{{ item.ResourceNo }} &nbsp;&nbsp;
              {{item.ResourceName}}</b><br>
           <small>规格：{{item.Standard}} &nbsp;&nbsp;
                  {{item.Sstate}}状态：在库 &nbsp;&nbsp;
-                 数量：{{item.Amount}}</small></a><hr>
-        </div><br><br><br>
+                 数量：{{item.Amount}}</small></a>
+        </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
         <mt-header style="font-size:20px" title="信息列表">
@@ -65,16 +64,16 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
           <mt-button size="small" type="primary" @click="refreshmessage()">刷新</mt-button>
         </mt-cell>
-        <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3"></mt-picker><hr>
+        <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3"></mt-picker>
         <div v-for=" (item,index) in data3" align="left">
-          <a @click="getMessage(index)">
+          <hr><a @click="getMessage(index)">
             <big><b>
               序号{{item.MessageNo}}</b></big><br>
               <b>{{item.MessageTitle}}</b><br>
             <small>{{item.MessageDetail}}&nbsp;<br>
               发送时间：{{item.SendTime}}</small>
-          </a><hr>
-        </div><br><br><br>
+          </a>
+        </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="个人">
         <mt-header style="font-size:20px" title="本车信息">

@@ -19,7 +19,7 @@
     <mt-button type="primary" size="normal"
     v-on:click="counter +=1">增加</mt-button>
     <mt-button type="danger" size="normal"
-    v-on:click="counter -=1">减少</mt-button><hr>
+    v-on:click="counter -=1">减少</mt-button><br><br>
     <mt-button type="primary" size="large" @click="edit()">确认修改</mt-button>
     <router-view></router-view>
   </div>

@@ -24,17 +24,17 @@
         </mt-header>
         <div>
           <p style="text-align: left">新增处置</p><hr>
-            <mt-button size="small" @click="oxygen()" style="position:relative;right:40px"
+            <mt-button size="small" @click="oxygen()" style="position:relative;right:30px"
             type="primary" plain>吸氧处理</mt-button>
             <mt-button size="small" @click="ECG()"
             type="primary" plain>心电检查</mt-button>
-            <mt-button size="small" @click="bandage()" style="position:relative;left:40px"
+            <mt-button size="small" @click="bandage()" style="position:relative;left:30px"
             type="primary" plain>包扎止血</mt-button><br><br>
-            <mt-button size="small" @click="stone()" style="position:relative;right:40px"
+            <mt-button size="small" @click="stone()" style="position:relative;right:30px"
             type="primary" plain>固定处理</mt-button>
             <mt-button size="small" @click="drug()"
             type="primary" plain>口服药物</mt-button>
-            <mt-button size="small" @click="dd()" style="position:relative;left:40px"
+            <mt-button size="small" @click="dd()" style="position:relative;left:30px"
             type="primary" plain>静脉给药</mt-button><br><br>
             <mt-button size="small" @click="elseway()"
             type="primary" plain>其他处理</mt-button><hr>
@@ -45,12 +45,12 @@
           <mt-button size="small" @click="add1()">确定</mt-button>
         </div>
         <div v-for="(item,index) in dataCZ">
-            <b>{{item.OperationName}}</b><br>
+            <hr><b>{{item.OperationName}}</b><br>
             <b>
             {{item.Detail}}
             </b><br>
-            <small>{{item.OperationTime}}</small><hr>
-        </div><br><br><br>
+            <small>{{item.OperationTime}}</small>
+        </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="既往病历">
         <mt-header style="font-size:20px" title="既往病历">
@@ -109,30 +109,30 @@
           </mt-tab-container-item>
           <mt-tab-container-item id="3">
             <p style="text-align: left">常用体征</p><hr>
-            <mt-button size="small" @click="heartrate()" style="position:relative;right:50px"
+            <mt-button size="small" @click="heartrate()" style="position:relative;right:40px"
             type="primary" plain>心率</mt-button>
             <mt-button size="small" @click="bloodpressure()"
             type="primary" plain>血压</mt-button>
-            <mt-button size="small" @click="temprature()" style="position:relative;left:50px"
+            <mt-button size="small" @click="temprature()" style="position:relative;left:40px"
             type="primary" plain>体温</mt-button><br><br>
-            <mt-button size="small" @click="breath()" style="position:relative;right:50px"
+            <mt-button size="small" @click="breath()" style="position:relative;right:40px"
             type="primary" plain>呼吸</mt-button>
             <mt-button size="small" @click="bloodoxygen()"
             type="primary" plain>血氧</mt-button>
-            <mt-button size="small" @click="symptom()" style="position:relative;left:50px"
-            type="primary" plain>其他</mt-button><br><br><hr>
+            <mt-button size="small" @click="symptom()" style="position:relative;left:40px"
+            type="primary" plain>其他</mt-button><br><hr>
             <div  class="map-box">
               {{体征}}<hr>
               <mt-field placeholder="内容" v-model="content" type="textarea"></mt-field>
               <mt-button @click="add()" size="small">确定</mt-button>
             </div>
             <div v-for="(item,index) in dataTZ">
-            <b>{{item.OperationName}}</b><br>
+            <hr><b>{{item.OperationName}}</b><br>
             <b>
             {{item.Detail}}
             </b><br>
-            <small>{{item.OperationTime}}</small><hr>
-            </div><br><br><br>
+            <small>{{item.OperationTime}}</small>
+            </div><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
             <p style="text-align: left">过敏史</p><hr>
@@ -173,7 +173,7 @@
             @click="save43()">保存</mt-button>
           </mt-tab-container-item>
           <mt-tab-container-item id="5">
-            <p style="text-align: left">初步诊断</p><hr>
+            <p style="text-align: left">初步诊断</p>
             <span>时间：{{timevalue2}}</span><br>
             <mt-field type="textarea" placeholder="内容" v-model="初步诊断"></mt-field><hr>
             <mt-button size="small" style="position:relative;right:55px"
@@ -192,7 +192,7 @@
             <hr>
             <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
             <br>
-            <mt-button type="danger" @click="alert()">一键上报</mt-button><hr>
+            <mt-button type="danger" @click="alert()">一键上报</mt-button><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="6">
             <img src="./pictrue/man.png"><hr>
@@ -205,7 +205,7 @@
             <mt-field label="邮箱" v-model="Email" disabled="true"></mt-field>
             <mt-field label="单位" v-model="Unit" disabled="true"></mt-field>
             <mt-field label="职务" v-model="Position" disabled="true"></mt-field>
-            <mt-field label="血型" v-model="bloodType" disabled="true"></mt-field><hr>
+            <mt-field label="血型" v-model="bloodType" disabled="true"></mt-field><br><br><br><br>
             <!-- <mt-button size="small" style="position:relative;left:100px"
             type="danger" @click="edit">修改</mt-button><br><hr> -->
           </mt-tab-container-item>
@@ -252,8 +252,8 @@ export default {
       selected: this.$route.params.SELECTED,
       selected1: '1',
       content1: '',
-      methods: '',
-      体征: '',
+      methods: '请选择处置',
+      体征: '请选择体征',
       content: '',
     };
   },
@@ -644,18 +644,18 @@ export default {
 
 <style>
   .map-box{
-    width:420px;
-    height:130px;
-    padding:10px;
-    border:2px solid blue;
+    width:96%;
+    height:145px;
+    padding:5px;
+    border:1px solid blue;
     margin:0px;
   }
   .map-root{
-    width:100%;
-    height:475px;
+    width:96%;
+    height:410px;
     padding:5px;
     border:1px solid black;
-    margin:5px;
+    margin:0px;
   }
 </style>
 

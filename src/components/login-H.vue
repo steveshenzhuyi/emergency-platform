@@ -12,9 +12,9 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
           <mt-button size="small" type="primary" @click="refreshpatient()">刷新</mt-button>
         </mt-cell>
-        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
+        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker>
         <div v-for="(item,index) in dataclass1" align="left">
-            <a @click="getpatient(index)">
+            <hr><a @click="getpatient(index)">
             <b class="first">{{item.PatientId}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;<small>{{item.CreateTime}}</small><br>
             <b class="second">{{item.Name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -26,8 +26,8 @@
             {{item.OrganizationName}}&nbsp;&nbsp;
             {{item.CarName}}&nbsp;
             {{item.CarId}}
-            {{item.Pcost}}</small></a><hr>
-        </div>
+            {{item.Pcost}}</small></a>
+        </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
         <mt-header style="font-size:20px" title="信息列表">
@@ -41,23 +41,23 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
           <mt-button size="small" type="primary" @click="refreshmessage()">刷新</mt-button>
         </mt-cell>
-        <mt-picker :slots="slots1" @change="onMessagechange" :visible-item-count="3"></mt-picker><hr>
+        <mt-picker :slots="slots1" @change="onMessagechange" :visible-item-count="3"></mt-picker>
         <div v-for=" (item,index) in data3" align="left">
-          <a @click="getMessage(index)">
+          <hr><a @click="getMessage(index)">
             <big><b>
               序号{{item.MessageNo}}</b></big><br>
               <b>{{item.MessageTitle}}</b><br>
             <small>{{item.MessageDetail}}&nbsp;<br>
               发送时间：{{item.SendTime}}</small>
-          </a><hr>
-        </div><br><br><br>
+          </a>
+        </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="个人">
         <mt-header style="font-size:20px" title="个人信息">
           <!-- <mt-button slot="right" @click="edit">修改</mt-button> -->
         </mt-header>
         <br>
-        <p>个人信息</p>
+        <p style="text-align: left">个人信息</p>
           <mt-field label="姓名" v-model="Name" disabled="true"></mt-field>
           <mt-field label="性别" v-model="Gender" disabled="true"></mt-field>
           <mt-field label="年龄" v-model="Age" disabled="true"></mt-field>
@@ -66,13 +66,13 @@
           <mt-field label="单位" v-model="DepartmentName" disabled="true"></mt-field>
           <mt-field label="职称" v-model="TitleName" disabled="true"></mt-field>
           <hr>
-          <p>角色：医院组</p>
+          <p style="text-align: left">角色：医院组</p>
           <mt-field label="所属小组" v-model="GroupName" disabled="true"></mt-field>
           <mt-field label="组内职务" v-model="GroupPosition" disabled="true"></mt-field>
           <mt-field label="责任区域" v-model="ManageArea" disabled="true"></mt-field>
           <mt-field label="重点保障对象" v-model="GuaranteeObject" disabled="true"></mt-field><hr>
-          <mt-button size="large" type="primary">修改密码</mt-button><hr>
-          <mt-button size="large" @click="$goRoute('/Home')">退出登录</mt-button><hr>
+          <mt-button size="large">修改密码</mt-button><br>
+          <mt-button size="large"  type="danger" @click="$goRoute('/Home')">退出登录</mt-button><br>
           <hr>
           <br><br>
       </mt-tab-container-item>

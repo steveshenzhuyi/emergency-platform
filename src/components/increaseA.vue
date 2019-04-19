@@ -14,7 +14,7 @@
         拍照</mt-button>
     </mt-cell> -->
     <hr>
-    <p style="text-align: left">个人信息</p>
+    <!-- <p style="text-align: left">个人信息</p> -->
       <mt-field label="姓名" v-model="pname"></mt-field>
       <mt-radio
         v-model="gender"
