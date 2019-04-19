@@ -70,7 +70,7 @@ export default {
     returnT1() {
       axios.post('/carReceive',{
         patientId:this.patientId,
-        carNo:window.localStorage.getItem(CARNO)
+        carNo:window.localStorage.getItem('CARNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
           Toast('接收成功')

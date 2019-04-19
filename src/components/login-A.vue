@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div align="center">
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
         <mt-header style="font-size:20px" title="病人列表">

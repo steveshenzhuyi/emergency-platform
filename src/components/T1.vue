@@ -346,12 +346,12 @@ export default {
       if(this.situations == "接单") {
         axios.post('/carPreparePatient',{
           patientId:this.$route.params.PATIENTID,
-          carNo:window.localStorage.getItem(CARNO),
+          carNo:window.localStorage.getItem('CARNO'),
           assembly:this.LocationName,
           hospital:this.OrganizationName
         }).then((response) => {
           if(response.data.results == "上传成功") {
-            Toast('接单成功！');
+            Toast('接单成功');
             window.localStorage.setItem('PATIENTID1',this.patientId);
             this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
           }

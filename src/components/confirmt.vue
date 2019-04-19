@@ -80,7 +80,7 @@ export default {
     },
     returnT1() {
       axios.post('/confirmArrive',{
-        carNo:window.localStorage.getItem(CARNO)
+        carNo:window.localStorage.getItem('CARNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
           Toast('确认送达！')
