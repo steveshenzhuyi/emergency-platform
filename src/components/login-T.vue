@@ -14,9 +14,7 @@
           <mt-button size="small" type="primary" @click="refreshPatient()">刷新</mt-button>
         </mt-cell>
         <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker>
-        <mt-cell title="当前状态：">
-          <p>{{nowstate}}</p>
-        </mt-cell>
+          <b style="color: red">{{nowstate}}{{patientId1}}{{文字}}</b>
         <div v-for="(item,index) in dataclass1" align="left">
             <hr><a @click="getpatient(index)">
             <b class="first">{{item.PatientId}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -87,7 +85,6 @@
         <br>
         <mt-cell title>
           <!-- <img slot="icon" src="./icon/个人.png"> -->
-          <mt-button size="small" type="primary" @click="$goRoute('/个人信息运输')">查看个人信息</mt-button>
         </mt-cell>
         <p>本车信息</p>
         <mt-field label="车号" v-model="name" disabled="true"></mt-field>
@@ -97,7 +94,7 @@
 
         <!-- <mt-picker :slots="slots3" :visible-item-count="3"></mt-picker> -->
         <hr>
-        <mt-button v-show="isshow" size="large" type="danger" @click="confirmpatient()">确认接单</mt-button>
+        <mt-button size="large" type="primary" @click="$goRoute('/个人信息运输')">查看个人信息</mt-button>
       </mt-tab-container-item>
     </mt-tab-container>
     <div>
@@ -129,13 +126,14 @@ export default {
       selected: '',
       userId: window.localStorage.getItem('USERID'),
       groupNo: window.localStorage.getItem('GROUPNO'),
+      patientId1:'',
       // flag: this.$route.params.FLAG,
       nowstate: '',
+      文字: '',
       value: '',
       value1: '',
       name: '',
       company: '',
-      isshow: '',
       carstate: '',
       CarStatus: '',
       assembly: '',
@@ -302,10 +300,17 @@ export default {
           window.localStorage.setItem('PATIENTID1',response.data.results[0].NowPatient);
           if(this.CarStatus == "0") {
             this.carstate = "空闲"
+            this.nowstate = "空闲中"
           }else if(this.CarStatus == "1") {
             this.carstate = "正在去会场"
+            this.nowstate = "正在接收编号为："
+            this.patientId1 = window.localStorage.getItem('PATIENTID1')
+            this.文字 = "的病人"
           }else if(this.CarStatus == "2") {
             this.carstate = "正在去医院"
+            this.nowstate = "正在运送编号为："
+            this.patientId1 = window.localStorage.getItem('PATIENTID1')
+            this.文字 = "的病人"
           }
         })
       })
