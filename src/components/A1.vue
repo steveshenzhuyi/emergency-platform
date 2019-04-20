@@ -325,12 +325,22 @@ export default {
         this.patientrecord=response.data.results
         //主诉
         this.zhusu=this.patientrecord.P01;
+        if(this.zhusu.length>0) {
+          this.主诉=this.zhusu[0].Detail;
+          this.timevalue=this.zhusu[0].OperationTime;
+        }else{
+          this.主诉='';
+          this.timevalue='';
+        }
         console.log(this.zhusu)
-        this.主诉=this.zhusu[0].Detail;
-        this.timevalue=this.zhusu[0].OperationTime;
         //现病史
-        this.现病史=this.patientrecord.P02[0].Detail;
-        this.timevalue1=this.patientrecord.P02[0].OperationTime;
+        if(this.patientrecord.P02.length>0) {
+          this.现病史=this.patientrecord.P02[0].Detail;
+          this.timevalue1=this.patientrecord.P02[0].OperationTime;
+        }else{
+          this.现病史 = '';
+          this.timevalue1 = '';
+        }
         //体征
         this.dataTZ=this.patientrecord.P03
         console.log(this.dataTZ)
@@ -355,12 +365,21 @@ export default {
           }
         }
         //初步诊断
-        this.初步诊断=this.patientrecord.P05[0].Detail
-        this.timevalue2=this.patientrecord.P05[0].OperationTime
+        if(this.patientrecord.P05.length>0) {
+          this.初步诊断=this.patientrecord.P05[0].Detail
+          this.timevalue2=this.patientrecord.P05[0].OperationTime
+        }else{
+          this.初步诊断=''
+          this.timevalue2=''
+        }
         //处置方案
         this.dataCZ=this.patientrecord.P11
         //医嘱
-        this.doctortell=this.patientrecord.P06[0].Detail
+        if(this.patientrecord.P06.length>0) {
+          this.doctortell=this.patientrecord.P06[0].Detail
+        }else{
+          this.doctortell= ''
+        }
       })
       axios.post('/getPatientInfo',{
         patientId:this.$route.params.PATIENTID
