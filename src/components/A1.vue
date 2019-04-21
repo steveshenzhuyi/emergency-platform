@@ -211,8 +211,11 @@
         </mt-header>
         <br><br>
         <h3>选择分流：{{state}}</h3>
-        <mt-button plain type="primary" @click="changestate()">处置完成</mt-button>
-        <mt-button plain type="danger" @click="gotohospital()">前往医院</mt-button>
+        <div v-show="isShow3">
+          <mt-button plain type="primary" @click="changestate()">处置完成</mt-button>
+          <mt-button plain type="danger" @click="gotohospital()">前往医院</mt-button>
+          <mt-button plain  @click="self()">自行前往</mt-button>
+        </div>
         <!-- <mt-button v-show="isShow1" plain type="primary" @click="map()">查看地图</mt-button> -->
         <hr>
         <div v-show="isShow">
@@ -225,14 +228,16 @@
           <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
           添加图片</mt-button>
           <mt-button size="small" type="primary" style="position:relative;right:-40px"
-          @click="save60()">保存</mt-button>
+          @click="save60()">确定</mt-button>
         </div>
         <div v-show="isShow1">
-          已选医院：{{hospital}}
+          前往方式：{{theways}}
+          <mt-button size="small" @click="confirm()" style="position:relative;float:right">确定</mt-button>
+          <br><br><hr>
+          已选医院：{{hospital}}<br>
           车辆编号：{{carId}}<hr>
-          前往方式：
-          <input type="radio" v-model="picked2" name="ways" value3="急救车">急救车
-          <input type="radio" v-model="picked2" name="ways" value3="自行前往">自行前往<hr>
+          <!-- <input type="radio" v-model="picked2" name="ways" value3="急救车">急救车
+          <input type="radio" v-model="picked2" name="ways" value3="自行前往">自行前往<hr> -->
           <div id="map-container" class="map-root">
             放置地图
           </div>
@@ -273,6 +278,7 @@ export default {
       isShow: false,
       isShow1:false,
       isShow2: '',
+      isShow3: true,
       value3: '',
       selected1: '1',
       timevalue: '',
@@ -295,6 +301,7 @@ export default {
       目前用药: '',
       PatientId: '',
       Name: '',
+      theways: '',
       Phone: '',
       Email: '',
       bloodType: '',
@@ -311,6 +318,7 @@ export default {
       dataCZ:[],
       Status: '',
       doctortell: '',
+      selectform: '',
       slots: [
           { 
             flex: 1,
@@ -424,14 +432,19 @@ export default {
         }else if(this.StatusName == "处置完成") {
           this.isShow = true
           this.isShow1 = false
+          this.isShow3 = false
         }else if(this.StatusName == "待后送") {
           this.isShow1 = true
+          this.isShow3 = false
         }else if(this.StatusName == "已后送") {
           this.isShow1 = true
+          this.isShow3 = false
         }else if(this.StatusName == "已后送") {
           this.isShow1 = true
+          this.isShow3 = false
         }else if(this.StatusName == "已后送") {
           this.isShow1 = true
+          this.isShow3 = false
         }
         // if(this.StatusName != "处置中") {
         //   this.isShow1 = true
@@ -446,21 +459,24 @@ export default {
       this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
     },
     changestate() {
-      axios.post('/assemblyOver',{
-        patientId:this.$route.params.PATIENTID
-      }).then((response) => {
-        if(response.data.results == "上传成功") {
-          Toast('处置完成');
-          this.state = "处置完成";
-          this.isShow = true;
-          // this.isShow1 = true
-        }
-      })
+      this.state = "处置完成";
+      this.isShow = true;
+      this.isShow1 = false;
+      this.isShow3 = false
     },
     gotohospital() {
       this.state = "待后送";
+      this.theways = "救护车送往"
       this.isShow = false;
       this.isShow1 = true;
+      this.carId = ""
+    },
+    self() {
+      this.theways = "自行前往";
+      this.state = "待后送";
+      this.isShow = false;
+      this.isShow1 = true;
+      this.carId = "000"
     },
     oxygen() {
       this.methods = "吸氧处理"
@@ -513,16 +529,30 @@ export default {
       })
     },
     ensure() {
-      axios.post('/prepareSend',{
-        patientId:this.patientid,
-        carNo:this.carNo,
-        hosNo:this.hosNo
-      }).then((response) => {
-        if(response.data.results == "上传成功") {
-          Toast('病人待后送');
-          this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carID}})
-        }
-      })
+      if(this.theways == "救护车送往") {
+          axios.post('/prepareSend',{
+          patientId:this.patientid,
+          carNo:this.carNo,
+          hosNo:this.hosNo
+        }).then((response) => {
+          if(response.data.results == "上传成功") {
+            Toast('病人待后送');
+            this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carID}})
+          }
+        })
+      }
+      if(this.theways == "自行前往") {
+        axios.post('/prepareSend',{
+          patientId:this.patientid,
+          carNo:'000',
+          hosNo:this.hosNo
+        }).then((response) => {
+          if(response.data.results == "上传成功") {
+            Toast('病人待后送');
+            this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往"}})
+          }
+        })
+      }
     },
     save41() {
       axios.post('/newPatientRecord',{
@@ -649,6 +679,14 @@ export default {
           // this.reload()
         }
       })
+      axios.post('/assemblyOver',{
+        patientId:this.$route.params.PATIENTID
+      }).then((response) => {
+        if(response.data.results == "上传成功") {
+          Toast('处置完成');
+          // this.isShow1 = true
+        }
+      })
     },
     setclass() {
       var Class
@@ -744,9 +782,21 @@ export default {
         }
       })
     },
+    Select() {
+      if(this.selectform == "2") {
+        this.carId = this.carId
+        this.carNo = this.carNo
+      }else if(this.selectform == "3") {
+        this.OrganizationName = this.OrganizationName
+        this.hosNo = this.hosNo
+      }
+    },
     confirm() {
-      this.$router.push({name: 'confirm',
-      params:{HOSPITAL:this.hospital,CARID:this.carId}})
+      if(this.carId != '' && this.OrganizationName != '') {
+        Toast('已选择车辆和医院')
+      }else{
+        Toast('请选择车辆和医院')
+      }
     }
   },
 };
@@ -754,7 +804,7 @@ export default {
 <style>
   .map-root{
     width:96%;
-    height:400px;
+    height:370px;
     padding:5px;
     border:1px solid black;
     margin:0px;
