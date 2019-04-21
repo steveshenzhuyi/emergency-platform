@@ -232,7 +232,7 @@
         </div>
         <div v-show="isShow1">
           前往方式：{{theways}}
-          <mt-button size="small" @click="confirm()" style="position:relative;float:right">确定</mt-button>
+          <mt-button size="small" @click="confirm1()" style="position:relative;float:right">确定</mt-button>
           <br><br><hr>
           已选医院：{{hospital}}<br>
           车辆编号：{{carId}}<hr>
@@ -543,7 +543,7 @@ export default {
         }).then((response) => {
           if(response.data.results == "上传成功") {
             Toast('病人待后送');
-            this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carID}})
+            // this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carID}})
           }
         })
       }
@@ -555,7 +555,7 @@ export default {
         }).then((response) => {
           if(response.data.results == "上传成功") {
             Toast('病人待后送');
-            this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往"}})
+            // this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往"}})
           }
         })
       }
@@ -797,10 +797,15 @@ export default {
         this.hosNo = this.hosNo
       }
     },
+    confirm1() {
+      if(this.carId != '' && this.OrganizationName != '') {
+        Toast('已选择车辆和医院')
+      }else{
+        Toast('请选择车辆和医院')
+      }
+    },
     confirm() {
-<<<<<<< HEAD
-      this.$router.push({name: 'confirm',
-      params:{HOSPITAL:this.hospital,CARID:this.carId}})
+      this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carId}})
     },
     initMap () {
       var that = this
@@ -1023,14 +1028,8 @@ export default {
             console.log(result)
           })  //  返回定位出错信息
         })
-=======
-      if(this.carId != '' && this.OrganizationName != '') {
-        Toast('已选择车辆和医院')
-      }else{
-        Toast('请选择车辆和医院')
-      }
->>>>>>> b3a90dca1b23b03ff0b8694aae973912ccbd85b5
-    }
+}
+    
   },
 };
 </script>
