@@ -300,8 +300,8 @@ export default {
       hospital: '',
       car: '',
       carId: '',
-      // carNo: '',
-      // hosNo: '',
+      CARNO: '',
+      HOSNO: '',
       CarNo: '',
       HosNo: '',
       picked2: '',
@@ -973,7 +973,7 @@ export default {
           console.log(this)
           var thisMarkerCar = this;
           that.selectform = "2" 
-          that.CarNo = thisMarkerCar.carinfo.CarNo
+          that.CARNO = thisMarkerCar.carinfo.CarNo
           that.Select()
           AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
 
@@ -1044,7 +1044,7 @@ export default {
           console.log(this)
           var thisMarkerHos = this;
           that.selectform = "3" 
-          that.HosNo = thisMarkerHos.hosinfo.OrganizationCode
+          that.HOSNO = thisMarkerHos.hosinfo.OrganizationCode
           that.Select()
           AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
 
