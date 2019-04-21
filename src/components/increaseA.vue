@@ -33,6 +33,7 @@
       <div>
         <mt-picker :slots="slots" @change="onbloodChange" :visible-item-count="3"></mt-picker>
       </div>
+      <br><br>
       
     <!-- <p style="text-align: left">健康信息</p> -->
       <!-- <mt-field label="疾病史" v-model="sick"></mt-field>
