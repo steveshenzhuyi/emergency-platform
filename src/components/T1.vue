@@ -899,7 +899,7 @@ export default {
   .map-root{
     width:100%;
     height:500px;
-    padding:3px;
+    padding:2px;
     border:1px solid black;
     margin:3px;
   }

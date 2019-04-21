@@ -911,6 +911,9 @@ export default {
         markerCar[i].on('click',function(){
           console.log(this)
           var thisMarkerCar = this;
+          that.selectform = "2" 
+          that.carNo = thisMarkerCar.carinfo.CarNo
+          that.Select()
           AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
 
                 var infoWindow = new SimpleInfoWindow({
@@ -979,6 +982,9 @@ export default {
         markerHos[i].on('click',function(){
           console.log(this)
           var thisMarkerHos = this;
+          that.selectform = "3" 
+          that.hosNo = thisMarkerHos.hosinfo.OrganizationCode
+          that.Select()
           AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
 
                 var infoWindow = new SimpleInfoWindow({
