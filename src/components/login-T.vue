@@ -119,7 +119,7 @@
 
 <script>
 import axios from 'axios';
-
+import { Toast } from 'mint-ui';
 export default {
   data() {
     return {
@@ -407,8 +407,8 @@ export default {
       }
       this.data2 = tmp;
     },
-    phone() {
-
+    phone(){
+      Toast('开发中！');
     }
   },
 };

@@ -123,6 +123,7 @@
 <script>
 import {picker} from 'mint-ui';
 import axios from 'axios';
+import { Toast } from 'mint-ui';
 
 export default {
   inject:['reload'],
@@ -378,6 +379,9 @@ export default {
         tmp.push(this.data2[i]);
       }
       this.data2 = tmp;
+    },
+    phone(){
+      Toast('开发中！');
     }
   },
 };
