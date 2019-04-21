@@ -231,11 +231,11 @@
           @click="save60()">确定</mt-button>
         </div>
         <div v-show="isShow1">
-          前往方式：{{theways}}
+          <!-- 前往方式：{{theways}}
           <mt-button size="small" @click="confirm1()" style="position:relative;float:right">确定</mt-button>
-          <br><br><hr>
-          已选医院：{{hospital}}<br>
-          车辆编号：{{carId}}<hr>
+          <br><br><hr> -->
+          <b>已选医院</b>：{{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}&nbsp;&nbsp;病床数：{{ICUNum}}<br>
+          <b>车辆编号</b>：{{carNo}}&nbsp;&nbsp;&nbsp;{{carname}}&nbsp;&nbsp;{{carID}}&nbsp;&nbsp;{{carstate}}&nbsp;&nbsp;{{destination}}<hr>
           <!-- <input type="radio" v-model="picked2" name="ways" value3="急救车">急救车
           <input type="radio" v-model="picked2" name="ways" value3="自行前往">自行前往<hr> -->
           <div id="map-container" class="map-root">
@@ -275,6 +275,14 @@ export default {
       selected: '',
       patientId: this.$route.params.PATIENTID,
       methods: '请选择处置',
+      OrganizationName: '',
+      ICUNum: '',
+      LocationDescription:'',
+      carNo:'',
+      carname:'',
+      carID: '',
+      carstate: '',
+      destination: '',
       isShow: false,
       isShow1:false,
       isShow2: '',
@@ -467,21 +475,19 @@ export default {
       this.state = "处置完成";
       this.isShow = true;
       this.isShow1 = false;
-      this.isShow3 = false
+      // this.isShow3 = false
     },
     gotohospital() {
       this.state = "待后送";
-      this.theways = "救护车送往"
       this.isShow = false;
       this.isShow1 = true;
-      this.carId = ""
+      this.carNo = ""
     },
     self() {
-      this.theways = "自行前往";
       this.state = "待后送";
       this.isShow = false;
       this.isShow1 = true;
-      this.carId = "000"
+      this.carNo = "自行前往"
     },
     oxygen() {
       this.methods = "吸氧处理"
@@ -543,6 +549,7 @@ export default {
           if(response.data.results == "上传成功") {
             Toast('病人待后送');
             // this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carID}})
+            this.isShow3 = false
           }
         })
       }
@@ -554,6 +561,7 @@ export default {
         }).then((response) => {
           if(response.data.results == "上传成功") {
             Toast('病人待后送');
+            this.isShow3 = false
             // this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往"}})
           }
         })
@@ -690,6 +698,7 @@ export default {
         if(response.data.results == "上传成功") {
           Toast('处置完成');
           // this.isShow1 = true
+          this.isShow3 = false
         }
       })
     },
@@ -791,20 +800,40 @@ export default {
       if(this.selectform == "2") {
         this.carId = this.carId
         this.carNo = this.carNo
+        axios.post('/getCarInfo',{
+          carNo:this.carNo
+        }).then((response) => {
+          this.carId = response.data.results[0].CarId
+          this.carname = response.data.results[0].CarName
+          if(response.data.results[0].Assembly !='') {
+            this.destination=response.data.results[0].Assembly
+          }else{
+            this.destination=response.data.results[0].Hospital
+          }
+          var state= '';
+          this.state=response.data.results[0].CarType
+          if(this.state == "0") {
+            this.carstate = "空闲"
+          }else if(this.state == "1") {
+            this.carstate = "正在去会场"
+          }else if(this.state == "2") {
+            this.carstate = "正在去医院"
+          }
+        })
       }else if(this.selectform == "3") {
         this.OrganizationName = this.OrganizationName
         this.hosNo = this.hosNo
-      }
-    },
-    confirm1() {
-      if(this.carId != '' && this.OrganizationName != '') {
-        Toast('已选择车辆和医院')
-      }else{
-        Toast('请选择车辆和医院')
+        axios.post('/getHosInfo',{
+          hosNo:this.hosNo
+        }).then((response) => {
+          this.OrganizationName = response.data.results[0].OrganizationName
+          this.LocationDescription = response.data.results[0].LocationDescription
+          this.ICUNum = response.data.results[0].ICUNum
+        })
       }
     },
     confirm() {
-      this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carId}})
+      this.$router.push({name:'confirm',params:{HOSPITAL:this.OrganizationName,CARID:this.carId}})
     },
     initMap () {
       var that = this
@@ -917,7 +946,7 @@ export default {
           }).catch(function(error){
         console.log("error",error);
       })
-      }, 10000)//一分钟刷新一次
+      }, 60000)//一分钟刷新一次
 
 
       }).catch(function(error){
@@ -1036,7 +1065,7 @@ export default {
   .map-root{
     width:100%;
     height:400px;
-    padding:3px;
+    padding:2px;
     border:1px solid black;
     margin:3px;
   }  
