@@ -192,10 +192,11 @@
             @click="save50()">保存</mt-button></div>
             <div  style="text-align: left; margin-top: 10px">预检分级 </div>
             <b style="text-align: left">当前分级：{{level}}</b>
-            <mt-button @click="setclass()">修改分级</mt-button>
+            <!-- <mt-button @click="setclass()">修改分级</mt-button> -->
             <hr>
-            <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
-            <mt-button type="danger" @click="alert()">一键上报</mt-button><br><br><br><br>
+            <!-- <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr> -->
+            <!-- <mt-button type="danger" @click="alert()">一键上报</mt-button> -->
+            <br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="6">
             <img src="./pictrue/man.png"><hr>
@@ -222,16 +223,10 @@
           @click="situation()"><small>{{situations}}</small></mt-button>
           <hr>
         </mt-header>
-        <br><br>
-        <h2>当前状态：{{StatusNameCar}}</h2>
-        <h2>后送医院：{{OrganizationName}}</h2>
-        <h2>车号：{{CarId}}&nbsp;&nbsp;&nbsp;&nbsp;
-        <mt-button size="normal">
-        <img src="./icon/语音通话.png" height="40" width="40" slot="icon">
-        视频通话</mt-button>
-        </h2>
+        <br>
+        <h3>当前状态：{{StatusNameCar}}</h3>
+        <h4>后送医院：{{OrganizationName}}&nbsp; 车号：{{CarId}}</h4>
         <div id="map-container" class="map-root">
-          放置地图
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -902,11 +897,11 @@ export default {
     margin:0px;
   }
   .map-root{
-    width:96%;
-    height:410px;
-    padding:5px;
+    width:100%;
+    height:500px;
+    padding:3px;
     border:1px solid black;
-    margin:0px;
+    margin:3px;
   }
 </style>
 

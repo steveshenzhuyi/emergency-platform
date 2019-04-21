@@ -209,7 +209,7 @@
             @click="confirm()"><small>后送</small></mt-button>
           <hr>
         </mt-header>
-        <br><br>
+        <br>
         <h3>选择分流：{{state}}</h3>
         <div v-show="isShow3">
           <mt-button plain type="primary" @click="changestate()">处置完成</mt-button>
@@ -239,7 +239,6 @@
           <!-- <input type="radio" v-model="picked2" name="ways" value3="急救车">急救车
           <input type="radio" v-model="picked2" name="ways" value3="自行前往">自行前往<hr> -->
           <div id="map-container" class="map-root">
-            放置地图
           </div>
           <br>
           <mt-button size="large" type="primary" @click="ensure()">确定</mt-button>
