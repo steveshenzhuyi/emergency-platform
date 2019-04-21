@@ -215,6 +215,7 @@
           <mt-button plain type="primary" @click="changestate()">处置完成</mt-button>
           <mt-button plain type="danger" @click="gotohospital()">前往医院</mt-button>
           <mt-button plain  @click="self()">自行前往</mt-button>
+          <mt-button plain  @click="sure()">确定选择</mt-button>
         </div>
         <!-- <mt-button v-show="isShow1" plain type="primary" @click="map()">查看地图</mt-button> -->
         <hr>
@@ -234,8 +235,10 @@
           <!-- 前往方式：{{theways}}
           <mt-button size="small" @click="confirm1()" style="position:relative;float:right">确定</mt-button>
           <br><br><hr> -->
-          <b>已选医院</b>：{{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}&nbsp;&nbsp;病床数：{{ICUNum}}<br>
-          <b>车辆编号</b>：{{carNo}}&nbsp;&nbsp;&nbsp;{{carname}}&nbsp;&nbsp;{{carID}}&nbsp;&nbsp;{{carstate}}&nbsp;&nbsp;{{destination}}<hr>
+          <b>已选医院</b>：{{HosNo}}<br>
+          {{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}&nbsp;&nbsp;病床数：{{ICUNum}}<br>
+          <b>车辆编号</b>：{{CarNo}}<br>
+          {{carname}}&nbsp;&nbsp;{{carId}}&nbsp;&nbsp;{{carstate}}&nbsp;&nbsp;{{destination}}<hr>
           <!-- <input type="radio" v-model="picked2" name="ways" value3="急救车">急救车
           <input type="radio" v-model="picked2" name="ways" value3="自行前往">自行前往<hr> -->
           <div id="map-container" class="map-root">
@@ -278,9 +281,7 @@ export default {
       OrganizationName: '',
       ICUNum: '',
       LocationDescription:'',
-      carNo:'',
       carname:'',
-      carID: '',
       carstate: '',
       destination: '',
       isShow: false,
@@ -297,9 +298,12 @@ export default {
       flag1: this.$route.params.FLAG1,
       message1: 'A医院',
       hospital: '',
+      car: '',
       carId: '',
-      carNo: '',
-      hosNo: '',
+      // carNo: '',
+      // hosNo: '',
+      CarNo: '',
+      HosNo: '',
       picked2: '',
       message2: 'xxxxxx',
       体征: '请选择体征',
@@ -425,10 +429,10 @@ export default {
         this.Status=response.data.results[0].Status;
         this.StatusName=response.data.results[0].StatusName;
         this.level=response.data.results[0].Classification;
-        this.hospital=response.data.results[0].OrganizationName;
-        this.carId=response.data.results[0].CarId;
-        this.carNo=response.data.results[0].CarNo;
-        this.hosNo=response.data.results[0].HosNo;
+        // this.hospital=response.data.results[0].OrganizationName;
+        // this.carId=response.data.results[0].CarId;
+        this.CarNo=response.data.results[0].CarNo;
+        this.HosNo=response.data.results[0].HosNo;
         if(this.flag1 == "1") {
           this.StatusName = "待后送"
           this.isShow2 = true
@@ -454,6 +458,33 @@ export default {
           this.isShow1 = true
           this.isShow3 = false
         }
+        if(this.CarNo != "") {
+          axios.post('/getCarInfo',{
+            carNo:this.CarNo
+          }).then((response) => {
+            this.carname = response.data.results[0].CarName
+            this.carId = response.data.results[0].CarId
+            console.log(this.carId)
+            var state2= '';
+            this.state2=response.data.results[0].CarStatus
+            if(this.state2 == "0") {
+              this.carstate = "空闲"
+            }else if(this.state2 == "1") {
+              this.carstate = "正在去会场"
+            }else if(this.state2 == "2") {
+              this.carstate = "正在去医院"
+            }
+          })
+        }
+        if(this.HosNo != "") {
+          axios.post('/getHosInfo',{
+            hosNo:this.HosNo
+          }).then((response) => {
+            this.OrganizationName = response.data.results[0].OrganizationName
+            this.LocationDescription = response.data.results[0].LocationDescription
+            this.ICUNum = response.data.results[0].ICUNum
+          })
+        }
         // if(this.StatusName != "处置中") {
         //   this.isShow1 = true
         // }
@@ -476,13 +507,13 @@ export default {
       this.state = "待后送";
       this.isShow = false;
       this.isShow1 = true;
-      this.carNo = ""
+      this.CarNo = ""
     },
     self() {
       this.state = "待后送";
       this.isShow = false;
       this.isShow1 = true;
-      this.carNo = "自行前往"
+      this.CarNo = "自行前往"
     },
     oxygen() {
       this.methods = "吸氧处理"
@@ -793,10 +824,45 @@ export default {
     },
     Select() {
       if(this.selectform == "2") {
-        this.carId = this.carId
-        this.carNo = this.carNo
+        // this.carId = this.carId
+        this.CarNo = this.CARNO
+        // axios.post('/getCarInfo',{
+        //   carNo:this.carNo
+        // }).then((response) => {
+        //   this.carId = response.data.results[0].CarId
+        //   this.carname = response.data.results[0].CarName
+        //   if(response.data.results[0].Assembly !='') {
+        //     this.destination=response.data.results[0].Assembly
+        //   }else{
+        //     this.destination=response.data.results[0].Hospital
+        //   }
+        //   var state= '';
+        //   this.state=response.data.results[0].CarStatus
+        //   if(this.state == "0") {
+        //     this.carstate = "空闲"
+        //   }else if(this.state == "1") {
+        //     this.carstate = "正在去会场"
+        //   }else if(this.state == "2") {
+        //     this.carstate = "正在去医院"
+        //   }
+        // })
+      }else if(this.selectform == "3") {
+        // this.OrganizationName = this.OrganizationName
+        this.HosNo = this.HOSNO
+        // axios.post('/getHosInfo',{
+        //   hosNo:this.hosNo
+        // }).then((response) => {
+        //   this.OrganizationName = response.data.results[0].OrganizationName
+        //   this.LocationDescription = response.data.results[0].LocationDescription
+        //   this.ICUNum = response.data.results[0].ICUNum
+        // })
+      }
+    },
+    sure() {
+      if(this.CarNo != "" && this.HosNo != "") {
+        Toast('确定选择的车辆和医院')
         axios.post('/getCarInfo',{
-          carNo:this.carNo
+          carNo:this.CarNo
         }).then((response) => {
           this.carId = response.data.results[0].CarId
           this.carname = response.data.results[0].CarName
@@ -806,7 +872,7 @@ export default {
             this.destination=response.data.results[0].Hospital
           }
           var state= '';
-          this.state=response.data.results[0].CarType
+          this.state=response.data.results[0].CarStatus
           if(this.state == "0") {
             this.carstate = "空闲"
           }else if(this.state == "1") {
@@ -815,16 +881,15 @@ export default {
             this.carstate = "正在去医院"
           }
         })
-      }else if(this.selectform == "3") {
-        this.OrganizationName = this.OrganizationName
-        this.hosNo = this.hosNo
         axios.post('/getHosInfo',{
-          hosNo:this.hosNo
+          hosNo:this.HosNo
         }).then((response) => {
           this.OrganizationName = response.data.results[0].OrganizationName
           this.LocationDescription = response.data.results[0].LocationDescription
           this.ICUNum = response.data.results[0].ICUNum
         })
+      }else{
+        Toast('请选择车辆和医院')
       }
     },
     confirm() {
@@ -836,7 +901,7 @@ export default {
 <style>
   .map-root{
     width:96%;
-    height:400px;
+    height:390px;
     padding:5px;
     border:1px solid black;
     margin:0px;
