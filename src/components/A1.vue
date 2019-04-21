@@ -210,15 +210,12 @@
           <hr>
         </mt-header>
         <br><br>
-        <h2>当前状态：{{state}}</h2><br>
-        <div v-show="isShow">
-          <p>选择病人去向</p><br>
-        <mt-button plain type="primary" @click="changestate()">处置完成</mt-button><br><br>
-        <mt-button plain type="danger" @click="$goRoute('/choosehospital')">去医院</mt-button>
-        </div>
-        <mt-button v-show="isShow1" plain type="primary" @click="map()">查看地图</mt-button>
+        <h3>选择分流：{{state}}</h3>
+        <mt-button plain type="primary" @click="changestate()">处置完成</mt-button>
+        <mt-button plain type="danger" @click="gotohospital()">前往医院</mt-button>
+        <!-- <mt-button v-show="isShow1" plain type="primary" @click="map()">查看地图</mt-button> -->
         <hr>
-        <div>
+        <div v-show="isShow">
           <p style="text-align: left">添加医嘱</p><br>
           <mt-field placeholder="输入医嘱" v-model="doctortell" type="textarea"></mt-field><hr>
           <mt-button size="small" type="primary" style="position:relative;right:40px" plain>
@@ -229,6 +226,18 @@
           添加图片</mt-button>
           <mt-button size="small" type="primary" style="position:relative;right:-40px"
           @click="save60()">保存</mt-button>
+        </div>
+        <div v-show="isShow1">
+          已选医院：{{hospital}}
+          车辆编号：{{carId}}<hr>
+          前往方式：
+          <input type="radio" v-model="picked2" name="ways" value3="急救车">急救车
+          <input type="radio" v-model="picked2" name="ways" value3="自行前往">自行前往<hr>
+          <div id="map-container" class="map-root">
+            放置地图
+          </div>
+          <br>
+          <mt-button size="large" type="primary" @click="ensure()">确定</mt-button>
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -261,9 +270,10 @@ export default {
       selected: '',
       patientId: this.$route.params.PATIENTID,
       methods: '请选择处置',
-      isShow: '',
-      isShow1: '',
+      isShow: false,
+      isShow1:false,
       isShow2: '',
+      value3: '',
       selected1: '1',
       timevalue: '',
       timecalue2: '',
@@ -276,6 +286,7 @@ export default {
       carId: '',
       carNo: '',
       hosNo: '',
+      picked2: '',
       message2: 'xxxxxx',
       体征: '请选择体征',
       主诉: '',
@@ -325,12 +336,22 @@ export default {
         this.patientrecord=response.data.results
         //主诉
         this.zhusu=this.patientrecord.P01;
+        if(this.zhusu.length>0) {
+          this.主诉=this.zhusu[0].Detail;
+          this.timevalue=this.zhusu[0].OperationTime;
+        }else{
+          this.主诉='';
+          this.timevalue='';
+        }
         console.log(this.zhusu)
-        this.主诉=this.zhusu[0].Detail;
-        this.timevalue=this.zhusu[0].OperationTime;
         //现病史
-        this.现病史=this.patientrecord.P02[0].Detail;
-        this.timevalue1=this.patientrecord.P02[0].OperationTime;
+        if(this.patientrecord.P02.length>0) {
+          this.现病史=this.patientrecord.P02[0].Detail;
+          this.timevalue1=this.patientrecord.P02[0].OperationTime;
+        }else{
+          this.现病史 = '';
+          this.timevalue1 = '';
+        }
         //体征
         this.dataTZ=this.patientrecord.P03
         console.log(this.dataTZ)
@@ -355,12 +376,21 @@ export default {
           }
         }
         //初步诊断
-        this.初步诊断=this.patientrecord.P05[0].Detail
-        this.timevalue2=this.patientrecord.P05[0].OperationTime
+        if(this.patientrecord.P05.length>0) {
+          this.初步诊断=this.patientrecord.P05[0].Detail
+          this.timevalue2=this.patientrecord.P05[0].OperationTime
+        }else{
+          this.初步诊断=''
+          this.timevalue2=''
+        }
         //处置方案
         this.dataCZ=this.patientrecord.P11
         //医嘱
-        this.doctortell=this.patientrecord.P06[0].Detail
+        if(this.patientrecord.P06.length>0) {
+          this.doctortell=this.patientrecord.P06[0].Detail
+        }else{
+          this.doctortell= ''
+        }
       })
       axios.post('/getPatientInfo',{
         patientId:this.$route.params.PATIENTID
@@ -390,29 +420,23 @@ export default {
         this.state=this.StatusName;
         console.log(this.StatusName)
         if(this.StatusName == "处置中") {
-          this.isShow = true
-          this.isShow1 = ''
+          this.isShow1 = false
         }else if(this.StatusName == "处置完成") {
-          this.isShow = !this.isShow;
-          this.isShow1 = true
+          this.isShow = true
+          this.isShow1 = false
         }else if(this.StatusName == "待后送") {
-          this.isShow = !this.isShow;
           this.isShow1 = true
         }else if(this.StatusName == "已后送") {
-          this.isShow = !this.isShow;
           this.isShow1 = true
         }else if(this.StatusName == "已后送") {
-          this.isShow = !this.isShow;
           this.isShow1 = true
         }else if(this.StatusName == "已后送") {
-          this.isShow = !this.isShow;
           this.isShow1 = true
         }
-        if(this.StatusName != "处置中") {
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }
-        window.localStorage.setItem('STATE',this.state);
+        // if(this.StatusName != "处置中") {
+        //   this.isShow1 = true
+        // }
+        // window.localStorage.setItem('STATE',this.state);
       })
     },
     onPatientlistChange(picker, values) {
@@ -428,10 +452,15 @@ export default {
         if(response.data.results == "上传成功") {
           Toast('处置完成');
           this.state = "处置完成";
-          this.isShow = !this.isShow;
-          this.isShow1 = true
+          this.isShow = true;
+          // this.isShow1 = true
         }
       })
+    },
+    gotohospital() {
+      this.state = "待后送";
+      this.isShow = false;
+      this.isShow1 = true;
     },
     oxygen() {
       this.methods = "吸氧处理"
@@ -480,6 +509,18 @@ export default {
           Toast('上传成功');
         }else{
           Toast('上传失败');
+        }
+      })
+    },
+    ensure() {
+      axios.post('/prepareSend',{
+        patientId:this.patientid,
+        carNo:this.carNo,
+        hosNo:this.hosNo
+      }).then((response) => {
+        if(response.data.results == "上传成功") {
+          Toast('病人待后送');
+          this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carID}})
         }
       })
     },
@@ -703,10 +744,6 @@ export default {
         }
       })
     },
-    map() {
-      this.$router.push({name: 'map',
-      params:{HOSPITAL:this.hospital,CARID:this.carId,HOSNO:this.hosNo,CARNO:this.carNo,STATE:this.StatusName,FLAG:"1"}})
-    },
     confirm() {
       this.$router.push({name: 'confirm',
       params:{HOSPITAL:this.hospital,CARID:this.carId}})
@@ -714,6 +751,15 @@ export default {
   },
 };
 </script>
+<style>
+  .map-root{
+    width:96%;
+    height:400px;
+    padding:5px;
+    border:1px solid black;
+    margin:0px;
+  }  
+</style>
 
 
 
