@@ -244,8 +244,8 @@
           <div id="map-container" class="map-root">
           </div>
           <br>
-          <mt-button size="large" type="primary" @click="ensure()">确定</mt-button>
-        </div>
+          </div>
+          <mt-button v-show="isShow100" size="large" type="primary" @click="ensure()">确定</mt-button>
       </mt-tab-container-item>
     </mt-tab-container>
     <div>
@@ -288,6 +288,7 @@ export default {
       isShow1:false,
       isShow2: '',
       isShow3: true,
+      isShow100: false,
       hide: true,
       value3: '',
       selected1: '1',
@@ -509,12 +510,14 @@ export default {
       this.state = "处置完成";
       this.isShow = true;
       this.isShow1 = false;
+      this.isShow100 = false
       // this.isShow3 = false
     },
     gotohospital() {
       this.state = "待后送";
       this.isShow = false;
       this.isShow1 = true;
+      this.isShow100 = true;
       this.hide = true
       this.CarNo = ""
       this.flag = "1"
@@ -523,6 +526,7 @@ export default {
       this.state = "待后送";
       this.isShow = false;
       this.isShow1 = true;
+      this.isShow100 = true
       this.CarNo = "自行前往"
       this.flag = "2"
       this.hide = false
@@ -589,6 +593,7 @@ export default {
             // this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carID}})
             this.isShow3 = false
             this.isShow2 = true
+            this.isShow100 = false
           }else{
             Toast('上传失败');
           }
@@ -604,6 +609,7 @@ export default {
             Toast('病人待后送');
             this.isShow3 = false
             this.isShow2 = true
+            this.isShow100 = false
             // this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往"}})
           }else{
             Toast('上传失败');

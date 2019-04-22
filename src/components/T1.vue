@@ -83,11 +83,11 @@
             <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
+            语音</mt-button>
             <mt-button size="small" style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
+            图片</mt-button>
             <mt-button size="small" type="primary" style="float: right"
             @click="save10()">保存</mt-button>
           </mt-tab-container-item>
@@ -101,11 +101,11 @@
             <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
+            语音</mt-button>
             <mt-button size="small" style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
+            图片</mt-button>
             <mt-button size="small" type="primary" style="float: right"
             @click="save20()">保存</mt-button>
           </mt-tab-container-item>
@@ -142,11 +142,11 @@
             <div style="height: 33px"><mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
+            语音</mt-button>
             <mt-button size="small" style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
+            图片</mt-button>
             <mt-button size="small" style="float: right"
             type="primary" @click="save41()">保存</mt-button></div>
             <div  style="text-align: left; margin-top: 10px">疾病史</div><hr>
@@ -155,11 +155,11 @@
             <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
+            语音</mt-button>
             <mt-button size="small"  style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
+            图片</mt-button>
             <mt-button size="small" type="primary" style="float: right"
             @click="save42()">保存</mt-button></div>
             <div  style="text-align: left; margin-top: 10px">目前用药</div><hr>
@@ -167,11 +167,11 @@
             <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
+            语音</mt-button>
             <mt-button size="small"  style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
+            图片</mt-button>
             <mt-button size="small" type="primary" style="float: right"
             @click="save43()">保存</mt-button>
             <br><br><br><br><br><br>
@@ -183,11 +183,11 @@
             <div style="height: 33px"><mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
+            语音</mt-button>
             <mt-button size="small" style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
+            图片</mt-button>
              <mt-button size="small" type="primary" style="float: right"
             @click="save50()">保存</mt-button></div>
             <div  style="text-align: left; margin-top: 10px">预检分级 </div>
