@@ -15,8 +15,8 @@
         <mt-header fixed style="font-size:20px" title="既往病历">
           <mt-button size="small" icon="back" slot="left"
             @click="returnH()"><small>返回</small></mt-button>
-          <mt-button v-show="isshow" size="small" slot="right"
-            @click="leaveHos()"><small>出院</small></mt-button>
+          <mt-button  size="small" slot="right"
+            @click="situation()"><small>{{situations}}</small></mt-button>
           <hr>
         </mt-header>
         <br><br>
@@ -208,8 +208,8 @@ export default {
       selected1: '1',
       content: '',
       体征: '请选择体征',
-      isshow: false,
       StatusNameHos: '',
+      situations:'',
       carId: '',
       hospital:'',
       dataTZ: [],
@@ -308,7 +308,13 @@ export default {
         this.level=response.data.results[0].Classification;
         this.carId = response.data.results[0].CarId;
         if(this.StatusNameHos == "已入院") {
-          this.isshow = true
+          this.situations = "出院"
+        }
+        if(this.StatusNameHos == "后送中") {
+          this.situations = "接收"
+        }
+        if(this.StatusNameHos == "待后送") {
+          this.situations = ""
         }
       })
     },
@@ -524,8 +530,11 @@ export default {
     returnH() {
       this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
     },
-    leaveHos() {
-      axios.post('/leaveHos',{
+    situation() {
+      if(this.situations == "接收") {
+        this.$router.push({name: 'confirmh',params:{PATIENTID:this.patientId}})
+      }else if(this.situations == "出院") {
+        axios.post('/leaveHos',{
         patientId:this.$route.params.PATIENTID
       }).then((response) => {
         if(response.data.results == "上传成功") {
@@ -535,6 +544,7 @@ export default {
           Toast('上传失败')
         }
       })
+      }
     },
     initMap () {
       var that = this

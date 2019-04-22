@@ -71,7 +71,7 @@ export default {
     returnH1() {
       axios.post('/hosReceive',{
         patientId:this.patientId,
-        hospitalGroup:window.localStorage.getItem('HOSPITALGROUP')
+        hospitalGroup:window.localStorage.getItem('GROUPNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
           this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
