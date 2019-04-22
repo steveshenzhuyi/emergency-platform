@@ -898,7 +898,7 @@ export default {
   }
   .map-root{
     width:100%;
-    height:500px;
+    height:530px;
     padding:2px;
     border:1px solid black;
     margin:3px;

@@ -237,7 +237,7 @@
           <br><br><hr> -->
           <b>已选医院</b>：{{HosNo}}<br>
           {{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}&nbsp;&nbsp;病床数：{{ICUNum}}<br>
-          <div v-show="hide"><b>车辆编号</b>：{{CarNo}}<br>
+          <div v-show="hide"><b>已选车辆</b>：{{CarNo}}<br>
           {{carname}}&nbsp;&nbsp;{{carId}}&nbsp;&nbsp;{{carstate}}&nbsp;&nbsp;{{destination}}<hr></div>
           <!-- <input type="radio" v-model="picked2" name="ways" value3="急救车">急救车
           <input type="radio" v-model="picked2" name="ways" value3="自行前往">自行前往<hr> -->
@@ -246,6 +246,7 @@
           <br>
           </div>
           <mt-button v-show="isShow100" size="large" type="primary" @click="ensure()">确定</mt-button>
+          <br><br><br><br>
       </mt-tab-container-item>
     </mt-tab-container>
     <div>
@@ -1153,11 +1154,11 @@ export default {
 </script>
 <style>
   .map-root{
-    width:96%;
-    height:390px;
-    padding:5px;
+    width:100%;
+    height:400px;
+    padding:3px;
     border:1px solid black;
-    margin:0px;
+    margin:2px;
   }  
 </style>
 
