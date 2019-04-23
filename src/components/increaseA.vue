@@ -28,7 +28,7 @@
       <mt-field label="单位" v-model="unit"></mt-field>
       <mt-field label="职务" v-model="position"></mt-field>
       <p style="position: absolute;left:52px">
-        血型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        血型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         {{blood}}{{type}}</p><hr>
       <div>
         <mt-picker :slots="slots" @change="onbloodChange" :visible-item-count="3"></mt-picker>

@@ -135,7 +135,7 @@ export default {
           },
           { 
             flex: 3,
-            values: ['时间正序','时间倒序'],
+            values: ['时间倒序','时间正序'],
             className: 'slot8',
           },
         ],
@@ -148,12 +148,12 @@ export default {
           },
           {
             flex: 1,
-            values: ['选择状态','处置中','待后送','已后送','处置完成'],
+            values: ['选择状态','待后送','后送中','已入院','已出院'],
             className: 'slot2',
           },
           { 
             flex: 1,
-            values: ['分级排序','时间排序'],
+            values: ['时间排序','分级排序'],
             textAlign: 'right',
             className: 'slot3',
           },
@@ -197,7 +197,6 @@ export default {
         groupNo: this.groupNo
       }).then((response) => {
         this.PatientlistClass=response.data.results;
-        this.dataclass1=this.PatientlistClass
         console.log(this.dataclass1);
       }).catch(function(error){
         console.log("error",error);
@@ -207,6 +206,7 @@ export default {
         groupNo: this.groupNo
       }).then((response) => {
         this.PatientlistTime=response.data.results;
+        this.dataclass1=this.PatientlistClass
         console.log(this.dataclass1);
       }).catch(function(error){
         console.log("error",error);
@@ -281,7 +281,7 @@ export default {
           }
         }
         if (this.choosestate != '选择状态') {
-          if (this.choosestate != this.dataclass1[i].StatusName) {
+          if (this.choosestate != this.dataclass1[i].StatusNameHos) {
             continue;
           }
         }
