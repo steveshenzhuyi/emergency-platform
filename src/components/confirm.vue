@@ -11,14 +11,14 @@
     </div>
     <hr>
     病人信息
-    <mt-field label="编号" v-model="patientid" disabled="true"></mt-field>
-    <mt-field label="分级" v-model="level" disabled="true"></mt-field>
-    <mt-field label="姓名" v-model="name" disabled="true"></mt-field>
-    <mt-field label="年龄" v-model="age" disabled="true"></mt-field>
-    <!-- <mt-field label="症状" v-model="situation" disabled="true"></mt-field> -->
-    <mt-field label="目标车号" v-model="car" disabled="true"></mt-field>
-    <mt-field label="目标医院" v-model="hospital" disabled="true"></mt-field><hr>
-    <mt-button size="normal" type="primary" @click="confirm()">确认送出</mt-button>
+    <mt-field label="编号" v-model= "patientid" disabled= true></mt-field>
+    <mt-field label="分级" v-model= "level" disabled= true></mt-field>
+    <mt-field label="姓名" v-model= "name" disabled= true></mt-field>
+    <mt-field label="年龄" v-model= "age" disabled= true></mt-field>
+    <mt-field label="症状" v-model= "situation" disabled= true></mt-field>
+    <mt-field label="目标车号" v-model= "car" disabled= true></mt-field>
+    <mt-field label="目标医院" v-model= "hospital" disabled= true></mt-field><hr>
+    <mt-button v-show="isShow" size="normal" type="primary" @click="confirm()">确认送出</mt-button>
     <router-view></router-view>
   </div>
 </template>
@@ -38,6 +38,8 @@ export default {
       situation: '',
       car: this.$route.params.CARID,
       hospital:this.$route.params.HOSPITAL,
+      flag: this.$route.params.FLAG,
+      isShow: false,
     };
   },
 
@@ -59,12 +61,16 @@ export default {
       console.log(qrcode)  
     },
     patient() {
+      if(this.flag == "2") {
+        this.isShow = true
+      }
       axios.post('/getPatientInfo', {
         patientId:window.localStorage.getItem('PATIENTNO')
       }).then((response) => {
         this.level = response.data.results[0].Classification;
         this.name = response.data.results[0].Name;
         this.age = response.data.results[0].Age;
+        this.situation = response.data.results[0].Diagnose;
         if(this.car == "") {
           this.car = response.data.results[0].CarId;
         }

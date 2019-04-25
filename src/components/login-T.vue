@@ -14,16 +14,15 @@
           <mt-button size="small" type="primary" @click="refreshPatient()">刷新</mt-button>
         </mt-cell>
         <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker>
-          <b style="color: red">{{nowstate}}{{patientId1}}{{文字}}</b>
+          <div style="color: red">{{nowstate}}{{patientId1}}{{文字}}</div>
         <div v-for="(item,index) in dataclass1" align="left">
             <hr><a @click="getpatient(index)">
-            <b class="first">{{item.PatientId}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;<small>{{item.CreateTime}}</small><br>
-            <b class="second">{{item.Name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <b>
+            <div>{{item.PatientId}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <small>{{item.CreateTime}}</small><br></div>
+            <div>{{item.Name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{item.Classification}} &nbsp;
-            {{item.StatusNameCar}}</b><br><small>
-            性别：{{item.Gender}} &nbsp; 
+            {{item.StatusNameCar}}</div><small style="color:grey">
+            性别：{{item.Gender}} &nbsp;&nbsp;
             年龄：{{item.Age}} &nbsp;&nbsp;&nbsp;&nbsp;
             {{item.OrganizationName}}&nbsp;&nbsp; 
             {{item.CarName}}&nbsp;
@@ -46,9 +45,9 @@
         <mt-picker :slots="slots1" @change="onResourcelistChange" :visible-item-count="3"></mt-picker>
         <div v-for=" (item,index) in data2" :data2-index="{index}" align="left">
           <hr><a @click="getResource(index)">
-          <b>{{ item.ResourceNo }} &nbsp;&nbsp;
-             {{item.ResourceName}}</b><br>
-          <small>规格：{{item.Standard}} &nbsp;&nbsp;
+          <div>{{ item.ResourceNo }} &nbsp;&nbsp;
+             {{item.ResourceName}}</div>
+          <small style="color:grey">规格：{{item.Standard}} &nbsp;&nbsp;
                  {{item.Sstate}}状态：在库 &nbsp;&nbsp;
                  数量：{{item.Amount}}</small></a>
         </div><br><br><br><br>
@@ -68,11 +67,10 @@
         <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3"></mt-picker>
         <div v-for=" (item,index) in data3" align="left">
           <hr><a @click="getMessage(index)">
-            <big><b>
-              序号{{item.MessageNo}}</b></big><br>
-              <b>{{item.MessageTitle}}</b><br>
-            <small>{{item.MessageDetail}}&nbsp;<br>
-              发送时间：{{item.SendTime}}</small>
+           <div>
+              序号{{item.MessageNo}}<br>
+              {{item.MessageTitle}}<br></div>
+              <small style="color:grey">发送时间：{{item.SendTime}}</small>
           </a>
         </div><br><br><br><br>
       </mt-tab-container-item>
@@ -94,22 +92,23 @@
 
         <!-- <mt-picker :slots="slots3" :visible-item-count="3"></mt-picker> -->
         <hr>
+        <mt-button v-show="isShow" size="large" type="danger" @click="decline()">取消接单</mt-button><br>
         <mt-button size="large" type="primary" @click="$goRoute('/个人信息运输')">查看个人信息</mt-button>
       </mt-tab-container-item>
     </mt-tab-container>
     <div>
       <mt-tabbar v-model= "selected" fixed>
         <mt-tab-item id="病人">
-          <img slot="icon" src="./icon/病人.png"><b style="font-size:15px">病人</b>
+          <img slot="icon" src="./icon/病人.png"><div style="font-size:12px">病人</div>
         </mt-tab-item>
         <mt-tab-item id="资源">
-         <img slot="icon" src="./icon/资源.png"><b style="font-size:15px">资源</b>
+         <img slot="icon" src="./icon/资源.png"><div style="font-size:12px">资源</div>
         </mt-tab-item>
         <mt-tab-item id="沟通">
-          <img slot="icon" src="./icon/沟通.png"><b style="font-size:15px">沟通</b>
+          <img slot="icon" src="./icon/沟通.png"><div style="font-size:12px">沟通</div>
         </mt-tab-item>
         <mt-tab-item id="个人">
-          <img slot="icon" src="./icon/本车.png"><b style="font-size:15px">本车</b>
+          <img slot="icon" src="./icon/本车.png"><div style="font-size:12px">本车</div>
         </mt-tab-item>
       </mt-tabbar>
     </div>
@@ -121,9 +120,11 @@
 import axios from 'axios';
 import { Toast } from 'mint-ui';
 export default {
+  inject:['reload'],
   data() {
     return {
       selected: '',
+      isShow: false,
       userId: window.localStorage.getItem('USERID'),
       groupNo: window.localStorage.getItem('GROUPNO'),
       patientId1:'',
@@ -236,7 +237,19 @@ export default {
           alert(error)
         }
       )
-
+    },
+    decline() {
+      axios.post('/carReversePrepare',{
+        patientId:window.localStorage.getItem('PATIENTID1'),
+        carNo:window.localStorage.getItem('CARNO')
+      }).then((response) => {
+        if(response.data.results == "上传成功") {
+          Toast('取消接单')
+          this.reload()
+        }else {
+          Toast('取消失败！')
+        }
+      })   
     },
     getpagelist() {
       console.log(this.groupNo);
@@ -305,6 +318,7 @@ export default {
             this.carstate = "正在去会场"
             this.nowstate = "正在接收编号为："
             this.patientId1 = window.localStorage.getItem('PATIENTID1')
+            this.isShow = true
             this.文字 = "的病人"
           }else if(this.CarStatus == "2") {
             this.carstate = "正在去医院"
