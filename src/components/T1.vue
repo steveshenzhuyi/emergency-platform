@@ -3,13 +3,13 @@
     <div>
       <mt-tabbar v-model= "selected" fixed>
         <mt-tab-item id="新增处置">
-          <img slot="icon" src="./icon/处置方案.png"><b style="font-size:15px">新增处置</b>
+          <img slot="icon" src="./icon/处置方案.png"><div style="font-size:12px">新增处置</div>
         </mt-tab-item>
         <mt-tab-item id="既往病历">
-          <img slot="icon" src="./icon/病历.png"><b style="font-size:15px">既往病历</b>
+          <img slot="icon" src="./icon/病历.png"><div style="font-size:12px">既往病历</div>
         </mt-tab-item>
         <mt-tab-item id="实时地图">
-          <img slot="icon" src="./icon/去向.png"><b style="font-size:15px">实时地图</b>
+          <img slot="icon" src="./icon/去向.png"><div style="font-size:12px">实时地图</div>
         </mt-tab-item>
       </mt-tabbar>
     </div>
@@ -377,7 +377,7 @@ export default {
           if(response.data.results == "上传成功") {
             Toast('接单成功');
             window.localStorage.setItem('PATIENTID1',this.patientId);
-            this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
+            this.$router.push({name: '转运列表',params:{SELECTED1:"个人"}});
           }
         })
       }else if(this.situations == "接收") {

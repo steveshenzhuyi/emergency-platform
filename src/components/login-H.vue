@@ -16,15 +16,14 @@
         <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker>
         <div v-for="(item,index) in dataclass1" align="left">
             <hr><a @click="getpatient(index)">
-            <b class="first">{{item.PatientId}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;<small>{{item.CreateTime}}</small><br>
-            <b class="second">{{item.Name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <b>
+            <div>{{item.PatientId}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <small>{{item.CreateTime}}</small><br></div>
+            <div>{{item.Name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{item.Classification}} &nbsp;
-            {{item.StatusNameHos}}</b><br><small>
-            性别：{{item.Gender}} &nbsp; 
+            {{item.StatusNameCar}}</div><small style="color:grey">
+            性别：{{item.Gender}} &nbsp;&nbsp;
             年龄：{{item.Age}} &nbsp;&nbsp;&nbsp;&nbsp;
-            {{item.OrganizationName}}&nbsp;&nbsp;
+            {{item.OrganizationName}}&nbsp;&nbsp; 
             {{item.CarName}}&nbsp;
             {{item.CarId}}
             {{item.Pcost}}</small></a>
@@ -46,11 +45,10 @@
         <mt-picker :slots="slots1" @change="onMessagechange" :visible-item-count="3"></mt-picker>
         <div v-for=" (item,index) in data3" align="left">
           <hr><a @click="getMessage(index)">
-            <big><b>
-              序号{{item.MessageNo}}</b></big><br>
-              <b>{{item.MessageTitle}}</b><br>
-            <small>{{item.MessageDetail}}&nbsp;<br>
-              发送时间：{{item.SendTime}}</small>
+            <div>
+              序号{{item.MessageNo}}<br>
+              {{item.MessageTitle}}<br></div>
+              <small style="color:grey">发送时间：{{item.SendTime}}</small>
           </a>
         </div><br><br><br><br>
       </mt-tab-container-item>
@@ -60,7 +58,7 @@
         </mt-header>
         <br><br>
         <br>
-        <p style="text-align: left">个人信息</p>
+        <div style="text-align: left; margin-top: 10px">个人信息</div>
           <mt-field label="姓名" v-model="Name" disabled="true"></mt-field>
           <mt-field label="性别" v-model="Gender" disabled="true"></mt-field>
           <mt-field label="年龄" v-model="Age" disabled="true"></mt-field>
@@ -69,7 +67,7 @@
           <mt-field label="单位" v-model="DepartmentName" disabled="true"></mt-field>
           <mt-field label="职称" v-model="TitleName" disabled="true"></mt-field>
           <hr>
-          <p style="text-align: left">角色：医院组</p>
+          <div style="text-align: left; margin-top: 10px">角色：医院组</div>
           <mt-field label="所属小组" v-model="GroupName" disabled="true"></mt-field>
           <mt-field label="组内职务" v-model="GroupPosition" disabled="true"></mt-field>
           <mt-field label="责任区域" v-model="ManageArea" disabled="true"></mt-field>
@@ -83,13 +81,13 @@
     <div>
       <mt-tabbar v-model= "selected" fixed>
         <mt-tab-item id="病人">
-          <img slot="icon" src="./icon/病人.png"><b style="font-size:15px">病人</b>
+          <img slot="icon" src="./icon/病人.png"><div style="font-size:12px">病人</div>
         </mt-tab-item>
         <mt-tab-item id="沟通">
-          <img slot="icon" src="./icon/沟通.png"><b style="font-size:15px">沟通</b>
+          <img slot="icon" src="./icon/沟通.png"><div style="font-size:12px">沟通</div>
         </mt-tab-item>
         <mt-tab-item id="个人">
-          <img slot="icon" src="./icon/个人.png"><b style="font-size:15px">个人</b>
+          <img slot="icon" src="./icon/个人.png"><div style="font-size:12px">个人</div>
         </mt-tab-item>
       </mt-tabbar>
     </div>

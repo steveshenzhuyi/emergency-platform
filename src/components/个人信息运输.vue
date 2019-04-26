@@ -6,7 +6,7 @@
       <hr>
     </mt-header>
     <br><br>
-        <p style="text-align: left">个人信息</p>
+        <div style="text-align: left; margin-top: 10px">个人信息</div>
         <mt-field label="姓名" v-model="name" disabled="true"></mt-field>
         <mt-field label="性别" v-model="sex" disabled="true"></mt-field>
         <mt-field label="年龄" v-model="age" disabled="true"></mt-field>
@@ -15,7 +15,7 @@
         <mt-field label="单位" v-model="company" disabled="true"></mt-field>
         <mt-field label="职称" v-model="title" disabled="true"></mt-field>
         <hr>
-        <p style="text-align: left">角色：运输组</p>
+        <div style="text-align: left; margin-top: 10px">角色：运输组</div>
         <mt-field label="所属小组" v-model="groupname" disabled="true"></mt-field>
         <mt-field label="组内职务" v-model="work" disabled="true"></mt-field>
         <mt-field label="责任区域" v-model="region" disabled="true"></mt-field>

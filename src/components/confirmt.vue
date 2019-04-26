@@ -21,7 +21,7 @@
     <mt-field label="目标车号" v-model="carId" disabled="true"></mt-field>
     <mt-field label="目标医院" v-model="OrganizationName" disabled="true"></mt-field>
     <mt-field label="现在时间" v-model="HospitalTime" disabled="true"></mt-field><hr>
-    <mt-button size="normal" @click="returnT1()">确认送达</mt-button>
+    <mt-button size="normal" type="primary" @click="returnT1()">确认送达</mt-button>
     <router-view></router-view>
   </div>
 </template>

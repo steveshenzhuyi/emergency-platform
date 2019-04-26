@@ -209,8 +209,8 @@
             @click="confirm()"><small>后送</small></mt-button>
           <hr>
         </mt-header>
-        <br>
-        <h3>选择分流：{{state}}</h3>
+        <br><br>
+        <div style="font-size:20px">选择分流：{{state}}</div>
         <div v-show="isShow3">
           <mt-button plain type="primary" @click="changestate()">处置完成</mt-button>
           <mt-button plain type="danger" @click="gotohospital()">前往医院</mt-button>
@@ -252,13 +252,13 @@
     <div>
       <mt-tabbar v-model= "selected" fixed>
         <mt-tab-item id="患者病历">
-          <img slot="icon" src="./icon/病历.png"><b style="font-size:15px">患者病历</b>
+          <img slot="icon" src="./icon/病历.png"><div style="font-size:12px">患者病历</div>
         </mt-tab-item>
         <mt-tab-item id="处置方案">
-          <img slot="icon" src="./icon/处置方案.png"><b style="font-size:15px">处置方案</b>
+          <img slot="icon" src="./icon/处置方案.png"><div style="font-size:12px">处置方案</div>
         </mt-tab-item>
         <mt-tab-item id="病人去向">
-          <img slot="icon" src="./icon/去向.png"><b style="font-size:15px">病人去向</b>
+          <img slot="icon" src="./icon/去向.png"><div style="font-size:12px">病人去向</div>
         </mt-tab-item>
       </mt-tabbar>
     </div>
@@ -591,10 +591,10 @@ export default {
         }).then((response) => {
           if(response.data.results == "上传成功") {
             Toast('病人待后送');
-            // this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carID}})
             this.isShow3 = false
             this.isShow2 = true
             this.isShow100 = false
+            this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carId}})
           }else{
             Toast('上传失败');
           }
@@ -611,7 +611,7 @@ export default {
             this.isShow3 = false
             this.isShow2 = true
             this.isShow100 = false
-            // this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往"}})
+            this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往",FLAG:this.flag}})
           }else{
             Toast('上传失败');
           }

@@ -11,20 +11,19 @@
         </mt-header>
         <br><br>
         <mt-cell>
-          <p v-show="false">{{chooselevel}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosestate}}&nbsp;&nbsp;&nbsp;&nbsp;{{sortway}}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <div v-show="false">{{chooselevel}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosestate}}&nbsp;&nbsp;&nbsp;&nbsp;{{sortway}}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
           <mt-button size="small" type="primary" @click="refreshPatient()">刷新</mt-button>
         </mt-cell>
         <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker>
         <div v-for="(item,index) in dataclass1" align="left">
             <hr><a @click="getpatient(index)">
-            <b class="first">{{item.PatientId}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;<small>{{item.CreateTime}}</small><br>
-            <b class="second">{{item.Name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <b>
+            <div>{{item.PatientId}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <small>{{item.CreateTime}}</small><br></div>
+            <div>{{item.Name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{item.Classification}} &nbsp;
-            {{item.StatusNameCar}}</b><br><small>
-            性别：{{item.Gender}} &nbsp; 
+            {{item.StatusNameCar}}</div><small style="color:grey">
+            性别：{{item.Gender}} &nbsp;&nbsp;
             年龄：{{item.Age}} &nbsp;&nbsp;&nbsp;&nbsp;
             {{item.OrganizationName}}&nbsp;&nbsp; 
             {{item.CarName}}&nbsp;
@@ -40,16 +39,16 @@
         </mt-header>
         <br><br>
         <mt-cell>
-          <p v-show="false">{{choosekind}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosenumber}}&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <div v-show="false">{{choosekind}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosenumber}}&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
           <mt-button size="small" type="primary" @click="refreshresource()">刷新</mt-button>
         </mt-cell>
         <mt-picker :slots="slots1" @change="onResourcelistChange" :visible-item-count="3"></mt-picker>
         <div v-for=" (item,index) in data2" :data2-index="{index}" align="left">
           <hr><a @click="getResource(index)">
-          <b>{{ item.ResourceNo }} &nbsp;&nbsp;
-             {{item.ResourceName}}</b><br>
-          <small>规格：{{item.Standard}} &nbsp;&nbsp;
+          <div>{{ item.ResourceNo }} &nbsp;&nbsp;
+             {{item.ResourceName}}</div>
+          <small style="color:grey">规格：{{item.Standard}} &nbsp;&nbsp;
                  {{item.Sstate}}状态：在库 &nbsp;&nbsp;
                  数量：{{item.Amount}}</small></a>
         </div><br><br><br><br>
@@ -62,18 +61,17 @@
         </mt-header>
         <br><br>
         <mt-cell>
-          <p v-show="false">{{choosesituation}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosesort}}&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <div v-show="false">{{choosesituation}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosesort}}&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
           <mt-button size="small" type="primary" @click="refreshMessage()">刷新</mt-button>
         </mt-cell>
         <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3"></mt-picker>
         <div v-for=" (item,index) in data3" align="left">
           <hr><a @click="getMessage(index)">
-            <big><b>
-              序号{{item.MessageNo}}</b></big><br>
-              <b>{{item.MessageTitle}}</b><br>
-           <!--  <small>{{item.MessageDetail}}&nbsp;<br> -->
-              发送时间：{{item.SendTime}}</small>
+            <div>
+              序号{{item.MessageNo}}<br>
+              {{item.MessageTitle}}<br></div>
+              <small style="color:grey">发送时间：{{item.SendTime}}</small>
           </a>
         </div><br><br><br><br>
       </mt-tab-container-item>
@@ -83,7 +81,7 @@
           <hr>
         </mt-header>
         <br><br>
-        <p style="text-align: left">个人信息</p>
+        <div style="text-align: left; margin-top: 10px">个人信息</div>
         <mt-field label="姓名" v-model="Name" disabled="true"></mt-field>
         <mt-field label="性别" v-model="Gender" disabled="true"></mt-field>
         <mt-field label="年龄" v-model="Age" disabled="true"></mt-field>
@@ -91,7 +89,7 @@
         <mt-field label="邮箱" v-model="Email" disabled="true"></mt-field>
         <mt-field label="职称" v-model="TitleName" disabled="true"></mt-field>
         <mt-field label="科室" v-model="DepartmentName" disabled="true"></mt-field><hr>
-        <p style="text-align: left">角色：现场组</p>
+        <div style="text-align: left; margin-top: 10px">角色：现场组</div>
         <mt-field label="所属小组" v-model="GroupName" disabled="true"></mt-field>
         <mt-field label="组内职务" v-model="GroupPosition" disabled="true"></mt-field>
         <mt-field label="责任区域" v-model="ManageArea" disabled="true"></mt-field>
@@ -103,16 +101,16 @@
     <div>
       <mt-tabbar v-model= "selected" fixed>
         <mt-tab-item id="病人">
-          <img slot="icon" src="./icon/病人.png"><b style="font-size:15px">病人</b>
+          <img slot="icon" src="./icon/病人.png"><div style="font-size:12px">病人</div>
         </mt-tab-item>
         <mt-tab-item id="资源">
-         <img slot="icon" src="./icon/资源.png"><b style="font-size:15px">资源</b>
+         <img slot="icon" src="./icon/资源.png"><div style="font-size:12px">资源</div>
         </mt-tab-item>
         <mt-tab-item id="沟通">
-          <img slot="icon" src="./icon/沟通.png"><b style="font-size:15px">沟通</b>
+          <img slot="icon" src="./icon/沟通.png"><div style="font-size:12px">沟通</div>
         </mt-tab-item>
         <mt-tab-item id="个人">
-          <img slot="icon" src="./icon/个人.png"><b style="font-size:15px">个人</b>
+          <img slot="icon" src="./icon/个人.png"><div style="font-size:12px">个人</div>
         </mt-tab-item>
       </mt-tabbar>
     </div>
@@ -388,10 +386,5 @@ export default {
 </script>
 
 <style>
-  b.second{
-    font-size:20px;
-  };
-  b.first{
-    font-size:15px;
-  }
+  
 </style>

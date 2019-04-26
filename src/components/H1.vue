@@ -3,10 +3,10 @@
     <div>
       <mt-tabbar v-model= "selected" fixed>
         <mt-tab-item id="既往病历">
-          <img slot="icon" src="./icon/病历.png"><b style="font-size:15px">既往病历</b>
+          <img slot="icon" src="./icon/病历.png"><div style="font-size:12px">既往病历</div>
         </mt-tab-item>
         <mt-tab-item id="实时地图">
-          <img slot="icon" src="./icon/去向.png"><b style="font-size:15px">实时地图</b>
+          <img slot="icon" src="./icon/去向.png"><div style="font-size:12px">实时地图</div>
         </mt-tab-item>
       </mt-tabbar>
     </div>
