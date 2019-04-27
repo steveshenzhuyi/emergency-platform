@@ -19,8 +19,18 @@
             <div>{{item.PatientId}}
             <small style="position:absolute;left:80px">{{item.CreateTime}}</small><br></div>
             <div><code style="font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Name}}</code>
-            <code style="position:absolute;left:80px;font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
-            <code style="position:absolute;left:175px;font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.StatusNameCar}}</code><br>
+            <code style="position:absolute;left:80px;font-size:18px;
+            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
+            <code v-show="isshow1" style="position:absolute;left:80px;font-size:18px; color:red;
+            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
+            <code v-show="isshow2" style="position:absolute;left:80px;font-size:18px; color:orange;
+            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
+            <code v-show="isshow3" style="position:absolute;left:80px;font-size:18px; color:yellow;
+            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
+            <code v-show="isshow4" style="position:absolute;left:80px;font-size:18px; color:blue;
+            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
+            <code style="position:absolute;left:175px;font-size:18px;
+            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.StatusNameCar}}</code><br>
             </div>
             <small style="color:grey">
             性别：{{item.Gender}}</small>
@@ -131,6 +141,10 @@ export default {
       StatusName: '',
       selected: '',
       mark: '',
+      isshow1: false,
+      isshow2: false,
+      isshow3: false,
+      isshow4: false,
       ResourceType: '',
       search: '',
       search1: '',
@@ -238,6 +252,13 @@ export default {
       }).then((response) => {
         this.PatientlistTime=response.data.results;
         this.dataclass1=this.PatientlistClass
+        // for(var i=0; i<this.dataclass1.length;i++) {
+        //   if (this.dataclass1[i].Classification == "I级") {
+        //     this.isshow1 = true
+        //   }else if(this.dataclass1[i].Classification == "II级") {
+        //     this.isshow2 = true
+        //   }
+        // }
         console.log(this.dataclass1);
       }).catch(function(error){
         console.log("error",error);
