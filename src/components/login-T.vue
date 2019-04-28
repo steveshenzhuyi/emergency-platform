@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div align="center">
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
         <mt-header fixed style="font-size:20px" title="转运列表">
@@ -8,26 +8,27 @@
           <hr>
         </mt-header>
         <br><br>
-        <mt-cell>
-          <p v-show="side">{{chooselevel}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosestate}}&nbsp;&nbsp;&nbsp;&nbsp;{{sortway}}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-          <mt-button size="small" type="primary" @click="refreshPatient()">刷新</mt-button>
-        </mt-cell>
-        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker>
-          <div style="color: red">{{nowstate}}{{patientId1}}{{文字}}</div>
-        <div v-for="(item,index) in dataclass1" align="left">
+        <div  style="width:80%;">
+        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker></div>
+        <div align="right"><mt-button size="small" type="primary" style="position:relative;top:-70px"
+        @click="refreshPatient()">刷新</mt-button></div>
+          <div style="position:relative;top:-40px;color: red">{{nowstate}}{{patientId1}}{{文字}}</div>
+        <div v-for="(item,index) in dataclass1" align="left" style="position:relative;top:-40px">
             <hr><a @click="getpatient(index)">
-            <div>{{item.PatientId}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <small>{{item.CreateTime}}</small><br></div>
-            <div>{{item.Name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {{item.Classification}} &nbsp;
-            {{item.StatusNameCar}}</div><small style="color:grey">
-            性别：{{item.Gender}} &nbsp;&nbsp;
-            年龄：{{item.Age}} &nbsp;&nbsp;&nbsp;&nbsp;
-            {{item.OrganizationName}}&nbsp;&nbsp; 
-            {{item.CarName}}&nbsp;
-            {{item.CarId}}
-            {{item.Pcost}}</small></a>
+            <div>{{item.PatientId}}
+            <small style="position:absolute;left:80px">{{item.CreateTime}}</small><br></div>
+            <div><code style="font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Name}}</code>
+            <code style="position:absolute;left:80px;font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
+            <code style="position:absolute;left:175px;font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.StatusNameCar}}</code><br>
+            </div>
+            <small style="color:grey">
+            性别：{{item.Gender}}</small>
+            <small style="color:grey;position:absolute;left:80px">年龄：{{item.Age}}</small>
+            <small style="color:grey;position:absolute;left:175px">症状：{{item.Diagnose}}</small><br>
+            <small style="color:grey">医院：{{item.OrganizationName}}</small>
+            <small style="color:grey;position:absolute;left:80px">车辆：{{item.CarName}}</small>
+            <small style="color:grey;position:absolute;left:175px">车号：{{item.CarId}}</small>
+            {{item.Pcost}}</a>
         </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="资源">
@@ -37,35 +38,33 @@
           <hr>
         </mt-header>
         <br><br>
-        <mt-cell>
-          <p v-show="side">{{choosekind}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosenumber}}&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-          <mt-button size="small" type="primary" @click="refreshresource()">刷新</mt-button>
-        </mt-cell>
+        <div style="width:80%;">
         <mt-picker :slots="slots1" @change="onResourcelistChange" :visible-item-count="3"></mt-picker>
-        <div v-for=" (item,index) in data2" :data2-index="{index}" align="left">
+        </div>
+        <div align="right">
+        <mt-button size="small" type="primary" style="position:relative;top:-70px" @click="refreshresource()">刷新</mt-button></div>
+        <div v-for=" (item,index) in data2" :data2-index="{index}" align="left" style="position:relative;top:-40px">
           <hr><a @click="getResource(index)">
-          <div>{{ item.ResourceNo }} &nbsp;&nbsp;
+          <div>{{ item.ResourceNo }} &nbsp;&nbsp;&nbsp;
              {{item.ResourceName}}</div>
-          <small style="color:grey">规格：{{item.Standard}} &nbsp;&nbsp;
-                 {{item.Sstate}}状态：在库 &nbsp;&nbsp;
-                 数量：{{item.Amount}}</small></a>
+          <small style="color:grey">规格：{{item.Standard}}</small>
+          <small style="color:grey;position:absolute;left:100px">  状态：{{item.Sstate}}</small>
+          <small style="color:grey;position:absolute;left:175px">  数量：{{item.Amount}}</small></a>
         </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
         <mt-header fixed style="font-size:20px" title="信息列表">
           <mt-button slot="left" @click="phone()"><small>视频通话</small></mt-button>
-          <!-- <mt-button slot="right" @click="$goRoute('/increaseCT')"><small>新增信息</small></mt-button> -->
           <hr>
         </mt-header>
         <br><br>
-        <mt-cell>
-          <p v-show="side">{{choosesituation}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosesort}}&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-          <mt-button size="small" type="primary" @click="refreshmessage()">刷新</mt-button>
-        </mt-cell>
-        <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3"></mt-picker>
-        <div v-for=" (item,index) in data3" align="left">
+        <div style="width:80%;">
+          <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3"></mt-picker>
+        </div>
+        <div align="right">
+          <mt-button size="small" type="primary" @click="refreshmessage()" style="position:relative;top:-70px">刷新</mt-button>
+        </div>
+        <div v-for=" (item,index) in data3" align="left" style="position:relative;top:-40px">
           <hr><a @click="getMessage(index)">
            <div>
               序号{{item.MessageNo}}<br>
@@ -76,9 +75,7 @@
       </mt-tab-container-item>
       <mt-tab-container-item id="个人">
         <mt-header fixed style="font-size:20px" title="本车信息">
-          <!-- <mt-button slot="right" @click="edit"><small>查看个人信息</small></mt-button>
-          <hr> -->
-        </mt-header>
+      </mt-header>
         <br><br>
         <br>
         <mt-cell title>
