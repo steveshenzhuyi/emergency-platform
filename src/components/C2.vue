@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <div align = left>
     <mt-header fixed style="font-size:20px" title="消息详情">
     <mt-button size="small" type="danger" slot="left" icon="back"
         @click="returnT()"><small>返回</small></mt-button>
     </mt-header>
     <br><br>
     <hr>
-    <b style="font-size:22px">编号：{{messageNo}}</b>
+    <b style="font-size:18px">编号：{{messageNo}}</b>
       <mt-badge v-show="showbadge" type="error">紧急</mt-badge>
-    <h2 style="text-align:center">标题：{{Title}}</h2><br>
-    <h3 style="text-align:center">时间：{{sendtime}}</h3><br>
-    <!-- <h3 style="text-align:center">对象：{{message3}}</h3><br> -->
-    <p style="text-align:center">内容：{{messagedetail}}</p>
+    <div style="font-size:22px"><b>标题：{{Title}}</b></div><br>
+    <div align ="left" v-for="item in MessageDetail" style="">
+      {{item}}<br>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -39,7 +39,10 @@ export default {
         messageNo:this.$route.params.MESSAGENO
       }).then((response) => {
         this.Title=response.data.results[0].MessageTitle
-        this.messagedetail=response.data.results[0].MessageDetail
+        var a = response.data.results[0].MessageDetail
+        var b = a.split(/[\r\n]/)
+        var c = b.filter( i => i)
+        this.MessageDetail = c
         this.sendtime=response.data.results[0].SendTime
         this.messageNo=response.data.results[0].MessageNo
         this.mark=response.data.results[0].Mark
