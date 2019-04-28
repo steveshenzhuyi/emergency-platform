@@ -338,6 +338,9 @@ export default {
       this.dataclass1 = tmp;
     },
     refreshMessage() {
+      JPush.getRegistrationID(function(rId) {
+  alert("JPushPlugin:registrationID is " + rId)
+})
       this.data3=this.message;
       var tmp = new Array();
       for(var i=0; i<this.data3.length;i++) {
