@@ -47,19 +47,22 @@ export default {
           }).then((response) => {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
-              window.JPush.setTags({ sequence: 1, tags: [GN] },
-  (result) => {
-    var sequence = result.sequence
-    var tags = result.tags  // 数组类型
-    // alert(sequence)
-    // alert(tags)
-  }, (error) => {
-    var sequence = error.sequence
-    var errorCode = error.code
-  })
+  //             window.JPush.setTags({ sequence: 1, tags: [GN] },
+  // (result) => {
+  //   var sequence = result.sequence
+  //   var tags = result.tags  // 数组类型
+  //   // alert(sequence)
+  //   // alert(tags)
+  // }, (error) => {
+  //   var sequence = error.sequence
+  //   var errorCode = error.code
+  // })
               this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
             }else{
-              Toast('用户名或密码错误！')
+              Toast({
+                message: '用户名或密码错误',
+                position: 'top'
+              });
             }
           }).catch(function(error){
             console.log("error",error);
@@ -87,7 +90,10 @@ export default {
   })
               this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
             }else{
-              Toast('用户名或密码错误！')
+              Toast({
+                message: '用户名或密码错误',
+                position: 'top'
+              });
             }
           }).catch(function(error){
             console.log("error",error);
@@ -115,7 +121,10 @@ export default {
   })
               this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
             }else{
-              Toast('用户名或密码错误！')
+              Toast({
+                message: '用户名或密码错误',
+                position: 'top'
+              });
             }
           }).catch(function(error){
             console.log("error",error);

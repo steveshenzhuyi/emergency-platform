@@ -90,10 +90,16 @@ export default {
         patientId:window.localStorage.getItem('PATIENTNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('确认送出');
+          Toast({
+            message: '确认送出',
+            position: 'top'
+          });
            this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",STATE1:"已后送",PATIENTID:this.patientid}})
         }else{
-          Toast('送出失败');
+         Toast({
+            message: '送出失败',
+            position: 'top'
+          });
         }
        
       })

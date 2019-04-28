@@ -91,10 +91,16 @@ export default {
       }).then((response) => {
         console.log(this.resourceType)
         if(response.data.results == "新建成功") {
-          Toast('新建成功');
+          Toast({
+            message: '新建成功',
+            position: 'top'
+          });
           this.$router.push({name: '病人列表',params:{SELECTED:"资源"}});
         }else {
-          Toast('新建失败');
+          Toast({
+            message: '创建失败',
+            position: 'top'
+          });
         }console.log(response);
             console.log(response.data.results);
         }).catch(function(error){

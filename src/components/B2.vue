@@ -107,7 +107,10 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('保存成功')
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
         }
       })
       }else{
@@ -120,7 +123,10 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('保存成功')
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
         }
       })
       }

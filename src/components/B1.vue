@@ -96,7 +96,12 @@ export default {
       })
     },
     edit() {
-      if(this.counter==this.amount)Toast('未作修改')
+      if(this.counter==this.amount){
+        Toast({
+            message: '未做修改',
+            position: 'top'
+          });
+      }
         else if(this.counter>this.amount) {
         this.difference=this.counter-this.amount
         axios.post('/setResourceAmount',{
@@ -107,7 +112,10 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('保存成功')
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
         }
       })
       }else{
@@ -120,7 +128,10 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('保存成功')
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
         }
       })
       }

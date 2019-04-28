@@ -1,5 +1,5 @@
 <template>
-  <div align="center">
+  <div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
         <mt-header fixed style="font-size:20px" title="病人列表">
@@ -10,35 +10,35 @@
           <hr>
         </mt-header>
         <br><br>  
-        <div  style="width:80%;">
+        <div align="left"  style="width:80%;">
         <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker></div>
         <div align="right"><mt-button size="small" type="primary" style="position:relative;top:-70px"
         @click="refreshPatient()">刷新</mt-button></div>
         <div v-for="(item,index) in dataclass1" align="left" style="position:relative;top:-40px">
             <hr><a @click="getpatient(index)">
             <div>{{item.PatientId}}
-            <small style="position:absolute;left:80px">{{item.CreateTime}}</small><br></div>
+            <small style="position:absolute;left:100px">{{item.CreateTime}}</small><br></div>
             <div><code style="font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Name}}</code>
-            <code style="position:absolute;left:80px;font-size:18px;
+            <code style="position:absolute;left:100px;font-size:18px;
             font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
-            <code v-show="isshow1" style="position:absolute;left:80px;font-size:18px; color:red;
+            <!-- <code v-show="isshow1" style="position:absolute;left:80px;font-size:18px; color:red;
             font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
             <code v-show="isshow2" style="position:absolute;left:80px;font-size:18px; color:orange;
             font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
             <code v-show="isshow3" style="position:absolute;left:80px;font-size:18px; color:yellow;
             font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
             <code v-show="isshow4" style="position:absolute;left:80px;font-size:18px; color:blue;
-            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
-            <code style="position:absolute;left:175px;font-size:18px;
-            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.StatusNameCar}}</code><br>
+            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code> -->
+            <code style="position:absolute;left:200px;font-size:18px;
+            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.StatusName}}</code><br>
             </div>
             <small style="color:grey">
             性别：{{item.Gender}}</small>
-            <small style="color:grey;position:absolute;left:80px">年龄：{{item.Age}}</small>
-            <small style="color:grey;position:absolute;left:175px">症状：{{item.Diagnose}}</small><br>
+            <small style="color:grey;position:absolute;left:100px">年龄：{{item.Age}}</small>
+            <small style="color:grey;position:absolute;left:200px">症状：{{item.Diagnose}}</small><br>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
-            <small style="color:grey;position:absolute;left:80px">车辆：{{item.CarName}}</small>
-            <small style="color:grey;position:absolute;left:175px">车号：{{item.CarId}}</small>
+            <small style="color:grey;position:absolute;left:100px">车辆：{{item.CarName}}</small>
+            <small style="color:grey;position:absolute;left:200px">车号：{{item.CarId}}</small>
             {{item.Pcost}}</a>
         </div><br><br><br><br>
       </mt-tab-container-item>
@@ -59,7 +59,7 @@
           <div>{{ item.ResourceNo }} &nbsp;&nbsp;&nbsp;
              {{item.ResourceName}}</div>
           <small style="color:grey">规格：{{item.Standard}}</small>
-          <small style="color:grey;position:absolute;left:100px">  状态：{{item.Sstate}}</small>
+          <small style="color:grey;position:absolute;left:100px">  状态：{{item.Status}}</small>
           <small style="color:grey;position:absolute;left:175px">  数量：{{item.Amount}}</small></a>
         </div><br><br><br><br>
       </mt-tab-container-item>
@@ -269,7 +269,6 @@ export default {
       }).then((response) => {
         this.resource=response.data.results
         this.data2=this.resource
-        console.log(response);
         console.log(this.data2);
       }).catch(function(error){
         console.log("error",error);
@@ -358,10 +357,15 @@ export default {
       this.dataclass1 = tmp;
     },
     refreshMessage() {
-      JPush.getRegistrationID(function(rId) {
-  alert("JPushPlugin:registrationID is " + rId)
-})
+//       JPush.getRegistrationID(function(rId) {
+//   alert("JPushPlugin:registrationID is " + rId)
+// })
       this.data3=this.message;
+      var x = new Array();
+      if(this.choosesort == '时间正序') {
+          x = this.data3.reverse();
+          this.data3 = x
+        }
       var tmp = new Array();
       for(var i=0; i<this.data3.length;i++) {
         if(this.choosesituation != '全部') {

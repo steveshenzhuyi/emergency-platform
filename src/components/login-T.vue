@@ -1,5 +1,5 @@
 <template>
-  <div align="center">
+  <div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
         <mt-header fixed style="font-size:20px" title="转运列表">
@@ -16,18 +16,18 @@
         <div v-for="(item,index) in dataclass1" align="left" style="position:relative;top:-40px">
             <hr><a @click="getpatient(index)">
             <div>{{item.PatientId}}
-            <small style="position:absolute;left:80px">{{item.CreateTime}}</small><br></div>
+            <small style="position:absolute;left:100px">{{item.CreateTime}}</small><br></div>
             <div><code style="font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Name}}</code>
-            <code style="position:absolute;left:80px;font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
-            <code style="position:absolute;left:175px;font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.StatusNameCar}}</code><br>
+            <code style="position:absolute;left:100px;font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
+            <code style="position:absolute;left:200px;font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.StatusNameCar}}</code><br>
             </div>
             <small style="color:grey">
             性别：{{item.Gender}}</small>
-            <small style="color:grey;position:absolute;left:80px">年龄：{{item.Age}}</small>
-            <small style="color:grey;position:absolute;left:175px">症状：{{item.Diagnose}}</small><br>
+            <small style="color:grey;position:absolute;left:100px">年龄：{{item.Age}}</small>
+            <small style="color:grey;position:absolute;left:200px">症状：{{item.Diagnose}}</small><br>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
-            <small style="color:grey;position:absolute;left:80px">车辆：{{item.CarName}}</small>
-            <small style="color:grey;position:absolute;left:175px">车号：{{item.CarId}}</small>
+            <small style="color:grey;position:absolute;left:100px">车辆：{{item.CarName}}</small>
+            <small style="color:grey;position:absolute;left:200px">车号：{{item.CarId}}</small>
             {{item.Pcost}}</a>
         </div><br><br><br><br>
       </mt-tab-container-item>
@@ -379,6 +379,9 @@ export default {
     },
     refreshmessage() {
       this.data3=this.message;
+      if(this.choosesort == '时间正序') {
+          this.data3.reverse();
+        }
       var tmp = new Array();
       for(var i=0; i<this.data3.length;i++) {
         if(this.choosesituation != '全部') {
@@ -419,7 +422,10 @@ export default {
       this.data2 = tmp;
     },
     phone(){
-      Toast('开发中！');
+      Toast({
+        message:'开发中！',
+        position: 'top'
+      });
     }
   },
 };

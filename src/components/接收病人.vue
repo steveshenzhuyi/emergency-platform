@@ -47,9 +47,15 @@ export default {
     getpatient() {
       if(this.$route.params.PATIENTID == window.localStorage.getItem('PATIENTID1')) {
         this.isshow = true;
-        Toast('请确认接收')
+        Toast({
+          message: '请确认接收',
+          position: 'top'
+        })
       }else {
-        Toast('接收错误病人')
+        Toast({
+          message: '接收错误病人',
+          position: 'top'
+        })
       };
       axios.post('/getPatientInfo',{
       patientId:this.$route.params.PATIENTID
@@ -74,9 +80,17 @@ export default {
         carNo:window.localStorage.getItem('CARNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('接收成功');
+          Toast({
+            message: '接收成功',
+            position: 'top'
+          });
           this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
-        }else Toast('接收失败')
+        }else{
+          Toast({
+            message:'接收失败',
+            position: 'top'
+          })
+        } 
       })      
     }
   }

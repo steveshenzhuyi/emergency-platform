@@ -576,9 +576,15 @@ export default {
         patientId:this.$route.params.PATIENTID
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('上传成功');
+          Toast({
+            message: '上传成功',
+            position: 'top'
+          });
         }else{
-          Toast('上传失败');
+          Toast({
+            message: '上传失败',
+            position: 'top'
+          });
         }
       })
     },
@@ -590,13 +596,19 @@ export default {
           hosNo:this.HosNo
         }).then((response) => {
           if(response.data.results == "上传成功") {
-            Toast('病人待后送');
+            Toast({
+            message: '病人待后送',
+            position: 'top'
+          });
             this.isShow3 = false
             this.isShow2 = true
             this.isShow100 = false
             this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carId}})
           }else{
-            Toast('上传失败');
+            Toast({
+            message: '上传失败',
+            position: 'top'
+          });
           }
         })
       }
@@ -607,13 +619,19 @@ export default {
           hosNo:this.HosNo
         }).then((response) => {
           if(response.data.results == "上传成功") {
-            Toast('病人待后送');
+            Toast({
+            message: '病人待后送',
+            position: 'top'
+          });
             this.isShow3 = false
             this.isShow2 = true
             this.isShow100 = false
             this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往",FLAG:this.flag}})
           }else{
-            Toast('上传失败');
+            Toast({
+            message: '上传失败',
+            position: 'top'
+          });
           }
         })
       }
@@ -631,7 +649,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -649,7 +670,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -667,7 +691,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -685,7 +712,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -703,7 +733,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           this.reload()
         }
       })
@@ -721,7 +754,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -739,7 +775,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -747,7 +786,10 @@ export default {
         patientId:this.$route.params.PATIENTID
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('处置完成');
+          Toast({
+            message: '处置完成',
+            position: 'top'
+          });
           // this.isShow1 = true
           this.isShow3 = false
         }
@@ -771,7 +813,10 @@ export default {
         class:this.Class
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('修改成功');
+          Toast({
+            message: '修改成功',
+            position: 'top'
+          });
         }
       })
     },
@@ -802,7 +847,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           console.log(this.dataTZ)
           var tmp = new array ()
           tmp.push(this.dataTZ);
@@ -842,7 +890,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })

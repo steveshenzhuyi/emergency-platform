@@ -62,8 +62,16 @@ export default {
         hosNo:this.$route.params.HOSNO
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('病人待后送');
+          Toast({
+            message: '病人待后送',
+            position: 'top'
+          });
           this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carID}})
+        }else{
+          Toast({
+            message: '上传失败',
+            position: 'top'
+          });
         }
       })
     },
