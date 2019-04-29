@@ -29,7 +29,7 @@
             <small style="color:grey;position:absolute;left:100px">车辆：{{item.CarName}}</small>
             <small style="color:grey;position:absolute;left:200px">车号：{{item.CarId}}</small>
             {{item.Pcost}}</a>
-        </div><br><br><br><br>
+        </div><hr>
       </mt-tab-container-item>
       <mt-tab-container-item id="资源">
         <mt-header fixed style="font-size:20px" title="资源列表">
@@ -48,9 +48,9 @@
           <div>{{ item.ResourceNo }} &nbsp;&nbsp;&nbsp;
              {{item.ResourceName}}</div>
           <small style="color:grey">规格：{{item.Standard}}</small>
-          <small style="color:grey;position:absolute;left:100px">  状态：{{item.Sstate}}</small>
+          <small style="color:grey;position:absolute;left:100px">  状态：{{item.Status}}</small>
           <small style="color:grey;position:absolute;left:175px">  数量：{{item.Amount}}</small></a>
-        </div><br><br><br><br>
+        </div><hr>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
         <mt-header fixed style="font-size:20px" title="信息列表">
@@ -71,7 +71,7 @@
               {{item.MessageTitle}}<br></div>
               <small style="color:grey">发送时间：{{item.SendTime}}</small>
           </a>
-        </div><br><br><br><br>
+        </div><hr>
       </mt-tab-container-item>
       <mt-tab-container-item id="个人">
         <mt-header fixed style="font-size:20px" title="本车信息">
@@ -82,10 +82,10 @@
           <!-- <img slot="icon" src="./icon/个人.png"> -->
         </mt-cell>
         <p>本车信息</p>
-        <mt-field label="车号" v-model="name" disabled="true"></mt-field>
-        <mt-field label="所属单位" v-model="company" disabled="true"></mt-field>
+        <mt-field label="车号" v-model="name" disabled></mt-field>
+        <mt-field label="所属单位" v-model="company" disabled></mt-field>
 
-        <mt-field label="当前状态" v-model="carstate" disabled="true"></mt-field>
+        <mt-field label="当前状态" v-model="carstate" disabled></mt-field>
 
         <!-- <mt-picker :slots="slots3" :visible-item-count="3"></mt-picker> -->
         <hr>

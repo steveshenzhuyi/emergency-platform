@@ -9,7 +9,7 @@
     <br>
     <mt-button size="large" type="primary" @click="check()">登录</mt-button>
     <br>
-    <mt-button size="large" @click="$goRoute('/forget')">忘记密码</mt-button>
+    <mt-button size="large" type="danger" @click="$goRoute('/forget')">忘记密码</mt-button>
     <router-view></router-view>
   </div>
 </template>
@@ -78,16 +78,16 @@ export default {
           }).then((response) => {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
-              window.JPush.setTags({ sequence: 1, tags: [GN] },
-  (result) => {
-    var sequence = result.sequence
-    var tags = result.tags  // 数组类型
-    // alert(sequence)
-    // alert(tags)
-  }, (error) => {
-    var sequence = error.sequence
-    var errorCode = error.code
-  })
+  //             window.JPush.setTags({ sequence: 1, tags: [GN] },
+  // (result) => {
+  //   var sequence = result.sequence
+  //   var tags = result.tags  // 数组类型
+  //   // alert(sequence)
+  //   // alert(tags)
+  // }, (error) => {
+  //   var sequence = error.sequence
+  //   var errorCode = error.code
+  // })
               this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
             }else{
               Toast({
@@ -109,16 +109,16 @@ export default {
           }).then((response) => {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
-              window.JPush.setTags({ sequence: 1, tags: [GN] },
-  (result) => {
-    var sequence = result.sequence
-    var tags = result.tags  // 数组类型
-    // alert(sequence)
-    // alert(tags)
-  }, (error) => {
-    var sequence = error.sequence
-    var errorCode = error.code
-  })
+  //             window.JPush.setTags({ sequence: 1, tags: [GN] },
+  // (result) => {
+  //   var sequence = result.sequence
+  //   var tags = result.tags  // 数组类型
+  //   // alert(sequence)
+  //   // alert(tags)
+  // }, (error) => {
+  //   var sequence = error.sequence
+  //   var errorCode = error.code
+  // })
               this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
             }else{
               Toast({
