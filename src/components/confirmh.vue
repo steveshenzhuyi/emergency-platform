@@ -52,9 +52,15 @@ export default {
       this.hosgroup = response.data.results[0].HosGroup
       if(this.hosgroup == this.hospitalGroup) {
         this.isshow = true;
-        Toast('请确认接收')
+        Toast({
+            message: '请确认接收',
+            position: 'top'
+          });
       }else {
-        Toast('非本院病人')
+        Toast({
+            message: '非本院病人',
+            position: 'top'
+          });
       }
       this.classification = response.data.results[0].Classification;
       this.name = response.data.results[0].Name;
@@ -74,7 +80,10 @@ export default {
         hospitalGroup:window.localStorage.getItem('GROUPNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('接收成功')
+          Toast({
+            message: '接收成功',
+            position: 'top'
+          });
           this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
         }
       })      

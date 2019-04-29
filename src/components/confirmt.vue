@@ -85,10 +85,16 @@ export default {
         carNo:window.localStorage.getItem('CARNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('确认送达！')
+          Toast({
+            message: '确认送达',
+            position: 'top'
+          });
           this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}})
         }else {
-          Toast('送错地方了！！')
+          Toast({
+            message: '送错地方了！',
+            position: 'top'
+          });
         }
       })      
     }
