@@ -357,9 +357,6 @@ export default {
       this.dataclass1 = tmp;
     },
     refreshMessage() {
-//       JPush.getRegistrationID(function(rId) {
-//   alert("JPushPlugin:registrationID is " + rId)
-// })
       this.data3=this.message;
       var x = new Array();
       if(this.choosesort == '时间正序') {
