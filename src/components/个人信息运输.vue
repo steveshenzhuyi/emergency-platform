@@ -7,19 +7,19 @@
     </mt-header>
     <br><br>
         <div style="text-align: left; margin-top: 10px">个人信息</div>
-        <mt-field label="姓名" v-model="name" disabled="true"></mt-field>
-        <mt-field label="性别" v-model="sex" disabled="true"></mt-field>
-        <mt-field label="年龄" v-model="age" disabled="true"></mt-field>
-        <mt-field label="手机" v-model="phone" disabled="true"></mt-field>
-        <mt-field label="邮箱" v-model="email" disabled="true"></mt-field>
-        <mt-field label="单位" v-model="company" disabled="true"></mt-field>
-        <mt-field label="职称" v-model="title" disabled="true"></mt-field>
+        <mt-field label="姓名" v-model="name" disabled></mt-field>
+        <mt-field label="性别" v-model="sex" disabled></mt-field>
+        <mt-field label="年龄" v-model="age" disabled></mt-field>
+        <mt-field label="手机" v-model="phone" disabled></mt-field>
+        <mt-field label="邮箱" v-model="email" disabled></mt-field>
+        <mt-field label="单位" v-model="company" disabled></mt-field>
+        <mt-field label="职称" v-model="title" disabled></mt-field>
         <hr>
         <div style="text-align: left; margin-top: 10px">角色：运输组</div>
-        <mt-field label="所属小组" v-model="groupname" disabled="true"></mt-field>
-        <mt-field label="组内职务" v-model="work" disabled="true"></mt-field>
-        <mt-field label="责任区域" v-model="region" disabled="true"></mt-field>
-        <mt-field label="重点保障对象" v-model="target" disabled="true"></mt-field><hr>
+        <mt-field label="所属小组" v-model="groupname" disabled></mt-field>
+        <mt-field label="组内职务" v-model="work" disabled></mt-field>
+        <mt-field label="责任区域" v-model="region" disabled></mt-field>
+        <mt-field label="重点保障对象" v-model="target" disabled></mt-field><hr>
         <mt-button size="large">修改密码</mt-button><br>
         <mt-button size="large" type="danger" @click="$goRoute('/Home')">退出登录</mt-button><br>
     <router-view></router-view>

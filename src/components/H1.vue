@@ -158,16 +158,16 @@
           </mt-tab-container-item>
           <mt-tab-container-item id="6">
             <img src="./pictrue/man.png"><hr>
-            <mt-field label="编号" v-model="PatientId" disabled="true"></mt-field>
-            <mt-field label="姓名" v-model="Name" disabled="true"></mt-field>
-            <mt-field label="性别" v-model="Gender" disabled="true"></mt-field>
-            <mt-field label="年龄" v-model="Age" disabled="true"></mt-field>
-            <mt-field label="民族" v-model="Nation" disabled="true"></mt-field>
-            <mt-field label="手机" v-model="Phone" disabled="true"></mt-field>
-            <mt-field label="邮箱" v-model="Email" disabled="true"></mt-field>
-            <mt-field label="单位" v-model="Unit" disabled="true"></mt-field>
-            <mt-field label="职务" v-model="Position" disabled="true"></mt-field>
-            <mt-field label="血型" v-model="bloodType" disabled="true"></mt-field><hr>
+            <mt-field label="编号" v-model="PatientId" disabled></mt-field>
+            <mt-field label="姓名" v-model="Name" disabled></mt-field>
+            <mt-field label="性别" v-model="Gender" disabled></mt-field>
+            <mt-field label="年龄" v-model="Age" disabled></mt-field>
+            <mt-field label="民族" v-model="Nation" disabled></mt-field>
+            <mt-field label="手机" v-model="Phone" disabled></mt-field>
+            <mt-field label="邮箱" v-model="Email" disabled></mt-field>
+            <mt-field label="单位" v-model="Unit" disabled></mt-field>
+            <mt-field label="职务" v-model="Position" disabled></mt-field>
+            <mt-field label="血型" v-model="bloodType" disabled></mt-field><hr>
             <!-- <mt-button size="small" style="position:relative;left:100px"
             type="danger" @click="edit">修改</mt-button><br><hr> -->
           </mt-tab-container-item>
@@ -204,10 +204,30 @@ export default {
     return {
       intervalid1:null,
       patientId: this.$route.params.PATIENTID,
+      PatientId: '',
       selected: '既往病历',
       selected1: '1',
       content: '',
+      timevalue: '',
+      timevalue1: '',
+      timevalue2: '',
+      主诉: '',
       体征: '请选择体征',
+      现病史: '',
+      过敏史: '',
+      疾病史: '',
+      目前用药: '',
+      初步诊断: '',
+      level: '',
+      Name: '',
+      Gender: '',
+      Age: '',
+      Nation:'',
+      Phone: '',
+      Email: '',
+      Unit: '',
+      Position: '',
+      bloodType: '',
       StatusNameHos: '',
       situations:'',
       carId: '',

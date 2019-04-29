@@ -28,7 +28,7 @@
             <small style="color:grey;position:absolute;left:100px">车辆：{{item.CarName}}</small>
             <small style="color:grey;position:absolute;left:200px">车号：{{item.CarId}}</small>
             {{item.Pcost}}</a>
-        </div><br><br><br><br>
+        </div><hr>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
         <mt-header fixed style="font-size:20px" title="信息列表">
@@ -49,7 +49,7 @@
               {{item.MessageTitle}}<br></div>
               <small style="color:grey">发送时间：{{item.SendTime}}</small>
           </a>
-        </div><br><br><br><br>
+        </div><hr>
       </mt-tab-container-item>
       <mt-tab-container-item id="个人">
         <mt-header fixed style="font-size:20px" title="个人信息">
@@ -58,19 +58,19 @@
         <br><br>
         <br>
         <div style="text-align: left; margin-top: 10px">个人信息</div>
-          <mt-field label="姓名" v-model="Name" disabled="true"></mt-field>
-          <mt-field label="性别" v-model="Gender" disabled="true"></mt-field>
-          <mt-field label="年龄" v-model="Age" disabled="true"></mt-field>
-          <mt-field label="手机" v-model="Phone" disabled="true"></mt-field>
-          <mt-field label="邮箱" v-model="Email" disabled="true"></mt-field>
-          <mt-field label="单位" v-model="DepartmentName" disabled="true"></mt-field>
-          <mt-field label="职称" v-model="TitleName" disabled="true"></mt-field>
+          <mt-field label="姓名" v-model="Name" disabled></mt-field>
+          <mt-field label="性别" v-model="Gender" disabled></mt-field>
+          <mt-field label="年龄" v-model="Age" disabled></mt-field>
+          <mt-field label="手机" v-model="Phone" disabled></mt-field>
+          <mt-field label="邮箱" v-model="Email" disabled></mt-field>
+          <mt-field label="单位" v-model="DepartmentName" disabled></mt-field>
+          <mt-field label="职称" v-model="TitleName" disabled></mt-field>
           <hr>
           <div style="text-align: left; margin-top: 10px">角色：医院组</div>
-          <mt-field label="所属小组" v-model="GroupName" disabled="true"></mt-field>
-          <mt-field label="组内职务" v-model="GroupPosition" disabled="true"></mt-field>
-          <mt-field label="责任区域" v-model="ManageArea" disabled="true"></mt-field>
-          <mt-field label="重点保障对象" v-model="GuaranteeObject" disabled="true"></mt-field><hr>
+          <mt-field label="所属小组" v-model="GroupName" disabled></mt-field>
+          <mt-field label="组内职务" v-model="GroupPosition" disabled></mt-field>
+          <mt-field label="责任区域" v-model="ManageArea" disabled></mt-field>
+          <mt-field label="重点保障对象" v-model="GuaranteeObject" disabled></mt-field><hr>
           <mt-button size="large">修改密码</mt-button><br>
           <mt-button size="large"  type="danger" @click="$goRoute('/Home')">退出登录</mt-button><br>
           <hr>
@@ -264,7 +264,7 @@ export default {
       console.log(index)
       this.$router.push({name: 'H1',params:{PATIENTID:this.dataclass1[index].PatientId}})
     },
-    refreshpatient() {
+    refreshPatient() {
       if(this.sortway == "时间排序") {
         this.dataclass1=this.PatientlistTime
       }else if(this.sortway == "分级排序"){
