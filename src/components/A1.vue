@@ -276,6 +276,7 @@ type="danger" plain>
     data() {
       return {
         intervalid1:null,
+        watchID1:null,
         selected: '',
         patientId: this.$route.params.PATIENTID,
         methods: '请选择处置',
@@ -352,30 +353,31 @@ type="danger" plain>
       this.getpatientrecord()
     },
     beforeDestroy () {
+      navigator.geolocation.clearWatch(this.watchID1)
+      this.watchID1 = null
       clearInterval(this.intervalid1)
-        this.intervalid1 = null
-      },
-      methods: {
-        getpatientrecord() {
-          if(this.StatusName == "待后送") {
-            this.isShow2 = true
+      this.intervalid1 = null
+    },
+    methods: {
+      getpatientrecord() {
+        if(this.StatusName == "待后送") {
+          this.isShow2 = true
+        }
+        this.selected=this.$route.params.SELECTED1;
+        axios.post('/getPatientRecord',{
+          patientId:this.$route.params.PATIENTID
+        }).then((response) => {
+          window.localStorage.setItem('PATIENTNO',this.patientId);
+          this.patientrecord=response.data.results
+          this.zhusu=this.patientrecord.P01;
+          if(this.zhusu.length>0) {
+            this.主诉=this.zhusu[0].Detail;
+            this.timevalue=this.zhusu[0].OperationTime;
+          }else{
+            this.主诉='';
+            this.timevalue='';
           }
-          this.selected=this.$route.params.SELECTED1;
-          axios.post('/getPatientRecord',{
-            patientId:this.$route.params.PATIENTID
-          }).then((response) => {
-            window.localStorage.setItem('PATIENTNO',this.patientId);
-            this.patientrecord=response.data.results
-//主诉
-this.zhusu=this.patientrecord.P01;
-if(this.zhusu.length>0) {
-  this.主诉=this.zhusu[0].Detail;
-  this.timevalue=this.zhusu[0].OperationTime;
-}else{
-  this.主诉='';
-  this.timevalue='';
-}
-console.log(this.zhusu)
+          console.log(this.zhusu)
 //现病史
 if(this.patientrecord.P02.length>0) {
   this.现病史=this.patientrecord.P02[0].Detail;
@@ -1001,7 +1003,7 @@ initMap () {
   })
   var options = {
     enableHighAccuracy: true,
-    maximumAge: 3600000
+    maximumAge: 0
   }
   var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
   // var gps = [119,30];
@@ -1023,7 +1025,6 @@ initMap () {
     AMap.convertFrom(gps, 'gps', function (status, result) {         
       lnglats = result.locations[0];
       mapObj.setCenter(lnglats)
-      alert(lnglats)
       marker = new AMap.Marker({
         position: lnglats,
         map: mapObj
@@ -1038,8 +1039,33 @@ initMap () {
           })
           infoWindow.open(mapObj, e.target.getPosition())
         })
-      })
+      })     
     });
+
+    var options1 = {
+      timeout: 3000,
+      enableHighAccuracy: true,
+      maximumAge: 0
+    }
+    that.watchID1 = navigator.geolocation.watchPosition(onSuccess1, onError1, options1);
+    function onSuccess1(position) {
+      // alert('Latitude: '          + position.coords.latitude          + '\n' +
+      //   'Longitude: '         + position.coords.longitude         + '\n' +
+      //   'Altitude: '          + position.coords.altitude          + '\n' +
+      //   'Accuracy: '          + position.coords.accuracy          + '\n' +
+      //   'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+      //   'Heading: '           + position.coords.heading           + '\n' +
+      //   'Speed: '             + position.coords.speed             + '\n' +
+      //   'Timestamp: '         + position.timestamp                + '\n');
+      var gps1 = [position.coords.longitude, position.coords.latitude];
+      AMap.convertFrom(gps1, 'gps', function (status, result) {         
+        var lnglats2 = result.locations[0];
+        marker.setPosition(lnglats2)
+      });
+    };
+    function onError1(error) {
+      alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+    }
   };
   function onError(error) {
     alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
@@ -1181,20 +1207,6 @@ initMap () {
       }
       that.intervalid1 = setInterval(() => {
         console.log("正在获取新位置")
-        var watchID = navigator.geolocation.getCurrentPosition(onSuccess1, onError1, options);
-        function onSuccess1(position) {
-    var gps = [position.coords.longitude, position.coords.latitude];
-    AMap.convertFrom(gps, 'gps', function (status, result) {         
-      lnglats = result.locations[0];
-      alert(lnglats)
-      marker.setPosition(lnglats)
-
-    });
-  };
-  function onError1(error) {
-    alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
-  }
-
         axios.get('/getCarList',{}).then((response) => {
           carList = response.data.results;
           console.log(carList)

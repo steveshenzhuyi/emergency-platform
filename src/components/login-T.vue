@@ -120,6 +120,7 @@ export default {
   inject:['reload'],
   data() {
     return {
+      watchID2:null,
       selected: '',
       isShow: false,
       userId: window.localStorage.getItem('USERID'),
@@ -221,6 +222,10 @@ export default {
   },
   mounted() {
     this.getpagelist()
+  },
+  beforeDestroy () {
+    navigator.geolocation.clearWatch(this.watchID2)
+    this.watchID2 = null
   },
   methods: {
     SEE(){
@@ -324,6 +329,40 @@ export default {
             this.文字 = "的病人"
           }
         })
+        var options1 = {
+          timeout: 3000,
+          enableHighAccuracy: true,
+          maximumAge: 0
+        }
+        this.watchID2 = navigator.geolocation.watchPosition(onSuccess1, onError1, options1);
+        function onSuccess1(position) {
+          // alert('1Latitude: '          + position.coords.latitude          + '\n' +
+          //   'Longitude: '         + position.coords.longitude         + '\n' +
+          //   'Altitude: '          + position.coords.altitude          + '\n' +
+          //   'Accuracy: '          + position.coords.accuracy          + '\n' +
+          //   'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+          //   'Heading: '           + position.coords.heading           + '\n' +
+          //   'Speed: '             + position.coords.speed             + '\n' +
+          //   'Timestamp: '         + position.timestamp                + '\n');
+          var gps1 = [position.coords.longitude, position.coords.latitude];
+          AMap.convertFrom(gps1, 'gps', function (status, result) {         
+            var lnglats2 = result.locations[0];
+            axios.post('/setCarLocation',{
+              longitude:lnglats2.lng,
+              latitude:lnglats2.lat,
+              carNo:window.localStorage.getItem('CARNO')
+            }).then((response) => {
+              if(response.data.results == "上传成功") {
+                //alert('定位成功')
+              }else {
+                //alert('上传失败')
+              }
+            })
+          });
+        };
+        function onError1(error) {
+          alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+        }
       })
     },
     //病人列表排序方法
