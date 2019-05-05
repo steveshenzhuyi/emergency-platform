@@ -1,8 +1,8 @@
 <template>
   <div>
-    <mt-header fixed style="font-size:20px" title="确认接收">
+    <mt-header fixed style="font-size:20px" title="接收病人">
       <mt-button size="small" icon="back" slot="left"
-        @click="returnH()"><small>返回</small></mt-button>
+        @click="returnT()"><small>返回</small></mt-button>
     </mt-header>
     <br><br>
     <hr>
@@ -15,8 +15,8 @@
     <!-- <mt-field label="症状" v-model="situation" disabled="true"></mt-field> -->
     <mt-field label="目标车号" v-model="carId" disabled="true"></mt-field>
     <mt-field label="目标医院" v-model="organizationName" disabled="true"></mt-field>
-    <mt-field label="现在时间" v-model="HospitalTime" disabled="true"></mt-field><hr>
-    <mt-button v-show="isshow" size="normal" type="primary" @click="returnH1()">确认接收</mt-button>
+    <mt-field label="现在时间" v-model="carTime" disabled="true"></mt-field><hr>
+    <mt-button v-show="isshow" size="normal" @click="returnT1()">确认接收</mt-button>
     <router-view></router-view>
   </div>
 </template>
@@ -29,16 +29,15 @@ export default {
   data() {
     return {
       patientId: this.$route.params.PATIENTID,
+      patientId1: window.localStorage.getItem('PATIENTID1'),
       classification: '',
       name: '',
       gender: '',
       age: '',
       carId: '',
       organizationName: '',
-      HospitalTime: '',
+      carTime: '',
       isshow: '',
-      hosgroup: '',
-      hospitalGroup:window.localStorage.getItem('GROUPNO'),
     };
   },
   mounted() {
@@ -46,22 +45,23 @@ export default {
   },
   methods: {
     getpatient() {
-      axios.post('/getPatientInfo',{
-      patientId:this.patientId
-    }).then((response) => {
-      this.hosgroup = response.data.results[0].HosGroup
-      if(this.hosgroup == this.hospitalGroup) {
+      if(this.$route.params.PATIENTID == window.localStorage.getItem('PATIENTID1')) {
         this.isshow = true;
         Toast({
-            message: '请确认接收',
-            position: 'top'
-          });
+          message: '请确认接收',
+          position: 'top'
+        })
       }else {
         Toast({
-            message: '非本院病人',
-            position: 'top'
-          });
-      }
+          message: '接收错误病人',
+          position: 'top'
+        })
+      };
+      axios.post('/getPatientInfo',{
+      patientId:this.$route.params.PATIENTID
+    }).then((response) => {
+      console.log(response)
+      this.patientId = this.$route.params.PATIENTID;
       this.classification = response.data.results[0].Classification;
       this.name = response.data.results[0].Name;
       this.gender = response.data.results[0].Gender;
@@ -71,24 +71,28 @@ export default {
       this.carTime = response.data.results[0].CarTime;
     })
     },
-    returnH() {
-      this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
+    returnT() {
+      this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
     },
-    returnH1() {
-      axios.post('/hosReceive',{
+    returnT1() {
+      axios.post('/carReceive',{
         patientId:this.patientId,
-        hospitalGroup:window.localStorage.getItem('GROUPNO')
+        carNo:window.localStorage.getItem('CARNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
           Toast({
             message: '接收成功',
             position: 'top'
           });
-          this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
-        }
+          this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
+        }else{
+          Toast({
+            message:'接收失败',
+            position: 'top'
+          })
+        } 
       })      
     }
   }
 };
 </script>
-

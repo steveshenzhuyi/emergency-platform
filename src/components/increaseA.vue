@@ -1,12 +1,13 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="新建病人">
+    <mt-header fixed style="font-size:20px" title="新建病人">
       <mt-button size="small" type="danger" slot="left" icon="back"
             @click="returnA()"><small>返回</small></mt-button>
       <mt-button size="small" slot="right"
             @click="getcamera()"><small>扫码</small></mt-button>
       <hr>
     </mt-header>
+    <br><br>
     <!-- <mt-cell>
       <img src="components/picture/man.png">
       <mt-button size="small" type="primary" plain>
@@ -14,7 +15,7 @@
         拍照</mt-button>
     </mt-cell> -->
     <hr>
-    <p style="text-align: left">个人信息</p>
+    <!-- <p style="text-align: left">个人信息</p> -->
       <mt-field label="姓名" v-model="pname"></mt-field>
       <mt-radio
         v-model="gender"
@@ -27,11 +28,12 @@
       <mt-field label="单位" v-model="unit"></mt-field>
       <mt-field label="职务" v-model="position"></mt-field>
       <p style="position: absolute;left:52px">
-        血型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        血型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         {{blood}}{{type}}</p><hr>
       <div>
         <mt-picker :slots="slots" @change="onbloodChange" :visible-item-count="3"></mt-picker>
       </div>
+      <br><br>
       
     <!-- <p style="text-align: left">健康信息</p> -->
       <!-- <mt-field label="疾病史" v-model="sick"></mt-field>
@@ -92,6 +94,21 @@ export default {
     };
   },
   methods: {
+    getcamera(){
+      var that = this;
+      cordova.plugins.barcodeScanner.scan(
+        function (result) {
+          console.log(result)
+          alert("We got a barcode\n" +
+            "Result: " + result.text + "\n" +
+            "Format: " + result.format + "\n" +
+            "Cancelled: " + result.cancelled)
+        },
+        function (error) {
+          alert(error)
+        }
+      )
+    },
     onbloodChange(picker, values) {
        this.blood = values[0];
        this.type = values[1];
@@ -134,9 +151,16 @@ export default {
       }).then((response) => {
         console.log(response)
         if(response.data.results == "新建成功") {
+          Toast({
+            message: '新建成功',
+            position: 'top'
+          });
           this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
         }else {
-          Toast('创建失败');
+          Toast({
+            message: '创建失败',
+            position: 'top'
+          });
         }console.log(response);
             console.log(response.data.results);
         }).catch(function(error){

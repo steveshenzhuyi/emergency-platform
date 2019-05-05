@@ -3,20 +3,23 @@
     <div>
       <mt-tabbar v-model= "selected" fixed>
         <mt-tab-item id="既往病历">
-          <img slot="icon" src="./icon/病历.png"><b style="font-size:15px">既往病历</b>
+          <img slot="icon" src="./icon/病历.png"><div style="font-size:12px">既往病历</div>
         </mt-tab-item>
         <mt-tab-item id="实时地图">
-          <img slot="icon" src="./icon/去向.png"><b style="font-size:15px">实时地图</b>
+          <img slot="icon" src="./icon/去向.png"><div style="font-size:12px">实时地图</div>
         </mt-tab-item>
       </mt-tabbar>
     </div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="既往病历">
-        <mt-header style="font-size:20px" title="既往病历">
+        <mt-header fixed style="font-size:20px" title="既往病历">
           <mt-button size="small" icon="back" slot="left"
             @click="returnH()"><small>返回</small></mt-button>
+          <mt-button  size="small" slot="right"
+            @click="situation()"><small>{{situations}}</small></mt-button>
           <hr>
         </mt-header>
+        <br><br>
         <mt-navbar v-model="selected1">
           <mt-tab-item id="1">主诉</mt-tab-item>
           <mt-tab-item id="2">现病史</mt-tab-item>
@@ -27,60 +30,60 @@
         </mt-navbar>
         <mt-tab-container v-model="selected1">
           <mt-tab-container-item id="1">
-            <p  style="text-align: left">语音</p>
-            <mt-button size="small" type="primary" plain>语音播放</mt-button>
-            <mt-button size="small" type="danger" plain>语音识别</mt-button><hr>
+            <div  style="text-align: left; margin-top: 10px">文字</div>
+            <!-- <mt-button size="small" type="primary" plain>语音播放</mt-button>
+            <mt-button size="small" type="danger" plain>语音识别</mt-button><hr> -->
             <span>时间：{{timevalue}}</span><br>
-            <mt-field type="textarea" v-model="主诉"></mt-field><hr>
-            <p style="text-align: left">图片</p>
+            <mt-field type="textarea" v-model="主诉" rows="3"></mt-field><hr>
+            <div  style="text-align: left; margin-top: 10px">图片</div>
             <span>时间：{{timevalue}}</span><br>
             <img src="./pictrue/logo.png"><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
-            <mt-button size="small"
+            语音</mt-button>
+            <mt-button size="small" style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
-            <mt-button size="small" type="primary" style="position:relative;right:-55px"
+            图片</mt-button>
+            <mt-button size="small" type="primary" style="float: right"
             @click="save10()">保存</mt-button>
           </mt-tab-container-item>
           <mt-tab-container-item id="2">
-            <p style="text-align: left">文字</p>
+            <div  style="text-align: left; margin-top: 10px">文字</div>
             <span>时间：{{timevalue1}}</span><br>
-            <mt-field type="textarea" placeholder="内容" v-model="现病史"></mt-field><hr>
-            <p style="text-align: left">图片</p>
+            <mt-field type="textarea" placeholder="内容" v-model="现病史" rows="3"></mt-field><hr>
+            <div  style="text-align: left; margin-top: 10px">图片</div>
             <span>时间：{{timevalue1}}</span><br>
             <img src="./pictrue/logo.png"><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
-            <mt-button size="small"
+            语音</mt-button>
+            <mt-button size="small"  style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
-            <mt-button size="small" type="primary" style="position:relative;right:-55px"
+            图片</mt-button>
+            <mt-button size="small" type="primary" style="float: right"
             @click="save20()">保存</mt-button>
           </mt-tab-container-item>
           <mt-tab-container-item id="3">
-            <p style="text-align: left">常用体征</p><hr>
-            <mt-button size="small" @click="heartrate()" style="position:relative;right:50px"
+            <div  style="text-align: left; margin-top: 10px">常用体征</div><hr>
+            <mt-button size="small" @click="heartrate()" style="position:relative;right:40px"
             type="primary" plain>心率</mt-button>
             <mt-button size="small" @click="bloodpressure()"
             type="primary" plain>血压</mt-button>
-            <mt-button size="small" @click="temprature()" style="position:relative;left:50px"
+            <mt-button size="small" @click="temprature()" style="position:relative;left:40px"
             type="primary" plain>体温</mt-button><br><br>
-            <mt-button size="small" @click="breath()" style="position:relative;right:50px"
+            <mt-button size="small" @click="breath()" style="position:relative;right:40px"
             type="primary" plain>呼吸</mt-button>
             <mt-button size="small" @click="bloodoxygen()"
             type="primary" plain>血氧</mt-button>
-            <mt-button size="small" @click="symptom()" style="position:relative;left:50px"
+            <mt-button size="small" @click="symptom()" style="position:relative;left:40px"
             type="primary" plain>其他</mt-button><br><br><hr>
-            <div  class="map-box">
+            <div  style=" padding:3px;border:1px solid blue;margin:3px;">
               {{体征}}<hr>
-              <mt-field placeholder="内容" v-model="content" type="textarea"></mt-field>
+              <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
               <mt-button @click="add()" size="small">确定</mt-button>
             </div>
             <div v-for="(item,index) in dataTZ">
@@ -92,97 +95,99 @@
             </div><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
-            <p style="text-align: left">过敏史</p><hr>
-            <mt-field type="textarea" placeholder="内容" v-model="过敏史"></mt-field><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            <div  style="text-align: left; margin-top: 10px">过敏史</div><hr>
+            <mt-field type="textarea" placeholder="内容" v-model="过敏史" rows="3"></mt-field><hr>
+            <div style="height: 33px"><mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
-            <mt-button size="small"
+            语音</mt-button>
+            <mt-button size="small" style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
-            <mt-button size="small" style="position:relative;right:-55px"
-            type="primary" @click="save41()">保存</mt-button>
-            <p style="text-align: left">疾病史</p><hr>
-            <mt-field type="textarea" placeholder="内容" v-model="疾病史"></mt-field><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            图片</mt-button>
+            <mt-button size="small" style="float: right"
+            type="primary" @click="save41()">保存</mt-button></div>
+            <div  style="text-align: left; margin-top: 10px">疾病史</div><hr>
+            <mt-field type="textarea" placeholder="内容" v-model="疾病史" rows="3"></mt-field><hr>
+            <div style="height: 33px">
+            <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
-            <mt-button size="small" 
+            语音</mt-button>
+            <mt-button size="small"  style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
-            <mt-button size="small" type="primary" style="position:relative;right:-55px"
-            @click="save42()">保存</mt-button>
-            <p style="text-align: left">目前用药</p><hr>
-            <mt-field type="textarea" placeholder="内容" v-model="目前用药"></mt-field><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            图片</mt-button>
+            <mt-button size="small" type="primary" style="float: right"
+            @click="save42()">保存</mt-button></div>
+            <div  style="text-align: left; margin-top: 10px">目前用药</div><hr>
+            <mt-field type="textarea" placeholder="内容" v-model="目前用药" rows="3"></mt-field><hr>
+            <mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
-            <mt-button size="small" 
+            语音</mt-button>
+            <mt-button size="small"  style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
-            <mt-button size="small" type="primary" style="position:relative;right:-55px"
+            图片</mt-button>
+            <mt-button size="small" type="primary" style="float: right"
             @click="save43()">保存</mt-button>
+            <br><br><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="5">
-            <p style="text-align: left">初步诊断</p><hr>
+            <div  style="text-align: left; margin-top: 10px">初步诊断</div>
             <span>时间：{{timevalue2}}</span><br>
-            <mt-field type="textarea" placeholder="内容" v-model="初步诊断"></mt-field><hr>
-            <mt-button size="small" style="position:relative;right:55px"
+            <mt-field type="textarea" placeholder="内容" v-model="初步诊断" rows="3"></mt-field><hr>
+            <div style="height: 33px"><mt-button size="small" style="float: left"
             type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">
-            语音输入</mt-button>
-            <mt-button size="small"
+            语音</mt-button>
+            <mt-button size="small"  style="float: left; margin-left: 10px"
             type="danger" plain>
             <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-            添加图片</mt-button>
-             <mt-button size="small" type="primary" style="position:relative;right:-55px"
-            @click="save50()">保存</mt-button>
-            <p style="text-align: left">预检分级 </p>
+            图片</mt-button>
+             <mt-button size="small" type="primary" style="float: right"
+            @click="save50()">保存</mt-button></div>
+            <div  style="text-align: left; margin-top: 10px">预检分级 </div>
             <b style="text-align: left">当前分级：{{level}}</b>
-            <mt-button @click="setclass()">修改分级</mt-button>
+            <!-- <mt-button @click="setclass()">修改分级</mt-button> -->
             <hr>
-            <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
+            <!-- <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr> -->
             <br>
-            <mt-button type="danger" @click="alert()">一键上报</mt-button><hr>
+            <!-- <mt-button type="danger" @click="alert()">一键上报</mt-button><hr> -->
           </mt-tab-container-item>
           <mt-tab-container-item id="6">
             <img src="./pictrue/man.png"><hr>
-            <mt-field label="编号" v-model="PatientId" disabled="true"></mt-field>
-            <mt-field label="姓名" v-model="Name" disabled="true"></mt-field>
-            <mt-field label="性别" v-model="Gender" disabled="true"></mt-field>
-            <mt-field label="年龄" v-model="Age" disabled="true"></mt-field>
-            <mt-field label="民族" v-model="Nation" disabled="true"></mt-field>
-            <mt-field label="手机" v-model="Phone" disabled="true"></mt-field>
-            <mt-field label="邮箱" v-model="Email" disabled="true"></mt-field>
-            <mt-field label="单位" v-model="Unit" disabled="true"></mt-field>
-            <mt-field label="职务" v-model="Position" disabled="true"></mt-field>
-            <mt-field label="血型" v-model="bloodType" disabled="true"></mt-field><hr>
+            <mt-field label="编号" v-model="PatientId" disabled></mt-field>
+            <mt-field label="姓名" v-model="Name" disabled></mt-field>
+            <mt-field label="性别" v-model="Gender" disabled></mt-field>
+            <mt-field label="年龄" v-model="Age" disabled></mt-field>
+            <mt-field label="民族" v-model="Nation" disabled></mt-field>
+            <mt-field label="手机" v-model="Phone" disabled></mt-field>
+            <mt-field label="邮箱" v-model="Email" disabled></mt-field>
+            <mt-field label="单位" v-model="Unit" disabled></mt-field>
+            <mt-field label="职务" v-model="Position" disabled></mt-field>
+            <mt-field label="血型" v-model="bloodType" disabled></mt-field><hr>
             <!-- <mt-button size="small" style="position:relative;left:100px"
             type="danger" @click="edit">修改</mt-button><br><hr> -->
           </mt-tab-container-item>
         </mt-tab-container>
       </mt-tab-container-item>
-      <mt-tab-container-item id="实时地图">
-        <mt-header style="font-size:20px" title="实时地图">
+      <mt-tab-container-item  id="实时地图">
+        <mt-header fixed style="font-size:20px" title="实时地图">
           <mt-button size="small" icon="back" slot="left"
           @click="returnH()"><small>返回</small></mt-button>
           <hr>
         </mt-header>
-        <h2>当前状态：{{message}}</h2>
-        <h2>后送医院：{{message1}}</h2>
-        <h2>车号：{{message2}}&nbsp;&nbsp;&nbsp;&nbsp;
+        <br>
+        <h3>当前状态：{{StatusNameHos}}</h3>
+        <h4>后送医院：{{hospital}}&nbsp; 车号：{{carId}}</h4>
+        <!-- <h4>
         <mt-button size="normal">
         <img src="./icon/语音通话.png" height="40" width="40" slot="icon">
         视频通话</mt-button>
-        </h2>
+        </h4> -->
         <div id="map-container" class="map-root">
-          放置地图
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -191,20 +196,56 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import { Toast } from 'mint-ui';
 
 export default {
   data() {
     return {
+      intervalid1:null,
+      watchID1:null,
       patientId: this.$route.params.PATIENTID,
+      PatientId: '',
       selected: '既往病历',
       selected1: '1',
       content: '',
-      体征: '',
+      timevalue: '',
+      timevalue1: '',
+      timevalue2: '',
+      主诉: '',
+      体征: '请选择体征',
+      现病史: '',
+      过敏史: '',
+      疾病史: '',
+      目前用药: '',
+      初步诊断: '',
+      level: '',
+      Name: '',
+      Gender: '',
+      Age: '',
+      Nation:'',
+      Phone: '',
+      Email: '',
+      Unit: '',
+      Position: '',
+      bloodType: '',
+      StatusNameHos: '',
+      situations:'',
+      carId: '',
+      hospital:'',
+      dataTZ: [],
+      patientrecord: [],
     };
   },
   mounted() {
+    this.initMap()
     this.getpatientrecord()
+  },
+  beforeDestroy () {
+    navigator.geolocation.clearWatch(this.watchID1)
+    this.watchID1 = null
+    clearInterval(this.intervalid1)
+    this.intervalid1 = null
   },
   methods: {
     getpatientrecord() {
@@ -215,14 +256,25 @@ export default {
         this.patientrecord=response.data.results
         //主诉
         this.zhusu=this.patientrecord.P01;
+        if(this.zhusu.length>0) {
+          this.主诉=this.zhusu[0].Detail;
+          this.timevalue=this.zhusu[0].OperationTime;
+        }else{
+          this.主诉='';
+          this.timevalue='';
+        }
         console.log(this.zhusu)
-        this.主诉=this.zhusu[0].Detail;
-        this.timevalue=this.zhusu[0].OperationTime;
         //现病史
-        this.现病史=this.patientrecord.P02[0].Detail;
-        this.timevalue1=this.patientrecord.P02[0].OperationTime;
+        if(this.patientrecord.P02.length>0) {
+          this.现病史=this.patientrecord.P02[0].Detail;
+          this.timevalue1=this.patientrecord.P02[0].OperationTime;
+        }else{
+          this.现病史 = '';
+          this.timevalue1 = '';
+        }
         //体征
         this.dataTZ=this.patientrecord.P03
+        console.log(this.dataTZ)
         //既往史
         for(var i=0; i<this.patientrecord.P04.length;i++) {
           if(this.patientrecord.P04[i].OperationCode == "P041") {
@@ -244,12 +296,21 @@ export default {
           }
         }
         //初步诊断
-        this.初步诊断=this.patientrecord.P05[0].Detail
-        this.timevalue2=this.patientrecord.P05[0].OperationTime
+        if(this.patientrecord.P05.length>0) {
+          this.初步诊断=this.patientrecord.P05[0].Detail
+          this.timevalue2=this.patientrecord.P05[0].OperationTime
+        }else{
+          this.初步诊断=''
+          this.timevalue2=''
+        }
         //处置方案
         this.dataCZ=this.patientrecord.P11
         //医嘱
-        this.doctortell=this.patientrecord.P06[0].Detail
+        if(this.patientrecord.P06.length>0) {
+          this.doctortell=this.patientrecord.P06[0].Detail
+        }else{
+          this.doctortell= ''
+        }
       })
       axios.post('/getPatientInfo',{
         patientId:this.$route.params.PATIENTID
@@ -265,38 +326,19 @@ export default {
         this.Age=response.data.results[0].Age;
         this.Nation=response.data.results[0].Nation;
         this.bloodType=response.data.results[0].BloodType;
-        this.Status=response.data.results[0].Status;
+        this.StatusNameHos = response.data.results[0].StatusNameHos;
+        this.hospital = response.data.results[0].OrganizationName;
         this.level=response.data.results[0].Classification;
-        console.log(this.Status)
-        if(this.Status=="S01") {
-          this.state="处置中"
-          this.isShow1 = false
-        }else if(this.Status=="S02") {
-          this.state="处置完成";
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.Status=="S03") {
-          this.state="待后送"
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.Status=="S04") {
-          this.state="已后送"
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.Status=="S05") {
-          this.state="已后送"
-          this.isShow = !this.isShow;
-          this.isShow1 = true
-        }else if(this.Status=="S06") {
-          this.state="已后送"
-          this.isShow = !this.isShow;
-          this.isShow1 = true
+        this.carId = response.data.results[0].CarId;
+        if(this.StatusNameHos == "已入院") {
+          this.situations = "出院"
         }
-        if(this.state !="处置中") {
-          this.isShow = !this.isShow;
-          this.isShow1 = true
+        if(this.StatusNameHos == "后送中") {
+          this.situations = "接收"
         }
-        window.localStorage.setItem('STATE',this.state);
+        if(this.StatusNameHos == "待后送") {
+          this.situations = ""
+        }
       })
     },
     heartrate() {
@@ -344,12 +386,12 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           console.log(this.dataTZ)
-          var tmp = new array ()
-          tmp.push(this.dataTZ);
         }
-        this.dataTZ = this.tmp;
       })
     },
     save41() {
@@ -365,7 +407,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -383,7 +428,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -401,7 +449,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -419,7 +470,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -437,7 +491,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           this.reload()
         }
       })
@@ -455,7 +512,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -473,7 +533,10 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
           // this.reload()
         }
       })
@@ -496,7 +559,10 @@ export default {
         class:this.Class
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('修改成功');
+          Toast({
+            message: '修改成功',
+            position: 'top'
+          });
         }
       })
     },
@@ -505,32 +571,302 @@ export default {
         patientId:this.$route.params.PATIENTID
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('上传成功');
+          Toast({
+            message: '上传成功',
+            position: 'top'
+          });
         }else{
-          Toast('上传失败');
+          Toast({
+            message: '上传失败',
+            position: 'top'
+          });
         }
       })
     },
     returnH() {
       this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
     },
+    situation() {
+      if(this.situations == "接收") {
+        this.$router.push({name: 'confirmh',params:{PATIENTID:this.patientId}})
+      }else if(this.situations == "出院") {
+        axios.post('/leaveHos',{
+        patientId:this.$route.params.PATIENTID
+      }).then((response) => {
+        if(response.data.results == "上传成功") {
+          Toast({
+            message: '病人已出院',
+            position: 'top'
+          });
+          this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
+        }else{
+          Toast({
+            message: '上传失败',
+            position: 'top'
+          });
+        }
+      })
+      }
+    },
+    initMap () {
+    var that = this
+  var carList=[{},];
+  var hosList=[{},];
+  var assList=[{},];
+  var positionHos = [];
+  var positionAss = [];
+  var positionCar = [];
+  var markerCar=[];
+  var markerHos = [];
+  var markerAss = [];
+  var lnglats;
+  var marker;
+
+  let mapObj = new AMap.Map('map-container', {
+    center: [120.154539,30.265048],
+    zoom: 13
+  })
+  mapObj.plugin(['AMap.ToolBar','AMap.OverView', 'AMap.MapType'], function () {
+    mapObj.addControl(new AMap.ToolBar())
+    mapObj.addControl(new AMap.OverView({isOpen:false}))
+    mapObj.addControl(new AMap.MapType({showTraffic: true, showRoad: false}))
+  })
+  var options = {
+    enableHighAccuracy: true,
+    maximumAge: 0
+  }
+  var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+  // var gps = [119,30];
+  //   AMap.convertFrom(gps, 'gps', function (status, result) {           
+  //     lnglats = result.locations[0];
+  //     mapObj.setCenter(lnglats)
+  //     alert(lnglats)
+  //   });
+  function onSuccess(position) {
+    alert('Latitude: '          + position.coords.latitude          + '\n' +
+    'Longitude: '         + position.coords.longitude         + '\n' +
+    'Altitude: '          + position.coords.altitude          + '\n' +
+    'Accuracy: '          + position.coords.accuracy          + '\n' +
+    'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+    'Heading: '           + position.coords.heading           + '\n' +
+    'Speed: '             + position.coords.speed             + '\n' +
+    'Timestamp: '         + position.timestamp                + '\n');
+    var gps = [position.coords.longitude, position.coords.latitude];
+    AMap.convertFrom(gps, 'gps', function (status, result) {         
+      lnglats = result.locations[0];
+      mapObj.setCenter(lnglats)
+      marker = new AMap.Marker({
+        position: lnglats,
+        map: mapObj
+      })
+      AMap.event.addListener(marker, 'click', (e) => {
+        AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
+          var infoWindow = new SimpleInfoWindow({
+            infoTitle: '<strong>我在这里</strong>',
+            infoBody: '',
+            offset: new AMap.Pixel(0, -20),
+            autoMove: true
+          })
+          infoWindow.open(mapObj, e.target.getPosition())
+        })
+      })     
+    });
+
+    var options1 = {
+      timeout: 3000,
+      enableHighAccuracy: true,
+      maximumAge: 0
+    }
+    that.watchID1 = navigator.geolocation.watchPosition(onSuccess1, onError1, options1);
+    function onSuccess1(position) {
+      // alert('Latitude: '          + position.coords.latitude          + '\n' +
+      //   'Longitude: '         + position.coords.longitude         + '\n' +
+      //   'Altitude: '          + position.coords.altitude          + '\n' +
+      //   'Accuracy: '          + position.coords.accuracy          + '\n' +
+      //   'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+      //   'Heading: '           + position.coords.heading           + '\n' +
+      //   'Speed: '             + position.coords.speed             + '\n' +
+      //   'Timestamp: '         + position.timestamp                + '\n');
+      var gps1 = [position.coords.longitude, position.coords.latitude];
+      AMap.convertFrom(gps1, 'gps', function (status, result) {         
+        var lnglats2 = result.locations[0];
+        marker.setPosition(lnglats2)
+      });
+    };
+    function onError1(error) {
+      alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+    }
+  };
+  function onError(error) {
+    alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+  }
+
+  AMapUI.loadUI(['overlay/SvgMarker'], function(SvgMarker) {
+    if (!SvgMarker.supportSvg) {
+      alert('当前环境不支持SVG');
+    }
+
+    axios.get('/getAssemblyList',{}).then((response) => {
+      assList = response.data.results;
+      console.log(assList)
+      for(var i=0;i<assList.length;i++){
+        positionAss[i] = new AMap.LngLat(assList[i].Longitude, assList[i].Latitude)
+        console.log(positionAss[i])
+        markerAss[i] = new SvgMarker(
+          new SvgMarker.Shape.IconFont({
+            symbolJs: null,
+            icon: 'icon-jianzhuwu',
+            size: 50,
+            offset: [-25, -50],
+            fillColor: 'blue'
+          }), {
+            map: mapObj,
+            position: positionAss[i],
+            showPositionPoint: {
+              color: 'red'
+            }
+          }
+          );
+        markerAss[i].assinfo = assList[i];
+        markerAss[i].on('click',function(){
+          console.log(this)
+          var thisMarkerAss = this;
+          AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
+            var infoWindow = new SimpleInfoWindow({
+              infoTitle: '<strong>' + thisMarkerAss.assinfo.LocationName+ '</strong>',
+              infoBody: "<div style=\"padding:0px 0px 0px 4px;\">"+thisMarkerAss.assinfo.Description+'</div>',
+              offset: new AMap.Pixel(0, -20),
+              autoMove: true                 
+            })
+            infoWindow.open(mapObj, thisMarkerAss.C.position)
+          })
+        })
+      }
+    }).catch(function(error){
+      console.log("error",error);
+    })
+
+    axios.get('/getHosList',{}).then((response) => {
+      hosList = response.data.results;
+      console.log(hosList)
+      for(var i=0;i<hosList.length;i++){
+        positionHos[i] = new AMap.LngLat(hosList[i].Longitude, hosList[i].Latitude)
+        console.log(positionHos[i])
+        markerHos[i] = new SvgMarker(
+          new SvgMarker.Shape.IconFont({
+            symbolJs: null,
+            icon: 'icon-yiyuan-2',
+            size: 50,
+            offset: [-25, -50],
+            fillColor: 'red'
+          }), {
+            map: mapObj,
+            position: positionHos[i],
+            showPositionPoint: {
+              color: 'red'
+            }
+          });
+        markerHos[i].hosinfo = hosList[i];
+        markerHos[i].on('click',function(){
+          console.log(this)
+          var thisMarkerHos = this;
+          AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
+            var infoWindow = new SimpleInfoWindow({
+              infoTitle: '<strong>' + thisMarkerHos.hosinfo.OrganizationName+ '</strong>',
+              infoBody: "<div style=\"padding:0px 0px 0px 4px;\">"+thisMarkerHos.hosinfo.LocationDescription+'</div>',
+              offset: new AMap.Pixel(0, -20),
+              autoMove: true
+            })
+            infoWindow.open(mapObj, thisMarkerHos.C.position)
+          })
+        })
+      }
+    }).catch(function(error){
+      console.log("error",error);
+    })
+
+    axios.get('/getCarList',{}).then((response) => {
+      carList = response.data.results;
+      console.log(carList)
+      for(var i=0;i<carList.length;i++){
+        if(carList[i].Longitude!=null && carList[i].Latitude!=null){
+          if(carList[i].CarStatus == 0){
+            carList[i].CarStatus='空闲'
+          }
+          else{
+            carList[i].CarStatus='忙碌'
+          }
+          positionCar[i] = new AMap.LngLat(carList[i].Longitude, carList[i].Latitude)
+          console.log(positionCar[i])
+          markerCar[i] = new SvgMarker(
+            new SvgMarker.Shape.IconFont({
+              symbolJs: null,
+              icon: 'icon-jiuhuche',
+              size: 50,
+              offset: [-25, -50],
+              fillColor: 'green'
+            }), {
+              map: mapObj,
+              position: positionCar[i],
+              showPositionPoint: {
+                color: 'red'
+              }
+            });
+          markerCar[i].carinfo = carList[i];
+          markerCar[i].on('click',function(){
+            console.log(this)
+            var thisMarkerCar = this;
+            AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
+
+              var infoWindow = new SimpleInfoWindow({
+                infoTitle: '<strong>' + thisMarkerCar.carinfo.CarName+ '</strong>',
+                infoBody: "<div style=\"padding:0px 0px 0px 4px;\">"+'编号：'+thisMarkerCar.carinfo.CarNo+'<br>车牌号：'+thisMarkerCar.carinfo.CarId+'<br>状态：'+thisMarkerCar.carinfo.CarStatus+'</div>',
+                offset: new AMap.Pixel(0, -20),
+                autoMove: true
+              })
+              infoWindow.open(mapObj, thisMarkerCar.C.position)
+            })
+          })
+        }
+      }
+      that.intervalid1 = setInterval(() => {
+        console.log("正在获取新位置")
+        axios.get('/getCarList',{}).then((response) => {
+          carList = response.data.results;
+          console.log(carList)
+          for(var i=0;i<carList.length;i++){
+            if(carList[i].Longitude!=null && carList[i].Latitude!=null){
+              if(carList[i].CarStatus == 0){
+                carList[i].CarStatus='空闲'
+              }
+              else{
+                carList[i].CarStatus='忙碌'
+              }
+              positionCar[i] = new AMap.LngLat(carList[i].Longitude, carList[i].Latitude)
+              console.log(positionCar[i])
+              markerCar[i].carinfo = carList[i];
+              markerCar[i].setPosition(positionCar[i])
+            }
+          }
+        }).catch(function(error){
+          console.log("error",error);
+        })
+      }, 10000)
+    }).catch(function(error){
+      console.log("error",error);
+    })
+  }) 
+}
   }
 };
 </script>
 
 <style>
-  .map-box{
-    width:420px;
-    height:130px;
-    padding:10px;
-    border:2px solid blue;
-    margin:0px;
-  }
   .map-root{
     width:100%;
-    height:475px;
-    padding:5px;
+    height:530px;
+    padding:2px;
     border:1px solid black;
-    margin:0px;
+    margin:3px;
   }
 </style>

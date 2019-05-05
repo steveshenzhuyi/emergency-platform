@@ -26,6 +26,7 @@ import map from '@/components/map';
 import 转运列表 from '@/components/login-T';
 import 医院病人列表 from '@/components/login-H';
 import 个人信息运输 from '@/components/个人信息运输';
+import 接收病人 from '@/components/接收病人';
 
 Vue.use(Router);
 
@@ -165,6 +166,11 @@ export default new Router({
       path: '/个人信息运输',
       name: '个人信息运输',
       component: 个人信息运输,
+    },
+    {
+      path: '/接收病人',
+      name: '接收病人',
+      component: 接收病人,
     },
   ],
 });

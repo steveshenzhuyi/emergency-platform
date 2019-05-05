@@ -1,13 +1,13 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="新增资源项目">
+    <mt-header fixed style="font-size:20px" title="新增资源项目">
       <mt-button size="small" type="danger" slot="left" icon="back"
             @click="resourcetoT()"><small>返回</small></mt-button>
       <mt-button slot="right" @click="NewResource()"><small>确定</small></mt-button>
       <hr>
     </mt-header>
+    <br><br>
     <mt-field label="名称" v-model="resourceName"></mt-field>
-    <p>所选种类：{{resourceType}}、{{type}} </p>
     <mt-picker :slots="slots" @change="ontypeChange" :visible-item-count="3"></mt-picker>
     <mt-field label="规格" v-model="standard"></mt-field>
     <mt-field label="数量" type="number" v-model="amount"></mt-field>
@@ -51,7 +51,7 @@ export default {
           },
           {
             flex: 1,
-            values: ['设备','器材','药品'],
+            values: ['药品','器材','其他'],
             className: 'slot1',
           },
         ],
@@ -61,11 +61,11 @@ export default {
     ontypeChange(picker, values) {
       this.blood = values[0];
       this.type = values[1];
-      if(this.type === "设备") {
+      if(this.type === "药品") {
         this.resourceType = "1"
       }else if(this.type === "器材") {
         this.resourceType = "2"
-      }else if(this.type === "药品") {
+      }else if(this.type === "其他") {
         this.resourceType = "3"
       }console.log(this.resourceType);
       console.log(this.amount);
@@ -90,9 +90,16 @@ export default {
       }).then((response) => {
         console.log(this.resourceType)
         if(response.data.results == "新建成功") {
+          Toast({
+            message: '新建成功',
+            position: 'top'
+          });
           this.$router.push({name: '转运列表',params:{SELECTED1:"资源"}});
         }else {
-          Toast('创建失败');
+          Toast({
+            message: '创建失败',
+            position: 'top'
+          });
         }console.log(response);
             console.log(response.data.results);
         }).catch(function(error){

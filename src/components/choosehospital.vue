@@ -1,9 +1,10 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="选择后送医院">
+    <mt-header fixed style="font-size:20px" title="选择后送医院">
       <mt-button icon="back" slot="left" @click="ReturnA1()">
         <small>返回</small></mt-button>
     </mt-header>
+    <br><br>
     <h2 style="color:blue">已选医院：{{hospital}}</h2>
     <h2>车辆编号：{{car}}</h2><hr>
     前往方式：
@@ -43,11 +44,14 @@ import { Radio } from 'mint-ui';
 export default {
   data() {
     return {
+      patientid: window.localStorage.getItem('PATIENTNO'),
       picked: '',
       picked2: '',
       picked1: '',
       hospital: '',
       car: '',
+      hosNo: '',
+      CarNo: '',
       value:'',
       value1: '',
       value3: '',
@@ -61,6 +65,8 @@ export default {
       carstate1: '',
       destination:'',
       destination1:'',
+      OrganizationCode: '',
+      OrganizationCode1: '',
       OrganizationName: '',
       OrganizationName1: '',
       LocationDescription: '',
@@ -83,6 +89,8 @@ export default {
         this.Hoslist = response.data.results
         this.OrganizationName = response.data.results[0].OrganizationName
         this.OrganizationName1 = response.data.results[1].OrganizationName
+        this.OrganizationCode = response.data.results[0].OrganizationCode
+        this.OrganizationCode1 = response.data.results[1].OrganizationCode
         this.LocationDescription = response.data.results[0].LocationDescription
         this.LocationDescription1 = response.data.results[1].LocationDescription
         this.ICUNum = response.data.results[0].ICUNum
@@ -132,35 +140,42 @@ export default {
       this.isShow = true
     },
     lookmap() {
-      this.$router.push({name: 'map'})
+      this.$router.push({name: 'map',params:{FLAG:"2"}})
     },
     ensure() {
       if(this.picked=="自行前往") {
-        this.$router.push({name: 'map',params:{HOSPITAL:this.hospital,CARNO:'',STATE:"待后送"}})
-      }else
-      this.$router.push({name: 'map',params:{HOSPITAL:this.hospital,CARNO:this.car,STATE:"待后送"}})
+        this.$router.push({name: 'map',
+        params:{HOSPITAL:this.hospital,CARID:'',STATE:"待后送",FLAG:"2",HOSNO:this.hosNo,CARNO:''}})
+      }else{
+        this.$router.push({name: 'map',
+        params:{HOSPITAL:this.hospital,CARID:this.car,STATE:"待后送",FLAG:"2",HOSNO:this.hosNo,CARNO:this.CarNo}})
+      }
     },
     ReturnA1() {
-      this.$router.push({name: 'A1',params:{SELECTED1:"病人去向"}})
+      this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",PATIENTID:this.patientid}})
     },
     choose() {
       if(this.value = "1") {
-        this.car=this.carNo
+        this.car=this.carID
+        this.CarNo = this.carNo
       }
     },
     choose1() {
       if(this.value = "2") {
-        this.car=this.carNo1
+        this.car=this.carID1
+        this.CarNo = this.carNo1
       }
     },
     choose2() {
       if(this.value = "1") {
         this.hospital=this.LocationDescription
+        this.hosNo = this.OrganizationCode
       }
     },
     choose3() {
       if(this.value = "2") {
         this.hospital=this.LocationDescription1
+        this.hosNo = this.OrganizationCode1
       }
     }
   }

@@ -1,9 +1,10 @@
 <template>
   <div>
-    <mt-header style="font-size:20px" title="资源详情">
+    <mt-header fixed style="font-size:20px" title="资源详情">
       <mt-button size="small" type="danger" slot="left" icon="back"
         @click="returnT()"><small>返回</small></mt-button>
     </mt-header>
+    <br><br>
     <mt-field label="名称" v-model="name" :disabled="true"></mt-field>
     <mt-field label="编号" v-model="number" :disabled="true"></mt-field>
     <mt-field label="种类" v-model="type" :disabled="true"></mt-field>
@@ -19,7 +20,7 @@
     <mt-button type="primary" size="normal"
     v-on:click="counter +=1">增加</mt-button>
     <mt-button type="danger" size="normal"
-    v-on:click="counter -=1">减少</mt-button><hr>
+    v-on:click="counter -=1">减少</mt-button><br><br>
     <mt-button type="primary" size="large" @click="edit()">确认修改</mt-button>
     <router-view></router-view>
   </div>
@@ -66,46 +67,50 @@ export default {
         this.counter=response.data.results[0].Amount;
         this.amount=response.data.results[0].Amount;
         this.Status=response.data.results[0].Status;
-        if(this.Status="1") {
+        if(this.Status=="1") {
           this.state="在库"
         }
         this.Subordinateunits=response.data.results[0].Subordinateunits;
-        if(this.Subordinateunits="G01") {
+        if(this.Subordinateunits=="G01") {
           this.belong="会场1组"
-        }else if(this.Subordinateunits="G02") {
+        }else if(this.Subordinateunits=="G02") {
           this.belong="会场2组"
-        }else if(this.Subordinateunits="G03") {
+        }else if(this.Subordinateunits=="G03") {
           this.belong="车辆1组"
-        }else if(this.Subordinateunits="G04") {
+        }else if(this.Subordinateunits=="G04") {
           this.belong="车辆2组"
-        }else if(this.Subordinateunits="G05") {
+        }else if(this.Subordinateunits=="G05") {
           this.belong="医院1组"
-        }else if(this.Subordinateunits="G06") {
+        }else if(this.Subordinateunits=="G06") {
           this.belong="医院2组"
         }
         this.ResourceType=response.data.results[0].ResourceType;
-        if(this.ResourceType="1") {
+        if(this.ResourceType=="1") {
           this.type="药品"
-        }else if(this.ResourceType="2"){
+        }else if(this.ResourceType=="2"){
           this.type="器材"
-        }else if(this.ResourceType="3"){
+        }else if(this.ResourceType=="3"){
           this.type="其他"
         }
         this.describe=response.data.results[0].ResourceDetail
       })
     },
     edit() {
-      if(this.counter>this.amount) {
+      if(this.counter==this.amount)Toast('未作修改')
+        else if(this.counter>this.amount) {
         this.difference=this.counter-this.amount
         axios.post('/setResourceAmount',{
         resourceNo:this.number,
         amount:this.counter,
-        operationCode:"R003",
+        operationCode:"RO03",
         operator:window.localStorage.getItem('USERID'),
         varyAmount:this.difference
       }).then((response) => {
-        if(response.data.results == "新建成功") {
-          Toast('保存成功')
+        if(response.data.results == "上传成功") {
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
         }
       })
       }else{
@@ -113,12 +118,15 @@ export default {
         axios.post('/setResourceAmount',{
         resourceNo:this.number,
         amount:this.counter,
-        operationCode:"R004",
+        operationCode:"RO04",
         operator:window.localStorage.getItem('USERID'),
         varyAmount:this.difference
       }).then((response) => {
-        if(response.data.results == "新建成功") {
-          Toast('保存成功')
+        if(response.data.results == "上传成功") {
+          Toast({
+            message: '保存成功',
+            position: 'top'
+          });
         }
       })
       }
