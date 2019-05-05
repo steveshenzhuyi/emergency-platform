@@ -24,6 +24,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 
 export default {
   data() {
@@ -52,15 +53,9 @@ export default {
       this.hosgroup = response.data.results[0].HosGroup
       if(this.hosgroup == this.hospitalGroup) {
         this.isshow = true;
-        Toast({
-            message: '请确认接收',
-            position: 'top'
-          });
+        MessageBox.alert('请确认接收', '提示');
       }else {
-        Toast({
-            message: '非本院病人',
-            position: 'top'
-          });
+        MessageBox.alert('非本院病人', '提示');
       }
       this.classification = response.data.results[0].Classification;
       this.name = response.data.results[0].Name;
@@ -80,10 +75,7 @@ export default {
         hospitalGroup:window.localStorage.getItem('GROUPNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '接收成功',
-            position: 'top'
-          });
+          MessageBox.alert('接收成功', '提示');
           this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
         }
       })      

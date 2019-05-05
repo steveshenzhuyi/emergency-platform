@@ -581,15 +581,9 @@ alert() {
     patientId:this.$route.params.PATIENTID
   }).then((response) => {
     if(response.data.results == "上传成功") {
-      Toast({
-        message: '上传成功',
-        position: 'top'
-      });
+      MessageBox.alert('上传成功', '提示');
 }else{
-  Toast({
-    message: '上传失败',
-    position: 'top'
-  });
+  MessageBox.alert('上传成功', '提示');
 }
 })
 },
@@ -601,19 +595,13 @@ ensure() {
       hosNo:this.HosNo
     }).then((response) => {
   if(response.data.results == "上传成功") {
-    Toast({
-      message: '病人待后送',
-      position: 'top'
-    });
+    MessageBox.alert('病人待后送', '提示');
     this.isShow3 = false
     this.isShow2 = true
     this.isShow100 = false
     this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carId}})
   }else{
-    Toast({
-      message: '上传失败',
-      position: 'top'
-    });
+    MessageBox.alert('上传失败', '提示');
   }
 })
 }
@@ -624,19 +612,13 @@ if(this.flag == "2") {
     hosNo:this.HosNo
   }).then((response) => {
   if(response.data.results == "上传成功") {
-    Toast({
-      message: '病人待后送',
-      position: 'top'
-    });
+    MessageBox.alert('病人待后送', '提示');
     this.isShow3 = false
     this.isShow2 = true
     this.isShow100 = false
     this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往",FLAG:this.flag}})
   }else{
-    Toast({
-      message: '上传失败',
-      position: 'top'
-    });
+    MessageBox.alert('上传失败', '提示');
   }
 })
 }
@@ -654,10 +636,7 @@ save41() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      Toast({
-        message: '保存成功',
-        position: 'top'
-      });
+      MessageBox.alert('上传成功', '提示');
 // this.reload()
 }
 })
@@ -675,10 +654,7 @@ save42() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      Toast({
-        message: '保存成功',
-        position: 'top'
-      });
+      MessageBox.alert('上传成功', '提示');
 // this.reload()
 }
 })
@@ -696,10 +672,7 @@ save43() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      Toast({
-        message: '保存成功',
-        position: 'top'
-      });
+      MessageBox.alert('上传成功', '提示');
 // this.reload()
 }
 })
@@ -717,10 +690,7 @@ save50() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      Toast({
-        message: '保存成功',
-        position: 'top'
-      });
+      MessageBox.alert('上传成功', '提示');
 // this.reload()
 }
 })
@@ -738,10 +708,7 @@ save10() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      Toast({
-        message: '保存成功',
-        position: 'top'
-      });
+      MessageBox.alert('上传成功', '提示');
   this.reload()
 }
 })
@@ -759,10 +726,7 @@ save20() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      Toast({
-        message: '保存成功',
-        position: 'top'
-      });
+      MessageBox.alert('上传成功', '提示');
 // this.reload()
 }
 })
@@ -780,10 +744,7 @@ save60() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      Toast({
-        message: '保存成功',
-        position: 'top'
-      });
+      MessageBox.alert('上传成功', '提示');
 // this.reload()
 }
 })
@@ -791,10 +752,7 @@ axios.post('/assemblyOver',{
   patientId:this.$route.params.PATIENTID
 }).then((response) => {
   if(response.data.results == "上传成功") {
-    Toast({
-      message: '处置完成',
-      position: 'top'
-    });
+    MessageBox.alert('处置完成', '提示');
 // this.isShow1 = true
 this.isShow3 = false
 }
@@ -818,12 +776,9 @@ setclass() {
     class:this.Class
   }).then((response) => {
     if(response.data.results == "上传成功") {
-      Toast({
-        message: '修改成功',
-        position: 'top'
-      });
-}
-})
+      MessageBox.alert('修改成功', '提示');
+    }
+  })
 },
 add() {
   var operationCode
@@ -852,10 +807,7 @@ add() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      Toast({
-        message: '保存成功',
-        position: 'top'
-      });
+      MessageBox.alert('上传成功', '提示');
   console.log(this.dataTZ)
   var tmp = new array ()
   tmp.push(this.dataTZ);
@@ -895,10 +847,7 @@ add1() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      Toast({
-        message: '保存成功',
-        position: 'top'
-      });
+      MessageBox.alert('上传成功', '提示');
 // this.reload()
 }
 })

@@ -24,6 +24,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 
 export default {
   data() {
@@ -47,15 +48,9 @@ export default {
     getpatient() {
       if(this.$route.params.PATIENTID == window.localStorage.getItem('PATIENTID1')) {
         this.isshow = true;
-        Toast({
-          message: '请确认接收',
-          position: 'top'
-        })
+        MessageBox.alert('请确认接收', '提示');
       }else {
-        Toast({
-          message: '接收错误病人',
-          position: 'top'
-        })
+        MessageBox.alert('接收错误病人', '提示');
       };
       axios.post('/getPatientInfo',{
       patientId:this.$route.params.PATIENTID
@@ -80,16 +75,10 @@ export default {
         carNo:window.localStorage.getItem('CARNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '接收成功',
-            position: 'top'
-          });
+          MessageBox.alert('接收成功', '提示');
           this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
         }else{
-          Toast({
-            message:'接收失败',
-            position: 'top'
-          })
+          MessageBox.alert('接收失败', '提示');
         } 
       })      
     }

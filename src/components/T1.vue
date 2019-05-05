@@ -237,6 +237,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 
 export default {
   data() {
@@ -397,7 +398,7 @@ export default {
           hospital:this.OrganizationName
         }).then((response) => {
           if(response.data.results == "上传成功") {
-            Toast('接单成功');
+            MessageBox.alert('接单成功', '提示');
             window.localStorage.setItem('PATIENTID1',this.patientId);
             this.$router.push({name: '转运列表',params:{SELECTED1:"个人"}});
           }
@@ -479,7 +480,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -511,7 +512,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          MessageBox.alert('上传成功', '提示');
           console.log(this.dataTZ)
           var tmp = new array ()
           tmp.push(this.dataTZ);
@@ -532,7 +533,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -550,7 +551,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -568,7 +569,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -586,7 +587,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -604,7 +605,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          MessageBox.alert('上传成功', '提示');
           this.reload()
         }
       })
@@ -622,7 +623,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -640,7 +641,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast('保存成功');
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -663,7 +664,7 @@ export default {
         class:this.Class
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('修改成功');
+          MessageBox.alert('修改成功', '提示');
         }
       })
     },
@@ -672,9 +673,9 @@ export default {
         patientId:this.$route.params.PATIENTID
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('上传成功');
+          MessageBox.alert('上传成功', '提示');
         }else{
-          Toast('上传失败');
+          MessageBox.alert('上传失败', '提示');
         }
       })
     },

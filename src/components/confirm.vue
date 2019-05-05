@@ -26,6 +26,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 import QRCode from 'qrcodejs2';
 
 export default {
@@ -90,16 +91,10 @@ export default {
         patientId:window.localStorage.getItem('PATIENTNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '确认送出',
-            position: 'top'
-          });
+          MessageBox.alert('确认送出', '提示');
            this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",STATE1:"已后送",PATIENTID:this.patientid}})
         }else{
-         Toast({
-            message: '送出失败',
-            position: 'top'
-          });
+          MessageBox.alert('送出失败', '提示');
         }
        
       })

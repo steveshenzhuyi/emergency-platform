@@ -29,6 +29,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 
 export default {
   data() {
@@ -97,10 +98,7 @@ export default {
     },
     edit() {
       if(this.counter==this.amount){
-        Toast({
-            message: '未做修改',
-            position: 'top'
-          });
+        MessageBox.alert('未做修改', '提示');
       }
         else if(this.counter>this.amount) {
         this.difference=this.counter-this.amount
@@ -112,10 +110,7 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          MessageBox.alert('上传成功', '提示');
         }
       })
       }else{
@@ -128,10 +123,7 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          MessageBox.alert('上传成功', '提示');
         }
       })
       }
