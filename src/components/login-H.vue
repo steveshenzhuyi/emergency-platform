@@ -97,6 +97,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 export default {
   data() {
     return {
@@ -309,7 +310,7 @@ export default {
       this.data3 = tmp;
     },
     phone(){
-      Toast('开发中！');
+      MessageBox.alert('开发中', '提示');
     }
   },
 };

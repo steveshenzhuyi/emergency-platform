@@ -17,6 +17,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 
 export default {
   data() {
@@ -59,10 +60,7 @@ export default {
   // })
               this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
             }else{
-              Toast({
-                message: '用户名或密码错误',
-                position: 'top'
-              });
+               MessageBox.alert('用户名或密码错误!', '提示');
             }
           }).catch(function(error){
             console.log("error",error);
@@ -90,10 +88,7 @@ export default {
   // })
               this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
             }else{
-              Toast({
-                message: '用户名或密码错误',
-                position: 'top'
-              });
+              MessageBox.alert('用户名或密码错误!', '提示');
             }
           }).catch(function(error){
             console.log("error",error);
@@ -121,10 +116,7 @@ export default {
   // })
               this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
             }else{
-              Toast({
-                message: '用户名或密码错误',
-                position: 'top'
-              });
+              MessageBox.alert('用户名或密码错误!', '提示');
             }
           }).catch(function(error){
             console.log("error",error);

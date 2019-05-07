@@ -48,6 +48,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 // import { Radio } from 'mint-ui';
 
 // Vue.component(Radio.name, Radio);
@@ -151,16 +152,10 @@ export default {
       }).then((response) => {
         console.log(response)
         if(response.data.results == "新建成功") {
-          Toast({
-            message: '新建成功',
-            position: 'top'
-          });
+          MessageBox.alert('创建成功', '提示');
           this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
         }else {
-          Toast({
-            message: '创建失败',
-            position: 'top'
-          });
+          MessageBox.alert('创建失败', '提示');
         }console.log(response);
             console.log(response.data.results);
         }).catch(function(error){

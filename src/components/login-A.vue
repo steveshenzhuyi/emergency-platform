@@ -131,7 +131,7 @@
 import {picker} from 'mint-ui';
 import axios from 'axios';
 import { Toast } from 'mint-ui';
-
+import { MessageBox } from 'mint-ui';
 export default {
   inject:['reload'],
   data() {
@@ -403,7 +403,7 @@ export default {
       this.data2 = tmp;
     },
     phone(){
-      Toast('开发中！');
+      MessageBox.alert('开发中', '提示');
     }
   },
 };

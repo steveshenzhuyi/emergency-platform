@@ -26,6 +26,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 
 export default {
 
@@ -91,16 +92,10 @@ export default {
       }).then((response) => {
         console.log(this.resourceType)
         if(response.data.results == "新建成功") {
-          Toast({
-            message: '新建成功',
-            position: 'top'
-          });
+          MessageBox.alert('新建成功', '提示');
           this.$router.push({name: '病人列表',params:{SELECTED:"资源"}});
         }else {
-          Toast({
-            message: '创建失败',
-            position: 'top'
-          });
+          MessageBox.alert('创建失败', '提示');
         }console.log(response);
             console.log(response.data.results);
         }).catch(function(error){
