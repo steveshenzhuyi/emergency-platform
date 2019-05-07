@@ -198,6 +198,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 
 export default {
   data() {
@@ -386,10 +387,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          MessageBox.alert('上传成功', '提示');
           console.log(this.dataTZ)
         }
       })
@@ -407,10 +405,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -428,10 +423,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -449,10 +441,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -470,10 +459,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -491,10 +477,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          MessageBox.alert('上传成功', '提示');
           this.reload()
         }
       })
@@ -512,10 +495,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -533,10 +513,7 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          MessageBox.alert('上传成功', '提示');
           // this.reload()
         }
       })
@@ -559,10 +536,7 @@ export default {
         class:this.Class
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '修改成功',
-            position: 'top'
-          });
+          MessageBox.alert('修改成功', '提示');
         }
       })
     },
@@ -571,15 +545,9 @@ export default {
         patientId:this.$route.params.PATIENTID
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '上传成功',
-            position: 'top'
-          });
+          MessageBox.alert('上传成功', '提示');
         }else{
-          Toast({
-            message: '上传失败',
-            position: 'top'
-          });
+          MessageBox.alert('上传失败', '提示');
         }
       })
     },
@@ -594,16 +562,10 @@ export default {
         patientId:this.$route.params.PATIENTID
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '病人已出院',
-            position: 'top'
-          });
+          MessageBox.alert('病人已出院', '提示');
           this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
         }else{
-          Toast({
-            message: '上传失败',
-            position: 'top'
-          });
+          MessageBox.alert('上传失败', '提示');
         }
       })
       }

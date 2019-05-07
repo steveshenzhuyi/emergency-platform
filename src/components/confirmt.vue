@@ -29,6 +29,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 import QRCode from 'qrcodejs2';
 
 
@@ -85,16 +86,10 @@ export default {
         carNo:window.localStorage.getItem('CARNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '确认送达',
-            position: 'top'
-          });
+          MessageBox.alert('确认送达', '提示');
           this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}})
         }else {
-          Toast({
-            message: '送错地方了！',
-            position: 'top'
-          });
+          MessageBox.alert('送错地方了！', '提示');
         }
       })      
     }
