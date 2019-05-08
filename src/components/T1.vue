@@ -243,6 +243,7 @@ export default {
   data() {
     return {
       intervalid1:null,
+      watchID1:null,
       patientId: this.$route.params.PATIENTID,
       CarStatus: this.$route.params.CARSTATUS,
       PatientId: '',
@@ -285,9 +286,11 @@ export default {
     this.getpatientrecord()
   },
   beforeDestroy () {
-   clearInterval(this.intervalid1)
-   this.intervalid1 = null
- },
+    navigator.geolocation.clearWatch(this.watchID1)
+    this.watchID1 = null
+    clearInterval(this.intervalid1)
+    this.intervalid1 = null
+  },
   methods: {
     getpatientrecord() {
       console.log(this.CarStatus)
@@ -686,185 +689,127 @@ export default {
       this.level = values[0];
     },
     initMap () {
-      var that = this
-      var carList=[{},];
-      var hosList=[{},];
-      var assList=[{},];
-      var positionHos = [];
-      var positionAss = [];
-      var positionCar = [];
-      var markerCar=[];
-      var markerHos = [];
-      var markerAss = [];
+    var that = this
+  var carList=[{},];
+  var hosList=[{},];
+  var assList=[{},];
+  var positionHos = [];
+  var positionAss = [];
+  var positionCar = [];
+  var markerCar=[];
+  var markerHos = [];
+  var markerAss = [];
+  var lnglats;
+  var marker;
 
-      // 创建地图
-        let mapObj = new AMap.Map('map-container', {
-          center: [108.77431122925678, 32.62743450916755],
-          zoom: 13
-           //mapStyle: 'amap://styles/darkblue',
-        })
-        //mapObj.setMapStyle('amap://styles/385185c5427db60ec63616866ec59f7b');
-        mapObj.plugin(['AMap.ToolBar','AMap.OverView', 'AMap.MapType'], function () {
-          mapObj.addControl(new AMap.ToolBar())
-          mapObj.addControl(new AMap.OverView({isOpen:true}))
-          mapObj.addControl(new AMap.MapType({showTraffic: true, showRoad: false}))
-        })
-        mapObj.plugin(['AMap.Geolocation'], function () {
-          let geolocation = new AMap.Geolocation({
-            enableHighAccuracy: true, //  是否使用高精度定位，默认:true
-            timeout: 10000, //  超过10秒后停止定位，默认：无穷大
-            maximumAge: 0, // 定位结果缓存0毫秒，默认：0
-            convert: true, // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
-            showButton: true, //  显示定位按钮，默认：true
-            buttonPosition: 'LB',  // 定位按钮停靠位置，默认：'LB'，左下角
-            buttonOffset: new AMap.Pixel(10, 20), //  定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-            showMarker: false, //  定位成功后在定位到的位置显示点标记，默认：true
-            showCircle: true, //  定位成功后用圆圈表示定位精度范围，默认：true
-            panToLocation: false,  //  定位成功后将定位到的位置作为地图中心点，默认：true
-            zoomToAccuracy: false  //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+  let mapObj = new AMap.Map('map-container', {
+    center: [120.154539,30.265048],
+    zoom: 13
+  })
+  mapObj.plugin(['AMap.ToolBar','AMap.OverView', 'AMap.MapType'], function () {
+    mapObj.addControl(new AMap.ToolBar())
+    mapObj.addControl(new AMap.OverView({isOpen:false}))
+    mapObj.addControl(new AMap.MapType({showTraffic: true, showRoad: false}))
+  })
+  var options = {
+    enableHighAccuracy: true,
+    maximumAge: 0
+  }
+  var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+  // var gps = [119,30];
+  //   AMap.convertFrom(gps, 'gps', function (status, result) {           
+  //     lnglats = result.locations[0];
+  //     mapObj.setCenter(lnglats)
+  //     alert(lnglats)
+  //   });
+  function onSuccess(position) {
+    alert('Latitude: '          + position.coords.latitude          + '\n' +
+    'Longitude: '         + position.coords.longitude         + '\n' +
+    'Altitude: '          + position.coords.altitude          + '\n' +
+    'Accuracy: '          + position.coords.accuracy          + '\n' +
+    'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+    'Heading: '           + position.coords.heading           + '\n' +
+    'Speed: '             + position.coords.speed             + '\n' +
+    'Timestamp: '         + position.timestamp                + '\n');
+    var gps = [position.coords.longitude, position.coords.latitude];
+    AMap.convertFrom(gps, 'gps', function (status, result) {         
+      lnglats = result.locations[0];
+      mapObj.setCenter(lnglats)
+      marker = new AMap.Marker({
+        position: lnglats,
+        map: mapObj
+      })
+      AMap.event.addListener(marker, 'click', (e) => {
+        AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
+          var infoWindow = new SimpleInfoWindow({
+            infoTitle: '<strong>我在这里</strong>',
+            infoBody: '',
+            offset: new AMap.Pixel(0, -20),
+            autoMove: true
           })
-          mapObj.addControl(geolocation)
-          geolocation.getCurrentPosition()
-          AMap.event.addListener(geolocation, 'complete', (result) => {
-            mapObj.setCenter(result.position)
-            console.log(result.position)
-          AMapUI.loadUI(['overlay/SvgMarker'], function(SvgMarker) {
-        if (!SvgMarker.supportSvg) {
-            alert('当前环境不支持SVG');
-        }
-        //获取三类地点
-        axios.get('/getCarList',{}).then((response) => {
-        carList = response.data.results;
-        console.log(carList)
-        for(var i=0;i<carList.length;i++){
-          if(carList[i].Longitude!=null && carList[i].Latitude!=null){
-          if(carList[i].CarStatus == 0)carList[i].CarStatus='空闲'
-            else carList[i].CarStatus='忙碌'
-        positionCar[i] = new AMap.LngLat(carList[i].Longitude, carList[i].Latitude)
-          console.log(positionCar[i])
-        markerCar[i] = new SvgMarker(
-            new SvgMarker.Shape.IconFont({
-                //已经加载了相关的js文件my-iconfont2
-                symbolJs: null,
-                icon: 'icon-jiuhuche',
-                size: 50,
-                offset: [-25, -50],
-                fillColor: 'green'
-            }), {
-                map: mapObj,
-                position: positionCar[i],
-                showPositionPoint: {
-                    color: 'red'
-                }
-            });
-        markerCar[i].carinfo = carList[i];
-        markerCar[i].on('click',function(){
-          console.log(this)
-          var thisMarkerCar = this;
-          AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
-
-                var infoWindow = new SimpleInfoWindow({
-                  infoTitle: '<strong>' + thisMarkerCar.carinfo.CarName+ '</strong>',
-                  infoBody: "<div style=\"padding:0px 0px 0px 4px;\">"+'编号：'+thisMarkerCar.carinfo.CarNo+'<br>车牌号：'+thisMarkerCar.carinfo.CarId+'<br>状态：'+thisMarkerCar.carinfo.CarStatus+'</div>',
-                  offset: new AMap.Pixel(0, -20),
-                  autoMove: true
-                })
-                infoWindow.open(mapObj, thisMarkerCar.C.position)
-              })
+          infoWindow.open(mapObj, e.target.getPosition())
         })
+      })     
+    });
 
-      }
+    var options1 = {
+      timeout: 3000,
+      enableHighAccuracy: true,
+      maximumAge: 0
     }
-      //循环获取车辆位置
-      that.intervalid1 = setInterval(() => {
-       
-       console.log("正在获取新位置")
-        axios.get('/getCarList',{}).then((response) => {
-        carList = response.data.results;
-        console.log(carList)
-        for(var i=0;i<carList.length;i++){
-          if(carList[i].Longitude!=null && carList[i].Latitude!=null){
-          if(carList[i].CarStatus == 0)carList[i].CarStatus='空闲'
-            else carList[i].CarStatus='忙碌'
-        positionCar[i] = new AMap.LngLat(carList[i].Longitude, carList[i].Latitude)
-          console.log(positionCar[i])
-          markerCar[i].carinfo = carList[i];
-          markerCar[i].setPosition(positionCar[i])
-        }
-
-        }
-          }).catch(function(error){
-        console.log("error",error);
-      })
-      }, 10000)//一分钟刷新一次
-
-
-      }).catch(function(error){
-        console.log("error",error);
-      })
-      
-
-      axios.get('/getHosList',{}).then((response) => {
-        hosList = response.data.results;
-        console.log(hosList)
-        for(var i=0;i<hosList.length;i++){
-        positionHos[i] = new AMap.LngLat(hosList[i].Longitude, hosList[i].Latitude)
-          console.log(positionHos[i])
-        markerHos[i] = new SvgMarker(
-            new SvgMarker.Shape.IconFont({
-                //已经加载了相关的js文件my-iconfont2
-                symbolJs: null,
-                icon: 'icon-yiyuan-2',
-                size: 50,
-                offset: [-25, -50],
-                fillColor: 'red'
-            }), {
-                map: mapObj,
-                position: positionHos[i],
-                showPositionPoint: {
-                    color: 'red'
-                }
-            });
-        markerHos[i].hosinfo = hosList[i];
-        markerHos[i].on('click',function(){
-          console.log(this)
-          var thisMarkerHos = this;
-          AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
-
-                var infoWindow = new SimpleInfoWindow({
-                  infoTitle: '<strong>' + thisMarkerHos.hosinfo.OrganizationName+ '</strong>',
-                  infoBody: "<div style=\"padding:0px 0px 0px 4px;\">"+thisMarkerHos.hosinfo.LocationDescription+'</div>',
-                  offset: new AMap.Pixel(0, -20),
-                  autoMove: true
-                })
-                infoWindow.open(mapObj, thisMarkerHos.C.position)
-              })
+    that.watchID1 = navigator.geolocation.watchPosition(onSuccess1, onError1, options1);
+    function onSuccess1(position) {
+      var gps1 = [position.coords.longitude, position.coords.latitude];
+      AMap.convertFrom(gps1, 'gps', function (status, result) {         
+        var lnglats2 = result.locations[0];
+        marker.setPosition(lnglats2)
+        axios.post('/setCarLocation',{
+          longitude:lnglats2.lng,
+          latitude:lnglats2.lat,
+          carNo:window.localStorage.getItem('CARNO')
+        }).then((response) => {
+          if(response.data.results == "上传成功") {
+            //alert('定位成功1')
+          }else {
+            //alert('上传失败1')
+          }
         })
-      }
-      }).catch(function(error){
-        console.log("error",error);
-      })
-      axios.get('/getAssemblyList',{}).then((response) => {
-        assList = response.data.results;
-        console.log(assList)
-         for(var i=0;i<assList.length;i++){
+      });
+    };
+    function onError1(error) {
+      alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+    }
+  };
+  function onError(error) {
+    alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+  }
+
+  AMapUI.loadUI(['overlay/SvgMarker'], function(SvgMarker) {
+    if (!SvgMarker.supportSvg) {
+      alert('当前环境不支持SVG');
+    }
+
+    axios.get('/getAssemblyList',{}).then((response) => {
+      assList = response.data.results;
+      console.log(assList)
+      for(var i=0;i<assList.length;i++){
         positionAss[i] = new AMap.LngLat(assList[i].Longitude, assList[i].Latitude)
-          console.log(positionAss[i])
+        console.log(positionAss[i])
         markerAss[i] = new SvgMarker(
           new SvgMarker.Shape.IconFont({
-                //已经加载了相关的js文件my-iconfont2
-                symbolJs: null,
-                icon: 'icon-jianzhuwu',
-                size: 50,
-                offset: [-25, -50],
-                fillColor: 'blue'
+            symbolJs: null,
+            icon: 'icon-jianzhuwu',
+            size: 50,
+            offset: [-25, -50],
+            fillColor: 'blue'
           }), {
-                map: mapObj,
-                position: positionAss[i],
-                showPositionPoint: {
-                    color: 'red'
-                }
-        });
+            map: mapObj,
+            position: positionAss[i],
+            showPositionPoint: {
+              color: 'red'
+            }
+          }
+          );
         markerAss[i].assinfo = assList[i];
         markerAss[i].on('click',function(){
           console.log(this)
@@ -879,34 +824,122 @@ export default {
             infoWindow.open(mapObj, thisMarkerAss.C.position)
           })
         })
-
       }
-      }).catch(function(error){
-        console.log("error",error);
-      })
- var marker = new AMap.Marker({
-              position: result.position,
-              map: mapObj
-            })
-        AMap.event.addListener(marker, 'click', (e) => {
-              AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
-                var infoWindow = new SimpleInfoWindow({
-                  infoTitle: '<strong>我在这里</strong>',
-                  infoBody: '',
-                  offset: new AMap.Pixel(0, -20),
-                  autoMove: true
-                })
-                infoWindow.open(mapObj, e.target.getPosition())
-              })
-            })
-})
+    }).catch(function(error){
+      console.log("error",error);
+    })
 
-          })  //  返回定位信息
-          AMap.event.addListener(geolocation, 'error', (result) => {
-            console.log(result)
-          })  //  返回定位出错信息
+    axios.get('/getHosList',{}).then((response) => {
+      hosList = response.data.results;
+      console.log(hosList)
+      for(var i=0;i<hosList.length;i++){
+        positionHos[i] = new AMap.LngLat(hosList[i].Longitude, hosList[i].Latitude)
+        console.log(positionHos[i])
+        markerHos[i] = new SvgMarker(
+          new SvgMarker.Shape.IconFont({
+            symbolJs: null,
+            icon: 'icon-yiyuan-2',
+            size: 50,
+            offset: [-25, -50],
+            fillColor: 'red'
+          }), {
+            map: mapObj,
+            position: positionHos[i],
+            showPositionPoint: {
+              color: 'red'
+            }
+          });
+        markerHos[i].hosinfo = hosList[i];
+        markerHos[i].on('click',function(){
+          console.log(this)
+          var thisMarkerHos = this;
+          AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
+            var infoWindow = new SimpleInfoWindow({
+              infoTitle: '<strong>' + thisMarkerHos.hosinfo.OrganizationName+ '</strong>',
+              infoBody: "<div style=\"padding:0px 0px 0px 4px;\">"+thisMarkerHos.hosinfo.LocationDescription+'</div>',
+              offset: new AMap.Pixel(0, -20),
+              autoMove: true
+            })
+            infoWindow.open(mapObj, thisMarkerHos.C.position)
+          })
         })
-    }
+      }
+    }).catch(function(error){
+      console.log("error",error);
+    })
+
+    axios.get('/getCarList',{}).then((response) => {
+      carList = response.data.results;
+      console.log(carList)
+      for(var i=0;i<carList.length;i++){
+        if(carList[i].Longitude!=null && carList[i].Latitude!=null){
+          if(carList[i].CarStatus == 0){
+            carList[i].CarStatus='空闲'
+          }
+          else{
+            carList[i].CarStatus='忙碌'
+          }
+          positionCar[i] = new AMap.LngLat(carList[i].Longitude, carList[i].Latitude)
+          console.log(positionCar[i])
+          markerCar[i] = new SvgMarker(
+            new SvgMarker.Shape.IconFont({
+              symbolJs: null,
+              icon: 'icon-jiuhuche',
+              size: 50,
+              offset: [-25, -50],
+              fillColor: 'green'
+            }), {
+              map: mapObj,
+              position: positionCar[i],
+              showPositionPoint: {
+                color: 'red'
+              }
+            });
+          markerCar[i].carinfo = carList[i];
+          markerCar[i].on('click',function(){
+            console.log(this)
+            var thisMarkerCar = this;
+            AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
+
+              var infoWindow = new SimpleInfoWindow({
+                infoTitle: '<strong>' + thisMarkerCar.carinfo.CarName+ '</strong>',
+                infoBody: "<div style=\"padding:0px 0px 0px 4px;\">"+'编号：'+thisMarkerCar.carinfo.CarNo+'<br>车牌号：'+thisMarkerCar.carinfo.CarId+'<br>状态：'+thisMarkerCar.carinfo.CarStatus+'</div>',
+                offset: new AMap.Pixel(0, -20),
+                autoMove: true
+              })
+              infoWindow.open(mapObj, thisMarkerCar.C.position)
+            })
+          })
+        }
+      }
+      that.intervalid1 = setInterval(() => {
+        console.log("正在获取新位置")
+        axios.get('/getCarList',{}).then((response) => {
+          carList = response.data.results;
+          console.log(carList)
+          for(var i=0;i<carList.length;i++){
+            if(carList[i].Longitude!=null && carList[i].Latitude!=null){
+              if(carList[i].CarStatus == 0){
+                carList[i].CarStatus='空闲'
+              }
+              else{
+                carList[i].CarStatus='忙碌'
+              }
+              positionCar[i] = new AMap.LngLat(carList[i].Longitude, carList[i].Latitude)
+              console.log(positionCar[i])
+              markerCar[i].carinfo = carList[i];
+              markerCar[i].setPosition(positionCar[i])
+            }
+          }
+        }).catch(function(error){
+          console.log("error",error);
+        })
+      }, 10000)
+    }).catch(function(error){
+      console.log("error",error);
+    })
+  }) 
+}
   }
 };
 </script>
