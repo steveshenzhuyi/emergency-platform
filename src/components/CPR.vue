@@ -22,23 +22,18 @@ export default {
       photosrc: global.photoUrl+"zyh_1557216080825test.jpg"
     }
   },
-  mounted(){
-    console.log(document.getElementById('image1').src)
-
-
-  },
   methods: {
     returnA() {
       this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
     },
     choosephoto() {
-    //   navigator.camera.getPicture(onSuccess, onFail, { 
-    //     quality: 100,
-    //     destinationType: 1,
-    //     sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-    //   // targetWidth: 300,
-    //   // targetHeight: 300
-    // });
+      navigator.camera.getPicture(onSuccess, onFail, { 
+        quality: 100,
+        destinationType: 1,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      // targetWidth: 300,
+      // targetHeight: 300
+    });
 
       function onSuccess(imageData) {
         document.getElementById('image').src =imageData;
@@ -50,12 +45,12 @@ export default {
 
     },
     takephoto() {
-    //   navigator.camera.getPicture(onSuccess, onFail, { 
-    //     quality: 100,
-    //     destinationType: 1,
-    //   // targetWidth: 300,
-    //   // targetHeight: 300
-    // });
+      navigator.camera.getPicture(onSuccess, onFail, { 
+        quality: 100,
+        destinationType: 1,
+      // targetWidth: 300,
+      // targetHeight: 300
+    });
 
       function onSuccess(imageData) {
         document.getElementById('image').src =imageData;
@@ -67,8 +62,11 @@ export default {
 
     },
     uploadPicture() {
+      //获取元素中的图片uri
       var imgURI = document.getElementById('image').src
+      //文件命名
       var photoname = window.localStorage.getItem('USERID') + '_' + new Date().getTime() + 'test.jpg'
+      //上传接口
       var uri = encodeURI(global.uploadUrl)
       var options = {
         fileKey: 'file',
