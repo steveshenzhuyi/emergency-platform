@@ -21,14 +21,6 @@
             <div><code style="font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Name}}</code>
             <code style="position:absolute;left:100px;font-size:18px;
             font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
-            <!-- <code v-show="isshow1" style="position:absolute;left:80px;font-size:18px; color:red;
-            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
-            <code v-show="isshow2" style="position:absolute;left:80px;font-size:18px; color:orange;
-            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
-            <code v-show="isshow3" style="position:absolute;left:80px;font-size:18px; color:yellow;
-            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
-            <code v-show="isshow4" style="position:absolute;left:80px;font-size:18px; color:blue;
-            font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code> -->
             <code style="position:absolute;left:200px;font-size:18px;
             font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.StatusName}}</code><br>
             </div>
@@ -252,13 +244,11 @@ export default {
       }).then((response) => {
         this.PatientlistTime=response.data.results;
         this.dataclass1=this.PatientlistClass
-        // for(var i=0; i<this.dataclass1.length;i++) {
-        //   if (this.dataclass1[i].Classification == "I级") {
-        //     this.isshow1 = true
-        //   }else if(this.dataclass1[i].Classification == "II级") {
-        //     this.isshow2 = true
-        //   }
-        // }
+        for(var i=0; i<this.dataclass1.length;i++) {
+          if (this.dataclass1[i].Classification == "I级") {
+            this.dataclass1[i].Classification.style.cssText = "color:blue"
+          }
+        }
         console.log(this.dataclass1);
       }).catch(function(error){
         console.log("error",error);
@@ -269,6 +259,11 @@ export default {
       }).then((response) => {
         this.resource=response.data.results
         this.data2=this.resource
+        for(var i=0; i<this.data2.length;i++) {
+          if(this.data2[i].Status == "1"){
+            this.data2[i].Status = "在库"
+          }
+        }
         console.log(this.data2);
       }).catch(function(error){
         console.log("error",error);
