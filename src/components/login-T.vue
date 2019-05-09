@@ -282,6 +282,11 @@ export default {
       }).then((response) => {
         this.resource=response.data.results
         this.data2=this.resource
+        for(var i=0; i<this.data2.length;i++) {
+          if(this.data2[i].Status == "1"){
+            this.data2[i].Status = "在库"
+          }
+        }
         console.log(response);
         console.log(this.data2);
       }).catch(function(error){
