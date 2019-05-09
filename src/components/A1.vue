@@ -134,12 +134,11 @@
     <img src="./icon/添加图片.png" height="35" width="35" slot="icon" @click="choosephoto()">图片</mt-button>
     <mt-button size="small" type="primary" style="float: right" @click="uploadPicture()">上传</mt-button>
   </div>
-<div  style="text-align: left; margin-top: 10px">预检分级 </div>
-<b style="text-align: left">当前分级：{{level}}</b>
-<mt-button @click="setclass()">修改分级</mt-button>
-<hr>
-<mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
-<mt-button type="danger" @click="alert()">一键上报</mt-button><br><br><br><br>
+  <div style="text-align: left; margin-top: 10px">预检分级 </div>
+  <b style="text-align: left">当前分级：{{level}}</b>
+  <mt-button @click="setclass()">修改分级</mt-button><hr>
+  <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
+  <mt-button type="danger" @click="alert()">一键上报</mt-button><br><br><br><br>
 </mt-tab-container-item>
 <mt-tab-container-item id="6">
   <img src="./pictrue/man.png"><hr>
@@ -1097,10 +1096,10 @@ initMap () {
 
     axios.get('/getAssemblyList',{}).then((response) => {
       assList = response.data.results;
-      //console.log(assList)
+      console.log(assList)
       for(var i=0;i<assList.length;i++){
         positionAss[i] = new AMap.LngLat(assList[i].Longitude, assList[i].Latitude)
-        //console.log(positionAss[i])
+        console.log(positionAss[i])
         markerAss[i] = new SvgMarker(
           new SvgMarker.Shape.IconFont({
             symbolJs: null,
@@ -1118,7 +1117,7 @@ initMap () {
           );
         markerAss[i].assinfo = assList[i];
         markerAss[i].on('click',function(){
-          //console.log(this)
+          console.log(this)
           var thisMarkerAss = this;
           AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
             var infoWindow = new SimpleInfoWindow({
@@ -1137,10 +1136,10 @@ initMap () {
 
     axios.get('/getHosList',{}).then((response) => {
       hosList = response.data.results;
-      //console.log(hosList)
+      console.log(hosList)
       for(var i=0;i<hosList.length;i++){
         positionHos[i] = new AMap.LngLat(hosList[i].Longitude, hosList[i].Latitude)
-        //console.log(positionHos[i])
+        console.log(positionHos[i])
         markerHos[i] = new SvgMarker(
           new SvgMarker.Shape.IconFont({
             symbolJs: null,
@@ -1157,7 +1156,7 @@ initMap () {
           });
         markerHos[i].hosinfo = hosList[i];
         markerHos[i].on('click',function(){
-          //console.log(this)
+          console.log(this)
           var thisMarkerHos = this;
           that.selectform = "3" 
           that.HOSNO = thisMarkerHos.hosinfo.OrganizationCode
@@ -1174,12 +1173,12 @@ initMap () {
         })
       }
     }).catch(function(error){
-      //console.log("error",error);
+      console.log("error",error);
     })
 
     axios.get('/getCarList',{}).then((response) => {
       carList = response.data.results;
-      //console.log(carList)
+      console.log(carList)
       for(var i=0;i<carList.length;i++){
         if(carList[i].Longitude!=null && carList[i].Latitude!=null){
           if(carList[i].CarStatus == 0){
@@ -1189,7 +1188,7 @@ initMap () {
             carList[i].CarStatus='忙碌'
           }
           positionCar[i] = new AMap.LngLat(carList[i].Longitude, carList[i].Latitude)
-          //console.log(positionCar[i])
+          console.log(positionCar[i])
           markerCar[i] = new SvgMarker(
             new SvgMarker.Shape.IconFont({
               symbolJs: null,
@@ -1206,7 +1205,7 @@ initMap () {
             });
           markerCar[i].carinfo = carList[i];
           markerCar[i].on('click',function(){
-            //console.log(this)
+            console.log(this)
             var thisMarkerCar = this;
             that.selectform = "2" 
             that.CARNO = thisMarkerCar.carinfo.CarNo
@@ -1225,10 +1224,10 @@ initMap () {
         }
       }
       that.intervalid1 = setInterval(() => {
-        //console.log("正在获取新位置")
+        console.log("正在获取新位置")
         axios.get('/getCarList',{}).then((response) => {
           carList = response.data.results;
-          //console.log(carList)
+          console.log(carList)
           for(var i=0;i<carList.length;i++){
             if(carList[i].Longitude!=null && carList[i].Latitude!=null){
               if(carList[i].CarStatus == 0){
@@ -1244,11 +1243,11 @@ initMap () {
             }
           }
         }).catch(function(error){
-          //console.log("error",error);
+          console.log("error",error);
         })
       }, 10000)
     }).catch(function(error){
-      //console.log("error",error);
+      console.log("error",error);
     })
   }) 
 }
