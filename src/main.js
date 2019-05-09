@@ -11,6 +11,7 @@ import '../settings.js';
 import VueQr from 'vue-qr';
 import './assets/iconfont.js';
 import QRCode from 'qrcodejs2';
+import gallery from 'img-vuer';
 
 
 axios.defaults.timeout = 5000;
@@ -22,6 +23,7 @@ Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
 
 Vue.use(MintUI);
+Vue.use(gallery);
 
 Vue.prototype.$goRoute = function $goRoute(index) {
   this.$router.push(index);
