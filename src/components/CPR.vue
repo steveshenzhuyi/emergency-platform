@@ -7,9 +7,9 @@
             @click="choosephoto()"><small>拍照</small></mt-button>
       </mt-header>
       <br><br>
-      <div><img id="image" style="max-height: 200px; max-width: 90%;" ></img></div>
+      <div><img v-gallery id="image" style="max-height: 200px; max-width: 90%;" ></img></div>
       <mt-button type="primary" @click="uploadPicture()"><small>上传</small></mt-button>
-      <div><img id="image1" style="max-height: 200px; max-width: 90%;" :src="photosrc" ></img></div>
+      <div><img id="image1" v-gallery style="max-height: 200px; max-width: 90%;" :src="photosrc" ></img></div>
     <router-view></router-view>
     </div>
 </template>
@@ -21,6 +21,8 @@ export default {
     return {
       photosrc: global.photoUrl+"zyh_1557216080825test.jpg"
     }
+  },
+  mounted(){
   },
   methods: {
     returnA() {

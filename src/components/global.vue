@@ -8,6 +8,7 @@
     // 暴露出这些属性和方法
     export default {
         photoUrl,
+        uploadUrl,
         commonFun
     }
 </script>

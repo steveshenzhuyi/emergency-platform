@@ -1057,10 +1057,8 @@ initMap () {
           })
           infoWindow.open(mapObj, e.target.getPosition())
         })
-      })     
-    });
-
-    var options1 = {
+      }) 
+      var options1 = {
       timeout: 3000,
       enableHighAccuracy: true,
       maximumAge: 0
@@ -1083,7 +1081,10 @@ initMap () {
     };
     function onError1(error) {
       alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
-    }
+    }    
+    });
+
+    
   };
   function onError(error) {
     alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
