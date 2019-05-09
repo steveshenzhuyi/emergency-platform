@@ -8,7 +8,7 @@
       </mt-header>
       <br><br>
       <div><img id="image" style="max-height: 200px; max-width: 90%;" ></img></div>
-      <button @click="uploadPicture()"><small>上传</small></button>
+      <mt-button type="primary" @click="uploadPicture()"><small>上传</small></mt-button>
       <div><img id="image1" style="max-height: 200px; max-width: 90%;" :src="photosrc" ></img></div>
     <router-view></router-view>
     </div>
