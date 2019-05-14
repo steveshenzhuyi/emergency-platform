@@ -18,39 +18,40 @@
           <mt-tab-item id="5">初步诊断</mt-tab-item>
           <mt-tab-item id="6">基本信息</mt-tab-item>
         </mt-navbar>
+        <br>
         <mt-tab-container v-model="selected1">
           <mt-tab-container-item id="1">
-            <div  style="text-align: left; margin-top: 10px">文字</div>
+            <!-- <div  style="text-align: left; margin-top: 10px">文字</div> -->
 <!--  <mt-button size="small" type="primary" plain>语音播放</mt-button>
   <mt-button size="small" type="danger" plain>语音识别</mt-button><hr> -->
-  <span>时间：{{timevalue}}</span><br>
   <div align="left">
-    <mt-field style="width:90%" type="textarea" v-model="主诉" rows="2"></mt-field><hr>
+    <span>{{timevalue}}</span><br>
+    <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="主诉" rows="2"></mt-field><hr>
   </div>
   <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
 @click="save10()">保存</mt-button>
-  <div  style="text-align: left; margin-top: 10px">图片</div>
+  <!-- <div  style="text-align: left; margin-top: 10px">图片</div> -->
   <!-- <span>时间：{{timevalue}}</span><br> -->
   <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
-  <mt-button size="small" style="float: left" type="primary" plain>
-  <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
+  <!-- <mt-button size="small" style="float: left" type="primary" plain>
+  <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
   <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain @click="choosephoto()">
   <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button>
   <mt-button size="small" type="primary" style="float: right" @click="uploadPicture()">上传</mt-button>
 </mt-tab-container-item>
 <mt-tab-container-item id="2">
-  <div  style="text-align: left; margin-top: 10px">文字</div>
-  <span>时间：{{timevalue1}}</span><br>
+  <!-- <div  style="text-align: left; margin-top: 10px">文字</div> -->
   <div align="left">
-    <mt-field style="width:90%" type="textarea" placeholder="内容" v-model="现病史" rows="2"></mt-field><hr>
+    <span>{{timevalue1}}</span><br>
+    <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="现病史" rows="2"></mt-field><hr>
   </div>
   <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
 @click="save20()">保存</mt-button>
-  <div style="text-align: left; margin-top: 10px">图片</div>
+  <!-- <div style="text-align: left; margin-top: 10px">图片</div> -->
   <!-- <span>时间：{{timevalue1}}</span><br> -->
   <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
-  <mt-button size="small" style="float: left" type="primary" plain>
-  <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
+  <!-- <mt-button size="small" style="float: left" type="primary" plain>
+  <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
   <mt-button size="small"  style="float: left; margin-left: 10px" type="danger" plain @click="choosephoto()">
   <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button>
   <mt-button size="small" type="primary"  style="float: right" @click="uploadPicture()">上传</mt-button>
@@ -85,36 +86,36 @@
 <mt-tab-container-item id="4">
   <div  style="text-align: left; margin-top: 10px">过敏史</div><hr>
   <div align="left">
-    <mt-field style="width:90%" type="textarea" placeholder="内容" v-model="过敏史"  rows="2"></mt-field><hr>
+    <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="过敏史"  rows="2"></mt-field><hr>
   </div>
   <mt-button size="small" style="float: right;position:relative;top:-50px" type="primary" @click="save41()">保存</mt-button>
   <div style="height: 33px">
-    <mt-button size="small" style="float: left" type="primary" plain>
-    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
+    <!-- <mt-button size="small" style="float: left" type="primary" plain>
+    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
     <!-- <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain>
     <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button> -->
     </div>
   <div style="text-align: left; margin-top: 10px">疾病史</div><hr>
   <div align="left">
-    <mt-field style="width:90%" type="textarea" placeholder="内容" v-model="疾病史"  rows="2"></mt-field><hr>
+    <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="疾病史"  rows="2"></mt-field><hr>
   </div>
   <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
     @click="save42()">保存</mt-button>
   <div style="height: 33px">
-    <mt-button size="small" style="float: left" type="primary" plain>
-    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
+    <!-- <mt-button size="small" style="float: left" type="primary" plain>
+    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
     <!-- <mt-button size="small"  style="float: left; margin-left: 10px" type="danger" plain>
     <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button> -->
     </div>
   <div style="text-align: left; margin-top: 10px">目前用药</div><hr>
   <div align="left">
-    <mt-field style="width:90%" type="textarea" placeholder="内容" v-model="目前用药"  rows="2"></mt-field><hr>
+    <mt-field style="width:90%" type="textarea" placeholder="请输入内容"v-model="目前用药"  rows="2"></mt-field><hr>
   </div>
     <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
     @click="save43()">保存</mt-button>
     <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
-    <mt-button size="small"  style="float: left" type="primary" plain>
-    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
+    <!-- <mt-button size="small"  style="float: left" type="primary" plain>
+    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
     <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain>
     <img src="./icon/添加图片.png" height="35" width="35" slot="icon" @click="choosephoto()">图片</mt-button>
     <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture()">上传</mt-button>
@@ -122,14 +123,14 @@
 </mt-tab-container-item>
 <mt-tab-container-item id="5">
   <div style="text-align: left; margin-top: 10px">初步诊断</div>
-  <span>时间：{{timevalue2}}</span>
   <div align="left">
-    <mt-field style="width:90%" type="textarea" placeholder="内容" v-model="初步诊断" rows="2"></mt-field><hr>
+    <span>{{timevalue2}}</span>
+    <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="2"></mt-field><hr>
   </div>
   <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px" @click="save50()">保存</mt-button>
   <div style="height: 33px">
-    <mt-button size="small" style="float: left" type="primary" plain>
-      <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
+    <!-- <mt-button size="small" style="float: left" type="primary" plain>
+      <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
     <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain>
     <img src="./icon/添加图片.png" height="35" width="35" slot="icon" @click="choosephoto()">图片</mt-button>
     <mt-button size="small" type="primary" style="float: right" @click="uploadPicture()">上传</mt-button>
@@ -217,9 +218,9 @@
   <div v-show="isShow">
     <div  style="text-align: left; margin-top: 10px">添加医嘱</div>
     <mt-field placeholder="输入医嘱" v-model="doctortell" type="textarea"></mt-field><hr>
-    <mt-button size="small" type="primary" style="float: left" plain>
+    <!-- <mt-button size="small" type="primary" style="float: left" plain>
       <img src="./icon/录音.png" height="35" width="35" slot="icon">
-    语音</mt-button>
+    语音</mt-button> -->
     <mt-button size="small" type="danger" plain style="float: left; margin-left: 10px">
       <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
     图片</mt-button>
@@ -592,9 +593,9 @@ alert() {
     patientId:this.$route.params.PATIENTID
   }).then((response) => {
     if(response.data.results == "上传成功") {
-      MessageBox.alert('上传成功', '提示');
+      alert("上传成功");
 }else{
-  MessageBox.alert('上传成功', '提示');
+  alert("上传成功");
 }
 })
 },
@@ -606,13 +607,13 @@ ensure() {
       hosNo:this.HosNo
     }).then((response) => {
   if(response.data.results == "上传成功") {
-    MessageBox.alert('病人待后送', '提示');
+    alert("病人待后送");
     this.isShow3 = false
     this.isShow2 = true
     this.isShow100 = false
     this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carId}})
   }else{
-    MessageBox.alert('上传失败', '提示');
+    alert("上传失败");
   }
 })
 }
@@ -623,13 +624,13 @@ if(this.flag == "2") {
     hosNo:this.HosNo
   }).then((response) => {
   if(response.data.results == "上传成功") {
-    MessageBox.alert('病人待后送', '提示');
+    alert("病人待后送");
     this.isShow3 = false
     this.isShow2 = true
     this.isShow100 = false
     this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往",FLAG:this.flag}})
   }else{
-    MessageBox.alert('上传失败', '提示');
+    alert("上传失败");
   }
 })
 }
@@ -647,7 +648,7 @@ save41() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      MessageBox.alert('上传成功', '提示');
+      alert("上传成功");
 // this.reload()
 }
 })
@@ -665,7 +666,7 @@ save42() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      MessageBox.alert('上传成功', '提示');
+      alert("上传成功");
 // this.reload()
 }
 })
@@ -683,7 +684,7 @@ save43() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      MessageBox.alert('上传成功', '提示');
+      alert("上传成功");
 // this.reload()
 }
 })
@@ -701,7 +702,7 @@ save50() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      MessageBox.alert('上传成功', '提示');
+      alert("上传成功");
 // this.reload()
 }
 })
@@ -719,7 +720,7 @@ save10() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      MessageBox.alert('上传成功', '提示');
+      alert("上传成功");
   this.reload()
 }
 })
@@ -737,7 +738,7 @@ save20() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      MessageBox.alert('上传成功', '提示');
+      alert("上传成功");
 // this.reload()
 }
 })
@@ -755,7 +756,7 @@ save60() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      MessageBox.alert('上传成功', '提示');
+      alert("上传成功");
 // this.reload()
 }
 })
@@ -763,7 +764,7 @@ axios.post('/assemblyOver',{
   patientId:this.$route.params.PATIENTID
 }).then((response) => {
   if(response.data.results == "上传成功") {
-    MessageBox.alert('处置完成', '提示');
+    alert("处置完成");
 // this.isShow1 = true
 this.isShow3 = false
 }
@@ -787,7 +788,7 @@ setclass() {
     class:this.Class
   }).then((response) => {
     if(response.data.results == "上传成功") {
-      MessageBox.alert('修改成功', '提示');
+      alert("修改成功");
     }
   })
 },
@@ -818,7 +819,7 @@ add() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      MessageBox.alert('上传成功', '提示');
+      alert("上传成功");
   console.log(this.dataTZ)
   var tmp = new array ()
   tmp.push(this.dataTZ);
@@ -858,7 +859,7 @@ add1() {
     fileUrl: '' 
   }).then((response) => {
     if(response.data.results == "新建成功") {
-      MessageBox.alert('上传成功', '提示');
+      alert("上传成功");
 // this.reload()
 }
 })

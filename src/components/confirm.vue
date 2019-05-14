@@ -91,10 +91,10 @@ export default {
         patientId:window.localStorage.getItem('PATIENTNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          MessageBox.alert('确认送出', '提示');
+          alert("确认送出");
            this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",STATE1:"已后送",PATIENTID:this.patientid}})
         }else{
-          MessageBox.alert('送出失败', '提示');
+          alert("送出失败");
         }
        
       })

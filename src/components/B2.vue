@@ -97,7 +97,8 @@ export default {
       })
     },
     edit() {
-      if(this.counter==this.amount)MessageBox.alert('未做修改', '提示');
+      if(this.counter==this.amount)
+        alert("未做修改");
         else if(this.counter>this.amount) {
         this.difference=this.counter-this.amount
         axios.post('/setResourceAmount',{
@@ -108,7 +109,7 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          MessageBox.alert('上传成功', '提示');
+          alert("上传成功");
         }
       })
       }else{
@@ -121,7 +122,7 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          MessageBox.alert('上传成功', '提示');
+          alert("上传成功");
         }
       })
       }

@@ -91,10 +91,12 @@ export default {
       }).then((response) => {
         console.log(this.resourceType)
         if(response.data.results == "新建成功") {
-          MessageBox.alert('新建成功', '提示');
+          // MessageBox.alert('新建成功', '提示');
+          alert("新建成功");
           this.$router.push({name: '转运列表',params:{SELECTED1:"资源"}});
         }else {
-          MessageBox.alert('创建失败', '提示');
+          // MessageBox.alert('创建失败', '提示');
+          alert("创建失败");
         }console.log(response);
             console.log(response.data.results);
         }).catch(function(error){
