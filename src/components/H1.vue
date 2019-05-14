@@ -334,21 +334,27 @@ export default {
     },
     heartrate() {
       this.体征 = "心率"
+      this.content = ""
     },
     bloodpressure() {
       this.体征 = "血压"
+      this.content = ""
     },
     temprature() {
       this.体征 = "体温"
+      this.content = ""
     },
     breath() {
       this.体征 = "呼吸"
+      this.content = ""
     },
     bloodoxygen() {
       this.体征 = "血氧"
+      this.content = ""
     },
     symptom() {
       this.体征 = "其他"
+      this.content = ""
     },
     add() {
       var operationCode

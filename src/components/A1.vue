@@ -80,7 +80,7 @@
     <b>
       {{item.Detail}}
     </b><br>
-    <small>{{item.OperationTime}}</small>
+    <small style="color:grey">{{item.OperationTime}}</small>
   </div><br><br><br><br>
 </mt-tab-container-item>
 <mt-tab-container-item id="4">
@@ -194,7 +194,7 @@
     <b>
       {{item.Detail}}
     </b><br>
-    <small>{{item.OperationTime}}</small>
+    <small style="color:grey">{{item.OperationTime}}</small>
   </div><br><br><br><br>
 </mt-tab-container-item>
 <mt-tab-container-item id="病人去向">
@@ -554,11 +554,11 @@ stone() {
 },
 drug() {
   this.methods = "口服药物"
-  this.content1 = ""
+  this.content1 = "药物名称：    用法：    用量："
 },
 dd() {
   this.methods = "静脉给药"
-  this.content1 = ""
+  this.content1 = "药物名称：    用法：    用量："
 },
 elseway () {
   this.methods = "其他处理"

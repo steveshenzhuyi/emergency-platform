@@ -50,7 +50,7 @@
             <b>
             {{item.Detail}}
             </b><br>
-            <small>{{item.OperationTime}}</small>
+            <small style="color:grey">{{item.OperationTime}}</small>
         </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="既往病历">
@@ -124,7 +124,7 @@
             <b>
             {{item.Detail}}
             </b><br>
-            <small>{{item.OperationTime}}</small>
+            <small style="color:grey">{{item.OperationTime}}</small>
             </div><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
@@ -405,42 +405,55 @@ export default {
     },
     oxygen() {
       this.methods = "吸氧处理"
+      this.content1 = ""
     },
     ECG() {
       this.methods = "心电检查"
+      this.content1 = ""
     },
     bandage() {
       this.methods = "包扎止血"
+      this.content1 = ""
     },
     stone() {
       this.methods = "固定处理"
+      this.content1 = ""
     },
     drug() {
       this.methods = "口服药物"
+      this.content1 = "药物名称：    用法：    用量："
     },
     dd() {
       this.methods = "静脉给药"
+      this.content1 = "药物名称：    用法：    用量："
     },
     elseway () {
       this.methods = "其他处理"
+      this.content1 = ""
     },
     heartrate() {
       this.体征 = "心率"
+      this.content = ""
     },
     bloodpressure() {
       this.体征 = "血压"
+      this.content = ""
     },
     temprature() {
       this.体征 = "体温"
+      this.content = ""
     },
     breath() {
       this.体征 = "呼吸"
+      this.content = ""
     },
     bloodoxygen() {
       this.体征 = "血氧"
+      this.content = ""
     },
     symptom() {
       this.体征 = "其他"
+      this.content = ""
     },
     add1() {
       var operationCode1
