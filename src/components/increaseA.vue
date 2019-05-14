@@ -64,6 +64,7 @@ export default {
       age: '',
       phone: '',
       gender: '',
+      gender1: '',
       unit: '',
       position: '',
       blood: '',

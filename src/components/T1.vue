@@ -166,20 +166,21 @@
             <br><br><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="5">
-            <div style="text-align: left; margin-top: 10px">初步诊断</div>
+            <!-- <div style="text-align: left; margin-top: 10px">初步诊断</div> -->
             <div align="left">
               <span>{{timevalue2}}</span>
               <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="2"></mt-field><hr>
             </div>
             <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px" @click="save50()">保存</mt-button>
-            <div style="height: 33px">
+            <div>
               <!-- <mt-button size="small" style="float: left" type="primary" plain>
               <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
+              <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
               <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain>
               <img src="./icon/添加图片.png" height="35" width="35" slot="icon" @click="choosephoto()">图片</mt-button>
               <mt-button size="small" type="primary" style="float: right" @click="uploadPicture()">上传</mt-button>
-            </div>
-            <div  style="text-align: left; margin-top: 10px">预检分级 </div>
+            </div><br><br>
+            <div style="text-align: left; margin-top: 10px">预检分级 </div>
             <b style="text-align: left">当前分级：{{level}}</b>
             <!-- <mt-button @click="setclass()">修改分级</mt-button> -->
             <hr>
