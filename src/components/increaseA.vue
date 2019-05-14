@@ -17,10 +17,11 @@
     <hr>
     <!-- <p style="text-align: left">个人信息</p> -->
       <mt-field label="姓名" v-model="pname"></mt-field>
-      <mt-radio
+      <mt-radio v-show="!iscamera"
         v-model="gender"
         :options="options">
       </mt-radio>
+      <mt-field v-show="iscamera" label="性别" v-model="gender1"></mt-field>
       <mt-field label="年龄" v-model="age"></mt-field>
       <mt-field label="民族" v-model="nation"></mt-field>
       <mt-field label="手机" v-model="phone"></mt-field>
@@ -30,7 +31,7 @@
       <p style="position: absolute;left:52px">
         血型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         {{blood}}{{type}}</p><hr>
-      <div>
+      <div v-show="!iscamera">
         <mt-picker :slots="slots" @change="onbloodChange" :visible-item-count="3"></mt-picker>
       </div>
       <br><br>
@@ -56,6 +57,7 @@ import { MessageBox } from 'mint-ui';
 export default {
   data() {
     return {
+      iscamera:false,
       groupId : window.localStorage.getItem('GROUPNO'),
       inputUserId : window.localStorage.getItem('USERID'),
       pname: '',
@@ -99,16 +101,69 @@ export default {
       var that = this;
       cordova.plugins.barcodeScanner.scan(
         function (result) {
-          console.log(result)
-          alert("We got a barcode\n" +
-            "Result: " + result.text + "\n" +
-            "Format: " + result.format + "\n" +
-            "Cancelled: " + result.cancelled)
-        },
-        function (error) {
-          alert(error)
+          console.log(result.text)
+          if(result.text && result.text!=undefined){
+            axios.post('/getMemberInfo',{
+              memberId:result.text
+          }).then((response) => {
+        console.log(response)
+        that.iscamera = true
+        that.pname = response.data.results[0].Name
+        that.age = response.data.results[0].Age
+        that.gender = response.data.results[0].Gender
+        that.unit = response.data.results[0].Unit
+        that.position = response.data.results[0].Position
+        that.bloodType = response.data.results[0].BloodType
+        that.nation = response.data.results[0].Nation
+        that.email = response.data.results[0].Email
+        that.photoUrl = response.data.results[0].PhotoUrl
+        that.phone = response.data.results[0].Phone
+
+        if(that.bloodType == 1){
+          that.blood = "A型"
+          that.type = "Rh+"
         }
-      )
+        else if(that.bloodType == 2){
+          that.blood = "A型"
+          that.type = "Rh-"
+        }
+        else if(that.bloodType == 3){
+          that.blood = "B型"
+          that.type = "Rh+"
+        }
+        else if(that.bloodType == 4){
+          that.blood = "B型"
+          that.type = "Rh-"
+        }
+        else if(that.bloodType == 5){
+          that.blood = "AB型"
+          that.type = "Rh+"
+        }
+        else if(that.bloodType == 6){
+          that.blood = "AB型"
+          that.type = "Rh-"
+        }
+        else if(that.bloodType == 7){
+          that.blood = "O型"
+          that.type = "Rh+"
+        }
+        else if(that.bloodType == 8){
+          that.blood = "O型"
+          that.type = "Rh-"
+        }
+
+        if(that.gender == 1){
+          that.gender1 = '男'
+        }else if(that.gender == 2){
+          that.gender1 = '女'
+        }else that.gender1 = '不明'
+
+        }).catch(function(error){
+            console.log("error",error);
+      });
+      }
+    })
+      
     },
     onbloodChange(picker, values) {
        this.blood = values[0];
