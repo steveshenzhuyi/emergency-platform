@@ -10,6 +10,9 @@
       <div><img v-gallery id="image" style="max-height: 200px; max-width: 90%;" ></img></div>
       <mt-button type="primary" @click="uploadPicture()"><small>上传</small></mt-button>
       <div><img id="image1" v-gallery style="max-height: 200px; max-width: 90%;" :src="photosrc" ></img></div>
+      <div><img v-gallery id="image2" style="max-height: 200px; max-width: 90%;" ></img></div>
+       <mt-button size="small" @click="chooseface()"><small>拍照</small></mt-button>
+      <mt-button type="primary" @click="uploadface()"><small>识别</small></mt-button>
       <!-- <mt-button type="primary" @click="startRecord()"><small>开始</small></mt-button>
       <mt-button type="primary" @click="stopRecord()"><small>结束</small></mt-button>
       <mt-button type="primary" @click="start()"><small>播放</small></mt-button>
@@ -21,11 +24,15 @@
 </template>
 
 <script>
+  import axios from 'axios';
 import global from './global.vue'
 export default {
   data(){
     return {
       photosrc: global.photoUrl+"zyh_1557216080825test.jpg",
+      confidence:0,
+      base64:'',
+      faceid:'0',
       // mediaRec:{},
       // mediaRec1:{}
     }
@@ -180,6 +187,56 @@ export default {
       ft.upload(imgURI, uri, success, fail, options)
       
     },
+    chooseface(){
+      var that = this
+      navigator.camera.getPicture(onSuccess, onFail, { 
+        quality: 100,
+        destinationType: 0,
+      targetHeight: 300
+    });
+
+      function onSuccess(imageData) {
+        that.base64 = imageData
+
+        document.getElementById('image2').src ="data:image/jpeg;base64," + imageData;
+      }
+
+      function onFail(message) {
+        alert('图片选择失败' + message);
+      }
+
+    },
+    uploadface(){
+      var that = this
+      that.confidence = 0
+      that.faceid = 0
+      var fd = new FormData()
+      fd.append('image_base64', that.base64)
+      fd.append('api_key', '3w6Df-OtcDBxNvrUWitVTjstLkxp4isX')
+      fd.append('api_secret','ntdkqsfCGgrCI_SIVtQEl7AHO6093PWy')
+      fd.append('faceset_token','5a7a9cc6cb9b27bfe063203125ccaed5')
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      axios.post('https://api-cn.faceplusplus.com/facepp/v3/search',fd).then( res => {
+        console.log(res.data.results)
+        if(res.data.results != null){
+          for (var i = 0; i < res.data.results.length; i++) {
+            if(res.data.results[i].confidence>60 && res.data.results[i].confidence>=that.confidence)that.faceid = res.data.results[i].user_id
+          }
+        if(that.faceid!='0'){
+          alert("识别ID"+res.data.results[0].user_id)
+        }else alert("无法识别")
+      }else{
+        alert("无法识别")
+      }
+    }).catch(function(error){
+      console.log("error",error);
+    });
+
+    }
 
   },
 }
