@@ -247,10 +247,12 @@ export default {
         carNo:window.localStorage.getItem('CARNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('取消接单')
+          // Toast('取消接单')
+          alert("取消接单");
           this.reload()
         }else {
-          Toast('取消失败！')
+          // Toast('取消失败！')
+          alert("取消失败");
         }
       })   
     },

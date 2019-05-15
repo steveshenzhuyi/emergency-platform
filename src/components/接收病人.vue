@@ -48,9 +48,11 @@ export default {
     getpatient() {
       if(this.$route.params.PATIENTID == window.localStorage.getItem('PATIENTID1')) {
         this.isshow = true;
-        MessageBox.alert('请确认接收', '提示');
+        // MessageBox.alert('请确认接收', '提示');
+        alert("请确认接收");
       }else {
-        MessageBox.alert('接收错误病人', '提示');
+        // MessageBox.alert('接收错误病人', '提示');
+        alert("接收错误病人");
       };
       axios.post('/getPatientInfo',{
       patientId:this.$route.params.PATIENTID
@@ -75,10 +77,12 @@ export default {
         carNo:window.localStorage.getItem('CARNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          MessageBox.alert('接收成功', '提示');
+          // MessageBox.alert('接收成功', '提示');
+          alert("接收成功");
           this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
         }else{
-          MessageBox.alert('接收失败', '提示');
+          // MessageBox.alert('接收失败', '提示');
+          alert("接收失败");
         } 
       })      
     }
