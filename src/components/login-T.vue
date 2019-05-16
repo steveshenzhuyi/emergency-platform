@@ -469,10 +469,7 @@ export default {
       this.data2 = tmp;
     },
     phone(){
-      Toast({
-        message:'开发中！',
-        position: 'top'
-      });
+      alert('开发中');
     }
   },
 };

@@ -674,14 +674,14 @@ export default {
   //     alert(lnglats)
   //   });
   function onSuccess(position) {
-    alert('Latitude: '          + position.coords.latitude          + '\n' +
-    'Longitude: '         + position.coords.longitude         + '\n' +
-    'Altitude: '          + position.coords.altitude          + '\n' +
-    'Accuracy: '          + position.coords.accuracy          + '\n' +
-    'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-    'Heading: '           + position.coords.heading           + '\n' +
-    'Speed: '             + position.coords.speed             + '\n' +
-    'Timestamp: '         + position.timestamp                + '\n');
+    // alert('Latitude: '          + position.coords.latitude          + '\n' +
+    // 'Longitude: '         + position.coords.longitude         + '\n' +
+    // 'Altitude: '          + position.coords.altitude          + '\n' +
+    // 'Accuracy: '          + position.coords.accuracy          + '\n' +
+    // 'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+    // 'Heading: '           + position.coords.heading           + '\n' +
+    // 'Speed: '             + position.coords.speed             + '\n' +
+    // 'Timestamp: '         + position.timestamp                + '\n');
     var gps = [position.coords.longitude, position.coords.latitude];
     AMap.convertFrom(gps, 'gps', function (status, result) {         
       lnglats = result.locations[0];
@@ -706,7 +706,7 @@ export default {
     var options1 = {
       timeout: 3000,
       enableHighAccuracy: true,
-      maximumAge: 0
+      maximumAge: 60000
     }
     that.watchID1 = navigator.geolocation.watchPosition(onSuccess1, onError1, options1);
     function onSuccess1(position) {
@@ -725,11 +725,11 @@ export default {
       });
     };
     function onError1(error) {
-      alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+      // alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
     }
   };
   function onError(error) {
-    alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+    // alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
   }
 
   AMapUI.loadUI(['overlay/SvgMarker'], function(SvgMarker) {
@@ -882,7 +882,7 @@ export default {
         }).catch(function(error){
           console.log("error",error);
         })
-      }, 10000)
+      }, 100000)
     }).catch(function(error){
       console.log("error",error);
     })

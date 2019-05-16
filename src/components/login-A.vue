@@ -398,7 +398,7 @@ export default {
       this.data2 = tmp;
     },
     phone(){
-      MessageBox.alert('开发中', '提示');
+      alert('开发中');
     }
   },
 };
