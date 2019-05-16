@@ -145,10 +145,10 @@
           <!-- <div style="text-align: left; margin-top: 10px">初步诊断</div> -->
           <div align="left">
             <span>{{timevalue2}}</span>
-            <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="2"></mt-field><hr>
+            <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="3"></mt-field><hr>
           </div>
           <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px" @click="save50()">保存</mt-button>
-          <!-- <div>
+  <!-- <div>
             <mt-button size="small" style="float: left" type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
             <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
@@ -206,7 +206,7 @@
         <mt-button size="small" @click="elseway()"
           type="primary" plain>其他处置</mt-button> <hr>
       </div>
-      <div style=" padding:3px;border:1px solid blue;margin:3px;">
+      <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px">
         {{methods}}<hr>
         <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
         <mt-button size="small" @click="add1()">确定</mt-button>
@@ -256,7 +256,11 @@
           <input type="radio" v-model="picked2" name="ways" value3="自行前往">自行前往<hr> -->
           <div id="map-container" class="map-root">
           </div>
-          <br>
+        </div>
+        <div v-show="isShow4">
+          <hr>
+          <p style="color:grey" @click="suggest()">{{LocationDescription || '最合适的医院'}}</p>
+          <hr>
         </div>
         <mt-button v-show="isShow100" size="large" type="primary" @click="ensure()">确定</mt-button>
         <br><br><br><br>
@@ -283,6 +287,7 @@
   import axios from 'axios';
   import { MessageBox } from 'mint-ui';
   import { Toast } from 'mint-ui';
+  import { Search } from 'mint-ui';
   import global from './global.vue'
   export default {
     inject:['reload'],
@@ -305,6 +310,7 @@
         isShow1:false,
         isShow2: '',
         isShow3: true,
+        isShow4: false,
         isShow100: false,
         hide: true,
         value3: '',
@@ -592,15 +598,20 @@ gotohospital() {
   this.state = "待后送";
   this.isShow = false;
   this.isShow1 = true;
+  this.isShow4 = true;
   this.isShow100 = true;
   this.hide = true
   this.CarNo = ""
   this.flag = "1"
 },
+suggest() {
+
+},
 self() {
   this.state = "待后送";
   this.isShow = false;
   this.isShow1 = true;
+  this.isShow4 = true;
   this.isShow100 = true
   this.CarNo = "自行前往"
   this.flag = "2"
@@ -609,30 +620,101 @@ self() {
 oxygen() {
   this.methods = "吸氧处理"
   this.content1 = ""
+  this.isShow4 = false
+  axios.post('/newPatientRecord',{
+    patientId:this.$route.params.PATIENTID,
+    inputUserId:window.localStorage.getItem('USERID'),
+    operator:window.localStorage.getItem('USERID'),
+    detail: "",
+    operationCode: "P111",
+    detail1: "",
+    address: "1",
+    infoType: "1",
+    fileUrl: '' 
+  }).then((response) => {
+    if(response.data.results == "新建成功") {
+      alert("上传成功");
+    }
+  })
+  this.reload()
 },
 ECG() {
   this.methods = "心电检查"
   this.content1 = ""
+  this.isShow4 = false
+  axios.post('/newPatientRecord',{
+    patientId:this.$route.params.PATIENTID,
+    inputUserId:window.localStorage.getItem('USERID'),
+    operator:window.localStorage.getItem('USERID'),
+    detail: "",
+    operationCode: "P112",
+    detail1: "",
+    address: "1",
+    infoType: "1",
+    fileUrl: '' 
+  }).then((response) => {
+    if(response.data.results == "新建成功") {
+      alert("上传成功");
+    }
+  })
+  this.reload()
 },
 bandage() {
   this.methods = "包扎止血"
   this.content1 = ""
+  this.isShow4 = false
+  axios.post('/newPatientRecord',{
+    patientId:this.$route.params.PATIENTID,
+    inputUserId:window.localStorage.getItem('USERID'),
+    operator:window.localStorage.getItem('USERID'),
+    detail: "",
+    operationCode: "P113",
+    detail1: "",
+    address: "1",
+    infoType: "1",
+    fileUrl: '' 
+  }).then((response) => {
+    if(response.data.results == "新建成功") {
+      alert("上传成功");
+    }
+  })
+  this.reload()
 },
 stone() {
   this.methods = "固定处理"
   this.content1 = ""
+  this.isShow4 = false
+  axios.post('/newPatientRecord',{
+    patientId:this.$route.params.PATIENTID,
+    inputUserId:window.localStorage.getItem('USERID'),
+    operator:window.localStorage.getItem('USERID'),
+    detail: "",
+    operationCode: "P114",
+    detail1: "",
+    address: "1",
+    infoType: "1",
+    fileUrl: '' 
+  }).then((response) => {
+    if(response.data.results == "新建成功") {
+      alert("上传成功");
+    }
+  })
+  this.reload()
 },
 drug() {
   this.methods = "口服药物"
   this.content1 = "药物名称：    用法：    用量："
+  this.isShow4 = true
 },
 dd() {
   this.methods = "静脉给药"
   this.content1 = "药物名称：    用法：    用量："
+  this.isShow4 = true
 },
 elseway () {
   this.methods = "其他处理"
   this.content1 = ""
+  this.isShow4 = true
 },
 heartrate() {
   this.体征 = "心率"
