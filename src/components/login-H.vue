@@ -310,7 +310,7 @@ export default {
       this.data3 = tmp;
     },
     phone(){
-      MessageBox.alert('开发中', '提示');
+     alert('开发中');
     }
   },
 };
