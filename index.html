@@ -22,12 +22,13 @@
 
 </html>
 <script>
-window.onerror = function(msg, url, line) {  
-   var idx = url.lastIndexOf("/");  
-   if(idx > -1) {  
-    url = url.substring(idx+1);  
-   }  
-   alert("ERROR in " + url + " (line #" + line + "): " + msg);  
-   return false;  
-};  
+  //全局报错捕捉
+// window.onerror = function(msg, url, line) {  
+//    var idx = url.lastIndexOf("/");  
+//    if(idx > -1) {  
+//     url = url.substring(idx+1);  
+//    }  
+//    alert("ERROR in " + url + " (line #" + line + "): " + msg);  
+//    return false;  
+// };  
 </script>
