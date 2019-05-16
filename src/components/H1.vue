@@ -33,10 +33,10 @@
           <mt-tab-container-item id="1">
             <div align="left">
               <span>{{timevalue}}</span><br>
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="主诉" rows="2"></mt-field><hr>
+              <mt-field  type="textarea" placeholder="请输入内容" v-model="主诉" rows="3"></mt-field><hr>
             </div>
-            <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save10()">保存</mt-button>
+            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
+              @click="save10()">保存</mt-button> -->
             <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
             <!-- <mt-button size="small" style="float: left" type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
@@ -47,10 +47,10 @@
           <mt-tab-container-item id="2">
             <div align="left">
               <span>{{timevalue1}}</span><br>
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="现病史" rows="2"></mt-field><hr>
+              <mt-field  type="textarea" placeholder="请输入内容" v-model="现病史" rows="2"></mt-field><hr>
             </div>
-            <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save20()">保存</mt-button>
+            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
+              @click="save20()">保存</mt-button> -->
             <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
             <!-- <mt-button size="small" style="float: left" type="primary" plain>
             <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
@@ -60,7 +60,7 @@
           </mt-tab-container-item>
           <mt-tab-container-item id="3">
             <div  style="text-align: left; margin-top: 10px">常用体征</div><hr>
-            <mt-button size="small" @click="heartrate()" style="position:relative;right:40px"
+            <!-- <mt-button size="small" @click="heartrate()" style="position:relative;right:40px"
             type="primary" plain>心率</mt-button>
             <mt-button size="small" @click="bloodpressure()"
             type="primary" plain>血压</mt-button>
@@ -76,7 +76,7 @@
               {{体征}}<hr>
               <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
               <mt-button @click="add()" size="small">确定</mt-button>
-            </div>
+            </div> -->
             <div v-for="(item,index) in dataTZ">
             <b>{{item.OperationName}}</b><br>
             <b>
@@ -88,9 +88,9 @@
           <mt-tab-container-item id="4">
             <div  style="text-align: left; margin-top: 10px">过敏史</div><hr>
             <div align="left">
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="过敏史"  rows="2"></mt-field><hr>
+              <mt-field  type="textarea" placeholder="请输入内容" v-model="过敏史"  rows="2"></mt-field><hr>
             </div>
-            <mt-button size="small" style="float: right;position:relative;top:-50px" type="primary" @click="save41()">保存</mt-button>
+            <!-- <mt-button size="small" style="float: right;position:relative;top:-50px" type="primary" @click="save41()">保存</mt-button> -->
             <div style="height: 33px">
     <!-- <mt-button size="small" style="float: left" type="primary" plain>
     <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
@@ -99,10 +99,10 @@
             </div>
             <div style="text-align: left; margin-top: 10px">疾病史</div><hr>
             <div align="left">
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="疾病史"  rows="2"></mt-field><hr>
+              <mt-field  type="textarea" placeholder="请输入内容" v-model="疾病史"  rows="2"></mt-field><hr>
             </div>
-            <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save42()">保存</mt-button>
+            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
+              @click="save42()">保存</mt-button> -->
             <div style="height: 33px">
     <!-- <mt-button size="small" style="float: left" type="primary" plain>
     <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
@@ -111,10 +111,10 @@
             </div>
             <div style="text-align: left; margin-top: 10px">目前用药</div><hr>
             <div align="left">
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容"v-model="目前用药"  rows="2"></mt-field><hr>
+              <mt-field type="textarea" placeholder="请输入内容" v-model="目前用药"  rows="2"></mt-field><hr>
             </div>
-            <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save43()">保存</mt-button>
+            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
+              @click="save43()">保存</mt-button> -->
             <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
     <!-- <mt-button size="small"  style="float: left" type="primary" plain>
     <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
@@ -127,9 +127,9 @@
             <div style="text-align: left; margin-top: 10px">初步诊断</div>
             <div align="left">
               <span>{{timevalue2}}</span>
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="2"></mt-field><hr>
+              <mt-field type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="2"></mt-field><hr>
             </div>
-            <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px" @click="save50()">保存</mt-button>
+            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px" @click="save50()">保存</mt-button> -->
             <div style="height: 33px">
               <!-- <mt-button size="small" style="float: left" type="primary" plain>
               <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
