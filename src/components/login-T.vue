@@ -11,7 +11,7 @@
         <div  style="width:80%;">
         <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker></div>
         <div align="right"><mt-button size="small" type="primary" style="position:relative;top:-70px"
-        @click="refreshPatient()">刷新</mt-button></div>
+        @click="getpagelist()">刷新</mt-button></div>
           <div style="position:relative;top:-40px;color: red">{{nowstate}}{{patientId1}}{{文字}}</div>
         <div v-for="(item,index) in dataclass1" align="left" style="position:relative;top:-40px">
             <hr><a @click="getpatient(index)">
@@ -42,7 +42,7 @@
         <mt-picker :slots="slots1" @change="onResourcelistChange" :visible-item-count="3"></mt-picker>
         </div>
         <div align="right">
-        <mt-button size="small" type="primary" style="position:relative;top:-70px" @click="refreshresource()">刷新</mt-button></div>
+        <mt-button size="small" type="primary" style="position:relative;top:-70px" @click="getResourceList()">刷新</mt-button></div>
         <div v-for=" (item,index) in data2" :data2-index="{index}" align="left" style="position:relative;top:-40px">
           <hr><a @click="getResource(index)">
           <div>{{ item.ResourceNo }} &nbsp;&nbsp;&nbsp;
@@ -62,7 +62,7 @@
           <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3"></mt-picker>
         </div>
         <div align="right">
-          <mt-button size="small" type="primary" @click="refreshmessage()" style="position:relative;top:-70px">刷新</mt-button>
+          <mt-button size="small" type="primary" @click="getMessageList()" style="position:relative;top:-70px">刷新</mt-button>
         </div>
         <div v-for=" (item,index) in data3" align="left" style="position:relative;top:-40px">
           <hr><a @click="getMessage(index)">
@@ -139,13 +139,13 @@ export default {
       assembly: '',
       hospital: '',
       carNo: '',
-      chooselevel: '',
-      choosestate: '',
-      choosekind: '',
-      choosenumber: '',
-      choosesituation: '',
-      ResourceType: '',
-      choosesort: '',
+      chooselevel: '选择分级',
+      choosestate: '选择状态',
+      choosekind: '全部',
+      choosenumber: '编号正序',
+      choosesituation: '全部',
+      choosesort: '时间倒序',
+      sortway: "时间排序",
       sortway: '',
       resourceNo: '',
       slots: [
@@ -223,6 +223,9 @@ export default {
   },
   mounted() {
     this.getpagelist()
+    this.getUserInfo()
+    this.getMessageList()
+    this.getResourceList()
   },
   beforeDestroy () {
     navigator.geolocation.clearWatch(this.watchID2)
@@ -259,52 +262,50 @@ export default {
     getpagelist() {
       console.log(this.groupNo);
       this.selected=this.$route.params.SELECTED1;
-      //获取病人列表分级
       axios.post('/getPatientListCarClass',{
         groupNo: this.groupNo
       }).then((response) => {
         this.PatientlistClass=response.data.results;
-        console.log(this.dataclass1);
+        axios.post('/getPatientListCarCreatetime',{
+          groupNo: this.groupNo
+        }).then((response) => {
+          this.PatientlistTime=response.data.results;
+          this.refreshPatient();
+        }).catch(function(error){
+          console.log("error",error);
+        })
       }).catch(function(error){
         console.log("error",error);
       })
-      //获取病人列表时间排序
-      axios.post('/getPatientListCarCreatetime',{
-        groupNo: this.groupNo
-      }).then((response) => {
-        this.PatientlistTime=response.data.results;
-        this.dataclass1=this.PatientlistClass
-        console.log(this.dataclass1);
-      }).catch(function(error){
-        console.log("error",error);
-      })
+    },
+    getResourceList(){
       //获取资源列表
       axios.post('/getResourceListByGroup',{
         groupNo: this.groupNo
       }).then((response) => {
         this.resource=response.data.results
-        this.data2=this.resource
-        for(var i=0; i<this.data2.length;i++) {
-          if(this.data2[i].Status == "1"){
-            this.data2[i].Status = "在库"
+        for(var i=0; i<this.resource.length;i++) {
+          if(this.resource[i].Status == "1"){
+            this.resource[i].Status = "在库"
           }
         }
-        console.log(response);
-        console.log(this.data2);
+        this.refreshresource()
       }).catch(function(error){
         console.log("error",error);
       })
-      //获取运输组信息列表
+    },
+    getMessageList(){
+      //获取现场组信息列表
       axios.post('/getCarMessage',{
         groupNo: this.groupNo
       }).then((response) => {
-        this.message=response.data.results
-        this.data3=this.message
-        console.log(response);
-        console.log(this.data3);
+        this.message = response.data.results
+        this.refreshMessage()
       }).catch(function(error){
         console.log("error",error);
       })
+    },
+    getUserInfo(){
       //获取小组号
       axios.post('/getGroupInfo',{
         groupNo: this.groupNo
@@ -340,7 +341,7 @@ export default {
         var options1 = {
           timeout: 3000,
           enableHighAccuracy: true,
-          maximumAge: 0
+          maximumAge: 60000
         }
         this.watchID2 = navigator.geolocation.watchPosition(onSuccess1, onError1, options1);
         function onSuccess1(position) {
@@ -403,6 +404,7 @@ export default {
     },
     //刷新各指定页面
     refreshPatient() {
+      this.dataclass1 = []
       if(this.sortway == "时间排序") {
         this.dataclass1=this.PatientlistTime
       }else if(this.sortway == "分级排序"){
@@ -424,13 +426,13 @@ export default {
       }
       this.dataclass1 = tmp;
     },
-    refreshmessage() {
-      this.data3=this.message;
+    refreshMessage() {
+      this.data3 = []
+      var x =this.message;
       if(this.choosesort == '时间正序') {
-          this.data3.reverse();
+          x.reverse();
         }
-      var tmp = new Array();
-      for(var i=0; i<this.data3.length;i++) {
+      for(var i=0; i<x.length;i++) {
         if(this.choosesituation != '全部') {
           if(this.choosesituation == '普通消息'){
             this.mark = '0'
@@ -438,18 +440,20 @@ export default {
           if(this.choosesituation == '紧急标识'){
             this.mark = '1'
           }
-          if(this.mark != this.data3[i].Mark) {
+          if(this.mark != x[i].Mark) {
             continue;
           }
         }
-        tmp.push(this.data3[i]);
+        this.data3.push(x[i]);
       }
-      this.data3 = tmp;
     },
     refreshresource() {
-      this.data2=this.resource;
-      var tmp = new Array();
-      for(var i=0; i<this.data2.length; i++) {
+      this.data2=[];
+      var tmp = this.resource;
+      if(this.choosenumber == '编号倒序') {
+          tmp.reverse();
+        }
+      for(var i=0; i<tmp.length; i++) {
         if(this.choosekind != '全部') {
           if(this.choosekind == '药品') {
             this.ResourceType = '1'
@@ -460,13 +464,12 @@ export default {
           if(this.choosekind == '其他') {
             this.ResourceType = '3'
           }
-          if(this.ResourceType != this.data2[i].ResourceType) {
+          if(this.ResourceType != tmp[i].ResourceType) {
             continue;
           }
         }
-        tmp.push(this.data2[i]);
+        this.data2.push(tmp[i]);
       }
-      this.data2 = tmp;
     },
     phone(){
       alert('开发中');

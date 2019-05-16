@@ -11,7 +11,7 @@
         <div  style="width:80%;">
         <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker></div>
         <div align="right"><mt-button size="small" type="primary" style="position:relative;top:-70px"
-        @click="refreshPatient()">刷新</mt-button></div>
+        @click="getpagelist()">刷新</mt-button></div>
         <div v-for="(item,index) in dataclass1" align="left" style="position:relative;top:-40px">
             <hr><a @click="getpatient(index)">
             <div>{{item.PatientId}}
@@ -41,7 +41,7 @@
         <div style="width:80%">
         <mt-picker :slots="slots1" @change="onMessagechange" :visible-item-count="3"></mt-picker></div>
         <div align="right">
-        <mt-button size="small" type="primary" @click="refreshmessage()" style="position:relative;top:-70px">刷新</mt-button></div>
+        <mt-button size="small" type="primary" @click="getMessageList()" style="position:relative;top:-70px">刷新</mt-button></div>
         <div v-for=" (item,index) in data3" align="left" style="position:relative;top:-40px">
           <hr><a @click="getMessage(index)">
             <div>
@@ -117,11 +117,11 @@ export default {
       GroupPosition: '',
       GroupName: '',
       ManageArea: '',
-      chooselevel: '',
-      choosestate: '',
-      choosesituation: '',
-      choosesort: '',
-      sortway: '',
+      chooselevel: '选择分级',
+      choosestate: '选择状态',
+      choosesituation: '全部',
+      choosesort: '时间倒序',
+      sortway: "时间排序",
       resourceNo: '',
       mark: '',
       OrganizationCode: '',
@@ -171,7 +171,9 @@ export default {
     };
   },
   mounted() {
-    this.getpagelist()
+   this.getpagelist()
+    this.getUserInfo()
+    this.getMessageList()
   },
   methods: {
      SEE(){
@@ -187,39 +189,37 @@ export default {
       )
 
     },
-    getpagelist() {
+     getpagelist() {
       console.log(this.groupNo);
       this.selected=this.$route.params.SELECTED2;
-      //获取病人列表分级
       axios.post('/getPatientListHospitalClass',{
         groupNo: this.groupNo
       }).then((response) => {
         this.PatientlistClass=response.data.results;
-        console.log(this.dataclass1);
+        axios.post('/getPatientListHospitalCreatetime',{
+          groupNo: this.groupNo
+        }).then((response) => {
+          this.PatientlistTime=response.data.results;
+          this.refreshPatient();
+        }).catch(function(error){
+          console.log("error",error);
+        })
       }).catch(function(error){
         console.log("error",error);
       })
-      //获取病人列表时间排序
-      axios.post('/getPatientListHospitalCreatetime',{
-        groupNo: this.groupNo
-      }).then((response) => {
-        this.PatientlistTime=response.data.results;
-        this.dataclass1=this.PatientlistClass
-        console.log(this.dataclass1);
-      }).catch(function(error){
-        console.log("error",error);
-      })
-      //获取医院组信息列表
+    },
+    getMessageList(){
+      //获取现场组信息列表
       axios.post('/getHosMessage',{
         groupNo: this.groupNo
       }).then((response) => {
-        this.message=response.data.results
-        this.data3=this.message
-        console.log(response);
-        console.log(this.data3);
+        this.message = response.data.results
+        this.refreshMessage()
       }).catch(function(error){
         console.log("error",error);
       })
+    },
+    getUserInfo(){
       //获取用户个人信息
       axios.post('/getUserInfo',{
         userId: this.userId
@@ -265,7 +265,9 @@ export default {
       console.log(index)
       this.$router.push({name: 'H1',params:{PATIENTID:this.dataclass1[index].PatientId}})
     },
+    //刷新各指定页面
     refreshPatient() {
+      this.dataclass1 = []
       if(this.sortway == "时间排序") {
         this.dataclass1=this.PatientlistTime
       }else if(this.sortway == "分级排序"){
@@ -287,13 +289,13 @@ export default {
       }
       this.dataclass1 = tmp;
     },
-    refreshmessage() {
-      this.data3=this.message;
+    refreshMessage() {
+      this.data3 = []
+      var x =this.message;
       if(this.choosesort == '时间正序') {
-          this.data3.reverse();
+          x.reverse();
         }
-      var tmp = new Array();
-      for(var i=0; i<this.data3.length;i++) {
+      for(var i=0; i<x.length;i++) {
         if(this.choosesituation != '全部') {
           if(this.choosesituation == '普通消息'){
             this.mark = '0'
@@ -301,13 +303,12 @@ export default {
           if(this.choosesituation == '紧急标识'){
             this.mark = '1'
           }
-          if(this.mark != this.data3[i].Mark) {
+          if(this.mark != x[i].Mark) {
             continue;
           }
         }
-        tmp.push(this.data3[i]);
+        this.data3.push(x[i]);
       }
-      this.data3 = tmp;
     },
     phone(){
      alert('开发中');

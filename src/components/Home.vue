@@ -25,6 +25,7 @@ export default {
       userId: '',
       pwd: '',
       groupNo: '',
+      RoleCode:''
     };
   },
   methods: {
@@ -36,6 +37,7 @@ export default {
       })
       .then((response) => {
         console.log(response);
+        this.RoleCode = response.data.results[0].RoleCode
         if (response.data.results[0].RoleCode == "R01") {
           //现场组登录
           this.groupNo = response.data.results[0].GroupNo;
@@ -48,6 +50,8 @@ export default {
           }).then((response) => {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
+              window.localStorage.setItem('ROLECODE',this.RoleCode);
+              
   //             window.JPush.setTags({ sequence: 1, tags: [GN] },
   // (result) => {
   //   var sequence = result.sequence
@@ -77,6 +81,7 @@ export default {
           }).then((response) => {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
+              window.localStorage.setItem('ROLECODE',this.RoleCode);
   //             window.JPush.setTags({ sequence: 1, tags: [GN] },
   // (result) => {
   //   var sequence = result.sequence
@@ -106,6 +111,7 @@ export default {
           }).then((response) => {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
+              window.localStorage.setItem('ROLECODE',this.RoleCode);
   //             window.JPush.setTags({ sequence: 1, tags: [GN] },
   // (result) => {
   //   var sequence = result.sequence

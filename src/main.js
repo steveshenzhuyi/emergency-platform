@@ -50,7 +50,14 @@ initiateUI()
 
 document.addEventListener("jpush.openNotification", function (event) {
   if(device.platform == "Android") {
+    if(window.localStorage.getItem('ROLECODE')=="R01")
 router.push({name: '病人列表',params:{SELECTED:"沟通"}});
+else if(window.localStorage.getItem('ROLECODE')=="R02")
+router.push({name: '转运列表',params:{SELECTED:"沟通"}});
+else if(window.localStorage.getItem('ROLECODE')=="R03")
+router.push({name: '医院病人列表',params:{SELECTED:"沟通"}});
+else alert("无角色")
+
   } else {
     alertContent = event.aps.alert
     alert('openNotification err')
