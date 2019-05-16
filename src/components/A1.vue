@@ -639,7 +639,7 @@ oxygen() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
     }
   })
   // this.reload()
@@ -661,7 +661,7 @@ ECG() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
     }
   })
   // this.reload()
@@ -683,7 +683,7 @@ bandage() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
     }
   })
   // this.reload()
@@ -705,7 +705,7 @@ stone() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
     }
   })
   // this.reload()
@@ -810,7 +810,7 @@ save41() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
 // this.reload()
 }
 })
@@ -829,7 +829,7 @@ save42() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
 // this.reload()
 }
 })
@@ -848,7 +848,7 @@ save43() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
 // this.reload()
 }
 })
@@ -867,7 +867,7 @@ save50() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
 // this.reload()
 }
 })
@@ -886,7 +886,7 @@ save10() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
   // this.reload()
 }
 })
@@ -905,7 +905,7 @@ save20() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
 // this.reload()
 }
 })
@@ -924,7 +924,7 @@ save60() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
 // this.reload()
 }
 })
@@ -957,7 +957,7 @@ setclass() {
   }).then((response) => {
     if(response.data.results == "上传成功") {
       alert("修改成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
     }
   })
 },
@@ -989,7 +989,7 @@ add() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
   console.log(this.dataTZ)
   var tmp = new array ()
   tmp.push(this.dataTZ);
@@ -1030,7 +1030,7 @@ add1() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-      that.getpatientrecord()
+      this.getpatientrecord()
 // this.reload()
 }
 })

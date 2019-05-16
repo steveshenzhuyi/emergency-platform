@@ -427,7 +427,7 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           alert("上传成功");
-          that.getpatientrecord()
+          this.getpatientrecord()
         }
       })
     },
@@ -448,7 +448,7 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           alert("上传成功");
-          that.getpatientrecord()
+          this.getpatientrecord()
         }
       })
     },
@@ -469,7 +469,7 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           alert("上传成功");
-          that.getpatientrecord()
+          this.getpatientrecord()
         }
       })
     },
@@ -490,7 +490,7 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           alert("上传成功");
-          that.getpatientrecord()
+          this.getpatientrecord()
         }
       })
     },
@@ -564,7 +564,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
-          that.getpatientrecord()
+          this.getpatientrecord()
           // this.reload()
         }
       })
@@ -598,12 +598,8 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
-          that.getpatientrecord()
-          console.log(this.dataTZ)
-          var tmp = new array ()
-          tmp.push(this.dataTZ);
+          this.getpatientrecord()
         }
-        this.dataTZ = this.tmp;
       })
     },
     save41() {
@@ -621,7 +617,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
-          that.getpatientrecord()
+          this.getpatientrecord()
           // this.reload()
         }
       })
@@ -641,7 +637,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
-          that.getpatientrecord()
+          this.getpatientrecord()
           // this.reload()
         }
       })
@@ -661,7 +657,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
-          that.getpatientrecord()
+          this.getpatientrecord()
           // this.reload()
         }
       })
@@ -681,7 +677,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
-          that.getpatientrecord()
+          this.getpatientrecord()
           // this.reload()
         }
       })
@@ -701,8 +697,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
-          that.getpatientrecord()
-          this.reload()
+          this.getpatientrecord()
         }
       })
     },
@@ -721,7 +716,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
-          that.getpatientrecord()
+          this.getpatientrecord()
           // this.reload()
         }
       })
@@ -741,7 +736,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
-          that.getpatientrecord()
+          this.getpatientrecord()
           // this.reload()
         }
       })
