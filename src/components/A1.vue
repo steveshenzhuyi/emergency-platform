@@ -222,7 +222,11 @@
           <input type="radio" v-model="picked2" name="ways" value3="自行前往">自行前往<hr> -->
           <div id="map-container" class="map-root">
           </div>
-          <br>
+        </div>
+        <div v-show="isShow4">
+          <hr>
+          <p style="color:grey" @click="suggest()">{{LocationDescription || '最合适的医院'}}</p>
+          <hr>
         </div>
         <mt-button v-show="isShow100" size="large" type="primary" @click="ensure()">确定</mt-button>
         <br><br><br><br>
@@ -507,15 +511,20 @@ gotohospital() {
   this.state = "待后送";
   this.isShow = false;
   this.isShow1 = true;
+  this.isShow4 = true;
   this.isShow100 = true;
   this.hide = true
   this.CarNo = ""
   this.flag = "1"
 },
+suggest() {
+
+},
 self() {
   this.state = "待后送";
   this.isShow = false;
   this.isShow1 = true;
+  this.isShow4 = true;
   this.isShow100 = true
   this.CarNo = "自行前往"
   this.flag = "2"
