@@ -224,10 +224,11 @@
           </div>
         </div>
         <div v-show="isShow4">
-          <hr>
-          <p style="color:grey" @click="suggest()">{{LocationDescription || '最合适的医院'}}</p>
-          <hr>
-        </div>
+          <mt-button @click.native="popupVisible1 = true" type="danger" size="large">医院列表</mt-button>
+        </div><br>
+        <mt-popup v-model="popupVisible1" position="bottom">
+          
+        </mt-popup>
         <mt-button v-show="isShow100" size="large" type="primary" @click="ensure()">确定</mt-button>
         <br><br><br><br>
       </mt-tab-container-item>
@@ -253,13 +254,14 @@
   import axios from 'axios';
   import { MessageBox } from 'mint-ui';
   import { Toast } from 'mint-ui';
-  import { Search } from 'mint-ui';
+  import { Popup } from 'mint-ui';
   import global from './global.vue'
   export default {
     inject:['reload'],
     data() {
       return {
         photosrc: global.photoUrl+"zyh_1557216080825test.jpg",
+        popupVisible1: false,
         intervalid1:null,
         watchID1:null,
         selected: '',
@@ -516,9 +518,6 @@ gotohospital() {
   this.hide = true
   this.CarNo = ""
   this.flag = "1"
-},
-suggest() {
-
 },
 self() {
   this.state = "待后送";

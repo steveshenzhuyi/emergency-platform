@@ -21,7 +21,6 @@ import C3 from '@/components/C3';
 import confirm from '@/components/confirm';
 import confirmt from '@/components/confirmt';
 import confirmh from '@/components/confirmh';
-import choosehospital from '@/components/choosehospital';
 import map from '@/components/map';
 import 转运列表 from '@/components/login-T';
 import 医院病人列表 from '@/components/login-H';
@@ -151,11 +150,6 @@ export default new Router({
       path: '/confirmh',
       name: 'confirmh',
       component: confirmh,
-    },
-    {
-      path: '/choosehospital',
-      name: 'choosehospital',
-      component: choosehospital,
     },
     {
       path: '/map',
