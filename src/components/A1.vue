@@ -215,7 +215,7 @@
         <hr> <b>{{item.OperationName}}</b><br>
         <b>{{item.Detail}}</b><br>
         <small style="color:grey">{{item.OperationTime}}</small>
-       </div><br><br><br><br>
+      </div><br><br><br><br>
     </mt-tab-container-item>
     <mt-tab-container-item id="病人去向">
       <mt-header fixed style="font-size:20px" title="病人去向">
@@ -247,6 +247,7 @@
           @click="save60()">确定</mt-button>
         </div>
         <div v-show="isShow1">
+          <b>推荐医院</b>: {{LocationDescription1}}<br>
           <b>已选医院</b>：{{HosNo}}<br>
           {{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}&nbsp;&nbsp;病床数：{{ICUNum}}<br>
           <div v-show="hide"><b>已选车辆</b>：{{CarNo}}<br>
@@ -258,10 +259,13 @@
           </div>
         </div>
         <div v-show="isShow4">
-          <mt-button @click.native="popupVisible1 = true" type="danger" size="large">医院列表</mt-button>
-        </div><br>
+          <mt-button @click.native="popupVisible1 = true" type="danger" size="large">推荐医院</mt-button>
+        </div>
+        <br>
         <mt-popup v-model="popupVisible1" position="bottom">
-          
+          <div v-for="(item,index) in hosList">
+            {{item.LocationDescription}}
+          </div>
         </mt-popup>
         <mt-button v-show="isShow100" size="large" type="primary" @click="ensure()">确定</mt-button>
         <br><br><br><br>
@@ -305,6 +309,7 @@
         OrganizationName: '',
         ICUNum: '',
         LocationDescription:'',
+        LocationDescription1: '',
         carname:'',
         carstate: '',
         destination: '',
@@ -361,6 +366,7 @@
         zhusu:[],
         dataTZ:[],
         dataCZ:[],
+        hosList:[],
         Status: '',
         doctortell: '',
         selectform: '',
@@ -633,9 +639,10 @@ oxygen() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
     }
   })
-  this.reload()
+  // this.reload()
 },
 ECG() {
   this.methods = "心电检查"
@@ -654,9 +661,10 @@ ECG() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
     }
   })
-  this.reload()
+  // this.reload()
 },
 bandage() {
   this.methods = "包扎止血"
@@ -675,9 +683,10 @@ bandage() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
     }
   })
-  this.reload()
+  // this.reload()
 },
 stone() {
   this.methods = "固定处理"
@@ -696,9 +705,10 @@ stone() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
     }
   })
-  this.reload()
+  // this.reload()
 },
 drug() {
   this.methods = "口服药物"
@@ -800,6 +810,7 @@ save41() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
 // this.reload()
 }
 })
@@ -818,6 +829,7 @@ save42() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
 // this.reload()
 }
 })
@@ -836,6 +848,7 @@ save43() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
 // this.reload()
 }
 })
@@ -854,6 +867,7 @@ save50() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
 // this.reload()
 }
 })
@@ -872,7 +886,8 @@ save10() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
-  this.reload()
+      that.getpatientrecord()
+  // this.reload()
 }
 })
 },
@@ -890,6 +905,7 @@ save20() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
 // this.reload()
 }
 })
@@ -908,6 +924,7 @@ save60() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
 // this.reload()
 }
 })
@@ -940,6 +957,7 @@ setclass() {
   }).then((response) => {
     if(response.data.results == "上传成功") {
       alert("修改成功");
+      that.getpatientrecord()
     }
   })
 },
@@ -971,6 +989,7 @@ add() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
   console.log(this.dataTZ)
   var tmp = new array ()
   tmp.push(this.dataTZ);
@@ -1011,6 +1030,7 @@ add1() {
   }).then((response) => {
     if(response.data.results == "新建成功") {
       alert("上传成功");
+      that.getpatientrecord()
 // this.reload()
 }
 })
@@ -1475,6 +1495,7 @@ initMap () {
     })
 
     axios.get('/getHosList',{}).then((response) => {
+      this.hosList = response.data.results
       hosList = response.data.results;
       console.log(hosList)
       for(var i=0;i<hosList.length;i++){

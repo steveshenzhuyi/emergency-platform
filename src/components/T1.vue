@@ -284,6 +284,12 @@ export default {
   },
   methods: {
     getpatientrecord() {
+      this.主诉图片 = []
+        this.既往史图片=[]
+        this.现病史图片=[]
+        this.dataTZ =[]
+        this.dataCZ = []
+
       console.log(this.CarStatus)
       axios.post('/getPatientRecord',{
         patientId:this.$route.params.PATIENTID
@@ -407,18 +413,86 @@ export default {
     oxygen() {
       this.methods = "吸氧处理"
       this.content1 = ""
+      this.isShow4 = false
+      axios.post('/newPatientRecord',{
+        patientId:this.$route.params.PATIENTID,
+        inputUserId:window.localStorage.getItem('USERID'),
+        operator:window.localStorage.getItem('USERID'),
+        detail: "",
+        operationCode: "P111",
+        detail1: "",
+        address: "1",
+        infoType: "1",
+        fileUrl: '' 
+      }).then((response) => {
+        if(response.data.results == "新建成功") {
+          alert("上传成功");
+          that.getpatientrecord()
+        }
+      })
     },
     ECG() {
       this.methods = "心电检查"
       this.content1 = ""
+      this.isShow4 = false
+      axios.post('/newPatientRecord',{
+        patientId:this.$route.params.PATIENTID,
+        inputUserId:window.localStorage.getItem('USERID'),
+        operator:window.localStorage.getItem('USERID'),
+        detail: "",
+        operationCode: "P112",
+        detail1: "",
+        address: "1",
+        infoType: "1",
+        fileUrl: '' 
+      }).then((response) => {
+        if(response.data.results == "新建成功") {
+          alert("上传成功");
+          that.getpatientrecord()
+        }
+      })
     },
     bandage() {
       this.methods = "包扎止血"
       this.content1 = ""
+      this.isShow4 = false
+      axios.post('/newPatientRecord',{
+        patientId:this.$route.params.PATIENTID,
+        inputUserId:window.localStorage.getItem('USERID'),
+        operator:window.localStorage.getItem('USERID'),
+        detail: "",
+        operationCode: "P113",
+        detail1: "",
+        address: "1",
+        infoType: "1",
+        fileUrl: '' 
+      }).then((response) => {
+        if(response.data.results == "新建成功") {
+          alert("上传成功");
+          that.getpatientrecord()
+        }
+      })
     },
     stone() {
       this.methods = "固定处理"
       this.content1 = ""
+      this.isShow4 = false
+      axios.post('/newPatientRecord',{
+        patientId:this.$route.params.PATIENTID,
+        inputUserId:window.localStorage.getItem('USERID'),
+        operator:window.localStorage.getItem('USERID'),
+        detail: "",
+        operationCode: "P114",
+        detail1: "",
+        address: "1",
+        infoType: "1",
+        fileUrl: '' 
+      }).then((response) => {
+        if(response.data.results == "新建成功") {
+          alert("上传成功");
+          that.getpatientrecord()
+        }
+      })
     },
     drug() {
       this.methods = "口服药物"
@@ -490,6 +564,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
+          that.getpatientrecord()
           // this.reload()
         }
       })
@@ -523,6 +598,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
+          that.getpatientrecord()
           console.log(this.dataTZ)
           var tmp = new array ()
           tmp.push(this.dataTZ);
@@ -545,6 +621,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
+          that.getpatientrecord()
           // this.reload()
         }
       })
@@ -564,6 +641,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
+          that.getpatientrecord()
           // this.reload()
         }
       })
@@ -583,6 +661,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
+          that.getpatientrecord()
           // this.reload()
         }
       })
@@ -602,6 +681,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
+          that.getpatientrecord()
           // this.reload()
         }
       })
@@ -621,6 +701,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
+          that.getpatientrecord()
           this.reload()
         }
       })
@@ -640,6 +721,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
+          that.getpatientrecord()
           // this.reload()
         }
       })
@@ -659,6 +741,7 @@ export default {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
+          that.getpatientrecord()
           // this.reload()
         }
       })
