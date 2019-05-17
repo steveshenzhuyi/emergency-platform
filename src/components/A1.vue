@@ -262,9 +262,15 @@
           <mt-button @click.native="popupVisible1 = true" type="danger" size="large">推荐医院</mt-button>
         </div>
         <br>
-        <mt-popup v-model="popupVisible1" position="bottom">
+        <mt-popup v-model="popupVisible1" position="bottom" class="mint-popup-4">
           <div v-for="(item,index) in hosList">
-            {{item.LocationDescription}}
+            <a @click="gethospital(index)">
+            <hr>
+            <div align="left">
+              {{item.OrganizationCode}}&nbsp;&nbsp;&nbsp;
+              {{item.LocationDescription}}
+            </div><hr>
+            </a>
           </div>
         </mt-popup>
         <mt-button v-show="isShow100" size="large" type="primary" @click="ensure()">确定</mt-button>
@@ -399,7 +405,10 @@
         this.现病史图片=[]
         this.dataTZ =[]
         this.dataCZ = []
-
+        axios.get('/getHosList',{}).then((response) => {
+          this.hosList = response.data.results
+        })
+        console.log(this.hosList)
         if(this.StatusName == "待后送") {
           this.isShow2 = true
         }
@@ -1495,7 +1504,6 @@ initMap () {
     })
 
     axios.get('/getHosList',{}).then((response) => {
-      this.hosList = response.data.results
       hosList = response.data.results;
       console.log(hosList)
       for(var i=0;i<hosList.length;i++){
@@ -1622,7 +1630,10 @@ initMap () {
     padding:3px;
     border:1px solid black;
     margin:2px;
-  }  
+  };
+  .mint-popup-4 {
+    width: 100%;  
+  }
 </style>
 
 
