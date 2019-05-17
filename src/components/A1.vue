@@ -287,9 +287,19 @@
           <mt-button @click.native="popupVisible1 = true" type="danger" size="large">推荐医院</mt-button>
         </div>
         <br>
-        <mt-popup v-model="popupVisible1" position="bottom">
+        <mt-popup v-model="popupVisible1" position="bottom" class="mint-popup-4">
           <div v-for="(item,index) in hosList">
-            {{item.LocationDescription}}
+            <a @click="gethospital(index)">
+            <hr>
+            <div align="left">
+              {{item.OrganizationCode}}&nbsp;&nbsp;&nbsp;
+              {{item.LocationDescription}}<br>
+              <small style="color:grey">
+              ICU数量：{{item.ICUNum}}</small>
+              <small style="color:grey;position:absolute;left:100px">联系人：{{item.realManager}}</small>
+              <small style="color:grey;position:absolute;left:200px">手机：{{item.phone}}</small>
+            </div><hr>
+            </a>
           </div>
         </mt-popup>
         <mt-button v-show="isShow100" size="large" type="primary" @click="ensure()">确定</mt-button>
@@ -519,6 +529,10 @@
         this.现病史图片=[]
         this.dataTZ =[]
         this.dataCZ = []
+        axios.get('/getHosList',{}).then((response) => {
+          this.hosList = response.data.results
+        })
+        console.log(this.hosList)
         this.content1 = ''
         this.体征 = ''
 
@@ -1603,7 +1617,6 @@ initMap () {
     })
 
     axios.get('/getHosList',{}).then((response) => {
-      this.hosList = response.data.results
       hosList = response.data.results;
       console.log(hosList)
       for(var i=0;i<hosList.length;i++){
@@ -1730,7 +1743,10 @@ initMap () {
     padding:3px;
     border:1px solid black;
     margin:2px;
-  }  
+  };
+  .mint-popup-4 {
+    width: 100%;  
+  }
 </style>
 
 
