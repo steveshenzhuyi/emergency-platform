@@ -22,11 +22,16 @@
         <mt-tab-container v-model="selected1">
           <mt-tab-container-item id="1">
             <div align="left">
-              <span>{{timevalue}}</span>
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="主诉" rows="5"></mt-field><hr>
+              <small style="color:grey">{{timevalue}}</small>
+              <mt-field type="textarea" placeholder="请输入内容" v-model="主诉" rows="5" v-on:focus.native.capture="focus1()" v-on:blur.native.capture="blur1()"></mt-field>
             </div>
-            <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
+            <div align="center" v-show="editing1" style="height: 35px">
+              <mt-button  v-show="editing1" size="small" type="primary" style="float: right;margin-top: 5px"
               @click="save10()">保存</mt-button>
+             <mt-button  v-show="editing1" size="small" style="float: right; margin-right:10px;margin-top: 5px"
+              @click="cancel1()">取消</mt-button>
+              </div>
+              <hr>
             <div v-for="(item,index) in 主诉图片">
               <div align="center">
               <small style="color:grey">{{item.time}}</small></div>
@@ -44,14 +49,20 @@
           <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
           <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture1()">上传</mt-button>
         </div>
+        <br><br><br><br><br><br>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
           <div align="left">
-            <span>{{timevalue1}}</span>
-            <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="现病史" rows="5"></mt-field><hr>
+            <small style="color:grey">{{timevalue1}}</small>
+            <mt-field type="textarea" placeholder="请输入内容" v-model="现病史" rows="5" v-on:focus.native.capture="focus2()" v-on:blur.native.capture="blur2()" ></mt-field>
           </div>
-          <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-            @click="save20()">保存</mt-button>
+          <div align="center" v-show="editing2" style="height: 35px">
+              <mt-button  v-show="editing2" size="small" type="primary" style="float: right;margin-top: 5px"
+              @click="save20()">保存</mt-button>
+             <mt-button  v-show="editing2" size="small" style="float: right; margin-right:10px;margin-top: 5px"
+              @click="cancel2()">取消</mt-button>
+              </div>
+              <hr>
           <div v-for="(item,index) in 现病史图片">
               <div align="center">
               <small style="color:grey">{{item.time}}</small></div>
@@ -69,6 +80,7 @@
           <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
           <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture2()">上传</mt-button>
         </div>
+        <br><br><br><br><br><br>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
           <div  style="text-align: left; margin-top: 10px">常用体征</div><hr>
@@ -85,7 +97,7 @@
           <mt-button size="small" @click="symptom()" style="position:relative;left:40px"
             type="primary" plain>其他</mt-button><br><hr>
           <div style=" padding:3px;border:1px solid blue;margin:3px;">
-            {{体征}}<hr>
+            {{体征}}
             <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
             <mt-button @click="add()" size="small">确定</mt-button>
           </div>
@@ -97,31 +109,44 @@
           <br><br><br><br>
         </mt-tab-container-item>
         <mt-tab-container-item id="4">
-          <div style="text-align: left; margin-top: 10px">过敏史</div><hr>
+          <div align="center" style="height:28px">
+          <mt-button v-show="editing41" size="small" style="float: right;margin-top: 2px" type="primary" @click="save41()">保存</mt-button>
+          <mt-button  v-show="editing41" size="small" style="float: right; margin-right:10px;margin-top: 2px"
+              @click="cancel41()">取消</mt-button>
+          <span style="float: left;">过敏史</span>
+        </div>
+          <hr>
           <div align="left">
-            <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="过敏史"  rows="2"></mt-field><hr>
+            <mt-field  type="textarea" placeholder="请输入内容" v-model="过敏史" rows="2" v-on:focus.native.capture="focus41()" v-on:blur.native.capture="blur41()"></mt-field><hr>
           </div>
-          <mt-button size="small" style="float: right;position:relative;top:-50px" type="primary" @click="save41()">保存</mt-button>
          <!--  <div style="height: 33px">
           <mt-button size="small" style="float: left" type="primary" plain>
           <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
           </div> -->
-          <div style="text-align: left; margin-top: 10px">疾病史</div><hr>
+          <div align="center" style="height:28px">
+          <mt-button v-show="editing42" size="small" style="float: right;margin-top: 2px" type="primary" @click="save42()">保存</mt-button>
+          <mt-button  v-show="editing42" size="small" style="float: right; margin-right:10px;margin-top: 2px"
+              @click="cancel42()">取消</mt-button>
+          <span style="float: left;">疾病史</span>
+        </div>
+          <hr>
           <div align="left">
-            <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="疾病史"  rows="2"></mt-field><hr>
+            <mt-field type="textarea" placeholder="请输入内容" v-model="疾病史"  rows="2" v-on:focus.native.capture="focus42()" v-on:blur.native.capture="blur42()"></mt-field><hr>
           </div>
-          <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-            @click="save42()">保存</mt-button>
           <!-- <div style="height: 33px">
           <mt-button size="small" style="float: left" type="primary" plain>
           <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
           </div> -->
-          <div style="text-align: left; margin-top: 10px">目前用药</div><hr>
+          <div align="center" style="height:28px">
+          <mt-button v-show="editing43" size="small" style="float: right;margin-top: 2px" type="primary" @click="save43()">保存</mt-button>
+          <mt-button  v-show="editing43" size="small" style="float: right; margin-right:10px;margin-top: 2px"
+              @click="cancel43()">取消</mt-button>
+          <span style="float: left;">过敏史</span>
+        </div>
+          <hr>
           <div align="left">
-            <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="目前用药"  rows="2"></mt-field><hr>
+            <mt-field type="textarea" placeholder="请输入内容" v-model="目前用药"  rows="2" v-on:focus.native.capture="focus43()" v-on:blur.native.capture="blur43()"></mt-field><hr>
           </div>
-          <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-            @click="save43()">保存</mt-button>
             <div v-for="(item,index) in 既往史图片">
               <div align="center">
               <small style="color:grey">{{item.time}}</small></div>
@@ -207,7 +232,7 @@
           type="primary" plain>其他处置</mt-button> <hr>
       </div>
       <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px">
-        {{methods}}<hr>
+        {{methods}}
         <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
         <mt-button size="small" @click="add1()">确定</mt-button>
       </div>
@@ -298,12 +323,22 @@
     inject:['reload'],
     data() {
       return {
+        editing1:false,
+        editing2:false,
+        editing41:false,
+        editing42:false,
+        editing43:false,
+        tempzhusu:'',
+        tempxianbingshi:'',
+        tempguomin:'',
+        tempjibing:'',
+        tempyongyao:'',
         photoing:false,
         photosrc: global.photoUrl+"zyh_1557216080825test.jpg",
         popupVisible1: false,
         intervalid1:null,
         watchID1:null,
-        selected: '',
+        selected: this.$route.params.SELECTED1,
         patientId: this.$route.params.PATIENTID,
         methods: '请选择处置',
         OrganizationName: '',
@@ -392,6 +427,91 @@
       this.intervalid1 = null
     },
     methods: {
+      focus1(){
+        this.editing1 = true;
+        this.tempzhusu = this.主诉;
+      },
+      blur1(){
+        if(this.tempzhusu == this.主诉){
+          this.editing1 = false;
+          this.tempzhusu = '';
+        }else{
+          this.editing1 = true;
+        }
+      },
+      cancel1(){
+        this.主诉 = this.tempzhusu;
+        this.editing1 = false;
+        this.tempzhusu = '';
+      },
+      focus2(){
+        this.editing2 = true;
+        this.tempxianbingshi = this.现病史;
+      },
+      blur2(){
+        if(this.tempxianbingshi == this.现病史){
+          this.editing2 = false;
+          this.tempxianbingshi = '';
+        }else{
+          this.editing2 = true;
+        }
+      },
+      cancel2(){
+        this.现病史 = this.tempxianbingshi;
+        this.editing2 = false;
+        this.tempxianbingshi = '';
+      },
+      focus41(){
+        this.editing41 = true;
+        this.tempguomin = this.过敏史;
+      },
+      blur41(){
+        if(this.tempguomin == this.过敏史){
+          this.editing41 = false;
+          this.tempguomin = '';
+        }else{
+          this.editing41 = true;
+        }
+      },
+      cancel41(){
+        this.过敏史 = this.tempguomin;
+        this.editing41 = false;
+        this.tempguomin = '';
+      },
+      focus42(){
+        this.editing42 = true;
+        this.tempjibing = this.疾病史;
+      },
+      blur42(){
+        if(this.tempjibing == this.疾病史){
+          this.editing42 = false;
+          this.tempjibing = '';
+        }else{
+          this.editing42 = true;
+        }
+      },
+      cancel42(){
+        this.疾病史 = this.tempjibing;
+        this.editing42 = false;
+        this.tempjibing = '';
+      },
+      focus43(){
+        this.editing43 = true;
+        this.tempyongyao = this.目前用药;
+      },
+      blur43(){
+        if(this.tempyongyao == this.目前用药){
+          this.editing43 = false;
+          this.tempyongyao = '';
+        }else{
+          this.editing43 = true;
+        }
+      },
+      cancel43(){
+        this.目前用药 = this.tempyongyao;
+        this.editing43 = false;
+        this.tempyongyao = '';
+      },
       getpatientrecord() {
         //重置
         this.主诉图片 = []
@@ -405,7 +525,6 @@
         if(this.StatusName == "待后送") {
           this.isShow2 = true
         }
-        this.selected=this.$route.params.SELECTED1;
         axios.post('/getPatientRecord',{
           patientId:this.$route.params.PATIENTID
         }).then((response) => {
@@ -458,586 +577,572 @@
             this.现病史 = '';
             this.timevalue1 = '';
           }
-//体征
-this.dataTZ=this.patientrecord.P03
-console.log(this.dataTZ)
-//既往史
-for(var i=0; i<this.patientrecord.P04.length;i++) {
-  if(this.patientrecord.P04[i].OperationCode == "P041") {
-    this.过敏史=this.patientrecord.P04[i].Detail
-    break;
-  }
-}
-for(var k=0; k<this.patientrecord.P04.length;k++) {
-  if(this.patientrecord.P04[k].OperationCode == "P042") {
-    this.疾病史=this.patientrecord.P04[k].Detail
-    break;
-  }
-}
-for(var j=0; j<this.patientrecord.P04.length;j++) {
-  if(this.patientrecord.P04[j].OperationCode == "P043") {
-    this.目前用药=this.patientrecord.P04[j].Detail
-    break;
-  }
-}
-for(var j=0; j<this.patientrecord.P04.length;j++) {
-  if(this.patientrecord.P04[j].OperationCode == "P040") {
-    var fileUrl =  this.patientrecord.P04[j].FileUrl
-    var time = this.patientrecord.P04[j].OperationTime
-    this.既往史图片.unshift({
-      fileUrl:global.photoUrl+fileUrl,
-      time:time
-    })
-  }
-}
-//初步诊断
-if(this.patientrecord.P05.length>0) {
-  this.初步诊断=this.patientrecord.P05[0].Detail
-  this.timevalue2=this.patientrecord.P05[0].OperationTime
-}else{
-  this.初步诊断=''
-  this.timevalue2=''
-}
-//处置方案
-this.dataCZ=this.patientrecord.P11
-//医嘱
-if(this.patientrecord.P06.length>0) {
-  this.doctortell=this.patientrecord.P06[0].Detail
-}else{
-  this.doctortell= ''
-}
-})
+          this.dataTZ=this.patientrecord.P03
+          console.log(this.dataTZ)
+
+          for(var i=0; i<this.patientrecord.P04.length;i++) {
+            if(this.patientrecord.P04[i].OperationCode == "P041") {
+              this.过敏史=this.patientrecord.P04[i].Detail
+              break;
+            }
+          }
+          for(var k=0; k<this.patientrecord.P04.length;k++) {
+            if(this.patientrecord.P04[k].OperationCode == "P042") {
+              this.疾病史=this.patientrecord.P04[k].Detail
+              break;
+            }
+          }
+          for(var j=0; j<this.patientrecord.P04.length;j++) {
+            if(this.patientrecord.P04[j].OperationCode == "P043") {
+              this.目前用药=this.patientrecord.P04[j].Detail
+              break;
+            }
+          }
+          for(var j=0; j<this.patientrecord.P04.length;j++) {
+            if(this.patientrecord.P04[j].OperationCode == "P040") {
+              var fileUrl =  this.patientrecord.P04[j].FileUrl
+              var time = this.patientrecord.P04[j].OperationTime
+              this.既往史图片.unshift({
+                fileUrl:global.photoUrl+fileUrl,
+                time:time
+              })
+            }
+          }
+          if(this.patientrecord.P05.length>0) {
+            this.初步诊断=this.patientrecord.P05[0].Detail
+            this.timevalue2=this.patientrecord.P05[0].OperationTime
+          }else{
+            this.初步诊断=''
+            this.timevalue2=''
+          }
+          this.dataCZ=this.patientrecord.P11
+          if(this.patientrecord.P06.length>0) {
+            this.doctortell=this.patientrecord.P06[0].Detail
+          }else{
+            this.doctortell= ''
+          }
+        })
       },
       getPatientInfo(){
+        axios.post('/getPatientInfo',{
+          patientId:this.$route.params.PATIENTID
+        }).then((response) => {
+          console.log(response)
+          this.PatientId=response.data.results[0].PatientId;
+          this.Name=response.data.results[0].Name;
+          this.Phone=response.data.results[0].Phone
+          this.Email=response.data.results[0].Email;
+          this.Gender=response.data.results[0].Gender;
+          this.Unit=response.data.results[0].Unit;
+          this.Position=response.data.results[0].Position;
+          this.Age=response.data.results[0].Age;
+          this.Nation=response.data.results[0].Nation;
+          this.bloodType=response.data.results[0].BloodType;
+          this.Status=response.data.results[0].Status;
+          this.StatusName=response.data.results[0].StatusName;
+          this.level=response.data.results[0].Classification;
+          // this.hospital=response.data.results[0].OrganizationName;
+          // this.carId=response.data.results[0].CarId;
+          this.CarNo=response.data.results[0].CarNo;
+          this.HosNo=response.data.results[0].HosNo;
+          if(this.flag1 == "1") {
+            this.StatusName = "待后送"
+            this.isShow2 = true
+          }
+          this.state=this.StatusName;
+          console.log(this.StatusName)
+          if(this.StatusName == "处置中") {
+            this.isShow1 = false
+          }else if(this.StatusName == "处置完成") {
+            this.isShow = true
+            this.isShow1 = false
+            this.isShow3 = false
+          }else if(this.StatusName == "待后送") {
+            this.isShow1 = true
+            this.isShow3 = false
+          }else if(this.StatusName == "已后送") {
+            this.isShow1 = true
+            this.isShow3 = false
+          }else if(this.StatusName == "已后送") {
+            this.isShow1 = true
+            this.isShow3 = false
+          }else if(this.StatusName == "已后送") {
+            this.isShow1 = true
+            this.isShow3 = false
+          }
+          if(this.CarNo != "") {
+            axios.post('/getCarInfo',{
+              carNo:this.CarNo
+            }).then((response) => {
+              if(this.CarNo == "000") {
+                this.hide = false
+              }
+              this.carname = response.data.results[0].CarName
+              this.carId = response.data.results[0].CarId
+              console.log(this.carId)
+              var state2= '';
+              this.state2=response.data.results[0].CarStatus
+              if(this.state2 == "0") {
+                this.carstate = "空闲"
+              }else if(this.state2 == "1") {
+                this.carstate = "正在去会场"
+              }else if(this.state2 == "2") {
+                this.carstate = "正在去医院"
+              }
+            })
+          }
+          if(this.HosNo != "") {
+            axios.post('/getHosInfo',{
+              hosNo:this.HosNo
+            }).then((response) => {
+              this.OrganizationName = response.data.results[0].OrganizationName
+              this.LocationDescription = response.data.results[0].LocationDescription
+              this.ICUNum = response.data.results[0].ICUNum
+            })
+          }
+          // if(this.StatusName != "处置中") {
+          //   this.isShow1 = true
+          // }
+          // window.localStorage.setItem('STATE',this.state);
 
-          axios.post('/getPatientInfo',{
-            patientId:this.$route.params.PATIENTID
+        })
+      },
+      onPatientlistChange(picker, values) {
+        this.level = values[0];
+      },
+      returnA() {
+        this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
+      },
+      changestate() {
+        this.state = "处置完成";
+        this.isShow = true;
+        this.isShow1 = false;
+        this.isShow100 = false
+        // this.isShow3 = false
+      },
+      gotohospital() {
+        this.state = "待后送";
+        this.isShow = false;
+        this.isShow1 = true;
+        this.isShow4 = true;
+        this.isShow100 = true;
+        this.hide = true
+        this.CarNo = ""
+        this.flag = "1"
+      },
+      self() {
+        this.state = "待后送";
+        this.isShow = false;
+        this.isShow1 = true;
+        this.isShow4 = true;
+        this.isShow100 = true
+        this.CarNo = "自行前往"
+        this.flag = "2"
+        this.hide = false
+      },
+      oxygen() {
+        this.methods = "吸氧处理"
+        this.content1 = ""
+        this.isShow4 = false
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail: "",
+          operationCode: "P111",
+          detail1: "",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+          }
+        })
+      },
+      ECG() {
+        this.methods = "心电检查"
+        this.content1 = ""
+        this.isShow4 = false
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail: "",
+          operationCode: "P112",
+          detail1: "",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+          }
+        })
+      },
+      bandage() {
+        this.methods = "包扎止血"
+        this.content1 = ""
+        this.isShow4 = false
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail: "",
+          operationCode: "P113",
+          detail1: "",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+          }
+        })
+      },
+      stone() {
+        this.methods = "固定处理"
+        this.content1 = ""
+        this.isShow4 = false
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail: "",
+          operationCode: "P114",
+          detail1: "",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+          }
+        })
+      },
+      drug() {
+        this.methods = "口服药物"
+        this.content1 = "药物名称    用法    用量   "
+        this.isShow4 = true
+      },
+      dd() {
+        this.methods = "静脉给药"
+        this.content1 = "药物名称    用法    用量   "
+        this.isShow4 = true
+      },
+      elseway () {
+        this.methods = "其他处理"
+        this.content1 = ""
+        this.isShow4 = true
+      },
+      heartrate() {
+        this.体征 = "心率"
+        this.content = ""
+      },
+      bloodpressure() {
+        this.体征 = "血压"
+        this.content = "收缩压   舒张压   "
+      },
+      temprature() {
+        this.体征 = "体温"
+        this.content = ""
+      },
+      breath() {
+        this.体征 = "呼吸"
+        this.content = ""
+      },
+      bloodoxygen() {
+        this.体征 = "血氧"
+        this.content = ""
+      },
+      symptom() {
+        this.体征 = "其他"
+        this.content = ""
+      },
+      alert() {
+        axios.post('/oneClickAlert',{
+          patientId:this.$route.params.PATIENTID
+        }).then((response) => {
+          if(response.data.results == "上传成功") {
+            alert("上报成功");
+          }else{
+            alert("上报失败");
+          }
+        })
+      },
+      ensure() {
+        if(this.flag == "1") {
+          axios.post('/prepareSend',{
+            patientId:this.patientId,
+            carNo:this.CarNo,
+            hosNo:this.HosNo
           }).then((response) => {
-            console.log(response)
-            this.PatientId=response.data.results[0].PatientId;
-            this.Name=response.data.results[0].Name;
-            this.Phone=response.data.results[0].Phone
-            this.Email=response.data.results[0].Email;
-            this.Gender=response.data.results[0].Gender;
-            this.Unit=response.data.results[0].Unit;
-            this.Position=response.data.results[0].Position;
-            this.Age=response.data.results[0].Age;
-            this.Nation=response.data.results[0].Nation;
-            this.bloodType=response.data.results[0].BloodType;
-            this.Status=response.data.results[0].Status;
-            this.StatusName=response.data.results[0].StatusName;
-            this.level=response.data.results[0].Classification;
-// this.hospital=response.data.results[0].OrganizationName;
-// this.carId=response.data.results[0].CarId;
-this.CarNo=response.data.results[0].CarNo;
-this.HosNo=response.data.results[0].HosNo;
-if(this.flag1 == "1") {
-  this.StatusName = "待后送"
-  this.isShow2 = true
-}
-this.state=this.StatusName;
-console.log(this.StatusName)
-if(this.StatusName == "处置中") {
-  this.isShow1 = false
-}else if(this.StatusName == "处置完成") {
-  this.isShow = true
-  this.isShow1 = false
-  this.isShow3 = false
-}else if(this.StatusName == "待后送") {
-  this.isShow1 = true
-  this.isShow3 = false
-}else if(this.StatusName == "已后送") {
-  this.isShow1 = true
-  this.isShow3 = false
-}else if(this.StatusName == "已后送") {
-  this.isShow1 = true
-  this.isShow3 = false
-}else if(this.StatusName == "已后送") {
-  this.isShow1 = true
-  this.isShow3 = false
-}
-if(this.CarNo != "") {
-  axios.post('/getCarInfo',{
-    carNo:this.CarNo
-  }).then((response) => {
-    if(this.CarNo == "000") {
-      this.hide = false
-    }
-    this.carname = response.data.results[0].CarName
-    this.carId = response.data.results[0].CarId
-    console.log(this.carId)
-    var state2= '';
-    this.state2=response.data.results[0].CarStatus
-    if(this.state2 == "0") {
-      this.carstate = "空闲"
-    }else if(this.state2 == "1") {
-      this.carstate = "正在去会场"
-    }else if(this.state2 == "2") {
-      this.carstate = "正在去医院"
-    }
-  })
-}
-if(this.HosNo != "") {
-  axios.post('/getHosInfo',{
-    hosNo:this.HosNo
-  }).then((response) => {
-    this.OrganizationName = response.data.results[0].OrganizationName
-    this.LocationDescription = response.data.results[0].LocationDescription
-    this.ICUNum = response.data.results[0].ICUNum
-  })
-}
-// if(this.StatusName != "处置中") {
-//   this.isShow1 = true
-// }
-// window.localStorage.setItem('STATE',this.state);
-})
-        },
-        onPatientlistChange(picker, values) {
-          this.level = values[0];
-        },
-        returnA() {
-          this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
-        },
-        changestate() {
-          this.state = "处置完成";
-          this.isShow = true;
-          this.isShow1 = false;
-          this.isShow100 = false
-// this.isShow3 = false
-},
-gotohospital() {
-  this.state = "待后送";
-  this.isShow = false;
-  this.isShow1 = true;
-  this.isShow4 = true;
-  this.isShow100 = true;
-  this.hide = true
-  this.CarNo = ""
-  this.flag = "1"
-},
-self() {
-  this.state = "待后送";
-  this.isShow = false;
-  this.isShow1 = true;
-  this.isShow4 = true;
-  this.isShow100 = true
-  this.CarNo = "自行前往"
-  this.flag = "2"
-  this.hide = false
-},
-oxygen() {
-  this.methods = "吸氧处理"
-  this.content1 = ""
-  this.isShow4 = false
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail: "",
-    operationCode: "P111",
-    detail1: "",
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-    }
-  })
-  // this.reload()
-},
-ECG() {
-  this.methods = "心电检查"
-  this.content1 = ""
-  this.isShow4 = false
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail: "",
-    operationCode: "P112",
-    detail1: "",
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-    }
-  })
-  // this.reload()
-},
-bandage() {
-  this.methods = "包扎止血"
-  this.content1 = ""
-  this.isShow4 = false
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail: "",
-    operationCode: "P113",
-    detail1: "",
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-    }
-  })
-  // this.reload()
-},
-stone() {
-  this.methods = "固定处理"
-  this.content1 = ""
-  this.isShow4 = false
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail: "",
-    operationCode: "P114",
-    detail1: "",
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-    }
-  })
-  // this.reload()
-},
-drug() {
-  this.methods = "口服药物"
-  this.content1 = "药物名称    用法    用量   "
-  this.isShow4 = true
-},
-dd() {
-  this.methods = "静脉给药"
-  this.content1 = "药物名称    用法    用量   "
-  this.isShow4 = true
-},
-elseway () {
-  this.methods = "其他处理"
-  this.content1 = ""
-  this.isShow4 = true
-},
-heartrate() {
-  this.体征 = "心率"
-  this.content = ""
-},
-bloodpressure() {
-  this.体征 = "血压"
-  this.content = "收缩压   舒张压   "
-},
-temprature() {
-  this.体征 = "体温"
-  this.content = ""
-},
-breath() {
-  this.体征 = "呼吸"
-  this.content = ""
-},
-bloodoxygen() {
-  this.体征 = "血氧"
-  this.content = ""
-},
-symptom() {
-  this.体征 = "其他"
-  this.content = ""
-},
-alert() {
-  axios.post('/oneClickAlert',{
-    patientId:this.$route.params.PATIENTID
-  }).then((response) => {
-    if(response.data.results == "上传成功") {
-      alert("上报成功");
-}else{
-  alert("上报失败");
-}
-})
-},
-ensure() {
-  if(this.flag == "1") {
-    axios.post('/prepareSend',{
-      patientId:this.patientId,
-      carNo:this.CarNo,
-      hosNo:this.HosNo
-    }).then((response) => {
-  if(response.data.results == "上传成功") {
-    alert("病人待后送");
-    this.isShow3 = false
-    this.isShow2 = true
-    this.isShow100 = false
-    this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carId}})
-  }else{
-    alert("上传失败");
-  }
-})
-}
-if(this.flag == "2") {
-  axios.post('/prepareSend',{
-    patientId:this.patientId,
-    carNo:'000',
-    hosNo:this.HosNo
-  }).then((response) => {
-  if(response.data.results == "上传成功") {
-    alert("病人待后送");
-    this.isShow3 = false
-    this.isShow2 = true
-    this.isShow100 = false
-    this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往",FLAG:this.flag}})
-  }else{
-    alert("上传失败");
-  }
-})
-}
-},
-save41() {
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail:this.过敏史,
-    operationCode: "P041",
-    detail1: "过敏史",
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-// this.reload()
-}
-})
-},
-save42() {
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail:this.疾病史,
-    operationCode: "P042",
-    detail1: "疾病史",
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-// this.reload()
-}
-})
-},
-save43() {
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail:this.目前用药,
-    operationCode: "P043",
-    detail1: "目前用药",
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-// this.reload()
-}
-})
-},
-save50() {
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail:this.初步诊断,
-    operationCode: "P050",
-    detail1: "初步诊断",
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-// this.reload()
-}
-})
-},
-save10() {
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail:this.主诉,
-    operationCode: "P010",
-    detail1: "主诉",
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-  // this.reload()
-}
-})
-},
-save20() {
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail:this.现病史,
-    operationCode: "P020",
-    detail1: "现病史",
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-// this.reload()
-}
-})
-},
-save60() {
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail:this.doctortell,
-    operationCode: "P060",
-    detail1: "医嘱",
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-// this.reload()
-}
-})
-axios.post('/assemblyOver',{
-  patientId:this.$route.params.PATIENTID
-}).then((response) => {
-  if(response.data.results == "上传成功") {
-    alert("处置完成");
-// this.isShow1 = true
-this.isShow3 = false
-}
-})
-},
-setclass() {
-  var Class
-  if(this.level === "I级") {
-    this.Class = '1'
-  }else if(this.level === "II级") {
-    this.Class = '2'
-  }else if(this.level === "III级") {
-    this.Class = '3'
-  }else if(this.level === "IV级") {
-    this.Class = '4'
-  }else if(this.level === "V级") {
-    this.Class = '5'
-  }console.log(this.Class)
-  axios.post('/setClass',{
-    patientId:this.$route.params.PATIENTID,
-    class:this.Class
-  }).then((response) => {
-    if(response.data.results == "上传成功") {
-      alert("修改成功");
-      this.getpatientrecord()
-    }
-  })
-},
-add() {
-  var operationCode
-  if(this.体征 == "心率") {
-    this.operationCode = "P031"
-  }else if(this.体征 == "血压") {
-    this.operationCode = "P032"
-  }else if(this.体征 == "体温") {
-    this.operationCode = "P033"
-  }else if(this.体征 == "呼吸") {
-    this.operationCode = "P034"
-  }else if(this.体征 == "血氧") {
-    this.operationCode = "P035"
-  }else if(this.体征 == "其他") {
-    this.operationCode = "P036"
-  }
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail:this.content,
-    operationCode: this.operationCode,
-    detail1: this.体征,
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-  console.log(this.dataTZ)
-  var tmp = new array ()
-  tmp.push(this.dataTZ);
-}
-this.dataTZ = this.tmp;
-})
-},
-add1() {
-  var operationCode1
-  if(this.methods == "吸氧处理") {
-    this.operationCode1 = "P111"
-  }else if(this.methods == "心电检查") {
-    this.operationCode1 = "P112"
-  }else if(this.methods == "包扎止血") {
-    this.operationCode1 = "P113"
-  }else if(this.methods == "固定处理") {
-    this.operationCode1 = "P114"
-  }else if(this.methods == "口服药物") {
-    this.operationCode1 = "P115"
-  }else if(this.methods == "静脉给药") {
-    this.operationCode1 = "P116"
-  }else if(this.methods == "其他处理") {
-    this.operationCode1 = "P117"
-  }
-  console.log(this.methods);
-  console.log(this.operationCode1);
-  console.log(this.content1);
-  axios.post('/newPatientRecord',{
-    patientId:this.$route.params.PATIENTID,
-    inputUserId:window.localStorage.getItem('USERID'),
-    operator:window.localStorage.getItem('USERID'),
-    detail:this.content1,
-    operationCode: this.operationCode1,
-    detail1: this.methods,
-    address: "1",
-    infoType: "1",
-    fileUrl: '' 
-  }).then((response) => {
-    if(response.data.results == "新建成功") {
-      alert("上传成功");
-      this.getpatientrecord()
-// this.reload()
-}
-})
-},
+            if(response.data.results == "上传成功") {
+              alert("病人待后送");
+              this.isShow3 = false
+              this.isShow2 = true
+              this.isShow100 = false
+              this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carId}})
+            }else{
+              alert("上传失败");
+            }
+          })
+        }
+        if(this.flag == "2") {
+          axios.post('/prepareSend',{
+            patientId:this.patientId,
+            carNo:'000',
+            hosNo:this.HosNo
+          }).then((response) => {
+            if(response.data.results == "上传成功") {
+              alert("病人待后送");
+              this.isShow3 = false
+              this.isShow2 = true
+              this.isShow100 = false
+              this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往",FLAG:this.flag}})
+            }else{
+              alert("上传失败");
+            }
+          })
+        }
+      },
+      save41() {
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.过敏史,
+          operationCode: "P041",
+          detail1: "过敏史",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+          }
+        })
+      },
+      save42() {
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.疾病史,
+          operationCode: "P042",
+          detail1: "疾病史",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+          }
+        })
+      },
+      save43() {
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.目前用药,
+          operationCode: "P043",
+          detail1: "目前用药",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+          }
+        })
+      },
+      save50() {
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.初步诊断,
+          operationCode: "P050",
+          detail1: "初步诊断",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+          }
+        })
+      },
+      save10() {
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.主诉,
+          operationCode: "P010",
+          detail1: "主诉",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.editing1 = false;
+            this.tempzhusu = ''
+            this.getpatientrecord()
+          }
+        })
+      },
+      save20() {
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.现病史,
+          operationCode: "P020",
+          detail1: "现病史",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+          }
+        })
+      },
+      save60() {
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.doctortell,
+          operationCode: "P060",
+          detail1: "医嘱",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+          }
+        })
+        axios.post('/assemblyOver',{
+          patientId:this.$route.params.PATIENTID
+        }).then((response) => {
+          if(response.data.results == "上传成功") {
+            alert("处置完成");
+            // this.isShow1 = true
+            this.isShow3 = false
+          }
+        })
+      },
+      setclass() {
+        var Class
+        if(this.level === "I级") {
+          this.Class = '1'
+        }else if(this.level === "II级") {
+          this.Class = '2'
+        }else if(this.level === "III级") {
+          this.Class = '3'
+        }else if(this.level === "IV级") {
+          this.Class = '4'
+        }else if(this.level === "V级") {
+          this.Class = '5'
+        }console.log(this.Class)
+        axios.post('/setClass',{
+          patientId:this.$route.params.PATIENTID,
+          class:this.Class
+        }).then((response) => {
+          if(response.data.results == "上传成功") {
+            alert("修改成功");
+            this.getpatientrecord()
+          }
+        })
+      },
+      add() {
+        var operationCode
+        if(this.体征 == "心率") {
+          this.operationCode = "P031"
+        }else if(this.体征 == "血压") {
+          this.operationCode = "P032"
+        }else if(this.体征 == "体温") {
+          this.operationCode = "P033"
+        }else if(this.体征 == "呼吸") {
+          this.operationCode = "P034"
+        }else if(this.体征 == "血氧") {
+          this.operationCode = "P035"
+        }else if(this.体征 == "其他") {
+          this.operationCode = "P036"
+        }
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.content,
+          operationCode: this.operationCode,
+          detail1: this.体征,
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+            console.log(this.dataTZ)
+            var tmp = new array ()
+            tmp.push(this.dataTZ);
+          }
+          this.dataTZ = this.tmp;
+        })
+      },
+      add1() {
+        var operationCode1
+        if(this.methods == "吸氧处理") {
+          this.operationCode1 = "P111"
+        }else if(this.methods == "心电检查") {
+          this.operationCode1 = "P112"
+        }else if(this.methods == "包扎止血") {
+          this.operationCode1 = "P113"
+        }else if(this.methods == "固定处理") {
+          this.operationCode1 = "P114"
+        }else if(this.methods == "口服药物") {
+          this.operationCode1 = "P115"
+        }else if(this.methods == "静脉给药") {
+          this.operationCode1 = "P116"
+        }else if(this.methods == "其他处理") {
+          this.operationCode1 = "P117"
+        }
+        console.log(this.methods);
+        console.log(this.operationCode1);
+        console.log(this.content1);
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.content1,
+          operationCode: this.operationCode1,
+          detail1: this.methods,
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+          }
+        })
+      },
 Select() {
   if(this.StatusName == "处置中") {
     if(this.selectform == "2") {
