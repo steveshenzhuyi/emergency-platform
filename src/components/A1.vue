@@ -268,7 +268,11 @@
             <hr>
             <div align="left">
               {{item.OrganizationCode}}&nbsp;&nbsp;&nbsp;
-              {{item.LocationDescription}}
+              {{item.LocationDescription}}<br>
+              <small style="color:grey">
+              ICU数量：{{item.ICUNum}}</small>
+              <small style="color:grey;position:absolute;left:100px">联系人：{{item.realManager}}</small>
+              <small style="color:grey;position:absolute;left:200px">手机：{{item.phone}}</small>
             </div><hr>
             </a>
           </div>
@@ -405,16 +409,13 @@
         this.现病史图片=[]
         this.dataTZ =[]
         this.dataCZ = []
-<<<<<<< HEAD
         axios.get('/getHosList',{}).then((response) => {
           this.hosList = response.data.results
         })
         console.log(this.hosList)
-=======
         this.content1 = ''
         this.体征 = ''
 
->>>>>>> 000d7129f336136270dfd13820bba07eb610e037
         if(this.StatusName == "待后送") {
           this.isShow2 = true
         }
