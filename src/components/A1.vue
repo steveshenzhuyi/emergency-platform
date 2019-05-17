@@ -405,10 +405,16 @@
         this.现病史图片=[]
         this.dataTZ =[]
         this.dataCZ = []
+<<<<<<< HEAD
         axios.get('/getHosList',{}).then((response) => {
           this.hosList = response.data.results
         })
         console.log(this.hosList)
+=======
+        this.content1 = ''
+        this.体征 = ''
+
+>>>>>>> 000d7129f336136270dfd13820bba07eb610e037
         if(this.StatusName == "待后送") {
           this.isShow2 = true
         }
@@ -427,7 +433,8 @@
                 this.主诉图片.unshift({
                   fileUrl:global.photoUrl+fileUrl,
                   time:time
-                })              }
+                })              
+              }
             }
             for(var k=0; k<this.zhusu.length;k++) {
               if(this.zhusu[k].InfoType == 1) {
@@ -721,12 +728,12 @@ stone() {
 },
 drug() {
   this.methods = "口服药物"
-  this.content1 = "药物名称：    用法：    用量："
+  this.content1 = "药物名称    用法    用量   "
   this.isShow4 = true
 },
 dd() {
   this.methods = "静脉给药"
-  this.content1 = "药物名称：    用法：    用量："
+  this.content1 = "药物名称    用法    用量   "
   this.isShow4 = true
 },
 elseway () {
@@ -740,7 +747,7 @@ heartrate() {
 },
 bloodpressure() {
   this.体征 = "血压"
-  this.content = ""
+  this.content = "收缩压   舒张压   "
 },
 temprature() {
   this.体征 = "体温"

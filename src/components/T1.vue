@@ -40,7 +40,7 @@
             <mt-button size="small" @click="elseway()"
             type="primary" plain>其他处理</mt-button><hr>
         </div>
-        <div  style=" padding:3px;border:1px solid blue;margin:3px;">
+        <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px;">
           {{methods}}<hr>
           <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
           <mt-button size="small" @click="add1()">确定</mt-button>
@@ -75,30 +75,52 @@
           <mt-tab-container-item id="1">
             <div align="left">
               <span>{{timevalue}}</span><br>
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="主诉" rows="2"></mt-field><hr>
+              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="主诉" rows="5"></mt-field><hr>
             </div>
             <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
               @click="save10()">保存</mt-button>
-            <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
-            <!-- <mt-button size="small" style="float: left" type="primary" plain>
-            <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
-            <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain @click="choosephoto()">
-            <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button>
-            <mt-button size="small" type="primary" style="float: right" @click="uploadPicture()">上传</mt-button>
+            <div v-for="(item,index) in 主诉图片">
+              <div align="center">
+              <small style="color:grey">{{item.time}}</small></div>
+              <div align="center">
+           <img v-gallery :src="item.fileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
+          </div>
+          <hr>
+          <div align="center">
+          <img v-gallery v-show="photoing" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;" id='image1'>
+        </div>
+        <div align="center">
+          <mt-button size="small"  style="float: left" type="primary" plain  @click="takephoto1()">
+          <img src="./icon/添加图片.png" height="35" width="35" slot="icon">拍照</mt-button>
+          <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain @click="choosephoto1()">
+          <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
+          <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture1()">上传</mt-button>
+        </div>
           </mt-tab-container-item>
           <mt-tab-container-item id="2">
             <div align="left">
               <span>{{timevalue1}}</span><br>
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="现病史" rows="2"></mt-field><hr>
+              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="现病史" rows="5"></mt-field><hr>
             </div>
             <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
               @click="save20()">保存</mt-button>
-            <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
-            <!-- <mt-button size="small" style="float: left" type="primary" plain>
-            <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
-            <mt-button size="small"  style="float: left; margin-left: 10px" type="danger" plain @click="choosephoto()">
-            <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button>
-            <mt-button size="small" type="primary"  style="float: right" @click="uploadPicture()">上传</mt-button>
+           <div v-for="(item,index) in 现病史图片">
+              <div align="center">
+              <small style="color:grey">{{item.time}}</small></div>
+              <div align="center">
+           <img v-gallery :src="item.fileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
+          </div>
+          <hr>
+          <div align="center">
+          <img v-gallery v-show="photoing" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;" id='image2'>
+        </div>
+        <div align="center">
+          <mt-button size="small"  style="float: left" type="primary" plain  @click="takephoto2()">
+          <img src="./icon/添加图片.png" height="35" width="35" slot="icon">拍照</mt-button>
+          <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain @click="choosephoto2()">
+          <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
+          <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture2()">上传</mt-button>
+        </div>
           </mt-tab-container-item>
           <mt-tab-container-item id="3">
             <div  style="text-align: left; margin-top: 10px">常用体征</div><hr>
@@ -157,12 +179,23 @@
             </div>
             <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
               @click="save43()">保存</mt-button>
-            <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
-    <!-- <mt-button size="small"  style="float: left" type="primary" plain>
-    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
-            <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain>
-            <img src="./icon/添加图片.png" height="35" width="35" slot="icon" @click="choosephoto()">图片</mt-button>
-            <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture()">上传</mt-button>
+           <div v-for="(item,index) in 既往史图片">
+              <div align="center">
+              <small style="color:grey">{{item.time}}</small></div>
+              <div align="center">
+           <img v-gallery :src="item.fileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
+          </div>
+          <hr>
+          <div align="center">
+          <img v-gallery v-show="photoing" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;" id='image4'>
+        </div>
+        <div align="center">
+          <mt-button size="small"  style="float: left" type="primary" plain  @click="takephoto4()">
+          <img src="./icon/添加图片.png" height="35" width="35" slot="icon">拍照</mt-button>
+          <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain @click="choosephoto4()">
+          <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
+          <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture4()">上传</mt-button>
+        </div>
             <br><br><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="5">
@@ -172,14 +205,7 @@
               <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="2"></mt-field><hr>
             </div>
             <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px" @click="save50()">保存</mt-button>
-            <div>
-              <!-- <mt-button size="small" style="float: left" type="primary" plain>
-              <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
-              <img :src="photosrc" style="max-height: 200px; max-width: 90%;"><hr>
-              <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain>
-              <img src="./icon/添加图片.png" height="35" width="35" slot="icon" @click="choosephoto()">图片</mt-button>
-              <mt-button size="small" type="primary" style="float: right" @click="uploadPicture()">上传</mt-button>
-            </div><br><br>
+            <br><br>
             <div style="text-align: left; margin-top: 10px">预检分级 </div>
             <b style="text-align: left">当前分级：{{level}}</b>
             <!-- <mt-button @click="setclass()">修改分级</mt-button> -->
@@ -248,14 +274,18 @@ export default {
       Position: '',
       bloodType : '',
       OrganizationName: '',
+      isShow4: false,
       timevalue: '',
       timevalue1: '',
       timevalue2: '',
       主诉: '',
+      现病史图片:[],
+      主诉图片:[],
       现病史: '',
       过敏史: '',
       疾病史: '',
       目前用药: '',
+      既往史图片:[],
       初步诊断: '',
       level: '',
       LocationName: '',
@@ -275,6 +305,7 @@ export default {
   mounted() {
     this.initMap()
     this.getpatientrecord()
+      this.getPatientInfo()
   },
   beforeDestroy () {
     navigator.geolocation.clearWatch(this.watchID1)
@@ -284,11 +315,14 @@ export default {
   },
   methods: {
     getpatientrecord() {
-      this.主诉图片 = []
+      //重置
+        this.主诉图片 = []
         this.既往史图片=[]
         this.现病史图片=[]
         this.dataTZ =[]
         this.dataCZ = []
+        this.content1 = ''
+        this.体征 = ''
 
       console.log(this.CarStatus)
       axios.post('/getPatientRecord',{
@@ -299,17 +333,48 @@ export default {
         //主诉
         this.zhusu=this.patientrecord.P01;
         if(this.zhusu.length>0) {
-          this.主诉=this.zhusu[0].Detail;
-          this.timevalue=this.zhusu[0].OperationTime;
+          for(var i=0; i<this.zhusu.length;i++) {
+            if(this.zhusu[i].InfoType == 3) {
+              var fileUrl = this.zhusu[i].FileUrl
+              var time = this.zhusu[i].OperationTime
+              this.主诉图片.unshift({
+                fileUrl:global.photoUrl+fileUrl,
+                time:time
+              })              
+            }
+          }
+          for(var k=0; k<this.zhusu.length;k++) {
+            if(this.zhusu[k].InfoType == 1) {
+              this.主诉=this.zhusu[k].Detail;
+              this.timevalue=this.zhusu[k].OperationTime;
+              break;
+            }
+          }
         }else{
           this.主诉='';
           this.timevalue='';
         }
         console.log(this.zhusu)
-        //现病史
         if(this.patientrecord.P02.length>0) {
-          this.现病史=this.patientrecord.P02[0].Detail;
-          this.timevalue1=this.patientrecord.P02[0].OperationTime;
+          for(var i=0; i<this.patientrecord.P02.length;i++) {
+            if(this.patientrecord.P02[i].InfoType == 3) {
+              var fileUrl = this.patientrecord.P02[i].FileUrl
+              var time = this.patientrecord.P02[i].OperationTime
+              this.现病史图片.unshift({
+                fileUrl:global.photoUrl+fileUrl,
+                time:time
+              })
+            }
+          }
+          console.log(this.现病史图片)
+          for(var k=0; k<this.patientrecord.P02.length;k++) {
+            if(this.patientrecord.P02[k].InfoType == 1) {
+              this.现病史=this.patientrecord.P02[k].Detail;
+              this.timevalue1=this.patientrecord.P02[k].OperationTime;
+              break;
+            }
+          }
+
         }else{
           this.现病史 = '';
           this.timevalue1 = '';
@@ -329,11 +394,20 @@ export default {
             break;
           }
         }
-        console.log(this.patientrecord.P04[k])
         for(var j=0; j<this.patientrecord.P04.length;j++) {
           if(this.patientrecord.P04[j].OperationCode == "P043") {
             this.目前用药=this.patientrecord.P04[j].Detail
             break;
+          }
+        }
+        for(var j=0; j<this.patientrecord.P04.length;j++) {
+          if(this.patientrecord.P04[j].OperationCode == "P040") {
+            var fileUrl =  this.patientrecord.P04[j].FileUrl
+            var time = this.patientrecord.P04[j].OperationTime
+            this.既往史图片.unshift({
+              fileUrl:global.photoUrl+fileUrl,
+              time:time
+            })
           }
         }
         //初步诊断
@@ -353,6 +427,8 @@ export default {
           this.doctortell= ''
         }
       })
+       },
+      getPatientInfo(){
       axios.post('/getPatientInfo',{
         patientId:this.$route.params.PATIENTID
       }).then((response) => {
@@ -421,7 +497,7 @@ export default {
         detail: "",
         operationCode: "P111",
         detail1: "",
-        address: "1",
+        address: "2",
         infoType: "1",
         fileUrl: '' 
       }).then((response) => {
@@ -442,7 +518,7 @@ export default {
         detail: "",
         operationCode: "P112",
         detail1: "",
-        address: "1",
+        address: "2",
         infoType: "1",
         fileUrl: '' 
       }).then((response) => {
@@ -463,7 +539,7 @@ export default {
         detail: "",
         operationCode: "P113",
         detail1: "",
-        address: "1",
+        address: "2",
         infoType: "1",
         fileUrl: '' 
       }).then((response) => {
@@ -484,7 +560,7 @@ export default {
         detail: "",
         operationCode: "P114",
         detail1: "",
-        address: "1",
+        address: "2",
         infoType: "1",
         fileUrl: '' 
       }).then((response) => {
@@ -496,15 +572,18 @@ export default {
     },
     drug() {
       this.methods = "口服药物"
-      this.content1 = "药物名称：    用法：    用量："
+      this.content1 = "药物名称    用法    用量   "
+      this.isShow4 = true
     },
     dd() {
       this.methods = "静脉给药"
-      this.content1 = "药物名称：    用法：    用量："
+      this.content1 = "药物名称    用法    用量   "
+      this.isShow4 = true
     },
     elseway () {
       this.methods = "其他处理"
       this.content1 = ""
+      this.isShow4 = true
     },
     heartrate() {
       this.体征 = "心率"
@@ -512,7 +591,7 @@ export default {
     },
     bloodpressure() {
       this.体征 = "血压"
-      this.content = ""
+      this.content = "收缩压   舒张压   "
     },
     temprature() {
       this.体征 = "体温"
@@ -783,17 +862,78 @@ export default {
     onPatientlistChange(picker, values) {
       this.level = values[0];
     },
-    choosephoto() {
+    choosephoto1() {
+  var that = this;
+  navigator.camera.getPicture(onSuccess, onFail, { 
+    quality: 100,
+    destinationType: 1,
+    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      // targetWidth: 300,
+      // targetHeight: 300
+    });
+
+  function onSuccess(imageData) {
+    that.photoing = true;
+    document.getElementById('image1').src =imageData;
+  }
+
+  function onFail(message) {
+    alert('图片选择失败' + message);
+  }
+
+},
+choosephoto2() {
+  var that = this;
+  navigator.camera.getPicture(onSuccess, onFail, { 
+    quality: 100,
+    destinationType: 1,
+    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      // targetWidth: 300,
+      // targetHeight: 300
+    });
+
+  function onSuccess(imageData) {
+    that.photoing = true;
+    document.getElementById('image2').src =imageData;
+  }
+
+  function onFail(message) {
+    alert('图片选择失败' + message);
+  }
+
+},
+choosephoto4() {
+  var that = this;
+  navigator.camera.getPicture(onSuccess, onFail, { 
+    quality: 100,
+    destinationType: 1,
+    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      // targetWidth: 300,
+      // targetHeight: 300
+    });
+
+  function onSuccess(imageData) {
+    that.photoing = true;
+    document.getElementById('image4').src =imageData;
+  }
+
+  function onFail(message) {
+    alert('图片选择失败' + message);
+  }
+
+},
+takephoto1() {
+      var that = this;
       navigator.camera.getPicture(onSuccess, onFail, { 
         quality: 100,
         destinationType: 1,
-        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
       // targetWidth: 300,
       // targetHeight: 300
     });
 
       function onSuccess(imageData) {
-        document.getElementById('image').src =imageData;
+        that.photoing = true;
+        document.getElementById('image1').src =imageData;
       }
 
       function onFail(message) {
@@ -801,7 +941,8 @@ export default {
       }
 
     },
-    takephoto() {
+    takephoto2() {
+      var that = this;
       navigator.camera.getPicture(onSuccess, onFail, { 
         quality: 100,
         destinationType: 1,
@@ -810,7 +951,8 @@ export default {
     });
 
       function onSuccess(imageData) {
-        document.getElementById('image').src =imageData;
+        that.photoing = true;
+        document.getElementById('image2').src =imageData;
       }
 
       function onFail(message) {
@@ -818,11 +960,31 @@ export default {
       }
 
     },
-    uploadPicture() {
+    takephoto4() {
+      var that = this;
+      navigator.camera.getPicture(onSuccess, onFail, { 
+        quality: 100,
+        destinationType: 1,
+      // targetWidth: 300,
+      // targetHeight: 300
+    });
+
+      function onSuccess(imageData) {
+        that.photoing = true;
+        document.getElementById('image4').src =imageData;
+      }
+
+      function onFail(message) {
+        alert('图片选择失败' + message);
+      }
+
+    },
+     uploadPicture1() {
+      var that = this;
       //获取元素中的图片uri
-      var imgURI = document.getElementById('image').src
+      var imgURI = document.getElementById('image1').src
       //文件命名
-      var photoname = window.localStorage.getItem('USERID') + '_' + new Date().getTime() + 'test.jpg'
+      var photoname =that.$route.params.PATIENTID + '_' + new Date().getTime() + '_P010.jpg'
       //上传接口
       var uri = encodeURI(global.uploadUrl)
       var options = {
@@ -832,16 +994,120 @@ export default {
         mimeType: 'image/jpeg'
       }
       function success(r) {
-        console.log(r)
-        alert("上传成功! Code = " + r.responseCode);
+        axios.post('/newPatientRecord',{
+          patientId:that.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:"主诉图片",
+          operationCode: "P010",
+          detail1: "",
+          address: "2",
+          infoType: "3",
+          fileUrl: photoname
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            that.getpatientrecord()
+            that.photoing = false
+
+          }else{
+            alert("信息上传失败");
+          }
+        })
       }
-      function fail(error) {
-        alert("上传失败! Code = " + error.code);
+          function fail(error) {
+            alert("图片上传失败!");
+          }
+          var ft = new FileTransfer();
+          ft.upload(imgURI, uri, success, fail, options)
+
+        },
+         uploadPicture2() {
+      var that = this;
+      //获取元素中的图片uri
+      var imgURI = document.getElementById('image2').src
+      //文件命名
+      var photoname =that.$route.params.PATIENTID + '_' + new Date().getTime() + '_P020.jpg'
+      //上传接口
+      var uri = encodeURI(global.uploadUrl)
+      var options = {
+        fileKey: 'file',
+        fileName: photoname,
+        chunkedMode: true,
+        mimeType: 'image/jpeg'
       }
-      var ft = new FileTransfer();
-      ft.upload(imgURI, uri, success, fail, options)
-      
-    },
+      function success(r) {
+        axios.post('/newPatientRecord',{
+          patientId:that.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:"现病史图片",
+          operationCode: "P020",
+          detail1: "",
+          address: "2",
+          infoType: "3",
+          fileUrl: photoname
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            that.getpatientrecord()
+            that.photoing = false
+
+          }else{
+            alert("信息上传失败");
+          }
+        })
+      }
+          function fail(error) {
+            alert("图片上传失败!");
+          }
+          var ft = new FileTransfer();
+          ft.upload(imgURI, uri, success, fail, options)
+
+        },
+    uploadPicture4() {
+      var that = this;
+      //获取元素中的图片uri
+      var imgURI = document.getElementById('image4').src
+      //文件命名
+      var photoname =that.$route.params.PATIENTID + '_' + new Date().getTime() + '_P040.jpg'
+      //上传接口
+      var uri = encodeURI(global.uploadUrl)
+      var options = {
+        fileKey: 'file',
+        fileName: photoname,
+        chunkedMode: true,
+        mimeType: 'image/jpeg'
+      }
+      function success(r) {
+        axios.post('/newPatientRecord',{
+          patientId:that.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:"既往史图片",
+          operationCode: "P040",
+          detail1: "",
+          address: "2",
+          infoType: "3",
+          fileUrl: photoname
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            that.getpatientrecord()
+            that.photoing = false
+
+          }else{
+            alert("信息上传失败");
+          }
+        })
+      }
+          function fail(error) {
+            alert("图片上传失败!");
+          }
+          var ft = new FileTransfer();
+          ft.upload(imgURI, uri, success, fail, options)
+
+        },
     initMap () {
     var that = this
   var carList=[{},];
