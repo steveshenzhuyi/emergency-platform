@@ -41,7 +41,7 @@
             type="primary" plain>其他处理</mt-button><hr>
         </div>
         <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px;">
-          {{methods}}<hr>
+          新增处置：{{methods}}
           <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
           <mt-button size="small" @click="add1()">确定</mt-button>
         </div>
@@ -74,11 +74,16 @@
         <mt-tab-container v-model="selected1">
           <mt-tab-container-item id="1">
             <div align="left">
-              <span>{{timevalue}}</span><br>
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="主诉" rows="5"></mt-field><hr>
+              <small style="color:grey">{{timevalue}}</small>
+              <mt-field type="textarea" placeholder="请输入内容" v-model="主诉" rows="5" v-on:focus.native.capture="focus1()" v-on:blur.native.capture="blur1()"></mt-field>
             </div>
-            <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
+            <div align="center" v-show="editing1" style="height: 35px">
+              <mt-button  v-show="editing1" size="small" type="primary" style="float: right;margin-top: 5px"
               @click="save10()">保存</mt-button>
+             <mt-button  v-show="editing1" size="small" style="float: right; margin-right:10px;margin-top: 5px"
+              @click="cancel1()">取消</mt-button>
+              </div>
+              <hr>
             <div v-for="(item,index) in 主诉图片">
               <div align="center">
               <small style="color:grey">{{item.time}}</small></div>
@@ -96,14 +101,20 @@
           <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
           <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture1()">上传</mt-button>
         </div>
+        <br><br><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="2">
             <div align="left">
-              <span>{{timevalue1}}</span><br>
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="现病史" rows="5"></mt-field><hr>
+              <small style="color:grey">{{timevalue1}}</small>
+            <mt-field type="textarea" placeholder="请输入内容" v-model="现病史" rows="5" v-on:focus.native.capture="focus2()" v-on:blur.native.capture="blur2()" ></mt-field>
             </div>
-            <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
+            <div align="center" v-show="editing2" style="height: 35px">
+              <mt-button  v-show="editing2" size="small" type="primary" style="float: right;margin-top: 5px"
               @click="save20()">保存</mt-button>
+             <mt-button  v-show="editing2" size="small" style="float: right; margin-right:10px;margin-top: 5px"
+              @click="cancel2()">取消</mt-button>
+              </div>
+              <hr>
            <div v-for="(item,index) in 现病史图片">
               <div align="center">
               <small style="color:grey">{{item.time}}</small></div>
@@ -121,9 +132,11 @@
           <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
           <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture2()">上传</mt-button>
         </div>
+        <br><br><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="3">
-            <div  style="text-align: left; margin-top: 10px">常用体征</div><hr>
+            <div align="center" style="height:28px"><span style="float: left;">常用体征</span>
+            </div><hr>
             <mt-button size="small" @click="heartrate()" style="position:relative;right:40px"
             type="primary" plain>心率</mt-button>
             <mt-button size="small" @click="bloodpressure()"
@@ -136,8 +149,8 @@
             type="primary" plain>血氧</mt-button>
             <mt-button size="small" @click="symptom()" style="position:relative;left:40px"
             type="primary" plain>其他</mt-button><br><hr>
-            <div style=" padding:3px;border:1px solid blue;margin:3px;">
-              {{体征}}<hr>
+            <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;">
+              新增体征：{{体征}}
               <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
               <mt-button @click="add()" size="small">确定</mt-button>
             </div>
@@ -150,36 +163,42 @@
             </div><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
-            <div  style="text-align: left; margin-top: 10px">过敏史</div><hr>
-            <div align="left">
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="过敏史"  rows="2"></mt-field><hr>
-            </div>
-            <mt-button size="small" style="float: right;position:relative;top:-50px" type="primary" @click="save41()">保存</mt-button>
-            <div style="height: 33px">
-    <!-- <mt-button size="small" style="float: left" type="primary" plain>
-    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
-    <!-- <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain>
-    <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button> -->
-            </div>
-            <div style="text-align: left; margin-top: 10px">疾病史</div><hr>
-            <div align="left">
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="疾病史"  rows="2"></mt-field><hr>
-            </div>
-            <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save42()">保存</mt-button>
-            <div style="height: 33px">
-    <!-- <mt-button size="small" style="float: left" type="primary" plain>
-    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
-    <!-- <mt-button size="small"  style="float: left; margin-left: 10px" type="danger" plain>
-    <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button> -->
-            </div>
-            <div style="text-align: left; margin-top: 10px">目前用药</div><hr>
-            <div align="left">
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容"v-model="目前用药"  rows="2"></mt-field><hr>
-            </div>
-            <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save43()">保存</mt-button>
-           <div v-for="(item,index) in 既往史图片">
+          <div align="center" style="height:37px">
+          <mt-button v-show="editing41" size="small" style="float: right;margin-top: 2px" type="primary" @click="save41()">保存</mt-button>
+          <mt-button  v-show="editing41" size="small" style="float: right; margin-right:10px;margin-top: 2px"
+              @click="cancel41()">取消</mt-button>
+          <span style="float: left;">过敏史</span>
+        </div>
+          <div align="left">
+            <mt-field  type="textarea" placeholder="请输入内容" v-model="过敏史" rows="2" v-on:focus.native.capture="focus41()" v-on:blur.native.capture="blur41()"></mt-field><hr>
+          </div>
+         <!--  <div style="height: 33px">
+          <mt-button size="small" style="float: left" type="primary" plain>
+          <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
+          </div> -->
+          <div align="center" style="height:37px">
+          <mt-button v-show="editing42" size="small" style="float: right;margin-top: 2px" type="primary" @click="save42()">保存</mt-button>
+          <mt-button  v-show="editing42" size="small" style="float: right; margin-right:10px;margin-top: 2px"
+              @click="cancel42()">取消</mt-button>
+          <span style="float: left;">疾病史</span>
+        </div>
+          <div align="left">
+            <mt-field type="textarea" placeholder="请输入内容" v-model="疾病史"  rows="2" v-on:focus.native.capture="focus42()" v-on:blur.native.capture="blur42()"></mt-field><hr>
+          </div>
+          <!-- <div style="height: 33px">
+          <mt-button size="small" style="float: left" type="primary" plain>
+          <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
+          </div> -->
+          <div align="center" style="height:37px">
+          <mt-button v-show="editing43" size="small" style="float: right;margin-top: 2px" type="primary" @click="save43()">保存</mt-button>
+          <mt-button  v-show="editing43" size="small" style="float: right; margin-right:10px;margin-top: 2px"
+              @click="cancel43()">取消</mt-button>
+          <span style="float: left;">目前用药</span>
+        </div>
+          <div align="left">
+            <mt-field type="textarea" placeholder="请输入内容" v-model="目前用药"  rows="2" v-on:focus.native.capture="focus43()" v-on:blur.native.capture="blur43()"></mt-field><hr>
+          </div>
+            <div v-for="(item,index) in 既往史图片">
               <div align="center">
               <small style="color:grey">{{item.time}}</small></div>
               <div align="center">
@@ -196,16 +215,21 @@
           <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
           <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture4()">上传</mt-button>
         </div>
-            <br><br><br><br><br><br>
-          </mt-tab-container-item>
+          <br><br><br><br><br><br>
+        </mt-tab-container-item>
           <mt-tab-container-item id="5">
             <!-- <div style="text-align: left; margin-top: 10px">初步诊断</div> -->
             <div align="left">
-              <span>{{timevalue2}}</span>
-              <mt-field style="width:90%" type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="2"></mt-field><hr>
-            </div>
-            <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px" @click="save50()">保存</mt-button>
-            <br><br>
+            <small style="color:grey">{{timevalue2}}</small>
+            <mt-field type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="3" v-on:focus.native.capture="focus5()" v-on:blur.native.capture="blur5()"></mt-field>
+          </div>
+          <div align="center" v-show="editing5" style="height: 35px">
+              <mt-button  v-show="editing5" size="small" type="primary" style="float: right;margin-top: 5px"
+              @click="save50()">保存</mt-button>
+             <mt-button  v-show="editing2" size="small" style="float: right; margin-right:10px;margin-top: 5px"
+              @click="cancel5()">取消</mt-button>
+              </div>
+            <hr>
             <div style="text-align: left; margin-top: 10px">预检分级 </div>
             <b style="text-align: left">当前分级：{{level}}</b>
             <!-- <mt-button @click="setclass()">修改分级</mt-button> -->
@@ -258,6 +282,19 @@ import global from './global.vue'
 export default {
   data() {
     return {
+      editing1:false,
+      editing2:false,
+      editing41:false,
+      editing42:false,
+      editing43:false,
+      editing5:false,
+      tempzhusu:'',
+      tempxianbingshi:'',
+      tempguomin:'',
+      tempjibing:'',
+      tempyongyao:'',
+      tempzhenduan:'',
+      photoing:false,
       photosrc: global.photoUrl+"zyh_1557216080825test.jpg",
       intervalid1:null,
       watchID1:null,
@@ -275,6 +312,7 @@ export default {
       bloodType : '',
       OrganizationName: '',
       isShow4: false,
+      istizheng: false,
       timevalue: '',
       timevalue1: '',
       timevalue2: '',
@@ -298,6 +336,7 @@ export default {
       methods: '请选择处置',
       体征: '请选择体征',
       content: '',
+      zhusu:'',
       dataCZ: [],
       dataTZ: [],
     };
@@ -314,6 +353,108 @@ export default {
     this.intervalid1 = null
   },
   methods: {
+    focus1(){
+      this.editing1 = true;
+      this.tempzhusu = this.主诉;
+    },
+    blur1(){
+      if(this.tempzhusu == this.主诉){
+        this.editing1 = false;
+        this.tempzhusu = '';
+      }else{
+        this.editing1 = true;
+      }
+    },
+    cancel1(){
+      this.主诉 = this.tempzhusu;
+      this.editing1 = false;
+      this.tempzhusu = '';
+    },
+    focus2(){
+      this.editing2 = true;
+      this.tempxianbingshi = this.现病史;
+    },
+    blur2(){
+      if(this.tempxianbingshi == this.现病史){
+        this.editing2 = false;
+        this.tempxianbingshi = '';
+      }else{
+        this.editing2 = true;
+      }
+    },
+    cancel2(){
+      this.现病史 = this.tempxianbingshi;
+      this.editing2 = false;
+      this.tempxianbingshi = '';
+    },
+    focus5(){
+      this.editing5 = true;
+      this.tempzhenduan = this.初步诊断;
+    },
+    blur5(){
+      if(this.tempzhenduan == this.初步诊断){
+        this.editing5 = false;
+        this.tempzhenduan = '';
+      }else{
+        this.editing5 = true;
+      }
+    },
+    cancel5(){
+      this.初步诊断 = this.tempzhenduan;
+      this.editing5 = false;
+      this.tempzhenduan = '';
+    },
+    focus41(){
+      this.editing41 = true;
+      this.tempguomin = this.过敏史;
+    },
+    blur41(){
+      if(this.tempguomin == this.过敏史){
+        this.editing41 = false;
+        this.tempguomin = '';
+      }else{
+        this.editing41 = true;
+      }
+    },
+    cancel41(){
+      this.过敏史 = this.tempguomin;
+      this.editing41 = false;
+      this.tempguomin = '';
+    },
+    focus42(){
+      this.editing42 = true;
+      this.tempjibing = this.疾病史;
+    },
+    blur42(){
+      if(this.tempjibing == this.疾病史){
+        this.editing42 = false;
+        this.tempjibing = '';
+      }else{
+        this.editing42 = true;
+      }
+    },
+    cancel42(){
+      this.疾病史 = this.tempjibing;
+      this.editing42 = false;
+      this.tempjibing = '';
+    },
+    focus43(){
+      this.editing43 = true;
+      this.tempyongyao = this.目前用药;
+    },
+    blur43(){
+      if(this.tempyongyao == this.目前用药){
+        this.editing43 = false;
+        this.tempyongyao = '';
+      }else{
+        this.editing43 = true;
+      }
+    },
+    cancel43(){
+      this.目前用药 = this.tempyongyao;
+      this.editing43 = false;
+      this.tempyongyao = '';
+    },
     getpatientrecord() {
       //重置
         this.主诉图片 = []
@@ -322,7 +463,7 @@ export default {
         this.dataTZ =[]
         this.dataCZ = []
         this.content1 = ''
-        this.体征 = ''
+        this.content = ''
 
       console.log(this.CarStatus)
       axios.post('/getPatientRecord',{
@@ -588,29 +729,35 @@ export default {
     heartrate() {
       this.体征 = "心率"
       this.content = ""
+      this.istizheng = true
     },
     bloodpressure() {
       this.体征 = "血压"
       this.content = "收缩压   舒张压   "
+      this.istizheng = true
     },
     temprature() {
       this.体征 = "体温"
       this.content = ""
+      this.istizheng = true
     },
     breath() {
       this.体征 = "呼吸"
       this.content = ""
+      this.istizheng = true
     },
     bloodoxygen() {
       this.体征 = "血氧"
       this.content = ""
+      this.istizheng = true
     },
     symptom() {
       this.体征 = "其他"
       this.content = ""
+      this.istizheng = true
     },
     add1() {
-      var operationCode1
+      this.operationCode1 = ''
       if(this.methods == "吸氧处理") {
         this.operationCode1 = "P111"
       }else if(this.methods == "心电检查") {
@@ -626,30 +773,30 @@ export default {
       }else if(this.methods == "其他处理") {
         this.operationCode1 = "P117"
       }
-      console.log(this.methods);
-      console.log(this.operationCode1);
-      console.log(this.content1);
-      axios.post('/newPatientRecord',{
-        patientId:this.$route.params.PATIENTID,
-        inputUserId:window.localStorage.getItem('USERID'),
-        operator:window.localStorage.getItem('USERID'),
-        detail:this.content1,
-        operationCode: this.operationCode1,
-        detail1: this.methods,
-        address: "2",
-        infoType: "1",
-        fileUrl: '' 
-      }).then((response) => {
-        if(response.data.results == "新建成功") {
-          // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
-          this.getpatientrecord()
-          // this.reload()
-        }
-      })
+      if(this.operationCode1!=''){
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.content1,
+          operationCode: this.operationCode1,
+          detail1: this.methods,
+          address: "2",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            alert("上传成功");
+            this.getpatientrecord()
+            this.isShow4 = false
+          }
+        })
+      }else{
+        alert("请选择处置");     
+      }
     },
     add() {
-      var operationCode
+      this.operationCode = ''
       if(this.体征 == "心率") {
         this.operationCode = "P031"
       }else if(this.体征 == "血压") {
@@ -663,23 +810,28 @@ export default {
       }else if(this.体征 == "其他") {
         this.operationCode = "P036"
       }
-      axios.post('/newPatientRecord',{
-        patientId:this.$route.params.PATIENTID,
-        inputUserId:window.localStorage.getItem('USERID'),
-        operator:window.localStorage.getItem('USERID'),
-        detail:this.content,
-        operationCode: this.operationCode,
-        detail1: this.体征,
-        address: "2",
-        infoType: "1",
-        fileUrl: '' 
-      }).then((response) => {
-        if(response.data.results == "新建成功") {
+      if(this.operationCode != ''){
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.content,
+          operationCode: this.operationCode,
+          detail1: this.体征,
+          address: "2",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
           alert("上传成功");
           this.getpatientrecord()
+          this.istizheng = false
         }
       })
+      }else{
+        alert("请选择体征");
+      }
     },
     save41() {
       axios.post('/newPatientRecord',{

@@ -72,9 +72,7 @@
           <mt-field label="责任区域" v-model="ManageArea" disabled></mt-field>
           <mt-field label="重点保障对象" v-model="GuaranteeObject" disabled></mt-field><hr>
           <mt-button size="large">修改密码</mt-button><br>
-          <mt-button size="large"  type="danger" @click="$goRoute('/Home')">退出登录</mt-button><br>
-          <hr>
-          <br><br>
+          <mt-button size="large"  type="danger" @click="$goRoute('/Home')">退出登录</mt-button><br><br><br><br>
       </mt-tab-container-item>
     </mt-tab-container>
     <div>
