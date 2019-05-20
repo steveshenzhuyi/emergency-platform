@@ -28,8 +28,18 @@ export default {
       RoleCode:''
     };
   },
+  // mounted(){
+  //   this.oast()
+  // },
   methods: {
     //先判断用户的小组
+//     oast(){
+//       Toast({
+//   message: 'Upload Complete',
+//   duration: -1
+// });
+
+//     },
     check() {
       console.log(this.userId)
       axios.post('/getUserGroup',{
@@ -125,7 +135,8 @@ export default {
               this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
             }else{
               // MessageBox.alert('用户名或密码错误!', '提示');
-              alert("用户名或密码错误");
+              Toast('用户名或密码错误');
+              // alert("用户名或密码错误");
             }
           }).catch(function(error){
             console.log("error",error);
@@ -142,3 +153,4 @@ export default {
   }
 };
 </script>
+
