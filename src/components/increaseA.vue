@@ -330,11 +330,13 @@ export default {
         console.log(response)
         if(response.data.results == "新建成功") {
           // MessageBox.alert('创建成功', '提示');
-          alert("创建成功");
+          // alert("创建成功");
+          Toast('创建成功');
           this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
         }else {
           // MessageBox.alert('创建失败', '提示');
-          alert("创建失败");
+          // alert("创建失败");
+          Toast('创建失败');
         }console.log(response);
             console.log(response.data.results);
         }).catch(function(error){

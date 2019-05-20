@@ -98,7 +98,8 @@ export default {
     },
     edit() {
       if(this.counter==this.amount){
-        alert("未做修改");
+        // alert("未做修改");
+        Toast('未做修改');
       }
         else if(this.counter>this.amount) {
         this.difference=this.counter-this.amount
@@ -110,7 +111,8 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
         }
       })
       }else{

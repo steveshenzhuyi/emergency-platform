@@ -54,10 +54,12 @@ export default {
       if(this.hosgroup == this.hospitalGroup) {
         this.isshow = true;
         // MessageBox.alert('请确认接收', '提示');
-        alert("请确认接收");
+        // alert("请确认接收");
+        Toast('请确认接收');
       }else {
         // MessageBox.alert('非本院病人', '提示');
-        alert("非本院病人");
+        // alert("非本院病人");
+        Toast('分本院病人');
       }
       this.classification = response.data.results[0].Classification;
       this.name = response.data.results[0].Name;
@@ -78,7 +80,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "上传成功") {
           // MessageBox.alert('接收成功', '提示');
-          alert("接收成功");
+          // alert("接收成功");
+          Toast('接收成功');
           this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
         }
       })      

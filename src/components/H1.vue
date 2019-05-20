@@ -429,7 +429,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           console.log(this.dataTZ)
         }
       })
@@ -448,7 +449,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           // this.reload()
         }
       })
@@ -467,7 +469,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           // this.reload()
         }
       })
@@ -486,7 +489,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           // this.reload()
         }
       })
@@ -505,7 +509,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           // this.reload()
         }
       })
@@ -524,7 +529,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.reload()
         }
       })
@@ -543,7 +549,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           // this.reload()
         }
       })
@@ -562,7 +569,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           // this.reload()
         }
       })
@@ -586,7 +594,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "上传成功") {
           // MessageBox.alert('修改成功', '提示');
-          alert("修改成功");
+          // alert("修改成功");
+          Toast('修改成功');
         }
       })
     },
@@ -596,10 +605,12 @@ export default {
       }).then((response) => {
         if(response.data.results == "上传成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
         }else{
           // MessageBox.alert('上传失败', '提示');
-          alert("上传失败");
+          // alert("上传失败");
+          Toast('上传失败');
         }
       })
     },
@@ -615,11 +626,13 @@ export default {
       }).then((response) => {
         if(response.data.results == "上传成功") {
           // MessageBox.alert('病人已出院', '提示');
-          alert("病人已出院");
+          // alert("病人已出院");
+          Toast('病人已出院');
           this.$router.push({name: '医院病人列表',params:{SELECTED2:"病人"}});
         }else{
           // MessageBox.alert('上传失败', '提示');
-          alert("上传失败");
+          // alert("上传失败");
+          Toast('上传失败');
         }
       })
       }
