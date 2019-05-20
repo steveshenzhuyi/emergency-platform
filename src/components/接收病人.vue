@@ -78,11 +78,13 @@ export default {
       }).then((response) => {
         if(response.data.results == "上传成功") {
           // MessageBox.alert('接收成功', '提示');
-          alert("接收成功");
+          // alert("接收成功");
+          Toast('接收成功');
           this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}});
         }else{
           // MessageBox.alert('接收失败', '提示');
-          alert("接收失败");
+          // alert("接收失败");
+          Toast('接收失败');
         } 
       })      
     }

@@ -616,7 +616,8 @@ export default {
         }).then((response) => {
           if(response.data.results == "上传成功") {
             // MessageBox.alert('接单成功', '提示');
-            alert("接单成功");
+            // alert("接单成功");
+            Toast('接单成功');
             window.localStorage.setItem('PATIENTID1',this.patientId);
             this.$router.push({name: '转运列表',params:{SELECTED1:"个人"}});
           }
@@ -644,6 +645,7 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
         }
       })
@@ -664,7 +666,8 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
         }
       })
@@ -685,7 +688,8 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
         }
       })
@@ -706,7 +710,8 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
         }
       })
@@ -786,13 +791,15 @@ export default {
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.getpatientrecord()
             this.isShow4 = false
           }
         })
       }else{
-        alert("请选择处置");     
+        // alert("请选择处置"); 
+        Toast('请选择处置');    
       }
     },
     add() {
@@ -824,13 +831,15 @@ export default {
         }).then((response) => {
           if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
           this.istizheng = false
         }
       })
       }else{
-        alert("请选择体征");
+        // alert("请选择体征");
+        Toast('请选择体征');
       }
     },
     save41() {
@@ -847,7 +856,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
           // this.reload()
         }
@@ -867,7 +877,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
           // this.reload()
         }
@@ -887,7 +898,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
           // this.reload()
         }
@@ -907,7 +919,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
           // this.reload()
         }
@@ -927,7 +940,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
         }
       })
@@ -946,7 +960,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
           // this.reload()
         }
@@ -966,7 +981,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "新建成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
           this.getpatientrecord()
           // this.reload()
         }
@@ -991,7 +1007,8 @@ export default {
       }).then((response) => {
         if(response.data.results == "上传成功") {
           // MessageBox.alert('修改成功', '提示');
-          alert("修改成功");
+          // alert("修改成功");
+          Toast('修改成功');
         }
       })
     },
@@ -1001,10 +1018,12 @@ export default {
       }).then((response) => {
         if(response.data.results == "上传成功") {
           // MessageBox.alert('上传成功', '提示');
-          alert("上传成功");
+          // alert("上传成功");
+          Toast('上传成功');
         }else{
           // MessageBox.alert('上传失败', '提示');
-          alert("上传失败");
+          // alert("上传失败");
+          Toast('上传失败');
         }
       })
     },
@@ -1244,7 +1263,8 @@ takephoto1() {
           fileUrl: photoname
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             that.getpatientrecord()
             that.photoing = false
 

@@ -793,7 +793,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.getpatientrecord()
           }
         })
@@ -814,7 +815,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.getpatientrecord()
           }
         })
@@ -835,7 +837,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.getpatientrecord()
           }
         })
@@ -856,7 +859,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.getpatientrecord()
           }
         })
@@ -911,9 +915,11 @@
           patientId:this.$route.params.PATIENTID
         }).then((response) => {
           if(response.data.results == "上传成功") {
-            alert("上报成功");
+            // alert("上报成功");
+            Toast('上报成功');
           }else{
-            alert("上报失败");
+            // alert("上报失败");
+            Toast('上报失败');
           }
         })
       },
@@ -925,13 +931,15 @@
             hosNo:this.HosNo
           }).then((response) => {
             if(response.data.results == "上传成功") {
-              alert("病人待后送");
+              // alert("病人待后送");
+              Toast('病人待后送');
               this.isShow3 = false
               this.isShow2 = true
               this.isShow100 = false
               this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carId}})
             }else{
-              alert("上传失败");
+              // alert("上传失败");
+              Toast('上传失败');
             }
           })
         }
@@ -942,13 +950,15 @@
             hosNo:this.HosNo
           }).then((response) => {
             if(response.data.results == "上传成功") {
-              alert("病人待后送");
+              // alert("病人待后送");
+              Toast('病人待后送');
               this.isShow3 = false
               this.isShow2 = true
               this.isShow100 = false
               this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往",FLAG:this.flag}})
             }else{
-              alert("上传失败");
+              // alert("上传失败");
+              Toast('上传失败');
             }
           })
         }
@@ -966,7 +976,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.getpatientrecord()
           }
         })
@@ -984,7 +995,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.getpatientrecord()
           }
         })
@@ -1002,7 +1014,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.getpatientrecord()
           }
         })
@@ -1020,7 +1033,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.getpatientrecord()
           }
         })
@@ -1038,7 +1052,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.editing1 = false;
             this.tempzhusu = ''
             this.getpatientrecord()
@@ -1058,7 +1073,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.getpatientrecord()
           }
         })
@@ -1076,7 +1092,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            // alert("上传成功");
+            Toast('上传成功');
             this.getpatientrecord()
           }
         })
@@ -1084,7 +1101,8 @@
           patientId:this.$route.params.PATIENTID
         }).then((response) => {
           if(response.data.results == "上传成功") {
-            alert("处置完成");
+            // alert("处置完成");
+            Toast('处置完成');
             // this.isShow1 = true
             this.isShow3 = false
           }
@@ -1108,7 +1126,8 @@
           class:this.Class
         }).then((response) => {
           if(response.data.results == "上传成功") {
-            alert("修改成功");
+            // alert("修改成功");
+            Toast('修改成功');
             this.getpatientrecord()
           }
         })
@@ -1141,13 +1160,15 @@
             fileUrl: '' 
           }).then((response) => {
             if(response.data.results == "新建成功") {
-              alert("上传成功");
+              // alert("上传成功");
+              Toast('上传成功');
               this.getpatientrecord()
               this.istizheng = false
             }
           })
         }else{
-          alert("请选择体征");
+          // alert("请选择体征");
+          Toast('请选择体征');
         }
       },
       add1() {
@@ -1180,13 +1201,15 @@
             fileUrl: '' 
           }).then((response) => {
             if(response.data.results == "新建成功") {
-              alert("上传成功");
+              // alert("上传成功");
+              Toast('上传成功');
               this.getpatientrecord()
               this.isShow4 = false
             }
           })
         }else{
-          alert("请选择处置");     
+          // alert("请选择处置"); 
+          Toast('请选择处置');    
         }
       },
 Select() {

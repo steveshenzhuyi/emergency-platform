@@ -87,11 +87,13 @@ export default {
       }).then((response) => {
         if(response.data.results == "上传成功") {
           // MessageBox.alert('确认送达', '提示');
-          alert("确认送达");
+          // alert("确认送达");
+          Toast('确认送达');
           this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}})
         }else {
           // MessageBox.alert('送错地方了！', '提示');
-          alert("送错地方了");
+          // alert("送错地方了");
+          Toast('送错地方了');
         }
       })      
     }
