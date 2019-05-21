@@ -9,8 +9,8 @@
         </mt-header>
         <br><br>
         <div  style="width:80%;">
-        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker></div>
-        <div align="right"><mt-button size="small" type="primary" style="position:relative;top:-70px"
+        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3" :itemHeight='30'></mt-picker></div>
+        <div align="right"><mt-button size="small" type="primary" style="position:relative;top:-60px"
         @click="getpagelist()">刷新</mt-button></div>
         <div v-for="(item,index) in dataclass1" align="left" style="position:relative;top:-40px">
             <hr><a @click="getpatient(index)">
@@ -308,7 +308,7 @@ export default {
       }
     },
     phone(){
-     alert('开发中');
+     Toast('开发中');
     }
   },
 };

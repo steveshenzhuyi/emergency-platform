@@ -644,7 +644,6 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          alert("上传成功");
           Toast('上传成功');
           this.getpatientrecord()
         }
@@ -1049,7 +1048,7 @@ export default {
   }
 
   function onFail(message) {
-    alert('图片选择失败' + message);
+    Toast('图片选择失败' + message);
   }
 
 },
@@ -1069,7 +1068,7 @@ choosephoto2() {
   }
 
   function onFail(message) {
-    alert('图片选择失败' + message);
+    Toast('图片选择失败' + message);
   }
 
 },
@@ -1089,7 +1088,7 @@ choosephoto4() {
   }
 
   function onFail(message) {
-    alert('图片选择失败' + message);
+    Toast('图片选择失败' + message);
   }
 
 },
