@@ -28,18 +28,8 @@ export default {
       RoleCode:''
     };
   },
-  // mounted(){
-  //   this.oast()
-  // },
   methods: {
     //先判断用户的小组
-//     oast(){
-//       Toast({
-//   message: 'Upload Complete',
-//   duration: -1
-// });
-
-//     },
     check() {
       console.log(this.userId)
       axios.post('/getUserGroup',{

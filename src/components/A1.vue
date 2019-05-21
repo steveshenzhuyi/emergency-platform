@@ -279,11 +279,11 @@
           <b>已选医院</b>：{{HosNo}}<br>
           {{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}&nbsp;&nbsp;病床数：{{ICUNum}}<br>
           <div v-show="hide"><b>已选车辆</b>：{{CarNo}}<br>
-            {{carname}}&nbsp;&nbsp;{{carId}}&nbsp;&nbsp;{{carstate}}&nbsp;&nbsp;{{destination}}<hr>
+            {{carname}}&nbsp;&nbsp;{{carId}}&nbsp;&nbsp;{{carstate}}&nbsp;&nbsp;{{destination}}
           </div>
           <!-- <input type="radio" v-model="picked2" name="ways" value3="急救车">急救车
           <input type="radio" v-model="picked2" name="ways" value3="自行前往">自行前往<hr> -->
-          <div id="map-container" class="map-root">
+          <div id="map-container" class="map-root" style="width:97%;height:400px;padding:1px;border:1px solid black;margin-bottom:5px;">
           </div>
         </div>
         <div v-show="isShow4">
@@ -331,6 +331,7 @@
   import { MessageBox } from 'mint-ui';
   import { Toast } from 'mint-ui';
   import { Popup } from 'mint-ui';
+  import { Indicator } from 'mint-ui';
   import global from './global.vue'
   export default {
     inject:['reload'],
@@ -1302,7 +1303,7 @@ choosephoto1() {
   }
 
   function onFail(message) {
-    alert('图片选择失败' + message);
+    Toast('图片选择失败' + message);
   }
 
 },
@@ -1322,7 +1323,7 @@ choosephoto2() {
   }
 
   function onFail(message) {
-    alert('图片选择失败' + message);
+    Toast('图片选择失败' + message);
   }
 
 },
@@ -1342,7 +1343,7 @@ choosephoto4() {
   }
 
   function onFail(message) {
-    alert('图片选择失败' + message);
+    Toast('图片选择失败' + message);
   }
 
 },
@@ -1361,7 +1362,7 @@ takephoto1() {
       }
 
       function onFail(message) {
-        alert('图片选择失败' + message);
+        Toast('图片选择失败' + message);
       }
 
     },
@@ -1380,7 +1381,7 @@ takephoto1() {
       }
 
       function onFail(message) {
-        alert('图片选择失败' + message);
+        Toast('图片选择失败' + message);
       }
 
     },
@@ -1399,11 +1400,12 @@ takephoto1() {
       }
 
       function onFail(message) {
-        alert('图片选择失败' + message);
+        Toast('图片选择失败' + message);
       }
 
     },
      uploadPicture1() {
+      Indicator.open('上传中...');
       var that = this;
       //获取元素中的图片uri
       var imgURI = document.getElementById('image1').src
@@ -1430,23 +1432,27 @@ takephoto1() {
           fileUrl: photoname
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            Indicator.close();
+            Toast("上传成功");
             that.getpatientrecord()
             that.photoing = false
 
           }else{
-            alert("信息上传失败");
+            Indicator.close();
+            Toast("信息上传失败");
           }
         })
       }
           function fail(error) {
-            alert("图片上传失败!");
+            Indicator.close();
+            Toast("图片上传失败!");
           }
           var ft = new FileTransfer();
           ft.upload(imgURI, uri, success, fail, options)
 
         },
          uploadPicture2() {
+          Indicator.open('上传中...');
       var that = this;
       //获取元素中的图片uri
       var imgURI = document.getElementById('image2').src
@@ -1473,23 +1479,27 @@ takephoto1() {
           fileUrl: photoname
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            Indicator.close();
+            Toast("上传成功");
             that.getpatientrecord()
             that.photoing = false
 
           }else{
-            alert("信息上传失败");
+            Indicator.close();
+            Toast("信息上传失败");
           }
         })
       }
           function fail(error) {
-            alert("图片上传失败!");
+            Indicator.close();
+            Toast("图片上传失败!");
           }
           var ft = new FileTransfer();
           ft.upload(imgURI, uri, success, fail, options)
 
         },
     uploadPicture4() {
+      Indicator.open('上传中...');
       var that = this;
       //获取元素中的图片uri
       var imgURI = document.getElementById('image4').src
@@ -1516,17 +1526,20 @@ takephoto1() {
           fileUrl: photoname
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            Indicator.close();
+            Toast("上传成功");
             that.getpatientrecord()
             that.photoing = false
 
           }else{
-            alert("信息上传失败");
+            Indicator.close();
+            Toast("信息上传失败");
           }
         })
       }
           function fail(error) {
-            alert("图片上传失败!");
+            Indicator.close();
+            Toast("图片上传失败!");
           }
           var ft = new FileTransfer();
           ft.upload(imgURI, uri, success, fail, options)
@@ -1792,6 +1805,7 @@ initMap () {
 };
 </script>
 <style>
+<<<<<<< HEAD
   .map-root{
     width:100%;
     height:400px;
@@ -1799,6 +1813,11 @@ initMap () {
     border:1px solid black;
     margin:2px;
   };
+=======
+  .mint-popup-4 {
+    width: 100%;  
+  }
+>>>>>>> 9e69d44c18fa71f15b44b3e358761bae2cda08ee
 </style>
 
 

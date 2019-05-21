@@ -5,7 +5,7 @@
         @click="returnA1()"><small>返回</small></mt-button>
     </mt-header>
     <br><br>
-    <br>车辆端扫描此二维码，完成交接
+    车辆端扫描此二维码，完成交接
     <div id="code-container" class="code-root">
       <div id="qrcode"></div>
     </div>

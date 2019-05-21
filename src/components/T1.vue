@@ -266,7 +266,7 @@
         <br>
         <h3>当前状态：{{StatusNameCar}}</h3>
         <h4>后送医院：{{OrganizationName}}&nbsp; 车号：{{CarId}}</h4>
-        <div id="map-container" class="map-root">
+        <div id="map-container" class="map-root" style="width:97%;height:400px;padding:1px;border:1px solid black;margin-bottom:5px;">
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -644,7 +644,6 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          alert("上传成功");
           Toast('上传成功');
           this.getpatientrecord()
         }
@@ -1049,7 +1048,7 @@ export default {
   }
 
   function onFail(message) {
-    alert('图片选择失败' + message);
+    Toast('图片选择失败' + message);
   }
 
 },
@@ -1069,7 +1068,7 @@ choosephoto2() {
   }
 
   function onFail(message) {
-    alert('图片选择失败' + message);
+    Toast('图片选择失败' + message);
   }
 
 },
@@ -1089,7 +1088,7 @@ choosephoto4() {
   }
 
   function onFail(message) {
-    alert('图片选择失败' + message);
+    Toast('图片选择失败' + message);
   }
 
 },
@@ -1108,7 +1107,7 @@ takephoto1() {
       }
 
       function onFail(message) {
-        alert('图片选择失败' + message);
+        Toast('图片选择失败' + message);
       }
 
     },
@@ -1127,7 +1126,7 @@ takephoto1() {
       }
 
       function onFail(message) {
-        alert('图片选择失败' + message);
+        Toast('图片选择失败' + message);
       }
 
     },
@@ -1146,11 +1145,12 @@ takephoto1() {
       }
 
       function onFail(message) {
-        alert('图片选择失败' + message);
+        Toast('图片选择失败' + message);
       }
 
     },
      uploadPicture1() {
+      Indicator.open('上传中...');
       var that = this;
       //获取元素中的图片uri
       var imgURI = document.getElementById('image1').src
@@ -1177,23 +1177,27 @@ takephoto1() {
           fileUrl: photoname
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            Indicator.close();
+            Toast("上传成功");
             that.getpatientrecord()
             that.photoing = false
 
           }else{
-            alert("信息上传失败");
+            Indicator.close();
+            Toast("信息上传失败");
           }
         })
       }
           function fail(error) {
-            alert("图片上传失败!");
+            Indicator.close();
+            Toast("图片上传失败!");
           }
           var ft = new FileTransfer();
           ft.upload(imgURI, uri, success, fail, options)
 
         },
          uploadPicture2() {
+          Indicator.open('上传中...');
       var that = this;
       //获取元素中的图片uri
       var imgURI = document.getElementById('image2').src
@@ -1220,23 +1224,27 @@ takephoto1() {
           fileUrl: photoname
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            alert("上传成功");
+            Indicator.close();
+            Toast("上传成功");
             that.getpatientrecord()
             that.photoing = false
 
           }else{
-            alert("信息上传失败");
+            Indicator.close();
+            Toast("信息上传失败");
           }
         })
       }
           function fail(error) {
-            alert("图片上传失败!");
+            Indicator.close();
+            Toast("图片上传失败!");
           }
           var ft = new FileTransfer();
           ft.upload(imgURI, uri, success, fail, options)
 
         },
     uploadPicture4() {
+      Indicator.open('上传中...');
       var that = this;
       //获取元素中的图片uri
       var imgURI = document.getElementById('image4').src
@@ -1263,18 +1271,21 @@ takephoto1() {
           fileUrl: photoname
         }).then((response) => {
           if(response.data.results == "新建成功") {
+            Indicator.close();
             // alert("上传成功");
             Toast('上传成功');
             that.getpatientrecord()
             that.photoing = false
 
           }else{
-            alert("信息上传失败");
+            Indicator.close();
+            Toast("信息上传失败");
           }
         })
       }
           function fail(error) {
-            alert("图片上传失败!");
+            Indicator.close();
+            Toast("图片上传失败!");
           }
           var ft = new FileTransfer();
           ft.upload(imgURI, uri, success, fail, options)
@@ -1536,20 +1547,4 @@ takephoto1() {
 };
 </script>
 
-<style>
-  .map-box{
-    width:96%;
-    height:145px;
-    padding:5px;
-    border:1px solid blue;
-    margin:0px;
-  }
-  .map-root{
-    width:100%;
-    height:530px;
-    padding:2px;
-    border:1px solid black;
-    margin:3px;
-  }
-</style>
 
