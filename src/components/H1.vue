@@ -177,7 +177,7 @@
         <img src="./icon/语音通话.png" height="40" width="40" slot="icon">
         视频通话</mt-button>
         </h4> -->
-        <div id="map-container" class="map-root">
+        <div id="map-container" class="map-root" style="width:97%;height:400px;padding:1px;border:1px solid black;margin-bottom:5px;">
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -949,13 +949,3 @@ export default {
   }
 };
 </script>
-
-<style>
-  .map-root{
-    width:100%;
-    height:530px;
-    padding:2px;
-    border:1px solid black;
-    margin:3px;
-  }
-</style>

@@ -56,7 +56,6 @@
           <!-- <mt-button slot="right" @click="edit">修改</mt-button> -->
         </mt-header>
         <br><br>
-        <br>
         <div style="text-align: left; margin-top: 10px">个人信息</div>
           <mt-field label="姓名" v-model="Name" disabled></mt-field>
           <mt-field label="性别" v-model="Gender" disabled></mt-field>
