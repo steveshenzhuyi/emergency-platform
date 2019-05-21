@@ -290,7 +290,7 @@
           <mt-button @click.native="popupVisible1 = true" type="danger" size="large">推荐医院</mt-button>
         </div>
         <br>
-        <mt-popup v-model="popupVisible1" position="bottom" class="mint-popup-4">
+        <mt-popup v-model="popupVisible1" position="bottom" style="width:100%">
           <div v-for="(item,index) in hosList">
             <a @click="gethospital(index)">
             <hr>
@@ -359,7 +359,7 @@
         OrganizationName: '',
         ICUNum: '',
         LocationDescription:'',
-        LocationDescription1: '',
+        LocationDescription1: '浙医二院',
         carname:'',
         carstate: '',
         destination: '',
@@ -1799,9 +1799,6 @@ initMap () {
     border:1px solid black;
     margin:2px;
   };
-  .mint-popup-4 {
-    width: 100%;  
-  }
 </style>
 
 
