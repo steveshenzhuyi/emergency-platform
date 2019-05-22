@@ -1546,7 +1546,7 @@ takephoto1() {
 
         },
 initMap () {
-    var that = this
+  var that = this
   var carList=[{},];
   var hosList=[{},];
   var assList=[{},];

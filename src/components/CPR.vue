@@ -127,21 +127,25 @@ export default {
       this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
     },
     choosephoto() {
-      navigator.camera.getPicture(onSuccess, onFail, { 
-        quality: 100,
-        destinationType: 1,
-        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-      // targetWidth: 300,
-      // targetHeight: 300
-    });
+      var options = {
 
-      function onSuccess(imageData) {
-        document.getElementById('image').src =imageData;
       }
+      // cordova.InAppBrowser.open('http://101.132.140.25:8090','_system','location=no,toolbar=yes,toolbarposition=top,closebuttoncaption=yes ')
+    //   navigator.camera.getPicture(onSuccess, onFail, { 
+    //     quality: 100,
+    //     destinationType: 1,
+    //     sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+    //   // targetWidth: 300,
+    //   // targetHeight: 300
+    // });
 
-      function onFail(message) {
-        alert('图片选择失败' + message);
-      }
+    //   function onSuccess(imageData) {
+    //     document.getElementById('image').src =imageData;
+    //   }
+
+    //   function onFail(message) {
+    //     alert('图片选择失败' + message);
+    //   }
 
     },
     takephoto() {

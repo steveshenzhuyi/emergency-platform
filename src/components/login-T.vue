@@ -470,7 +470,20 @@ export default {
       }
     },
     phone(){
-      Toast('开发中');
+      var scheme = 'com.tencent.trtc';
+      appAvailability.check(scheme,
+        function() {
+          var sApp = startApp.set({"application":"com.tencent.trtc"
+        });
+        sApp.start(function() {
+          }, function(error) {
+            alert(error);
+          });
+        },
+        function() {
+          alert(scheme + ' is not available');
+        }
+      );     
     }
   },
 };
