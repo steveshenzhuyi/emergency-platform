@@ -12,13 +12,15 @@ import VueQr from 'vue-qr';
 import './assets/iconfont.js';
 import QRCode from 'qrcodejs2';
 import gallery from 'img-vuer';
-
+import global_ from './components/global.vue'
 
 axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] =
   'application/x-www-form-urlencoded;charset=UTF-8';
 Vue.prototype.$axios = axios;
+
+Vue.prototype.GLOBAL = global_
 
 Vue.config.productionTip = false;
 
@@ -64,15 +66,7 @@ else alert("无角色")
   }
 }, false)
 
-// document.addEventListener("jpush.receiveNotification", function (event) {
-//   var alertContent
-//   if(device.platform == "Android") {
-//     alertContent = event.alert
-//   } else {
-//     alertContent = event.aps.alert
-//   }
-//   alert("receive Notification:" + alertContent)
-// }, false)
+
 
 // JPush.getUserNotificationSettings(function(result) {
 //   if(result == 0) {

@@ -17,6 +17,18 @@ export default {
       isRouterAlive:true
     }
   },
+  mounted(){
+    var that = this
+    document.addEventListener("jpush.receiveNotification", function (event) {
+  var alertContent
+    alertContent = event.extras.type
+    if(alertContent == 'video'){
+    that.GLOBAL.changeVideoAlert(true)
+    }
+    console.log(that.GLOBAL)
+}, false)
+
+  },
   methods: {
     reload() {
       this.isRouterAlive = false

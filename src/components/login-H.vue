@@ -38,6 +38,7 @@
           <hr>
         </mt-header>
         <br><br>
+        <h4 v-show="GLOBAL.showVideoAlert" style="color:red">您有视频通话邀请，请点击左上角进入</h4>
         <div style="width:80%">
         <mt-picker :slots="slots1" @change="onMessagechange" :visible-item-count="3"></mt-picker></div>
         <div align="right">
@@ -71,7 +72,7 @@
           <mt-field label="责任区域" v-model="ManageArea" disabled></mt-field>
           <mt-field label="重点保障对象" v-model="GuaranteeObject" disabled></mt-field><hr>
           <mt-button size="large">修改密码</mt-button><br>
-          <mt-button size="large"  type="danger" @click="$goRoute('/Home')">退出登录</mt-button><br><br><br><br>
+          <mt-button size="large"  type="danger" @click="logout()">退出登录</mt-button><br><br><br><br>
       </mt-tab-container-item>
     </mt-tab-container>
     <div>
@@ -237,6 +238,24 @@ export default {
         this.ManageArea=response.data.results[0].ManageArea;
         this.GroupName=response.data.results[0].GroupName;
         this.GroupPosition=response.data.results[0].GroupPosition;
+        var GN = this.groupNo;
+        if(this.GroupPosition == '组长'){
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
+          (result) => {
+            var sequence = result.sequence
+            var tags = result.tags
+          }, (error) => {
+            console.log(error)
+          })
+        }else{
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
+          (result) => {
+            var sequence = result.sequence
+            var tags = result.tags
+          }, (error) => {
+            console.log(error)
+          })
+        }
       })
     },
     //病人列表排序方法
@@ -308,6 +327,7 @@ export default {
       }
     },
     phone(){
+      this.GLOBAL.changeVideoAlert(false)
       var scheme = 'com.tencent.trtc';
       appAvailability.check(scheme,
         function() {
@@ -322,6 +342,15 @@ export default {
           alert(scheme + ' is not available');
         }
       );     
+    },
+    logout(){
+      window.JPush.cleanTags({ sequence: 1 },
+        (result) => {
+          console.log(result)
+          this.$router.push({name:'Home'})
+        }, (error) => {
+          console.log(err)
+        })
     }
   },
 };
