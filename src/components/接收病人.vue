@@ -49,10 +49,10 @@ export default {
       if(this.$route.params.PATIENTID == window.localStorage.getItem('PATIENTID1')) {
         this.isshow = true;
         // MessageBox.alert('请确认接收', '提示');
-        alert("请确认接收");
+        Toast("请确认接收");
       }else {
         // MessageBox.alert('接收错误病人', '提示');
-        alert("接收错误病人");
+        Toast("接收错误病人");
       };
       axios.post('/getPatientInfo',{
       patientId:this.$route.params.PATIENTID

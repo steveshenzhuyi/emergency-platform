@@ -391,7 +391,8 @@ export default {
           });
         };
         function onError1(error) {
-          alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+          console.log(error)
+          // alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
         }
       })
     },
