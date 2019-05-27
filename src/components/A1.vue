@@ -274,23 +274,24 @@
           <mt-button size="small" type="primary" style="float: right"
           @click="save60()">确定</mt-button>
         </div>
-        <div v-show="isShow1">
-          <b>推荐医院</b>: {{LocationDescription1}}<br>
-          <b>已选医院</b>：{{HosNo}}<br>
-          {{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}&nbsp;&nbsp;病床数：{{ICUNum}}<br>
-          <div v-show="hide"><b>已选车辆</b>：{{CarNo}}<br>
-            {{carname}}&nbsp;&nbsp;{{carId}}&nbsp;&nbsp;{{carstate}}&nbsp;&nbsp;{{destination}}
-          </div>
-          <!-- <input type="radio" v-model="picked2" name="ways" value3="急救车">急救车
-          <input type="radio" v-model="picked2" name="ways" value3="自行前往">自行前往<hr> -->
-          <div id="map-container" class="map-root" style="width:97%;height:400px;padding:1px;border:1px solid black;margin-bottom:5px;">
+        <div v-show="isShow1" align="left">
+           <span><b>推荐医院：</b>{{goodhos}} &nbsp;&nbsp;</span><span v-show="hide"><b>推荐车辆：</b>{{goodcar}}</span>
+           <div style="margin-top:10px;text-align: left"><b>已选医院：</b>{{HosNo}}&nbsp;&nbsp;&nbsp;{{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}</div>
+          <div v-show="hide" style="text-align: left;"><b>已选车辆：</b>{{CarNo}}&nbsp;&nbsp;&nbsp;{{carname}}&nbsp;&nbsp;&nbsp;{{carId}}</div>
+          <div align="center" v-show="isShow1" style="margin: 10px 0px; width: 98%">
+          <mt-button size="small"  style="float: left" type="primary" plain  @click.native="popupVisible1 = true">医院列表</mt-button>
+          <mt-button size="small" style="float: left; margin-left: 10px" type="primary" plain @click.native="popupVisible2 = true">车辆列表</mt-button>
+          <mt-button v-show="isShow100" size="small" type="danger" style="float: right;" @click="ensure()">确定</mt-button>
+        </div>
+          <div id="map-container" class="map-root" style="width:97%;height:400px;padding:1px;border:1px solid black;margin:10px 0;">
           </div>
         </div>
-        <div v-show="isShow4">
-          <mt-button @click.native="popupVisible1 = true" type="danger" size="large">推荐医院</mt-button>
-        </div>
+<<<<<<< HEAD
         <br>
         <mt-popup v-model="popupVisible1" position="bottom" style="width:100%">
+=======
+        <mt-popup v-model="popupVisible1" position="bottom" class="mint-popup-4">
+>>>>>>> f53d2225bfb3fc4232f71b57b4631cd0f99a3601
           <div v-for="(item,index) in hosList">
             <a @click="gethospital(index)">
             <hr>
@@ -305,7 +306,21 @@
             </a>
           </div>
         </mt-popup>
-        <mt-button v-show="isShow100" size="large" type="primary" @click="ensure()">确定</mt-button>
+        <mt-popup v-model="popupVisible2" position="bottom" class="mint-popup-4">
+          <div v-for="(item,index) in hosList">
+            <a @click="gethospital(index)">
+            <hr>
+            <div align="left">
+              {{item.OrganizationCode}}&nbsp;&nbsp;&nbsp;
+              {{item.LocationDescription}}<br>
+              <small style="color:grey">
+              ICU数量：{{item.ICUNum}}</small>
+              <small style="color:grey;position:absolute;left:100px">联系人：{{item.realManager}}</small>
+              <small style="color:grey;position:absolute;left:200px">手机：{{item.phone}}</small>
+            </div><hr>
+            </a>
+          </div>
+        </mt-popup>
         <br><br><br><br>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -337,6 +352,8 @@
     inject:['reload'],
     data() {
       return {
+        goodcar:'车辆1',
+        goodhos:'医院1',
         editing1:false,
         editing2:false,
         editing41:false,
@@ -762,7 +779,6 @@
         this.state = "待后送";
         this.isShow = false;
         this.isShow1 = true;
-        this.isShow4 = true;
         this.isShow100 = true;
         this.hide = true
         this.CarNo = ""
@@ -772,7 +788,6 @@
         this.state = "待后送";
         this.isShow = false;
         this.isShow1 = true;
-        this.isShow4 = true;
         this.isShow100 = true
         this.CarNo = "自行前往"
         this.flag = "2"
@@ -952,7 +967,7 @@
           }).then((response) => {
             if(response.data.results == "上传成功") {
               // alert("病人待后送");
-              Toast('病人待后送');
+              Toast('病人自行前往，请手动点击送出');
               this.isShow3 = false
               this.isShow2 = true
               this.isShow100 = false
@@ -1546,7 +1561,7 @@ takephoto1() {
 
         },
 initMap () {
-    var that = this
+  var that = this
   var carList=[{},];
   var hosList=[{},];
   var assList=[{},];
@@ -1640,6 +1655,8 @@ initMap () {
   }
 
   AMapUI.loadUI(['overlay/SvgMarker'], function(SvgMarker) {
+
+
     if (!SvgMarker.supportSvg) {
       alert('当前环境不支持SVG');
     }

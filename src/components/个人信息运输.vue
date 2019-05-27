@@ -21,7 +21,7 @@
         <mt-field label="责任区域" v-model="region" disabled></mt-field>
         <mt-field label="重点保障对象" v-model="target" disabled></mt-field><hr>
         <mt-button size="large">修改密码</mt-button><br>
-        <mt-button size="large" type="danger" @click="$goRoute('/Home')">退出登录</mt-button><br>
+        <mt-button size="large" type="danger" @click="logout()">退出登录</mt-button><br>
     <router-view></router-view>
   </div>
 </template>
@@ -78,6 +78,14 @@ export default {
     },
     returnT() {
       this.$router.push({name: '转运列表',params:{SELECTED1:"个人"}});
+    },
+    logout(){
+      window.JPush.cleanTags({ sequence: 1 },
+        (result) => {
+         this.$router.push({name:'Home'})
+        }, (error) => {
+          console.log(err)
+        })
     }
   }
 };

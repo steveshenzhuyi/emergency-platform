@@ -38,6 +38,7 @@
           <hr>
         </mt-header>
         <br><br>
+        <h4 v-show="GLOBAL.showVideoAlert" style="color:red">您有视频通话邀请，请点击左上角进入</h4>
         <div style="width:80%;">
         <mt-picker :slots="slots1" @change="onResourcelistChange" :visible-item-count="3" :itemHeight='30'></mt-picker>
         </div>
@@ -304,7 +305,29 @@ export default {
       })
     },
     getUserInfo(){
-      //获取小组号
+      //获取一下组长tag先
+      axios.post('/getUserGroup',{
+        userId: this.userId
+      }).then((response) => {
+        var GN = this.groupNo;
+        if(response.data.results[0].GroupPosition == '组长'){
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
+          (result) => {
+            var sequence = result.sequence
+            var tags = result.tags
+          }, (error) => {
+            console.log(error)
+          })
+        }else{
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
+          (result) => {
+            var sequence = result.sequence
+            var tags = result.tags
+          }, (error) => {
+            console.log(error)
+          })
+        }
+      })
       axios.post('/getGroupInfo',{
         groupNo: this.groupNo
       }).then((response) => {
@@ -368,7 +391,8 @@ export default {
           });
         };
         function onError1(error) {
-          alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+          console.log(error)
+          // alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
         }
       })
     },
@@ -470,7 +494,21 @@ export default {
       }
     },
     phone(){
-      Toast('开发中');
+      this.GLOBAL.changeVideoAlert(false)
+      var scheme = 'com.tencent.trtc';
+      appAvailability.check(scheme,
+        function() {
+          var sApp = startApp.set({"application":"com.tencent.trtc"
+        });
+        sApp.start(function() {
+          }, function(error) {
+            alert(error);
+          });
+        },
+        function() {
+          alert(scheme + ' is not available');
+        }
+      );     
     }
   },
 };
