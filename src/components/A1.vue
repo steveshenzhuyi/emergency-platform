@@ -286,12 +286,8 @@
           <div id="map-container" class="map-root" style="width:97%;height:400px;padding:1px;border:1px solid black;margin:10px 0;">
           </div>
         </div>
-<<<<<<< HEAD
         <br>
         <mt-popup v-model="popupVisible1" position="bottom" style="width:100%">
-=======
-        <mt-popup v-model="popupVisible1" position="bottom" class="mint-popup-4">
->>>>>>> f53d2225bfb3fc4232f71b57b4631cd0f99a3601
           <div v-for="(item,index) in hosList">
             <a @click="gethospital(index)">
             <hr>
@@ -1822,7 +1818,6 @@ initMap () {
 };
 </script>
 <style>
-<<<<<<< HEAD
   .map-root{
     width:100%;
     height:400px;
@@ -1830,11 +1825,9 @@ initMap () {
     border:1px solid black;
     margin:2px;
   };
-=======
   .mint-popup-4 {
     width: 100%;  
   }
->>>>>>> 9e69d44c18fa71f15b44b3e358761bae2cda08ee
 </style>
 
 
