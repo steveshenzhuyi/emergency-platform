@@ -102,10 +102,10 @@
             <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
             <mt-button @click="add()" size="small">确定</mt-button>
           </div>
-          <div v-for="(item,index) in dataTZ">
-            <hr><b>{{item.OperationName}}</b><br>
-            <b>{{item.Detail}}</b><br>
-            <small style="color:grey">{{item.OperationTime}}</small>
+          <div v-for="(item,index) in dataTZ" style="text-align: left">
+            <hr>
+            <small style="color:grey">{{item.OperationTime}}</small><br>
+            <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span>{{item.Detail}}</span>
           </div>
           <br><br><br><br>
         </mt-tab-container-item>
@@ -185,7 +185,7 @@
             <mt-button size="small" type="primary" style="float: right" @click="uploadPicture()">上传</mt-button>
           </div> -->
           <hr>
-          <div style="text-align: left; margin-top: 10px">预检分级 </div>
+          <div style="text-align: left; margin-top: 10px">预检分级</div>
           <b style="text-align: left">当前分级：{{level}}</b>
           <mt-button @click="setclass()">修改分级</mt-button><hr>
           <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
@@ -219,30 +219,31 @@
       <br><br>
       <div>
         <div style="text-align: left; margin-top: 10px">常用处置</div><hr>
-        <mt-button size="small" @click="oxygen()" style="position:relative;right:30px"
-          type="primary" plain>吸氧处置</mt-button>
-        <mt-button size="small" @click="ECG()"
-          type="primary" plain>心电检查</mt-button>
+        <mt-button size="small" @click="oxygen()" style="position:relative;right:30px;width: 88px"
+          type="primary" plain>吸&nbsp;&nbsp;氧</mt-button>
+        <mt-button size="small" @click="ECG()" style="width: 88px"
+          type="primary" plain>&nbsp;心电图&nbsp;</mt-button>
         <mt-button size="small" @click="bandage()" style="position:relative;left:30px"
           type="primary" plain>包扎止血</mt-button><br><br>
         <mt-button size="small" @click="stone()" style="position:relative;right:30px"
-          type="primary" plain>固定处置</mt-button>
+          type="primary" plain>支具固定</mt-button>
         <mt-button size="small" @click="drug()"
           type="primary" plain>口服药物</mt-button>
         <mt-button size="small" @click="dd()" style="position:relative;left:30px"
           type="primary" plain>静脉给药</mt-button><br><br>
         <mt-button size="small" @click="elseway()"
-          type="primary" plain>其他处置</mt-button> <hr>
+          type="primary" plain>其他处理</mt-button> <hr>
       </div>
       <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px">
         新增处置：{{methods}}
         <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
         <mt-button size="small" @click="add1()">确定</mt-button>
       </div>
-      <div v-for="(item,index) in dataCZ">
-        <hr> <b>{{item.OperationName}}</b><br>
-        <b>{{item.Detail}}</b><br>
-        <small style="color:grey">{{item.OperationTime}}</small>
+      <div v-for="(item,index) in dataCZ" style="text-align: left">
+        <hr> 
+        <small style="color:grey">{{item.OperationTime}}</small><br>
+        <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<br>
+        <span>{{item.Detail}}</span><br>
       </div><br><br><br><br>
     </mt-tab-container-item>
     <mt-tab-container-item id="病人去向">
@@ -263,15 +264,13 @@
         </div>
         <hr>
         <div v-show="isShow">
-          <div  style="text-align: left; margin-top: 10px">添加医嘱</div>
-          <mt-field placeholder="输入医嘱" v-model="doctortell" type="textarea"></mt-field><hr>
-          <!-- <mt-button size="small" type="primary" style="float: left" plain>
-          <img src="./icon/录音.png" height="35" width="35" slot="icon">
-          语音</mt-button> -->
-          <mt-button size="small" type="danger" plain style="float: left; margin-left: 10px">
+          <div  align="center" style="height:30px">
+          <span style="float: left;">添加医嘱</span></div>
+          <mt-field placeholder="输入医嘱" v-model="doctortell" type="textarea" :disabled="!isovering"></mt-field><hr>
+          <!-- <mt-button size="small" type="danger" plain style="float: left; margin-left: 10px">
           <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-          图片</mt-button>
-          <mt-button size="small" type="primary" style="float: right"
+          图片</mt-button> -->
+          <mt-button size="small" type="primary" style="float: right" v-show="isovering"
           @click="save60()">确定</mt-button>
         </div>
         <div v-show="isShow1" align="left">
@@ -383,6 +382,7 @@
         isShow4: false,
         isShow100: false,
         istizheng: false,
+        isovering:false,
         hide: true,
         value3: '',
         selected1: '1',
@@ -767,7 +767,8 @@
         this.state = "处置完成";
         this.isShow = true;
         this.isShow1 = false;
-        this.isShow100 = false
+        this.isShow100 = false;
+        this.isovering = true;
         // this.isShow3 = false
       },
       gotohospital() {
@@ -789,7 +790,7 @@
         this.hide = false
       },
       oxygen() {
-        this.methods = "吸氧处理"
+        this.methods = "吸氧"
         this.content1 = ""
         this.isShow4 = false
         axios.post('/newPatientRecord',{
@@ -811,7 +812,7 @@
         })
       },
       ECG() {
-        this.methods = "心电检查"
+        this.methods = "心电图"
         this.content1 = ""
         this.isShow4 = false
         axios.post('/newPatientRecord',{
@@ -855,7 +856,7 @@
         })
       },
       stone() {
-        this.methods = "固定处理"
+        this.methods = "支具固定"
         this.content1 = ""
         this.isShow4 = false
         axios.post('/newPatientRecord',{
@@ -878,12 +879,12 @@
       },
       drug() {
         this.methods = "口服药物"
-        this.content1 = "药物名称    用法    用量   "
+        this.content1 = "药物名称：    用法：    用量：   "
         this.isShow4 = true
       },
       dd() {
         this.methods = "静脉给药"
-        this.content1 = "药物名称    用法    用量   "
+        this.content1 = "药物名称：    用法：    用量：   "
         this.isShow4 = true
       },
       elseway () {
@@ -987,7 +988,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            // alert("上传成功");
+            this.editing41 = false;
+            this.tempguomin = '';
             Toast('上传成功');
             this.getpatientrecord()
           }
@@ -1006,7 +1008,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            // alert("上传成功");
+            this.editing42 = false;
+            this.tempjibing = '';
             Toast('上传成功');
             this.getpatientrecord()
           }
@@ -1025,7 +1028,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            // alert("上传成功");
+            this.editing43 = false;
+            this.tempyongyao = '';
             Toast('上传成功');
             this.getpatientrecord()
           }
@@ -1044,7 +1048,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            // alert("上传成功");
+            this.editing5 = false;
+            this.tempzhenduan = '';
             Toast('上传成功');
             this.getpatientrecord()
           }
@@ -1084,7 +1089,8 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            // alert("上传成功");
+            this.editing2 = false;
+            this.tempxianbingshi = '';
             Toast('上传成功');
             this.getpatientrecord()
           }
@@ -1103,21 +1109,20 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            // alert("上传成功");
-            Toast('上传成功');
-            this.getpatientrecord()
+            axios.post('/assemblyOver',{
+              patientId:this.$route.params.PATIENTID
+            }).then((response) => {
+              if(response.data.results == "上传成功") {
+                Toast('处置完成');
+                this.isovering = false
+                this.isShow3 = false
+                this.getpatientrecord()
+              }
+            })
+
           }
         })
-        axios.post('/assemblyOver',{
-          patientId:this.$route.params.PATIENTID
-        }).then((response) => {
-          if(response.data.results == "上传成功") {
-            // alert("处置完成");
-            Toast('处置完成');
-            // this.isShow1 = true
-            this.isShow3 = false
-          }
-        })
+        
       },
       setclass() {
         var Class
@@ -1184,13 +1189,13 @@
       },
       add1() {
         this.operationCode1 = ''
-        if(this.methods == "吸氧处理") {
+        if(this.methods == "吸氧") {
           this.operationCode1 = "P111"
-        }else if(this.methods == "心电检查") {
+        }else if(this.methods == "心电图") {
           this.operationCode1 = "P112"
         }else if(this.methods == "包扎止血") {
           this.operationCode1 = "P113"
-        }else if(this.methods == "固定处理") {
+        }else if(this.methods == "支具固定") {
           this.operationCode1 = "P114"
         }else if(this.methods == "口服药物") {
           this.operationCode1 = "P115"
@@ -1720,9 +1725,9 @@ initMap () {
         markerHos[i].on('click',function(){
           console.log(this)
           var thisMarkerHos = this;
-          that.selectform = "3" 
-          that.HOSNO = thisMarkerHos.hosinfo.OrganizationCode
-          that.Select()
+          // that.selectform = "3" 
+          // that.HOSNO = thisMarkerHos.hosinfo.OrganizationCode
+          // that.Select()
           AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
             var infoWindow = new SimpleInfoWindow({
               infoTitle: '<strong>' + thisMarkerHos.hosinfo.OrganizationName+ '</strong>',
@@ -1769,9 +1774,9 @@ initMap () {
           markerCar[i].on('click',function(){
             console.log(this)
             var thisMarkerCar = this;
-            that.selectform = "2" 
-            that.CARNO = thisMarkerCar.carinfo.CarNo
-            that.Select()
+            // that.selectform = "2" 
+            // that.CARNO = thisMarkerCar.carinfo.CarNo
+            // that.Select()
             AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
 
               var infoWindow = new SimpleInfoWindow({

@@ -25,14 +25,14 @@
         <br><br>
         <div>
           <div  style="text-align: left; margin-top: 10px">常用处置</div><hr>
-            <mt-button size="small" @click="oxygen()" style="position:relative;right:30px"
-            type="primary" plain>吸氧处理</mt-button>
-            <mt-button size="small" @click="ECG()"
-            type="primary" plain>心电检查</mt-button>
+            <mt-button size="small" @click="oxygen()" style="position:relative;right:30px;width: 88px"
+            type="primary" plain>吸&nbsp;&nbsp;氧</mt-button>
+            <mt-button size="small" @click="ECG()" style="width: 88px"
+            type="primary" plain>&nbsp;心电图&nbsp;</mt-button>
             <mt-button size="small" @click="bandage()" style="position:relative;left:30px"
             type="primary" plain>包扎止血</mt-button><br><br>
             <mt-button size="small" @click="stone()" style="position:relative;right:30px"
-            type="primary" plain>固定处理</mt-button>
+            type="primary" plain>支具固定</mt-button>
             <mt-button size="small" @click="drug()"
             type="primary" plain>口服药物</mt-button>
             <mt-button size="small" @click="dd()" style="position:relative;left:30px"
@@ -45,13 +45,12 @@
           <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
           <mt-button size="small" @click="add1()">确定</mt-button>
         </div>
-        <div v-for="(item,index) in dataCZ">
-            <hr><b>{{item.OperationName}}</b><br>
-            <b>
-            {{item.Detail}}
-            </b><br>
-            <small style="color:grey">{{item.OperationTime}}</small>
-        </div><br><br><br><br>
+        <div v-for="(item,index) in dataCZ" style="text-align: left">
+        <hr> 
+        <small style="color:grey">{{item.OperationTime}}</small><br>
+        <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<br>
+        <span>{{item.Detail}}</span><br>
+      </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="既往病历">
         <mt-header fixed style="font-size:20px" title="既往病历">
@@ -154,13 +153,11 @@
               <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
               <mt-button @click="add()" size="small">确定</mt-button>
             </div>
-            <div v-for="(item,index) in dataTZ">
-            <hr><b>{{item.OperationName}}</b><br>
-            <b>
-            {{item.Detail}}
-            </b><br>
-            <small style="color:grey">{{item.OperationTime}}</small>
-            </div><br><br><br><br>
+            <div v-for="(item,index) in dataTZ" style="text-align: left">
+            <hr>
+            <small style="color:grey">{{item.OperationTime}}</small><br>
+            <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span>{{item.Detail}}</span>
+          </div><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
           <div align="center" style="height:37px">
@@ -226,11 +223,11 @@
           <div align="center" v-show="editing5" style="height: 35px">
               <mt-button  v-show="editing5" size="small" type="primary" style="float: right;margin-top: 5px"
               @click="save50()">保存</mt-button>
-             <mt-button  v-show="editing2" size="small" style="float: right; margin-right:10px;margin-top: 5px"
+             <mt-button  v-show="editing5" size="small" style="float: right; margin-right:10px;margin-top: 5px"
               @click="cancel5()">取消</mt-button>
               </div>
             <hr>
-            <div style="text-align: left; margin-top: 10px">预检分级 </div>
+            <div style="text-align: left; margin-top: 10px">预检分级</div>
             <b style="text-align: left">当前分级：{{level}}</b>
             <!-- <mt-button @click="setclass()">修改分级</mt-button> -->
             <hr>
@@ -629,7 +626,7 @@ export default {
       }
     },
     oxygen() {
-      this.methods = "吸氧处理"
+      this.methods = "吸氧"
       this.content1 = ""
       this.isShow4 = false
       axios.post('/newPatientRecord',{
@@ -650,7 +647,7 @@ export default {
       })
     },
     ECG() {
-      this.methods = "心电检查"
+      this.methods = "心电图"
       this.content1 = ""
       this.isShow4 = false
       axios.post('/newPatientRecord',{
@@ -694,7 +691,7 @@ export default {
       })
     },
     stone() {
-      this.methods = "固定处理"
+      this.methods = "支具固定"
       this.content1 = ""
       this.isShow4 = false
       axios.post('/newPatientRecord',{
@@ -717,12 +714,12 @@ export default {
     },
     drug() {
       this.methods = "口服药物"
-      this.content1 = "药物名称    用法    用量   "
+      this.content1 = "药物名称：    用法：    用量：   "
       this.isShow4 = true
     },
     dd() {
       this.methods = "静脉给药"
-      this.content1 = "药物名称    用法    用量   "
+      this.content1 = "药物名称：    用法：    用量：   "
       this.isShow4 = true
     },
     elseway () {
@@ -762,13 +759,13 @@ export default {
     },
     add1() {
       this.operationCode1 = ''
-      if(this.methods == "吸氧处理") {
+      if(this.methods == "吸氧") {
         this.operationCode1 = "P111"
-      }else if(this.methods == "心电检查") {
+      }else if(this.methods == "心电图") {
         this.operationCode1 = "P112"
       }else if(this.methods == "包扎止血") {
         this.operationCode1 = "P113"
-      }else if(this.methods == "固定处理") {
+      }else if(this.methods == "支具固定") {
         this.operationCode1 = "P114"
       }else if(this.methods == "口服药物") {
         this.operationCode1 = "P115"
@@ -854,8 +851,8 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          // MessageBox.alert('上传成功', '提示');
-          // alert("上传成功");
+          this.editing41 = false;
+          this.tempguomin = '';
           Toast('上传成功');
           this.getpatientrecord()
           // this.reload()
@@ -875,8 +872,8 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          // MessageBox.alert('上传成功', '提示');
-          // alert("上传成功");
+          this.editing42 = false;
+          this.tempjibing = '';
           Toast('上传成功');
           this.getpatientrecord()
           // this.reload()
@@ -896,8 +893,8 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          // MessageBox.alert('上传成功', '提示');
-          // alert("上传成功");
+          this.editing43 = false;
+          this.tempyongyao = '';
           Toast('上传成功');
           this.getpatientrecord()
           // this.reload()
@@ -917,8 +914,8 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          // MessageBox.alert('上传成功', '提示');
-          // alert("上传成功");
+          this.editing5 = false;
+          this.tempzhenduan = '';
           Toast('上传成功');
           this.getpatientrecord()
           // this.reload()
@@ -938,8 +935,8 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          // MessageBox.alert('上传成功', '提示');
-          // alert("上传成功");
+          this.editing1 = false;
+          this.tempzhusu = '';
           Toast('上传成功');
           this.getpatientrecord()
         }
@@ -958,8 +955,8 @@ export default {
         fileUrl: '' 
       }).then((response) => {
         if(response.data.results == "新建成功") {
-          // MessageBox.alert('上传成功', '提示');
-          // alert("上传成功");
+          this.editing2 = false;
+          this.tempxianbingshi = '';
           Toast('上传成功');
           this.getpatientrecord()
           // this.reload()
