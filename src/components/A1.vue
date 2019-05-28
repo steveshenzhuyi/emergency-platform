@@ -275,9 +275,11 @@
           @click="save60()">确定</mt-button>
         </div>
         <div v-show="isShow1" align="left">
-           <span><b>推荐医院：</b>{{goodhos}} &nbsp;&nbsp;</span><span v-show="hide"><b>推荐车辆：</b>{{goodcar}}</span>
-           <div style="margin-top:10px;text-align: left"><b>已选医院：</b>{{HosNo}}&nbsp;&nbsp;&nbsp;{{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}</div>
-          <div v-show="hide" style="text-align: left;"><b>已选车辆：</b>{{CarNo}}&nbsp;&nbsp;&nbsp;{{carname}}&nbsp;&nbsp;&nbsp;{{carId}}</div>
+          <span><b>推荐医院：</b>{{goodhos}} &nbsp;&nbsp;</span><span v-show="hide"><b>推荐车辆：</b>{{goodcar}}</span>
+          <div style="margin-top:10px;text-align: left"><b>已选医院：</b>
+          {{HosNo}}&nbsp;&nbsp;&nbsp;{{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}</div>
+          <div v-show="hide" style="text-align: left;"><b>已选车辆：</b>
+          {{CarNo}}&nbsp;&nbsp;&nbsp;{{carname}}&nbsp;&nbsp;&nbsp;{{carId}}</div>
           <div align="center" v-show="isShow1" style="margin: 10px 0px; width: 98%">
           <mt-button size="small"  style="float: left" type="primary" plain  @click.native="popupVisible1 = true">医院列表</mt-button>
           <mt-button size="small" style="float: left; margin-left: 10px" type="primary" plain @click.native="popupVisible2 = true">车辆列表</mt-button>
@@ -302,17 +304,16 @@
             </a>
           </div>
         </mt-popup>
-        <mt-popup v-model="popupVisible2" position="bottom" class="mint-popup-4">
-          <div v-for="(item,index) in hosList">
-            <a @click="gethospital(index)">
+        <mt-popup v-model="popupVisible2" position="bottom" style="width:100%">
+          <div v-for="(item,index) in carList">
+            <a @click="getcar(index)">
             <hr>
             <div align="left">
-              {{item.OrganizationCode}}&nbsp;&nbsp;&nbsp;
-              {{item.LocationDescription}}<br>
-              <small style="color:grey">
-              ICU数量：{{item.ICUNum}}</small>
-              <small style="color:grey;position:absolute;left:100px">联系人：{{item.realManager}}</small>
-              <small style="color:grey;position:absolute;left:200px">手机：{{item.phone}}</small>
+              <div>{{item.CarNo}}&nbsp;&nbsp;&nbsp;
+              {{item.CarName}}&nbsp;&nbsp;&nbsp;{{item.CarStatus}}</div>
+              <small style="color:grey">车牌号：{{item.CarId}}</small>
+              <small style="color:grey;position:absolute;left:120px">联系人：{{item.CarManager}}</small>
+              <small style="color:grey;position:absolute;left:220px">手机：{{item.phone}}</small>
             </div><hr>
             </a>
           </div>
@@ -365,6 +366,7 @@
         photoing:false,
         photosrc: global.photoUrl+"zyh_1557216080825test.jpg",
         popupVisible1: false,
+        popupVisible2: false,
         intervalid1:null,
         watchID1:null,
         selected: this.$route.params.SELECTED1,
@@ -373,7 +375,7 @@
         OrganizationName: '',
         ICUNum: '',
         LocationDescription:'',
-        LocationDescription1: '浙医二院',
+        // LocationDescription1: '浙医二院',
         carname:'',
         carstate: '',
         destination: '',
@@ -432,6 +434,7 @@
         dataTZ:[],
         dataCZ:[],
         hosList:[],
+        carList:[],
         Status: '',
         doctortell: '',
         selectform: '',
@@ -570,6 +573,20 @@
           this.hosList = response.data.results
         })
         console.log(this.hosList)
+        axios.get('/getCarList',{}).then((response) => {
+          var carlist = response.data.results
+          var x  =carlist.shift()
+          this.carList = response.data.results
+          for(var i=0; i<this.carList.length;i++) {
+          if(this.carList[i].CarStatus == "0"){
+            this.carList[i].CarStatus = "空闲"
+          }else if(this.carList[i].CarStatus == "1") {
+            this.carList[i].CarStatus = "正在前往会场"
+          }else if(this.carList[i].CarStatus == "2") {
+            this.carList[i].CarStatus = "正在前往医院"
+          }
+        }
+        })
         this.content1 = ''
         this.content = ''
 
@@ -1297,6 +1314,16 @@ Select() {
 confirm() {
   this.$router.push({name:'confirm',params:{HOSPITAL:this.OrganizationName,CARID:this.carId}})
 },
+gethospital:function(index){
+      this.HosNo=this.hosList[index].OrganizationCode
+      this.OrganizationName = this.hosList[index].OrganizationName
+      this.LocationDescription = this.hosList[index].LocationDescription
+    },
+getcar:function(index){
+      this.CarNo = this.carList[index].CarNo
+      this.carname = this.carList[index].CarName
+      this.carId = this.carList[index].CarId
+    },
 
 choosephoto1() {
   var that = this;
