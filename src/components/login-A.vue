@@ -27,7 +27,8 @@
             <small style="color:grey">
             性别：{{item.Gender}}</small>
             <small style="color:grey;position:absolute;left:100px">年龄：{{item.Age}}</small>
-            <small style="color:grey;position:absolute;left:200px">症状：{{item.Diagnose}}</small><br>
+            <small style="width:9em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
+            color:grey;position:absolute;left:200px">症状：{{item.Diagnose}}</small><br>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
             <small style="color:grey;position:absolute;left:100px">车辆：{{item.CarName}}</small>
             <small style="color:grey;position:absolute;left:200px">车号：{{item.CarId}}</small>
