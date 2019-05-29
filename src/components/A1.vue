@@ -279,7 +279,7 @@
           {{HosNo}}&nbsp;&nbsp;&nbsp;{{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}</div>
           <div v-show="hide" style="text-align: left;"><b>已选车辆：</b>
           {{CarNo}}&nbsp;&nbsp;&nbsp;{{carname}}&nbsp;&nbsp;&nbsp;{{carId}}</div>
-          <div align="center" v-show="isShow1" style="margin: 10px 0px; width: 98%">
+          <div align="center" v-show="isShow100" style="margin: 10px 0px; width: 98%">
           <mt-button size="small"  style="float: left" type="primary" plain  @click.native="popupVisible1 = true">医院列表</mt-button>
           <mt-button size="small" style="float: left; margin-left: 10px" type="primary" plain @click.native="popupVisible2 = true">车辆列表</mt-button>
           <mt-button v-show="isShow100" size="small" type="danger" style="float: right;" @click="ensure()">确定</mt-button>
@@ -293,12 +293,12 @@
             <a @click="gethospital(index)">
             <hr>
             <div align="left">
-              {{item.OrganizationCode}}&nbsp;&nbsp;&nbsp;
+              编号{{item.OrganizationCode}}&nbsp;&nbsp;{{item.OrganizationName}}&nbsp;&nbsp;
               {{item.LocationDescription}}<br>
               <small style="color:grey">
-              ICU数量：{{item.ICUNum}}</small>
-              <small style="color:grey;position:absolute;left:100px">联系人：{{item.realManager}}</small>
-              <small style="color:grey;position:absolute;left:200px">手机：{{item.phone}}</small>
+              ICU剩余{{item.ICUNow}}&nbsp;&nbsp;手术室剩余{{item.ORNow}}&nbsp;&nbsp;专用病房剩余{{item.GWNow}}</small><br>
+              <small style="color:grey;">联系人：{{item.realManager}}</small>
+              <small style="color:grey;position:absolute;left:100px">手机：{{item.phone}}</small>
             </div><hr>
             </a>
           </div>
@@ -308,11 +308,10 @@
             <a @click="getcar(index)">
             <hr>
             <div align="left">
-              <div>{{item.CarNo}}&nbsp;&nbsp;&nbsp;
-              {{item.CarName}}&nbsp;&nbsp;&nbsp;{{item.CarStatus}}</div>
-              <small style="color:grey">车牌号：{{item.CarId}}</small>
-              <small style="color:grey;position:absolute;left:120px">联系人：{{item.CarManager}}</small>
-              <small style="color:grey;position:absolute;left:220px">手机：{{item.phone}}</small>
+              <div>编号{{item.CarNo}}&nbsp;&nbsp;
+              {{item.CarName}}&nbsp;{{item.CarId}}</div>&nbsp;<div>{{item.CarStatus}}</div>
+              <small style="color:grey;">联系人：{{item.CarManager}}</small>
+              <small style="color:grey;position:absolute;left:120px">手机：{{item.phone}}</small>
             </div><hr>
             </a>
           </div>
@@ -581,9 +580,9 @@
           if(this.carList[i].CarStatus == "0"){
             this.carList[i].CarStatus = "空闲"
           }else if(this.carList[i].CarStatus == "1") {
-            this.carList[i].CarStatus = "正在前往会场"
+            this.carList[i].CarStatus = "正在前往会场："+this.carList[i].Assembly
           }else if(this.carList[i].CarStatus == "2") {
-            this.carList[i].CarStatus = "正在前往医院"
+            this.carList[i].CarStatus = "正在前往医院："+this.carList[i].Hospital
           }
         }
         })
