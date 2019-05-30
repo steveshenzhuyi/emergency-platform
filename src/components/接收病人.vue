@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     getpatient() {
-      if(this.$route.params.PATIENTID == window.localStorage.getItem('PATIENTID1')) {
+      if(this.$route.params.PATIENTID == window.localStorage.getItem('PATIENTID1') || this.$route.params.CarStatus != 1) {
         this.isshow = true;
         // MessageBox.alert('请确认接收', '提示');
         Toast("请确认接收");

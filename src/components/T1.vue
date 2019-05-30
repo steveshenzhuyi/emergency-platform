@@ -590,7 +590,7 @@ export default {
         if(this.StatusNameCar == "待后送") {
           if(this.CarStatus == "0"){
             this.situations = "接单"
-          }else if(this.CarStatus == "1") {
+          }else if(this.CarStatus != "0") {
             this.situations = "接收"
           }
         }else if(this.CarStatus == "2") {
@@ -620,7 +620,7 @@ export default {
           }
         })
       }else if(this.situations == "接收") {
-        this.$router.push({name: '接收病人',params:{PATIENTID:this.patientId}});
+        this.$router.push({name: '接收病人',params:{PATIENTID:this.patientId,CarStatus:this.CarStatus}});
       }else if(this.situations == "送达") {
         this.$router.push({name: 'confirmt'})
       }
