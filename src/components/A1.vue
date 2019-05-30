@@ -298,7 +298,7 @@
               <small style="color:grey">
               ICU剩余{{item.ICUNow}}&nbsp;&nbsp;手术室剩余{{item.ORNow}}&nbsp;&nbsp;专用病房剩余{{item.GWNow}}</small><br>
               <small style="color:grey;">联系人：{{item.realManager}}</small>
-              <small style="color:grey;position:absolute;right:10px">手机：{{item.phone}}</small>
+              <small style="color:grey;position:absolute;right:100px">手机：{{item.phone}}</small>
             </div><hr>
             </a>
           </div>
@@ -309,9 +309,9 @@
             <hr>
             <div align="left">
               <div>编号{{item.CarNo}}&nbsp;&nbsp;{{item.CarName}}&nbsp;{{item.CarId}}</div>
-              <div><span>{{item.CarStatus}}</span><span style="position:absolute;left:120px">&nbsp;当前待后送：{{item.daihousong}}人</span></div>
+              <div><span>{{item.CarStatus}}</span><span style="position:absolute;right:30px">&nbsp;当前待后送：{{item.daihousong}}人</span></div>
               <small style="color:grey;">联系人：{{item.CarManager}}</small>
-              <small style="color:grey;position:absolute;left:120px">手机：{{item.phone}}</small>
+              <small style="color:grey;position:absolute;left:100px">手机：{{item.phone}}</small>
             </div><hr>
             </a>
           </div>
