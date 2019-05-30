@@ -298,7 +298,7 @@
               <small style="color:grey">
               ICU剩余{{item.ICUNow}}&nbsp;&nbsp;手术室剩余{{item.ORNow}}&nbsp;&nbsp;专用病房剩余{{item.GWNow}}</small><br>
               <small style="color:grey;">联系人：{{item.realManager}}</small>
-              <small style="color:grey;position:absolute;left:100px">手机：{{item.phone}}</small>
+              <small style="color:grey;position:absolute;right:10px">手机：{{item.phone}}</small>
             </div><hr>
             </a>
           </div>
@@ -308,8 +308,8 @@
             <a @click="getcar(index)">
             <hr>
             <div align="left">
-              <div>编号{{item.CarNo}}&nbsp;&nbsp;
-              {{item.CarName}}&nbsp;{{item.CarId}}</div>&nbsp;<div>{{item.CarStatus}}</div>
+              <div>编号{{item.CarNo}}&nbsp;&nbsp;{{item.CarName}}&nbsp;{{item.CarId}}</div>
+              <div><span>{{item.CarStatus}}</span><span style="position:absolute;left:120px">&nbsp;当前待后送：{{item.daihousong}}人</span></div>
               <small style="color:grey;">联系人：{{item.CarManager}}</small>
               <small style="color:grey;position:absolute;left:120px">手机：{{item.phone}}</small>
             </div><hr>
@@ -573,18 +573,27 @@
         })
         console.log(this.hosList)
         axios.get('/getCarList',{}).then((response) => {
+          var that = this
           var carlist = response.data.results
           var x  =carlist.shift()
-          this.carList = response.data.results
-          for(var i=0; i<this.carList.length;i++) {
-          if(this.carList[i].CarStatus == "0"){
-            this.carList[i].CarStatus = "空闲"
-          }else if(this.carList[i].CarStatus == "1") {
-            this.carList[i].CarStatus = "正在前往会场："+this.carList[i].Assembly
-          }else if(this.carList[i].CarStatus == "2") {
-            this.carList[i].CarStatus = "正在前往医院："+this.carList[i].Hospital
+          that.carList = response.data.results
+          for(var i=0; i<that.carList.length;i++) {
+            (function(j){
+              axios.post('/getCarStatusCount', {'groupNo': that.carList[j].GroupNo})
+              .then((response) => {
+                that.carList[j].daihousong = response.data['results'].daihousong
+              }).catch(function (error) {
+                console.log("error", error);
+              })
+              if(that.carList[j].CarStatus == "0"){
+                that.carList[j].CarStatus = "空闲"
+              }else if(that.carList[j].CarStatus == "1") {
+                that.carList[j].CarStatus = "正在前往会场："+that.carList[j].Assembly
+              }else if(that.carList[j].CarStatus == "2") {
+                that.carList[j].CarStatus = "正在前往医院："+that.carList[j].Hospital
+              }   
+            })(i);
           }
-        }
         })
         this.content1 = ''
         this.content = ''
