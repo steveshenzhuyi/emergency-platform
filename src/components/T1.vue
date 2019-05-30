@@ -593,11 +593,11 @@ export default {
           }else if(this.CarStatus == "1") {
             this.situations = "接收"
           }
-        }else if(this.StatusNameCar == "后送中") {
-          if(this.CarStatus == "2") {
+        }else if(this.CarStatus == "2") {
+          if(this.PatientId == window.localStorage.getItem('PATIENTID1')) {
             this.situations = "送达"
           }
-        }else if (this.StatusNameCar == "已送达") {
+        }else{
           this.situations = ""
         }
         // window.localStorage.setItem('STATE',this.state);
