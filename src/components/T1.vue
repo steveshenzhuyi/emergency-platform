@@ -590,7 +590,7 @@ export default {
         if(this.StatusNameCar == "待后送") {
           if(this.CarStatus == "0"){
             this.situations = "接单"
-          }else if(this.CarStatus == "1") {
+          }else if(this.CarStatus != "0") {
             this.situations = "接收"
           }
         }else if(this.CarStatus == "2") {
