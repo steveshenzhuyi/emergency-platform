@@ -39,6 +39,7 @@ export default {
       organizationName: '',
       carTime: '',
       isshow: '',
+      LocationName:'',
     };
   },
   mounted() {
@@ -66,6 +67,7 @@ export default {
       this.carId = response.data.results[0].CarId;
       this.organizationName = response.data.results[0].OrganizationName;
       this.carTime = response.data.results[0].CarTime;
+      this.LocationName = response.data.results[0].LocationName;
     })
     },
     returnT() {
@@ -74,7 +76,9 @@ export default {
     returnT1() {
       axios.post('/carReceive',{
         patientId:this.patientId,
-        carNo:window.localStorage.getItem('CARNO')
+        carNo:window.localStorage.getItem('CARNO'),
+        assembly:this.LocationName,
+        hospital:this.organizationName
       }).then((response) => {
         if(response.data.results == "上传成功") {
           // MessageBox.alert('接收成功', '提示');

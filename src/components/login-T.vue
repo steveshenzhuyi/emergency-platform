@@ -239,7 +239,7 @@ export default {
       cordova.plugins.barcodeScanner.scan(
         function (result) {
           var res = result.text
-        that.$router.push({name: '接收病人',params:{PATIENTID:res,CarStatus:this.CarStatus}});
+        that.$router.push({name: '接收病人',params:{PATIENTID:res,CarStatus:that.CarStatus}});
         },
         function (error) {
           alert(error)
