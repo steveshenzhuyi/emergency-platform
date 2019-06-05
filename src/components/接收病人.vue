@@ -12,7 +12,7 @@
     <mt-field label="姓名" v-model="name" disabled="true"></mt-field>
     <mt-field label="性别" v-model="gender" disabled="true"></mt-field>
     <mt-field label="年龄" v-model="age" disabled="true"></mt-field>
-    <!-- <mt-field label="症状" v-model="situation" disabled="true"></mt-field> -->
+    <mt-field label="症状" v-model="situation" disabled="true"></mt-field>
     <mt-field label="目标车号" v-model="carId" disabled="true"></mt-field>
     <mt-field label="目标医院" v-model="organizationName" disabled="true"></mt-field>
     <mt-field label="现在时间" v-model="carTime" disabled="true"></mt-field><hr>
@@ -40,6 +40,7 @@ export default {
       carTime: '',
       isshow: '',
       LocationName:'',
+      situation:'',
     };
   },
   mounted() {
@@ -68,6 +69,7 @@ export default {
       this.organizationName = response.data.results[0].OrganizationName;
       this.carTime = response.data.results[0].CarTime;
       this.LocationName = response.data.results[0].LocationName;
+      this.situation = response.data.results[0].Diagnose;
     })
     },
     returnT() {

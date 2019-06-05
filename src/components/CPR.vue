@@ -3,16 +3,15 @@
       <mt-header fixed style="font-size:20px" title="心肺复苏指导">
         <mt-button size="small" type="danger" slot="left" icon="back"
             @click="returnA()"><small>返回</small></mt-button>
-      <mt-button size="small" slot="right"
-            @click="choosephoto()"><small>拍照</small></mt-button>
+      <!-- <mt-button size="small" slot="right" @click="choosephoto()"><small>拍照</small></mt-button> -->
       </mt-header>
       <br><br>
-      <div><img v-gallery id="image" style="max-height: 200px; max-width: 90%;" ></img></div>
+      <!-- <div><img v-gallery id="image" style="max-height: 200px; max-width: 90%;" ></img></div>
       <mt-button type="primary" @click="uploadPicture()"><small>上传</small></mt-button>
       <div><img id="image1" v-gallery style="max-height: 200px; max-width: 90%;" :src="photosrc" ></img></div>
       <div><img v-gallery id="image2" style="max-height: 200px; max-width: 90%;" ></img></div>
        <mt-button size="small" @click="chooseface()"><small>拍照</small></mt-button>
-      <mt-button type="primary" @click="uploadface()"><small>识别</small></mt-button>
+      <mt-button type="primary" @click="uploadface()"><small>识别</small></mt-button> -->
       <!-- <mt-button type="primary" @click="startRecord()"><small>开始</small></mt-button>
       <mt-button type="primary" @click="stopRecord()"><small>结束</small></mt-button>
       <mt-button type="primary" @click="start()"><small>播放</small></mt-button>

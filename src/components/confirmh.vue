@@ -12,7 +12,7 @@
     <mt-field label="姓名" v-model="name" disabled="true"></mt-field>
     <mt-field label="性别" v-model="gender" disabled="true"></mt-field>
     <mt-field label="年龄" v-model="age" disabled="true"></mt-field>
-    <!-- <mt-field label="症状" v-model="situation" disabled="true"></mt-field> -->
+    <mt-field label="症状" v-model="situation" disabled="true"></mt-field>
     <mt-field label="目标车号" v-model="carId" disabled="true"></mt-field>
     <mt-field label="目标医院" v-model="organizationName" disabled="true"></mt-field>
     <mt-field label="现在时间" v-model="HospitalTime" disabled="true"></mt-field><hr>
@@ -40,6 +40,7 @@ export default {
       isshow: '',
       hosgroup: '',
       hospitalGroup:window.localStorage.getItem('GROUPNO'),
+      situation:'',
     };
   },
   mounted() {
@@ -59,7 +60,7 @@ export default {
       }else {
         // MessageBox.alert('非本院病人', '提示');
         // alert("非本院病人");
-        Toast('分本院病人');
+        Toast('非本院病人');
       }
       this.classification = response.data.results[0].Classification;
       this.name = response.data.results[0].Name;
@@ -68,6 +69,7 @@ export default {
       this.carId = response.data.results[0].CarId;
       this.organizationName = response.data.results[0].OrganizationName;
       this.carTime = response.data.results[0].CarTime;
+      this.situation = response.data.results[0].Diagnose;
     })
     },
     returnH() {
