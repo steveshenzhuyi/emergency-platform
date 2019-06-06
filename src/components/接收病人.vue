@@ -15,7 +15,7 @@
     <mt-field label="症状" v-model="situation" disabled="true"></mt-field>
     <mt-field label="目标车号" v-model="carId" disabled="true"></mt-field>
     <mt-field label="目标医院" v-model="organizationName" disabled="true"></mt-field>
-    <mt-field label="现在时间" v-model="carTime" disabled="true"></mt-field><hr>
+    <!-- <mt-field label="现在时间" v-model="carTime" disabled="true"></mt-field><hr> -->
     <mt-button v-show="isshow" size="normal" @click="returnT1()">确认接收</mt-button>
     <router-view></router-view>
   </div>
@@ -67,7 +67,6 @@ export default {
       this.age = response.data.results[0].Age;
       this.carId = response.data.results[0].CarId;
       this.organizationName = response.data.results[0].OrganizationName;
-      this.carTime = response.data.results[0].CarTime;
       this.LocationName = response.data.results[0].LocationName;
       this.situation = response.data.results[0].Diagnose;
     })

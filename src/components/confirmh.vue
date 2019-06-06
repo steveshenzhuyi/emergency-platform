@@ -15,7 +15,7 @@
     <mt-field label="症状" v-model="situation" disabled="true"></mt-field>
     <mt-field label="目标车号" v-model="carId" disabled="true"></mt-field>
     <mt-field label="目标医院" v-model="organizationName" disabled="true"></mt-field>
-    <mt-field label="现在时间" v-model="HospitalTime" disabled="true"></mt-field><hr>
+    <mt-field label="上车时间" v-model="carTime" disabled="true"></mt-field><hr>
     <mt-button v-show="isshow" size="normal" type="primary" @click="returnH1()">确认接收</mt-button>
     <router-view></router-view>
   </div>
@@ -36,7 +36,7 @@ export default {
       age: '',
       carId: '',
       organizationName: '',
-      HospitalTime: '',
+      carTime: '',
       isshow: '',
       hosgroup: '',
       hospitalGroup:window.localStorage.getItem('GROUPNO'),
