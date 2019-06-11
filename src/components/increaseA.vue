@@ -25,10 +25,10 @@
         :options="options">
       </mt-radio>
       <mt-field v-show="iscamera" label="性别" v-model="gender1" disabled></mt-field>
-      <mt-field label="年龄" v-model="age"></mt-field>
+      <mt-field label="年龄" v-model="age" type='number'></mt-field>
       <mt-field label="民族" v-model="nation"></mt-field>
-      <mt-field label="手机" v-model="phone"></mt-field>
-      <mt-field label="邮箱" v-model="email"></mt-field>
+      <mt-field label="手机" v-model="phone" type='number'></mt-field>
+      <mt-field label="邮箱" v-model="email" type='email'></mt-field>
       <mt-field label="单位" v-model="unit"></mt-field>
       <mt-field label="职务" v-model="position"></mt-field>
       <p style="position: absolute;left:52px">
@@ -80,6 +80,7 @@ export default {
       nation: '',
       email: '',
       photoUrl: '',
+      memberId: '',
       options: [
         {
           label: '男',
@@ -154,7 +155,11 @@ export default {
               if(response.data.results && response.data.results.length>0){
                 that.iscamera = true
                 that.isface = true
-                that.pname = response.data.results[0].Name
+                if(response.data.results[0].VIPTag == true){
+                  that.pname = 'VIP'+that.faceid
+                }else{
+                  that.pname = response.data.results[0].Name
+                }
                 that.age = response.data.results[0].Age
                 that.gender = response.data.results[0].Gender
                 that.unit = response.data.results[0].Unit
@@ -164,6 +169,7 @@ export default {
                 that.email = response.data.results[0].Email
                 that.photoUrl = response.data.results[0].PhotoUrl
                 that.phone = response.data.results[0].Phone
+                that.memberId = that.faceid
 
                 if(that.bloodType == 1){
                   that.blood = "A型"
@@ -229,7 +235,11 @@ export default {
               if(response.data.results && response.data.results.length>0){
                 that.iscamera = true
                 that.isface = false
-                that.pname = response.data.results[0].Name
+                if(response.data.results[0].VIPTag == true){
+                  that.pname = 'VIP'+result.text
+                }else{
+                  that.pname = response.data.results[0].Name
+                }
                 that.age = response.data.results[0].Age
                 that.gender = response.data.results[0].Gender
                 that.unit = response.data.results[0].Unit
@@ -239,6 +249,7 @@ export default {
                 that.email = response.data.results[0].Email
                 that.photoUrl = response.data.results[0].PhotoUrl
                 that.phone = response.data.results[0].Phone
+                that.memberId = result.text
 
                 if(that.bloodType == 1){
                   that.blood = "A型"
@@ -312,7 +323,8 @@ export default {
         this.bloodType = '7'
       }else if(this.blood === "O型" && this.type === "Rh-") {
         this.bloodType = '8'
-      }console.log(this.bloodType)
+      }
+      console.log(typeof(this.age))
       axios.post('/newPatient',{
         groupId: this.groupId,
         inputUserId: this.inputUserId,
@@ -325,22 +337,18 @@ export default {
         position: this.position,
         nation: this.nation,
         email: this.email,
-        photoUrl: ''
+        photoUrl: '',
+        memberId: this.memberId
       }).then((response) => {
         console.log(response)
         if(response.data.results == "新建成功") {
-          // MessageBox.alert('创建成功', '提示');
-          // alert("创建成功");
           Toast('创建成功');
           this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
         }else {
-          // MessageBox.alert('创建失败', '提示');
-          // alert("创建失败");
           Toast('创建失败');
-        }console.log(response);
-            console.log(response.data.results);
-        }).catch(function(error){
-            console.log("error",error);
+        }
+      }).catch(function(error){
+        console.log("error",error);
       });
     }
   }
