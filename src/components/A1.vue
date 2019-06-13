@@ -288,7 +288,10 @@
           </div>
         </div>
         <br>
-        <mt-popup v-model="popupVisible1" position="bottom" style="width:100%">
+        <br><br>
+      </mt-tab-container-item>
+    </mt-tab-container>
+    <mt-popup v-model="popupVisible1"  position="bottom" closeOnClickModal="true" style="width:100%;height: 50%;overflow: auto;">
           <div v-for="(item,index) in hosList">
             <a @click="gethospital(index)">
             <hr>
@@ -298,12 +301,24 @@
               <small style="color:grey">
               ICU剩余{{item.ICUNow}}&nbsp;&nbsp;手术室剩余{{item.ORNow}}&nbsp;&nbsp;专用病房剩余{{item.GWNow}}</small><br>
               <small style="color:grey;">联系人：{{item.realManager}}</small>
-              <small style="color:grey;position:absolute;right:100px">手机：{{item.phone}}</small>
+              <small style="color:grey;position:absolute;right:100px">手机：{{item.phone}}</small><br>
+              <mt-badge size="small" v-show='item.XiongtongTag'>胸痛</mt-badge>
+              <mt-badge size="small" v-show='item.GanranTag'>感染</mt-badge>
+              <mt-badge size="small" v-show='item.ZhongduTag'>中毒</mt-badge>
+              <mt-badge size="small" v-show='item.CuzhongTag'>卒中</mt-badge>
+              <mt-badge size="small" v-show='item.ChuangshangTag'>创伤</mt-badge>
+              <mt-badge size="small" v-show='item.HefusheTag'>核辐射</mt-badge>
+              <mt-badge size="small" v-show='item.YunchanTag'>孕产</mt-badge>
+              <mt-badge size="small" v-show='item.ErtongTag'>儿童</mt-badge>
+              <mt-badge size="small" v-show='item.JingshenTag'>精神</mt-badge>
+              <mt-badge size="small" v-show='item.ChuanranTag'>传染</mt-badge>
+              <mt-badge size="small" v-show='item.XinliTag'>心理</mt-badge>
+              <mt-badge size="small" v-show='item.ErchuangTag'>儿创</mt-badge>
             </div><hr>
             </a>
           </div>
         </mt-popup>
-        <mt-popup v-model="popupVisible2" position="bottom" style="width:100%">
+        <mt-popup v-model="popupVisible2" position="bottom" style="width:100%;overflow: auto;">
           <div v-for="(item,index) in carList">
             <a @click="getcar(index)">
             <hr>
@@ -316,9 +331,6 @@
             </a>
           </div>
         </mt-popup>
-        <br><br>
-      </mt-tab-container-item>
-    </mt-tab-container>
     <div>
       <mt-tabbar v-model= "selected" fixed>
         <mt-tab-item id="患者病历">
@@ -335,6 +347,7 @@
     <router-view></router-view>
   </div>
 </template>
+
 
 <script>
   import axios from 'axios';
@@ -458,7 +471,26 @@
       clearInterval(this.intervalid1)
       this.intervalid1 = null
     },
+    watch: {
+      popupVisible1: function (val) {
+        if(val) {
+          document.getElementsByTagName('mt-tab-container')[0].addEventListener('touchmove', this.handler, { passive: false });
+        } else {
+          document.getElementsByTagName('mt-tab-container')[0].addEventListener('touchmove', this.handler, { passive: false });
+        }
+      },
+       popupVisible2: function (val) {
+        if(val) {
+          document.getElementsByTagName('mt-tab-container')[0].addEventListener('touchmove', this.handler, { passive: false });
+        } else {
+          document.getElementsByTagName('mt-tab-container')[0].addEventListener('touchmove', this.handler, { passive: false });
+        }
+      }
+    },
     methods: {
+      handler:function(e) {
+        e.preventDefault();
+      },
       focus1(){
         this.editing1 = true;
         this.tempzhusu = this.主诉;
@@ -1331,6 +1363,7 @@ gethospital:function(index){
       this.HosNo=this.hosList[index].OrganizationCode
       this.OrganizationName = this.hosList[index].OrganizationName
       this.LocationDescription = this.hosList[index].LocationDescription
+
     },
 getcar:function(index){
       this.CarNo = this.carList[index].CarNo
@@ -1858,18 +1891,7 @@ initMap () {
 }
 };
 </script>
-<style>
-  .map-root{
-    width:100%;
-    height:400px;
-    padding:3px;
-    border:1px solid black;
-    margin:2px;
-  };
-  .mint-popup-4 {
-    width: 100%;  
-  }
-</style>
+
 
 
 
