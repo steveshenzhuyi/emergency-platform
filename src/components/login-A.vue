@@ -59,7 +59,7 @@
       <mt-tab-container-item id="沟通">
         <mt-header fixed style="font-size:20px" title="信息列表">
           <mt-button slot="left" @click="phone()"><small>视频通话</small></mt-button>
-          <!-- <mt-button slot="right" @click="$goRoute('/increaseC')"><small>新增信息</small></mt-button> -->
+          <mt-button slot="right" @click="oneClickNeedHelp()"><small>一键求助</small></mt-button>
           <hr>
         </mt-header>
         <br><br>
@@ -432,6 +432,17 @@ export default {
           alert(scheme + ' is not available');
         }
       );     
+    },
+    oneClickNeedHelp(){
+      axios.post('/oneClickNeedHelp',{
+        groupNo: window.localStorage.getItem('GROUPNO')
+      }).then((response) => {
+        if(response.data.results == "上传成功") {
+          Toast("成功上报指挥中心，请打开AR眼镜视频实况功能");
+        }else{
+          Toast("上报失败");
+        }
+      })
     },
     logout(){
       window.JPush.cleanTags({ sequence: 1 },
