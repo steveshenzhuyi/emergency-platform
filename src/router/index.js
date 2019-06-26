@@ -13,6 +13,7 @@ import increaseCH from '@/components/increaseCH';
 import A1 from '@/components/A1';
 import T1 from '@/components/T1';
 import H1 from '@/components/H1';
+import Z1 from '@/components/Z1';
 import 资源详情 from '@/components/B1';
 import B2 from '@/components/B2';
 import C1 from '@/components/C1';
@@ -24,6 +25,7 @@ import confirmh from '@/components/confirmh';
 import map from '@/components/map';
 import 转运列表 from '@/components/login-T';
 import 医院病人列表 from '@/components/login-H';
+import 专家病人列表 from '@/components/login-Z';
 import 个人信息运输 from '@/components/个人信息运输';
 import 接收病人 from '@/components/接收病人';
 
@@ -55,6 +57,11 @@ export default new Router({
       path: '/login-H',
       name: '医院病人列表',
       component: 医院病人列表,
+    },
+    {
+      path: '/login-Z',
+      name: '专家病人列表',
+      component: 专家病人列表,
     },
     {
       path: '/CPR',
@@ -135,6 +142,11 @@ export default new Router({
       path: '/H1',
       name: 'H1',
       component: H1,
+    },
+    {
+      path: '/Z1',
+      name: 'Z1',
+      component: Z1,
     },
     {
       path: '/confirm',

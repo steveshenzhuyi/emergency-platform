@@ -133,6 +133,37 @@ export default {
           }).catch(function(error){
             console.log("error",error);
           })
+        } else if (response.data.results[0].RoleCode == "R04"){
+          //专家端登录
+          this.groupNo = response.data.results[0].GroupNo;
+          window.localStorage.setItem('GROUPNO',this.groupNo);
+          var GN = this.groupNo;
+          axios.post('/checkPassword',{
+            userId: this.userId,
+            pwd: this.pwd
+          }).then((response) => {
+            if (response.data.results == "密码正确") {
+              window.localStorage.setItem('USERID',this.userId);
+              window.localStorage.setItem('ROLECODE',this.RoleCode);
+  //             window.JPush.setTags({ sequence: 1, tags: [GN] },
+  // (result) => {
+  //   var sequence = result.sequence
+  //   var tags = result.tags  // 数组类型
+  //   // alert(sequence)
+  //   // alert(tags)
+  // }, (error) => {
+  //   var sequence = error.sequence
+  //   var errorCode = error.code
+  // })
+              this.$router.push({name: '专家病人列表',params:{SELECTED2:"病人"}});
+            }else{
+              // MessageBox.alert('用户名或密码错误!', '提示');
+              Toast('用户名或密码错误');
+              // alert("用户名或密码错误");
+            }
+          }).catch(function(error){
+            console.log("error",error);
+          })
         }
       })
     },

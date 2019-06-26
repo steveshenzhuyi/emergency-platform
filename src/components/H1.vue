@@ -5,12 +5,29 @@
         <mt-tab-item id="既往病历">
           <img slot="icon" src="./icon/病历.png"><div style="font-size:12px">既往病历</div>
         </mt-tab-item>
+        <mt-tab-item id="既往处置">
+          <img slot="icon" src="./icon/处置方案.png"><div style="font-size:12px">既往处置</div>
+        </mt-tab-item>
         <mt-tab-item id="实时地图">
           <img slot="icon" src="./icon/去向.png"><div style="font-size:12px">实时地图</div>
         </mt-tab-item>
       </mt-tabbar>
     </div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
+      <mt-tab-container-item id="既往处置">
+        <mt-header fixed style="font-size:20px" title="既往处置">
+          <mt-button size="small" icon="back" slot="left"
+            @click="returnH()"><small>返回</small></mt-button>
+          <hr>
+        </mt-header>
+        <br><br>
+        <div v-for="(item,index) in dataCZ" style="text-align: left">
+        <hr> 
+        <small style="color:grey">{{item.OperationTime}}</small><br>
+        <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<br>
+        <span>{{item.Detail}}</span><br>
+      </div><br><br><br><br>
+      </mt-tab-container-item>
       <mt-tab-container-item id="既往病历">
         <mt-header fixed style="font-size:20px" title="既往病历">
           <mt-button size="small" icon="back" slot="left"
