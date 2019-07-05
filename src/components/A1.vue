@@ -5,8 +5,8 @@
         <mt-header fixed style="font-size:20px" title="患者病历">
           <mt-button size="small" icon="back" slot="left"
           @click="returnA()"><small>返回</small></mt-button>
-          <mt-button size="small" slot="right" v-show="isShow2"
-          @click="confirm()"><small>后送</small></mt-button>
+          <mt-button size="small" slot="right"
+          @click.native="popupVisible3 = true"><small>监护</small></mt-button>
           <hr>
         </mt-header>
         <br><br>
@@ -212,8 +212,8 @@
       <mt-header fixed style="font-size:20px" title="处置方案">
       <mt-button size="small" icon="back" slot="left"
         @click="returnA()"><small>返回</small></mt-button>
-      <mt-button size="small" slot="right" v-show="isShow2"
-        @click="confirm()"><small>后送</small></mt-button>
+      <!-- <mt-button size="small" slot="right"
+        @click="()"><small>监护</small></mt-button> -->
       <hr>
       </mt-header>
       <br><br>
@@ -331,6 +331,42 @@
             </a>
           </div>
         </mt-popup>
+        <mt-popup v-model="popupVisible3" position="bottom" style="width:100%;height: 70%;overflow: auto;">
+          <h4>点选可用设备，给病人使用心电监护。结束上一个病人的监测后，设备才可以重复使用。</h4>
+          <div>
+            <div align="center" style="height: 30px">
+              <span>可用设备列表</span>
+              <mt-button size="small" type="primary" style="float: right;margin-right: 30px"
+              @click="getDeviceList()">刷新</mt-button>
+              </div>
+            <div v-for="(item,index) in useableDeviceList">
+            <a @click="startMonitor(index)">
+            <div align="left">
+              <div>设备编号：{{item.device_bid}}</div>
+              <div><span>设备名称：{{item.device_desc}}</span><span>&nbsp;&nbsp;&nbsp;&nbsp;序列号：{{item.device_serial_id}}</span></div>
+              <small style="color:grey;">通道号：{{item.channel_no}}</small>
+              <!-- <small style="color:grey;position:absolute;left:100px">手机：{{}}</small> -->
+            </div><hr>
+            </a>
+          </div>
+          </div>
+          <br>
+          <div>
+             <div align="center" style="height: 30px">
+              <span>检查单列表</span>
+              <mt-button size="small" type="primary" style="float: right;margin-right: 30px"
+              @click="getTestList()">刷新</mt-button>
+              </div>
+             <div v-for="(item,index) in testList">
+            <div align="left">
+              <div>检查单号：{{item.busi_no}}</div>
+              <div><span>病人姓名：{{item.member_idcard}}</span><span style="position:absolute;left:140px">&nbsp;当前状态：{{item.status_descprion}}</span><mt-button size="small" type="primary" v-show="item.status==1" style="float: right;margin-right: 30px" @click="stopMonitor(index)">停止监测</mt-button> </div>
+             <!--  <small style="color:grey;">联系人：{{}}</small>
+              <small style="color:grey;position:absolute;left:100px">手机：{{}}</small> -->
+            </div><hr>
+          </div>
+          </div>
+        </mt-popup>
     <div>
       <mt-tabbar v-model= "selected" fixed>
         <mt-tab-item id="患者病历">
@@ -378,6 +414,10 @@
         photosrc: global.photoUrl+"zyh_1557216080825test.jpg",
         popupVisible1: false,
         popupVisible2: false,
+        popupVisible3: false,
+        useableDeviceList:[],
+        testList:[],
+        nowTime:'',
         intervalid1:null,
         watchID1:null,
         selected: this.$route.params.SELECTED1,
@@ -464,6 +504,9 @@
       this.initMap()
       this.getpatientrecord()
       this.getPatientInfo()
+      this.getDeviceList()
+      this.getTestList()
+      
     },
     beforeDestroy () {
       navigator.geolocation.clearWatch(this.watchID1)
@@ -813,6 +856,59 @@
           // }
           // window.localStorage.setItem('STATE',this.state);
 
+        })
+      },
+      getDeviceList() {
+        axios('http://test.995120.cn:8088/his/outpatient/queryDeviceList',{
+          method: 'post', 
+          data:{  
+         "hospital_bid":"810000"
+       },
+       headers:{
+        "pkgId":"0001",
+        "transCode":"500008",
+        "senderOrgCode":"810000",
+        "senderPltCode":"88888899",
+        "senderSysCode":"81",
+        "createDate":"20190713",
+        "createTime":"11:17:00",
+        "version":"1.0",
+        "token":"0001",
+        "recverOrgCode":"999999",
+        "recverPltCode":"99999999",
+        "recverSysCode":"99",
+        "Content-Type":"application/json"
+       }
+        }).then((response) => {
+          this.useableDeviceList = response.data.recordList
+        })
+      },
+      getTestList() {
+        axios('http://test.995120.cn:8088/his/outpatient/getTestList',{
+          method: 'post', 
+          data:{
+         "hospital_bid":"810000"
+       },
+       headers:{
+        "pkgId":"0001",
+        "transCode":"500008",
+        "senderOrgCode":"810000",
+        "senderPltCode":"88888899",
+        "senderSysCode":"81",
+        "createDate":"20190713",
+        "createTime":"11:17:00",
+        "version":"1.0",
+        "token":"0001",
+        "recverOrgCode":"999999",
+        "recverPltCode":"99999999",
+        "recverSysCode":"99",
+        "Content-Type":"application/json"
+       }
+        }).then((response) => {
+          this.testList = []
+          for(var i=0;i<5;i++){
+            this.testList.push(response.data.recordList[i]) 
+          }
         })
       },
       onPatientlistChange(picker, values) {
@@ -1360,16 +1456,138 @@ confirm() {
   this.$router.push({name:'confirm',params:{HOSPITAL:this.OrganizationName,CARID:this.carId}})
 },
 gethospital:function(index){
-      this.HosNo=this.hosList[index].OrganizationCode
-      this.OrganizationName = this.hosList[index].OrganizationName
-      this.LocationDescription = this.hosList[index].LocationDescription
+  this.HosNo=this.hosList[index].OrganizationCode
+  this.OrganizationName = this.hosList[index].OrganizationName
+  this.LocationDescription = this.hosList[index].LocationDescription
 
-    },
+},
 getcar:function(index){
-      this.CarNo = this.carList[index].CarNo
-      this.carname = this.carList[index].CarName
-      this.carId = this.carList[index].CarId
-    },
+  this.CarNo = this.carList[index].CarNo
+  this.carname = this.carList[index].CarName
+  this.carId = this.carList[index].CarId
+},
+
+startMonitor:function(index){
+  var that = this
+  that.nowTime = new Date().getTime()
+  MessageBox.confirm('确定使用这台设备监护?').then(action => {
+    axios('http://test.995120.cn:8088/his/outpatient/addOutpatient',{
+      method: 'post', 
+      data:{  
+       "busi_no":that.nowTime,
+       "test_type":"ECG00010000001",
+       "hospital_bid":"810000",
+       "office_bid":"G01",
+       "doctor_account":"zyh",
+       "device_bid":"",
+       "device_serial_id":"",
+       "device_type":"",
+       "outerUserNo":that.patientId,
+       "realName":"陈二",
+       "certType":"01",
+       "certNo":that.Name
+     },
+     headers:{
+      "pkgId":"0001",
+      "transCode":"500008",
+      "senderOrgCode":"810000",
+      "senderPltCode":"88888899",
+      "senderSysCode":"81",
+      "createDate":"20190703",
+      "createTime":"11:17:00",
+      "version":"1.0",
+      "token":"0001",
+      "recverOrgCode":"999999",
+      "recverPltCode":"99999999",
+      "recverSysCode":"99",
+      "Content-Type":"application/json"
+    }
+  }).then((response) => {
+    if(response.data.respCode == "000000"){
+      axios('http://test.995120.cn:8088/his/outpatient/startMonitoring',{
+        method: 'post', 
+        data:{
+         "busi_no":that.nowTime,
+         "hospital_bid":"810000",
+         "office_bid":"G01",
+         "doctor_account":"zyh",
+         "device_bid":that.useableDeviceList[index].device_bid,
+         "device_serial_id":that.useableDeviceList[index].device_serial_id,
+         "device_type":"",
+         "memo":"",
+         "outpatient_test_bid":""
+       },
+     headers:{
+      "pkgId":"0001",
+      "transCode":"500008",
+      "senderOrgCode":"810000",
+      "senderPltCode":"88888899",
+      "senderSysCode":"81",
+      "createDate":"20190703",
+      "createTime":"11:17:00",
+      "version":"1.0",
+      "token":"0001",
+      "recverOrgCode":"999999",
+      "recverPltCode":"99999999",
+      "recverSysCode":"99",
+      "Content-Type":"application/json"
+    }
+  }).then((response) => {
+    if(response.data.respCode == "000000"){
+      MessageBox.alert("开始监护成功","提示")
+      that.getDeviceList()
+      that.getTestList()
+    }else{
+      MessageBox.alert("开始监护失败","提示")
+    }
+  })
+
+    }else{
+     MessageBox.alert("下检查单失败","提示")
+    }
+  })
+  
+});
+  // 你从何而来的自信
+},
+stopMonitor:function(index){
+  var that = this
+  MessageBox.confirm('确定停止监护?').then(action => {
+    axios('http://test.995120.cn:8088/his/outpatient/stopMonitoring',{
+      method: 'post', 
+      data:{  
+       "busi_no":that.testList[index].busi_no,
+       "hospital_bid":"810000",
+       "office_bid":"G01",
+       "doctor_account":"zyh",
+       "memo":""
+     },
+     headers:{
+      "pkgId":"0001",
+      "transCode":"500008",
+      "senderOrgCode":"810000",
+      "senderPltCode":"88888899",
+      "senderSysCode":"81",
+      "createDate":"20190703",
+      "createTime":"11:17:00",
+      "version":"1.0",
+      "token":"0001",
+      "recverOrgCode":"999999",
+      "recverPltCode":"99999999",
+      "recverSysCode":"99",
+      "Content-Type":"application/json"
+    }
+  }).then((response) => {
+    if(response.data.respCode == "000000"){
+      MessageBox.alert("停止监护成功","提示")
+      that.getTestList()
+      that.getDeviceList()
+    }else{
+      MessageBox.alert("停止监护失败","提示")
+    }
+  })
+})
+},
 
 choosephoto1() {
   var that = this;

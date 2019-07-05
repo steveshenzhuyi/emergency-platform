@@ -231,7 +231,6 @@ export default {
     };
   },
   mounted() {
-    this.initMap()
     this.getpatientrecord()
   },
   beforeDestroy () {

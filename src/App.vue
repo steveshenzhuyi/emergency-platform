@@ -7,11 +7,11 @@
 <script>
 export default {
   name: 'App',
-  provide (){
-    return {
-      reload:this.reload
-    }
-  },
+  // provide (){
+  //   return {
+  //     reload:this.reload
+  //   }
+  // },
   data() {
     return {
       isRouterAlive:true
@@ -30,12 +30,12 @@ export default {
 
   },
   methods: {
-    reload() {
-      this.isRouterAlive = false
-      this.$nextTick(function() {
-        this.isRouterAlive = true
-      })
-    }
+    // reload() {
+    //   this.isRouterAlive = false
+    //   this.$nextTick(function() {
+    //     this.isRouterAlive = true
+    //   })
+    // }
   },
   components: {
   }

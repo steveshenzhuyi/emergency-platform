@@ -39,7 +39,6 @@
           <hr>
         </mt-header>
         <br><br>
-        <h4 v-show="GLOBAL.showVideoAlert" style="color:red">您有视频通话邀请，请点击左上角进入</h4>
         <div style="width:80%;">
         <mt-picker :slots="slots1" @change="onResourcelistChange" :visible-item-count="3" :itemHeight='30'></mt-picker>
         </div>
@@ -60,6 +59,7 @@
           <hr>
         </mt-header>
         <br><br>
+        <h4 v-show="GLOBAL.showVideoAlert" style="color:red">您有视频通话邀请，请点击左上角进入</h4>
         <div style="width:80%;">
           <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3" :itemHeight='30'></mt-picker>
         </div>
@@ -120,11 +120,11 @@ import axios from 'axios';
 import { Toast } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
 export default {
-  inject:['reload'],
+  // inject:['reload'],
   data() {
     return {
       watchID2:null,
-      selected: '',
+      selected: '沟通',
       isShow: false,
       userId: window.localStorage.getItem('USERID'),
       groupNo: window.localStorage.getItem('GROUPNO'),

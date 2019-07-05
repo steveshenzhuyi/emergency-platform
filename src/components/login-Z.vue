@@ -8,8 +8,9 @@
           <hr> -->
         </mt-header>
         <br><br>
-        <div  style="width:80%;">
-        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3" :itemHeight='30'></mt-picker></div>
+        <div  style="width:80%;height: 60px">
+        <!-- <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3" :itemHeight='30'></mt-picker> -->
+      </div>
         <div align="right"><mt-button size="small" type="primary" style="position:relative;top:-60px"
         @click="getpagelist()">刷新</mt-button></div>
         <div v-for="(item,index) in dataclass1" align="left" style="position:relative;top:-40px">
@@ -94,11 +95,12 @@ import axios from 'axios';
 import { Toast } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
 export default {
+  // inject:['reload'],
   data() {
     return {
       userId: window.localStorage.getItem('USERID'),
       groupNo: window.localStorage.getItem('GROUPNO'),
-      selected: '',
+      selected: '沟通',
       value: '',
       value1: '',
       Name: '',
@@ -191,23 +193,16 @@ export default {
       axios.post('/getExpertPatientList',{
         expertId: this.userId
       }).then((response) => {
-        this.PatientlistClass=response.data.results;
-        axios.post('/getPatientListHospitalCreatetime',{
-          groupNo: this.groupNo
-        }).then((response) => {
-          this.PatientlistTime=response.data.results;
-          this.refreshPatient();
-        }).catch(function(error){
-          console.log("error",error);
-        })
+        this.dataclass1 = []
+      this.dataclass1=response.data.results
       }).catch(function(error){
         console.log("error",error);
       })
     },
     getMessageList(){
       //获取现场组信息列表
-      axios.post('/getHosMessage',{
-        groupNo: this.groupNo
+      axios.post('/getExpertMessage',{
+        Expert: this.userId
       }).then((response) => {
         this.message = response.data.results
         this.refreshMessage()
@@ -237,8 +232,9 @@ export default {
         this.GroupName=response.data.results[0].GroupName;
         this.GroupPosition=response.data.results[0].GroupPosition;
         var GN = this.groupNo;
+        var UI = this.userId;
         if(this.GroupPosition == '组长'){
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
+          window.JPush.setTags({ sequence: 1, tags: [UI, 'groupLeader']},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags
@@ -246,7 +242,7 @@ export default {
             console.log(error)
           })
         }else{
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
+          window.JPush.setTags({ sequence: 1, tags: [UI, 'worker']},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags
@@ -282,11 +278,8 @@ export default {
     //刷新各指定页面
     refreshPatient() {
       this.dataclass1 = []
-      if(this.sortway == "时间排序") {
-        this.dataclass1=this.PatientlistTime
-      }else if(this.sortway == "分级排序"){
-        this.dataclass1=this.PatientlistClass
-      }
+      this.dataclass1=this.PatientlistClass
+      
       var tmp = new Array();
       for(var i=0; i<this.dataclass1.length;i++) {
         if (this.chooselevel != '选择分级') {

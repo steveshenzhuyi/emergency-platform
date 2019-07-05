@@ -127,13 +127,13 @@ import axios from 'axios';
 import { Toast } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
 export default {
-  inject:['reload'],
+  // inject:['reload'],
   data() {
     return {
       userId: window.localStorage.getItem('USERID'),
       groupNo: window.localStorage.getItem('GROUPNO'),
       StatusName: '',
-      selected: '',
+      selected: '沟通',
       mark: '',
       isshow1: false,
       isshow2: false,
