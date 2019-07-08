@@ -19,6 +19,7 @@ import B2 from '@/components/B2';
 import C1 from '@/components/C1';
 import C2 from '@/components/C2';
 import C3 from '@/components/C3';
+import C4 from '@/components/C4';
 import confirm from '@/components/confirm';
 import confirmt from '@/components/confirmt';
 import confirmh from '@/components/confirmh';
@@ -132,6 +133,11 @@ export default new Router({
       path: '/C3',
       name: 'C3',
       component: C3,
+    },
+    {
+      path: '/C4',
+      name: 'C4',
+      component: C4,
     },
     {
       path: '/T1',

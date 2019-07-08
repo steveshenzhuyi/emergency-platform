@@ -20,13 +20,37 @@ export default {
   mounted(){
     var that = this
     document.addEventListener("jpush.receiveNotification", function (event) {
-  var alertContent
-    alertContent = event.extras.type
-    if(alertContent == 'video'){
-    that.GLOBAL.changeVideoAlert(true)
-    }
-    console.log(that.GLOBAL)
-}, false)
+      var alertContent
+      alertContent = event.extras.type
+      if(alertContent == 'video'){
+        that.GLOBAL.changeVideoAlert(true)
+      }
+      console.log(that.GLOBAL)
+    }, false)
+
+    document.addEventListener("jpush.openNotification", function (event) {
+      var alertContent = event.extras.type
+      var num = event.extras.MessageNo
+      if(alertContent == 'video'){
+        that.GLOBAL.changeVideoAlert(false)
+        var scheme = 'com.tencent.trtc';
+        appAvailability.check(scheme,
+          function() {
+            var sApp = startApp.set({"application":"com.tencent.trtc"});
+            sApp.start(function() {
+            }, function(error) {
+              alert(error);
+            });
+          },
+          function() {
+            alert(scheme + ' is not available');
+          }
+        );
+      }else{
+       window.localStorage.setItem('MESSAGENO',num);
+       that.$router.push({name:'C1'});
+      }
+    }, false)
 
   },
   methods: {

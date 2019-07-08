@@ -340,7 +340,8 @@ export default {
     },
     getMessage:function(index){
       console.log(index)
-      this.$router.push({name: 'C1',params:{MESSAGENO:this.data3[index].MessageNo}});
+      window.localStorage.setItem('MESSAGENO',this.data3[index].MessageNo)
+      this.$router.push({name: 'C1'});
     },
     getpatient:function(index){
       console.log(index)

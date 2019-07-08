@@ -1,8 +1,8 @@
 <template>
-  <div align ="left">
+  <div align=left>
     <mt-header fixed style="font-size:20px" title="消息详情">
     <mt-button size="small" type="danger" slot="left" icon="back"
-        @click="returnA()"><small>返回</small></mt-button>
+        @click="returnZ()"><small>返回</small></mt-button>
     </mt-header>
     <br><br>
     <hr>
@@ -26,7 +26,7 @@ export default {
       messageNo: '',
       sendtime: '',
       mark: '',
-      MessageDetail:[],
+      messagedetail: '',
       showbadge:'',
     };
   },
@@ -36,14 +36,13 @@ export default {
   methods: {
     getMessage() {
       axios.post('/getMessageDetail', {
-        messageNo:window.localStorage.getItem('MESSAGENO')
+        messageNo:this.$route.params.MESSAGENO
       }).then((response) => {
         this.Title=response.data.results[0].MessageTitle
         var a = response.data.results[0].MessageDetail
         var b = a.split(/[\r\n]/)
         var c = b.filter( i => i)
         this.MessageDetail = c
-        console.log(this.MessageDetail)
         this.sendtime=response.data.results[0].SendTime
         this.messageNo=response.data.results[0].MessageNo
         this.mark=response.data.results[0].Mark
@@ -52,16 +51,8 @@ export default {
         }
       })
     },
-    returnA() {
-       if(window.localStorage.getItem('ROLECODE')=="R01"){
-        this.$router.push({name: '病人列表',params:{SELECTED:"沟通"}});
-        }else if(window.localStorage.getItem('ROLECODE')=="R02"){
-          this.$router.push({name:'转运列表',params:{SELECTED1:"沟通"}});
-        }else if(window.localStorage.getItem('ROLECODE')=="R03"){
-          this.$router.push({name:'医院病人列表',params:{SELECTED2:"沟通"}});
-        }else if(window.localStorage.getItem('ROLECODE')=="R04"){
-          this.$router.push({name:'专家病人列表',params:{SELECTED2:"沟通"}});
-        }else alert("无角色")
+    returnH() {
+      this.$router.push({name: '专家病人列表',params:{SELECTED2:"沟通"}});
     }
   }
 };
