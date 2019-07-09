@@ -414,7 +414,7 @@ export default {
     //获取单一资源信息
     getResource:function(index){
       console.log(index)
-      this.$router.push({name: 'B2',params:{RESOURCENO:this.data2[index].ResourceNo}});
+      this.$router.push({name: '资源详情',params:{RESOURCENO:this.data2[index].ResourceNo}});
     },
     getMessage:function(index){
       console.log(index)

@@ -8,11 +8,15 @@
     <mt-field label="名称" v-model="name" :disabled="true"></mt-field>
     <mt-field label="编号" v-model="number" :disabled="true"></mt-field>
     <mt-field label="种类" v-model="type" :disabled="true"></mt-field>
+    <mt-field label="总量" v-model="amount" :disabled="true"></mt-field>
+    <mt-field label="已用量" v-model="used" :disabled="true"></mt-field>
+    <mt-field label="单位" v-model="unit" :disabled="true"></mt-field>
     <mt-field label="规格" v-model="standard" :disabled="true"></mt-field>
-    <mt-field label="原始数量" v-model="amount" :disabled="true"></mt-field>
-    <mt-field label="所属" v-model="belong" :disabled="true"></mt-field>
-    <mt-field label="添加时间" v-model="time" :disabled="true"></mt-field>
     <mt-field label="状态" v-model="state" :disabled="true"></mt-field>
+    <mt-field label="添加时间" v-model="time" :disabled="true"></mt-field>
+    <mt-field label="所属" v-model="Subordinateunits" :disabled="true"></mt-field>
+    <mt-field label="生产厂家" v-model="Manufacturer" :disabled="true"></mt-field>
+    <mt-field label="批号" v-model="BatchNumber" :disabled="true"></mt-field>
     <mt-field label="描述" type="textarea" v-model="describe" :disabled="true"></mt-field>
     <hr>
     <p  style="text-align: left">数量增减</p>
@@ -48,6 +52,10 @@ export default {
       ResourceType: '',
       amount: '',
       difference: '',
+      unit:'',
+      Manufacturer:'',
+      BatchNumber:'',
+      used:''
     };
   },
   mounted() {
@@ -55,7 +63,17 @@ export default {
   },
   methods: {
     returnA() {
-      this.$router.push({name: '病人列表',params:{SELECTED:"资源"}});
+      if(window.localStorage.getItem('ROLECODE')=="R01"){
+        this.$router.push({name: '病人列表',params:{SELECTED:"资源"}});
+        }else if(window.localStorage.getItem('ROLECODE')=="R02"){
+          this.$router.push({name:'转运列表',params:{SELECTED1:"资源"}});
+        }
+        // else if(window.localStorage.getItem('ROLECODE')=="R03"){
+        //   this.$router.push({name:'医院病人列表',params:{SELECTED2:"资源"}});
+        // }else if(window.localStorage.getItem('ROLECODE')=="R04"){
+        //   this.$router.push({name:'专家病人列表',params:{SELECTED2:"资源"}});
+        // }
+        else alert("无角色")
     },
     getResource() {
       axios.post('/getResourceInfo', {
@@ -66,25 +84,15 @@ export default {
         this.standard=response.data.results[0].Standard;
         this.time=response.data.results[0].AddTime;
         this.counter=response.data.results[0].Amount;
-        this.amount=response.data.results[0].Amount;
+        this.used=response.data.results[0].Used;
+        this.amount=this.counter+this.used;
         this.Status=response.data.results[0].Status;
         if(this.Status=="1") {
           this.state="在库"
+        }else{
+          this.state="其他"
         }
-        this.Subordinateunits=response.data.results[0].Subordinateunits;
-        if(this.Subordinateunits=="G01") {
-          this.belong="会场1组"
-        }else if(this.Subordinateunits=="G02") {
-          this.belong="会场2组"
-        }else if(this.Subordinateunits=="G03") {
-          this.belong="车辆1组"
-        }else if(this.Subordinateunits=="G04") {
-          this.belong="车辆2组"
-        }else if(this.Subordinateunits=="G05") {
-          this.belong="医院1组"
-        }else if(this.Subordinateunits=="G06") {
-          this.belong="医院2组"
-        }
+        this.Subordinateunits=response.data.results[0].GroupName;
         this.ResourceType=response.data.results[0].ResourceType;
         if(this.ResourceType=="1") {
           this.type="药品"
@@ -93,7 +101,10 @@ export default {
         }else if(this.ResourceType=="3"){
           this.type="其他"
         }
-        this.describe=response.data.results[0].ResourceDetail
+        this.describe=response.data.results[0].ResourceDetail;
+        this.unit=response.data.results[0].Unit;
+        this.Manufacturer=response.data.results[0].Manufacturer;
+        this.BatchNumber=response.data.results[0].BatchNumber
       })
     },
     edit() {
@@ -125,7 +136,7 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          alert("上传成功");
+          Toast("上传成功");
         }
       })
       }
