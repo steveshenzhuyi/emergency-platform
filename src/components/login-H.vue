@@ -14,21 +14,24 @@
         @click="getpagelist()">刷新</mt-button></div>
         <div v-for="(item,index) in dataclass1" align="left" style="position:relative;top:-40px">
             <hr><a @click="getpatient(index)">
-            <div>{{item.PatientId}}
-            <small style="position:absolute;left:100px">{{item.CreateTime}}</small><br></div>
-            <div><code style="font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Name}}</code>
-            <code style="position:absolute;left:100px;font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.Classification}}</code>
-            <code style="position:absolute;left:200px;font-size:18px;font-family:'Avenir', Helvetica, Arial, sans-serif">{{item.StatusNameHos}}</code><br>
-            </div>
+            <div><span>{{item.PatientId}}</span>
+            <span><small style="position:absolute;left:110px">{{item.CreateTime}}</small></span></div>
+            <!-- <br> -->
+            <div><span style="font-size:23px;">{{item.Name}}</span>
+            <span style="position:absolute;left:110px;font-size:20px;">{{item.Classification}}</span>
+            <span style="position:absolute;left:220px;font-size:20px;">{{item.StatusNameHos}}</span></div>
+            <!-- <br> -->
+            <div>
             <small style="color:grey">
             性别：{{item.Gender}}</small>
-            <small style="color:grey;position:absolute;left:100px">年龄：{{item.Age}}</small>
+            <small style="color:grey;position:absolute;left:110px">年龄：{{item.Age}}</small>
             <small style="width:15em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
-            color:grey;position:absolute;left:200px">症状：{{item.Diagnose}}</small><br>
+            color:grey;position:absolute;left:220px">症状：{{item.Diagnose}}</small></div>
+            <div>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
-            <small style="color:grey;position:absolute;left:100px">车辆：{{item.CarName}}</small>
-            <small style="color:grey;position:absolute;left:200px">车号：{{item.CarId}}</small>
-            {{item.Pcost}}</a>
+            <small style="color:grey;position:absolute;left:110px">车辆：{{item.CarName}}</small>
+            <small style="color:grey;position:absolute;left:220px">车号：{{item.CarId}}</small>
+            {{item.Pcost}}</div></a>
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">

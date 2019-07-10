@@ -229,7 +229,8 @@
               </div>
             <hr>
             <div align="center" style="height:30px"><span style="float: left;">预检分级</span></div>
-            <b style="text-align: left">当前分级：{{level}}</b>
+           <div align="left" style="height:30px">
+            <span><b>当前分级：{{level}}</b></span></div>
             <!-- <mt-button @click="setclass()">修改分级</mt-button> -->
             <hr>
             <!-- <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr> -->

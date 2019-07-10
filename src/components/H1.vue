@@ -162,7 +162,8 @@
             <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px" @click="save50()">保存</mt-button> -->
             <hr>
             <div align="center" style="height:30px"><span style="float: left;">预检分级</span></div>
-            <b style="text-align: left">当前分级：{{level}}</b>
+            <div align="left" style="height:30px">
+            <span><b>当前分级：{{level}}</b></span></div>
           </mt-tab-container-item>
           <mt-tab-container-item id="6">
             <img src="./pictrue/man.png"><hr>

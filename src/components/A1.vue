@@ -187,9 +187,13 @@
           </div> -->
           <hr>
           <div align="center" style="height:30px"><span style="float: left;">预检分级</span></div>
-          <b style="text-align: left">当前分级：{{level}}</b>
-          <mt-button @click="setclass()">修改分级</mt-button><hr>
+          <div align="left" style="height:30px">
+            <span><b>当前分级：{{level}}</b></span>
+          <mt-button @click="setclass()" size="small" style="float: right;margin-right: 10px" v-show="settingclass">修改分级</mt-button>
+          </div>
+          <hr>
           <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
+          <div><small style="color:grey">病人分级为I级或II级时，系统将自动上报。其他情况有需求时，可以使用手动一键上报。</small></div>
           <mt-button type="danger" @click="alert()">一键上报</mt-button><br><br><br><br>
         </mt-tab-container-item>
         <mt-tab-container-item id="6">
@@ -439,6 +443,7 @@
         isShow100: false,
         istizheng: false,
         isovering:false,
+        settingclass:false,
         hide: true,
         value3: '',
         selected1: '1',
@@ -793,6 +798,7 @@
           this.Status=response.data.results[0].Status;
           this.StatusName=response.data.results[0].StatusName;
           this.level=response.data.results[0].Classification;
+          this.Classification = response.data.results[0].Classification;
           // this.hospital=response.data.results[0].OrganizationName;
           // this.carId=response.data.results[0].CarId;
           this.CarNo=response.data.results[0].CarNo;
@@ -914,6 +920,8 @@
       },
       onPatientlistChange(picker, values) {
         this.level = values[0];
+        if(this.level == this.Classification || values[0]=="选择分级"){this.settingclass=false}
+          else this.settingclass=true
       },
       returnA() {
         this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
@@ -1300,6 +1308,7 @@
             // alert("修改成功");
             Toast('修改成功');
             this.getpatientrecord()
+            this.getPatientInfo()
           }
         })
       },
