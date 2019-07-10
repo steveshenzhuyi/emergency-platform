@@ -2,7 +2,7 @@
   <div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
-        <mt-header fixed style="font-size:20px" title="病人列表">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="病人列表">
           <mt-button size="small" type="danger" slot="left"
             @click="$goRoute('/CPR')"><small>CPR</small></mt-button>
           <mt-button size="small" slot="right"
@@ -27,18 +27,17 @@
             <small style="color:grey">
             性别：{{item.Gender}}</small>
             <small style="color:grey;position:absolute;left:100px">年龄：{{item.Age}}</small>
-            <small style="width:9em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
+            <small style="width:15em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
             color:grey;position:absolute;left:200px">症状：{{item.Diagnose}}</small><br>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
             <small style="color:grey;position:absolute;left:100px">车辆：{{item.CarName}}</small>
             <small style="color:grey;position:absolute;left:200px">车号：{{item.CarId}}</small>
             {{item.Pcost}}</a>
-        </div><hr>
+        </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="资源">
-        <mt-header fixed style="font-size:20px" title="资源列表">
-          <mt-button size="small" slot="right"
-            @click="$goRoute('/increaseB')"><small>新增资源</small></mt-button>
+        <mt-header fixed style="font-size:25px;height: 50px;" title="资源列表">
+          <!-- <mt-button size="small" slot="right" @click="$goRoute('/increaseB')"><small>新增资源</small></mt-button> -->
           <hr>
         </mt-header>
         <br><br>
@@ -49,15 +48,16 @@
         <mt-button size="small" type="primary" style="position:relative;top:-60px" @click="getResourceList()">刷新</mt-button></div>
         <div v-for=" (item,index) in data2" :data2-index="{index}" align="left" style="position:relative;top:-40px">
           <hr><a @click="getResource(index)">
-          <div>{{ item.ResourceNo }} &nbsp;&nbsp;&nbsp;
+          <div style="font-size: 20px;">{{ item.ResourceNo }} &nbsp;&nbsp;&nbsp;
              {{item.ResourceName}}</div>
           <small style="color:grey">规格：{{item.Standard}}</small>
-          <small style="color:grey;position:absolute;left:100px">  状态：{{item.Status}}</small>
-          <small style="color:grey;position:absolute;left:175px">  数量：{{item.Amount}}</small></a>
-        </div><hr>
+          <small style="color:grey;position:absolute;left:100px">状态：{{item.Status}}</small>
+          <small style="color:grey;position:absolute;left:192px">数量：{{item.Amount}}</small>
+        <small style="color:grey;position:absolute;left:280px">单位：{{item.Unit}}</small></a>
+        </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
-        <mt-header fixed style="font-size:20px" title="信息列表">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="信息列表">
           <mt-button slot="left" @click="phone()"><small>视频通话</small></mt-button>
           <mt-button slot="right" @click="oneClickNeedHelp()"><small>一键求助</small></mt-button>
           <hr>
@@ -72,18 +72,18 @@
         <div v-for=" (item,index) in data3" align="left" style="position:relative;top:-40px">
           <hr><a @click="getMessage(index)">
             <div>
-              序号{{item.MessageNo}}<br>
-              {{item.MessageTitle}}<br></div>
+              序号{{item.MessageNo}}<br></div>
+              <div style="font-size: 20px;">{{item.MessageTitle}}<br></div>
               <small style="color:grey">发送时间：{{item.SendTime}}</small>
           </a>
-        </div><hr>
+        </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="个人">
-        <mt-header fixed style="font-size:20px" title="个人信息">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="个人信息">
           <!-- <mt-button slot="right" @click="edit"><small>修改</small></mt-button> -->
           <hr>
         </mt-header>
-        <br><br>
+        <br><br><br>
         <div style="text-align: left; margin-top: 10px">个人信息</div>
         <mt-field label="姓名" v-model="Name" disabled></mt-field>
         <mt-field label="性别" v-model="Gender" disabled></mt-field>
@@ -225,6 +225,9 @@ export default {
     };
   },
   mounted() {
+    console.log(this.groupNo);
+    this.selected=this.$route.params.SELECTED;
+    console.log(this.selected);
     this.getpagelist()
     this.getUserInfo()
     this.getMessageList()
@@ -233,9 +236,6 @@ export default {
   },
   methods: {
     getpagelist() {
-      console.log(this.groupNo);
-      this.selected=this.$route.params.SELECTED;
-      console.log(this.selected);
       axios.post('/getPatientlistEmergencyClass',{
         groupNo: this.groupNo
       }).then((response) => {

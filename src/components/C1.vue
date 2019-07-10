@@ -1,15 +1,15 @@
 <template>
   <div align ="left">
-    <mt-header fixed style="font-size:20px" title="消息详情">
+    <mt-header fixed style="font-size:25px;height: 50px;" title="消息详情">
     <mt-button size="small" type="danger" slot="left" icon="back"
         @click="returnA()"><small>返回</small></mt-button>
     </mt-header>
-    <br><br>
+    <br><br><br>
     <hr>
-    <b style="font-size:18px">编号：{{messageNo}}</b>
+    <b style="font-size:20px">编号：{{messageNo}}</b>
       <mt-badge v-show="showbadge" type="error">紧急</mt-badge>
-    <div style="font-size:22px"><b>标题：{{Title}}</b></div><br>
-    <div align ="left" v-for="item in MessageDetail" style="">
+    <div><b style="font-size:25px">标题：{{Title}}</b></div><br>
+    <div align ="left" v-for="item in MessageDetail" style="font-size: 20px;">
       {{item}}<br>
     </div>
     <router-view></router-view>

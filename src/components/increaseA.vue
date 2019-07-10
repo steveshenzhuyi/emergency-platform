@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mt-header fixed style="font-size:20px" title="新建病人">
+    <mt-header fixed style="font-size:25px;height: 50px;" title="新建病人">
       <mt-button size="small" type="danger" slot="left" icon="back"
             @click="returnA()"><small>返回</small></mt-button>
       <mt-button size="small" slot="right"
@@ -16,9 +16,9 @@
     </mt-cell> -->
     <hr>
     <!-- <p style="text-align: left">个人信息</p> -->
-    <mt-button size="small" @click="getface()"><small>人脸识别拍照</small></mt-button>
+    <mt-button size="small" @click="getface()" style="margin-bottom:10px"><small>人脸识别拍照</small></mt-button>
     <div v-show='isface'><img v-gallery id="image" style="max-height: 200px; max-width: 90%;" ></img></div>
-    <mt-button v-show='isface' type="primary" @click="uploadPicture()"><small>识别</small></mt-button>
+    <mt-button v-show='isface' type="primary" size="small" @click="uploadPicture()"style="margin-bottom:10px"><small>识别</small></mt-button>
       <mt-field label="姓名" v-model="pname"></mt-field>
       <mt-radio v-show="!iscamera"
         v-model="gender"
@@ -32,17 +32,12 @@
       <mt-field label="单位" v-model="unit"></mt-field>
       <mt-field label="职务" v-model="position"></mt-field>
       <p style="position: absolute;left:52px">
-        血型：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        血型&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         {{blood}}{{type}}</p><hr>
       <div v-show="!iscamera">
         <mt-picker :slots="slots" @change="onbloodChange" :visible-item-count="3"></mt-picker>
       </div>
       <br><br>
-      
-    <!-- <p style="text-align: left">健康信息</p> -->
-      <!-- <mt-field label="疾病史" v-model="sick"></mt-field>
-      <mt-field label="用药史" v-model="drug"></mt-field>
-      <mt-field label="过敏史" v-model="allergy"></mt-field> -->
       <mt-button size="large" type="primary"
             @click="newPatient()">新增病历</mt-button>
     <router-view></router-view>

@@ -15,7 +15,7 @@
     </div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="新增处置">
-        <mt-header fixed style="font-size:20px" title="新增处置">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="新增处置">
           <mt-button size="small" icon="back" slot="left"
             @click="returnT()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
@@ -40,8 +40,8 @@
             <mt-button size="small" @click="elseway()"
             type="primary" plain>其他处理</mt-button><hr>
         </div>
-        <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px;">
-          新增处置：{{methods}}
+        <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px;" align="right">
+          <div align="center">新增处置：{{methods}}</div>
           <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
           <mt-button size="small" @click="add1()">确定</mt-button>
         </div>
@@ -53,7 +53,7 @@
       </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="既往病历">
-        <mt-header fixed style="font-size:20px" title="既往病历">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="既往病历">
           <mt-button size="small" icon="back" slot="left"
             @click="returnT()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
@@ -148,8 +148,8 @@
             type="primary" plain>血氧</mt-button>
             <mt-button size="small" @click="symptom()" style="position:relative;left:40px"
             type="primary" plain>其他</mt-button><br><hr>
-            <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;">
-              新增体征：{{体征}}
+            <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;" align="right">
+              <div align="center">新增体征：{{体征}}</div>
               <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
               <mt-button @click="add()" size="small">确定</mt-button>
             </div>
@@ -160,7 +160,7 @@
           </div><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
-          <div align="center" style="height:37px">
+          <div align="center" style="height:30px">
           <mt-button v-show="editing41" size="small" style="float: right;margin-top: 2px" type="primary" @click="save41()">保存</mt-button>
           <mt-button  v-show="editing41" size="small" style="float: right; margin-right:10px;margin-top: 2px"
               @click="cancel41()">取消</mt-button>
@@ -173,7 +173,7 @@
           <mt-button size="small" style="float: left" type="primary" plain>
           <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
           </div> -->
-          <div align="center" style="height:37px">
+          <div align="center" style="height:30px">
           <mt-button v-show="editing42" size="small" style="float: right;margin-top: 2px" type="primary" @click="save42()">保存</mt-button>
           <mt-button  v-show="editing42" size="small" style="float: right; margin-right:10px;margin-top: 2px"
               @click="cancel42()">取消</mt-button>
@@ -186,7 +186,7 @@
           <mt-button size="small" style="float: left" type="primary" plain>
           <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
           </div> -->
-          <div align="center" style="height:37px">
+          <div align="center" style="height:30px">
           <mt-button v-show="editing43" size="small" style="float: right;margin-top: 2px" type="primary" @click="save43()">保存</mt-button>
           <mt-button  v-show="editing43" size="small" style="float: right; margin-right:10px;margin-top: 2px"
               @click="cancel43()">取消</mt-button>
@@ -215,7 +215,8 @@
           <br><br><br><br><br><br>
         </mt-tab-container-item>
           <mt-tab-container-item id="5">
-            <!-- <div style="text-align: left; margin-top: 10px">初步诊断</div> -->
+            <div align="center" style="height:30px">
+              <span style="float: left;">初步诊断</span></div>
             <div align="left">
             <small style="color:grey">{{timevalue2}}</small>
             <mt-field type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="3" v-on:focus.native.capture="focus5()" v-on:blur.native.capture="blur5()"></mt-field>
@@ -227,7 +228,7 @@
               @click="cancel5()">取消</mt-button>
               </div>
             <hr>
-            <div style="text-align: left; margin-top: 10px">预检分级</div>
+            <div align="center" style="height:30px"><span style="float: left;">预检分级</span></div>
             <b style="text-align: left">当前分级：{{level}}</b>
             <!-- <mt-button @click="setclass()">修改分级</mt-button> -->
             <hr>
@@ -253,17 +254,17 @@
         </mt-tab-container>
       </mt-tab-container-item>
       <mt-tab-container-item id="实时地图">
-        <mt-header fixed style="font-size:20px" title="实时地图">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="实时地图">
           <mt-button size="small" icon="back" slot="left"
           @click="returnT()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
           @click="situation()"><small>{{situations}}</small></mt-button>
           <hr>
         </mt-header>
-        <br>
+        <br><br>
         <h3>当前状态：{{StatusNameCar}}</h3>
         <h4>后送医院：{{OrganizationName}}&nbsp; 车号：{{CarId}}</h4>
-        <div id="map-container" class="map-root" style="width:97%;height:400px;padding:1px;border:1px solid black;margin-bottom:5px;">
+        <div id="map-container" class="map-root" style="width:97%;height:500px;padding:1px;border:1px solid black;margin-bottom:5px;">
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -275,6 +276,7 @@
 import axios from 'axios';
 import { Toast } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
+import { Indicator } from 'mint-ui';
 import global from './global.vue'
 export default {
   data() {

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <mt-header fixed style="font-size:20px" title="本车信息">
+    <mt-header fixed style="font-size:25px;height: 50px;" title="个人信息">
       <mt-button slot="left" icon="back" @click="returnT()"><small>返回</small></mt-button>
       <!-- <mt-button slot="right" @click="edit">修改</mt-button> -->
       <hr>
     </mt-header>
-    <br><br>
+    <br><br><br>
         <div style="text-align: left; margin-top: 10px">个人信息</div>
         <mt-field label="姓名" v-model="name" disabled></mt-field>
         <mt-field label="性别" v-model="sex" disabled></mt-field>

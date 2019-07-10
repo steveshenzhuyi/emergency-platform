@@ -2,7 +2,7 @@
   <div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
-        <mt-header fixed style="font-size:20px" title="转运列表">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="转运列表">
           <mt-button size="small" slot="right"
             @click="SEE()"><small>扫描</small></mt-button>
           <hr>
@@ -24,18 +24,17 @@
             <small style="color:grey">
             性别：{{item.Gender}}</small>
             <small style="color:grey;position:absolute;left:100px">年龄：{{item.Age}}</small>
-            <small style="width:9em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
+            <small style="width:15em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
             color:grey;position:absolute;left:200px">症状：{{item.Diagnose}}</small><br>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
             <small style="color:grey;position:absolute;left:100px">车辆：{{item.CarName}}</small>
             <small style="color:grey;position:absolute;left:200px">车号：{{item.CarId}}</small>
             {{item.Pcost}}</a>
-        </div><hr>
+        </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="资源">
-        <mt-header fixed style="font-size:20px" title="资源列表">
-          <mt-button size="small" slot="right"
-            @click="$goRoute('/increaseBT')"><small>新增资源</small></mt-button>
+        <mt-header fixed style="font-size:25px;height: 50px;" title="资源列表">
+          <!-- <mt-button size="small" slot="right" @click="$goRoute('/increaseBT')"><small>新增资源</small></mt-button> -->
           <hr>
         </mt-header>
         <br><br>
@@ -46,15 +45,16 @@
         <mt-button size="small" type="primary" style="position:relative;top:-60px" @click="getResourceList()">刷新</mt-button></div>
         <div v-for=" (item,index) in data2" :data2-index="{index}" align="left" style="position:relative;top:-40px">
           <hr><a @click="getResource(index)">
-          <div>{{ item.ResourceNo }} &nbsp;&nbsp;&nbsp;
+          <div style="font-size: 20px;">{{ item.ResourceNo }} &nbsp;&nbsp;&nbsp;
              {{item.ResourceName}}</div>
           <small style="color:grey">规格：{{item.Standard}}</small>
-          <small style="color:grey;position:absolute;left:100px">  状态：{{item.Status}}</small>
-          <small style="color:grey;position:absolute;left:175px">  数量：{{item.Amount}}</small></a>
-        </div><hr>
+          <small style="color:grey;position:absolute;left:100px">状态：{{item.Status}}</small>
+          <small style="color:grey;position:absolute;left:192px">数量：{{item.Amount}}</small>
+        <small style="color:grey;position:absolute;left:280px">单位：{{item.Unit}}</small></a>
+        </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
-        <mt-header fixed style="font-size:20px" title="信息列表">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="信息列表">
           <mt-button slot="left" @click="phone()"><small>视频通话</small></mt-button>
           <hr>
         </mt-header>
@@ -69,27 +69,21 @@
         <div v-for=" (item,index) in data3" align="left" style="position:relative;top:-40px">
           <hr><a @click="getMessage(index)">
            <div>
-              序号{{item.MessageNo}}<br>
-              {{item.MessageTitle}}<br></div>
+              序号{{item.MessageNo}}<br></div>
+              <div style="font-size: 20px;">{{item.MessageTitle}}<br></div>
               <small style="color:grey">发送时间：{{item.SendTime}}</small>
           </a>
-        </div><hr>
+        </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="个人">
-        <mt-header fixed style="font-size:20px" title="本车信息">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="本车信息">
       </mt-header>
         <br><br>
         <br>
-        <mt-cell title>
-          <!-- <img slot="icon" src="./icon/个人.png"> -->
-        </mt-cell>
         <p>本车信息</p>
         <mt-field label="车号" v-model="name" disabled></mt-field>
         <mt-field label="所属单位" v-model="company" disabled></mt-field>
-
         <mt-field label="当前状态" v-model="carstate" disabled></mt-field>
-
-        <!-- <mt-picker :slots="slots3" :visible-item-count="3"></mt-picker> -->
         <hr>
         <mt-button v-show="isShow" size="large" type="danger" @click="decline()">取消接单</mt-button><br>
         <mt-button size="large" type="primary" @click="$goRoute('/个人信息运输')">查看个人信息</mt-button>
@@ -120,7 +114,7 @@ import axios from 'axios';
 import { Toast } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
 export default {
-  // inject:['reload'],
+  inject:['reload'],
   data() {
     return {
       watchID2:null,
@@ -224,6 +218,7 @@ export default {
     };
   },
   mounted() {
+    this.selected=this.$route.params.SELECTED1;
     this.getpagelist()
     this.getUserInfo()
     this.getMessageList()
@@ -261,7 +256,6 @@ export default {
     },
     getpagelist() {
       console.log(this.groupNo);
-      this.selected=this.$route.params.SELECTED1;
       axios.post('/getPatientListCarClass',{
         groupNo: this.groupNo
       }).then((response) => {

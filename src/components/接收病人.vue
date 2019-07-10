@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mt-header fixed style="font-size:20px" title="接收病人">
+    <mt-header fixed style="font-size:25px;height: 50px;" title="接收病人">
       <mt-button size="small" icon="back" slot="left"
         @click="returnT()"><small>返回</small></mt-button>
     </mt-header>

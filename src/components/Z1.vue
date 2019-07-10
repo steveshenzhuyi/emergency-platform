@@ -12,7 +12,7 @@
     </div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="既往处置">
-        <mt-header fixed style="font-size:20px" title="既往处置">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="既往处置">
           <mt-button size="small" icon="back" slot="left"
             @click="returnZ()"><small>返回</small></mt-button>
           <hr>
@@ -26,7 +26,7 @@
       </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="既往病历">
-        <mt-header fixed style="font-size:20px" title="既往病历">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="既往病历">
           <mt-button size="small" icon="back" slot="left"
             @click="returnZ()"><small>返回</small></mt-button>
           <!-- <mt-button  size="small" slot="right"
@@ -47,7 +47,7 @@
           <mt-tab-container-item id="1">
             <div align="left">
               <small style="color:grey">{{timevalue}}</small>
-              <mt-field  type="textarea" placeholder="请输入内容" v-model="主诉" rows="5"></mt-field>
+              <mt-field  type="textarea" placeholder="暂无内容" v-model="主诉" rows="5"></mt-field>
             </div>
             <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
               @click="save10()">保存</mt-button> -->
@@ -65,7 +65,7 @@
           <mt-tab-container-item id="2">
             <div align="left">
               <small style="color:grey">{{timevalue1}}</small>
-              <mt-field  type="textarea" placeholder="请输入内容" v-model="现病史" rows="5"></mt-field>
+              <mt-field  type="textarea" placeholder="暂无内容" v-model="现病史" rows="5"></mt-field>
             </div>
             <hr>
           <div v-for="(item,index) in 现病史图片">
@@ -106,11 +106,11 @@
             </div><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
-            <div align="center" style="height:28px">
+            <div align="center" style="height:30px">
               <span style="float: left;">过敏史</span>
             </div>
             <div align="left">
-              <mt-field  type="textarea" placeholder="请输入内容" v-model="过敏史"  rows="2"></mt-field><hr>
+              <mt-field  type="textarea" placeholder="暂无内容" v-model="过敏史"  rows="2"></mt-field><hr>
             </div>
             <!-- <mt-button size="small" style="float: right;position:relative;top:-50px" type="primary" @click="save41()">保存</mt-button> -->
             <!-- <div style="height: 33px">
@@ -119,11 +119,11 @@
     <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain>
     <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button>
             </div> -->
-            <div align="center" style="height:28px">
+            <div align="center" style="height:30px">
               <span style="float: left;">疾病史</span>
             </div>
             <div align="left">
-              <mt-field  type="textarea" placeholder="请输入内容" v-model="疾病史"  rows="2"></mt-field><hr>
+              <mt-field  type="textarea" placeholder="暂无内容" v-model="疾病史"  rows="2"></mt-field><hr>
             </div>
             <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
               @click="save42()">保存</mt-button> -->
@@ -133,11 +133,11 @@
     <mt-button size="small"  style="float: left; margin-left: 10px" type="danger" plain>
     <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button>
             </div> -->
-            <div align="center" style="height:28px">
+            <div align="center" style="height:30px">
           <span style="float: left;">目前用药</span>
         </div>
             <div align="left">
-              <mt-field type="textarea" placeholder="请输入内容" v-model="目前用药"  rows="2"></mt-field><hr>
+              <mt-field type="textarea" placeholder="暂无内容" v-model="目前用药"  rows="2"></mt-field><hr>
             </div>
             <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
               @click="save43()">保存</mt-button> -->
@@ -150,14 +150,15 @@
             <br><br><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="5">
-            <!-- <div style="text-align: left; margin-top: 10px">初步诊断</div> -->
+            <div align="center" style="height:30px">
+              <span style="float: left;">初步诊断</span></div>
             <div align="left">
               <small style="color:grey">{{timevalue2}}</small>
-              <mt-field type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="3"></mt-field>
+              <mt-field type="textarea" placeholder="暂无内容" v-model="初步诊断" rows="3"></mt-field>
             </div>
             <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px" @click="save50()">保存</mt-button> -->
             <hr>
-            <div  style="text-align: left; margin-top: 10px">预检分级 </div>
+            <div align="center" style="height:30px"><span style="float: left;">预检分级</span></div>
             <b style="text-align: left">当前分级：{{level}}</b>
           </mt-tab-container-item>
           <mt-tab-container-item id="6">

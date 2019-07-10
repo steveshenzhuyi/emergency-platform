@@ -2,7 +2,7 @@
   <div align="center">
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="患者病历">
-        <mt-header fixed style="font-size:20px" title="患者病历">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="患者病历">
           <mt-button size="small" icon="back" slot="left"
           @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
@@ -97,8 +97,8 @@
             type="primary" plain>血氧</mt-button>
           <mt-button size="small" @click="symptom()" style="position:relative;left:40px"
             type="primary" plain>其他</mt-button><br><hr>
-          <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;">
-            新增体征：{{体征}}
+          <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;" align="right">
+            <div align="center">新增体征：{{体征}}</div>
             <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
             <mt-button @click="add()" size="small">确定</mt-button>
           </div>
@@ -110,7 +110,7 @@
           <br><br><br><br>
         </mt-tab-container-item>
         <mt-tab-container-item id="4">
-          <div align="center" style="height:37px">
+          <div align="center" style="height:30px">
           <mt-button v-show="editing41" size="small" style="float: right;margin-top: 2px" type="primary" @click="save41()">保存</mt-button>
           <mt-button  v-show="editing41" size="small" style="float: right; margin-right:10px;margin-top: 2px"
               @click="cancel41()">取消</mt-button>
@@ -123,7 +123,7 @@
           <mt-button size="small" style="float: left" type="primary" plain>
           <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
           </div> -->
-          <div align="center" style="height:37px">
+          <div align="center" style="height:30px">
           <mt-button v-show="editing42" size="small" style="float: right;margin-top: 2px" type="primary" @click="save42()">保存</mt-button>
           <mt-button  v-show="editing42" size="small" style="float: right; margin-right:10px;margin-top: 2px"
               @click="cancel42()">取消</mt-button>
@@ -136,7 +136,7 @@
           <mt-button size="small" style="float: left" type="primary" plain>
           <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
           </div> -->
-          <div align="center" style="height:37px">
+          <div align="center" style="height:30px">
           <mt-button v-show="editing43" size="small" style="float: right;margin-top: 2px" type="primary" @click="save43()">保存</mt-button>
           <mt-button  v-show="editing43" size="small" style="float: right; margin-right:10px;margin-top: 2px"
               @click="cancel43()">取消</mt-button>
@@ -165,7 +165,8 @@
           <br><br><br><br><br><br>
         </mt-tab-container-item>
         <mt-tab-container-item id="5">
-          <!-- <div style="text-align: left; margin-top: 10px">初步诊断</div> -->
+          <div align="center" style="height:30px">
+              <span style="float: left;">初步诊断</span></div>
           <div align="left">
             <small style="color:grey">{{timevalue2}}</small>
             <mt-field type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="3" v-on:focus.native.capture="focus5()" v-on:blur.native.capture="blur5()"></mt-field>
@@ -185,7 +186,7 @@
             <mt-button size="small" type="primary" style="float: right" @click="uploadPicture()">上传</mt-button>
           </div> -->
           <hr>
-          <div style="text-align: left; margin-top: 10px">预检分级</div>
+          <div align="center" style="height:30px"><span style="float: left;">预检分级</span></div>
           <b style="text-align: left">当前分级：{{level}}</b>
           <mt-button @click="setclass()">修改分级</mt-button><hr>
           <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
@@ -209,7 +210,7 @@
       </mt-tab-container>
     </mt-tab-container-item>
     <mt-tab-container-item id="处置方案">
-      <mt-header fixed style="font-size:20px" title="处置方案">
+      <mt-header fixed style="font-size:25px;height: 50px;" title="处置方案">
       <mt-button size="small" icon="back" slot="left"
         @click="returnA()"><small>返回</small></mt-button>
       <!-- <mt-button size="small" slot="right"
@@ -234,9 +235,9 @@
         <mt-button size="small" @click="elseway()"
           type="primary" plain>其他处理</mt-button> <hr>
       </div>
-      <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px">
-        新增处置：{{methods}}
-        <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
+      <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px" align="right">
+        <div align="center">新增处置：{{methods}}</div>
+        <mt-field placeholder="内容" v-model="content1" type="textarea" rows="3"></mt-field>
         <mt-button size="small" @click="add1()">确定</mt-button>
       </div>
       <div v-for="(item,index) in dataCZ" style="text-align: left">
@@ -247,14 +248,14 @@
       </div><br><br><br><br>
     </mt-tab-container-item>
     <mt-tab-container-item id="病人去向">
-      <mt-header fixed style="font-size:20px" title="病人去向">
+      <mt-header fixed style="font-size:25px;height: 50px;" title="病人去向">
         <mt-button size="small" icon="back" slot="left"
         @click="returnA()"><small>返回</small></mt-button>
         <mt-button size="small" slot="right" v-show="isShow2"
         @click="confirm()"><small>后送</small></mt-button>
         <hr>
       </mt-header>
-      <br><br>
+      <br><br><br>
       <div style="font-size:20px">选择分流：{{state}}</div>
         <div v-show="isShow3">
           <mt-button plain type="primary" @click="changestate()">处置完成</mt-button>
@@ -266,7 +267,7 @@
         <div v-show="isShow">
           <div  align="center" style="height:30px">
           <span style="float: left;">添加医嘱</span></div>
-          <mt-field placeholder="输入医嘱" v-model="doctortell" type="textarea" :disabled="!isovering"></mt-field><hr>
+          <mt-field placeholder="输入医嘱" v-model="doctortell" type="textarea" :disabled="!isovering" rows="5"></mt-field><hr>
           <!-- <mt-button size="small" type="danger" plain style="float: left; margin-left: 10px">
           <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
           图片</mt-button> -->
@@ -284,7 +285,7 @@
           <mt-button size="small" style="float: left; margin-left: 10px" type="primary" plain @click.native="popupVisible2 = true">车辆列表</mt-button>
           <mt-button v-show="isShow100" size="small" type="danger" style="float: right;" @click="ensure()">确定</mt-button>
         </div>
-          <div id="map-container" class="map-root" style="width:97%;height:400px;padding:1px;border:1px solid black;margin:10px 0;">
+          <div id="map-container" class="map-root" style="width:99%;height:420px;padding:1px;border:1px solid black;margin-top: 50px;">
           </div>
         </div>
         <br>
@@ -299,9 +300,9 @@
               编号{{item.OrganizationCode}}&nbsp;&nbsp;{{item.OrganizationName}}&nbsp;&nbsp;
               {{item.LocationDescription}}<br>
               <small style="color:grey">
-              ICU剩余{{item.ICUNow}}&nbsp;&nbsp;手术室剩余{{item.ORNow}}&nbsp;&nbsp;专用病房剩余{{item.GWNow}}</small><br>
+              ICU剩余{{item.ICUNow}}&nbsp;&nbsp;手术室剩余{{item.ORNow}}&nbsp;&nbsp;专用病房剩余{{item.GWNow}}&nbsp;&nbsp;导管室剩余{{item.DGNow}}</small><br>
               <small style="color:grey;">联系人：{{item.realManager}}</small>
-              <small style="color:grey;position:absolute;right:100px">手机：{{item.phone}}</small><br>
+              <small style="color:grey;position:absolute;left:150px">手机：{{item.phone}}</small><br>
               <mt-badge size="small" v-show='item.XiongtongTag'>胸痛</mt-badge>
               <mt-badge size="small" v-show='item.GanranTag'>感染</mt-badge>
               <mt-badge size="small" v-show='item.ZhongduTag'>中毒</mt-badge>
@@ -324,9 +325,9 @@
             <hr>
             <div align="left">
               <div>编号{{item.CarNo}}&nbsp;&nbsp;{{item.CarName}}&nbsp;{{item.CarId}}</div>
-              <div><span>{{item.CarStatus}}</span><span style="position:absolute;right:30px">&nbsp;当前待后送：{{item.daihousong}}人</span></div>
+              <div><span>{{item.CarStatus}}</span><span style="position:absolute;left:150px">&nbsp;当前待后送：{{item.daihousong}}人</span></div>
               <small style="color:grey;">联系人：{{item.CarManager}}</small>
-              <small style="color:grey;position:absolute;left:100px">手机：{{item.phone}}</small>
+              <small style="color:grey;position:absolute;left:150px">手机：{{item.phone}}</small>
             </div><hr>
             </a>
           </div>
@@ -335,7 +336,7 @@
           <h4>点选可用设备，给病人使用心电监护。结束上一个病人的监测后，设备才可以重复使用。</h4>
           <div>
             <div align="center" style="height: 30px">
-              <span>可用设备列表</span>
+              <span><b>可用设备列表</b></span>
               <mt-button size="small" type="primary" style="float: right;margin-right: 30px"
               @click="getDeviceList()">刷新</mt-button>
               </div>
@@ -353,14 +354,14 @@
           <br>
           <div>
              <div align="center" style="height: 30px">
-              <span>检查单列表</span>
+              <span><b>检查单列表</b></span>
               <mt-button size="small" type="primary" style="float: right;margin-right: 30px"
               @click="getTestList()">刷新</mt-button>
               </div>
              <div v-for="(item,index) in testList">
             <div align="left">
               <div>检查单号：{{item.busi_no}}</div>
-              <div><span>病人姓名：{{item.member_idcard}}</span><span style="position:absolute;left:140px">&nbsp;当前状态：{{item.status_descprion}}</span><mt-button size="small" type="primary" v-show="item.status==1" style="float: right;margin-right: 30px" @click="stopMonitor(index)">停止监测</mt-button> </div>
+              <div><span>病人姓名：{{item.member_name}}</span><span style="position:absolute;left:140px">&nbsp;当前状态：{{item.status_descprion}}</span><mt-button size="small" type="primary" v-show="item.status==1" style="float: right;margin-right: 30px" @click="stopMonitor(index)">停止监测</mt-button> </div>
              <!--  <small style="color:grey;">联系人：{{}}</small>
               <small style="color:grey;position:absolute;left:100px">手机：{{}}</small> -->
             </div><hr>
@@ -1483,9 +1484,9 @@ startMonitor:function(index){
        "device_serial_id":"",
        "device_type":"",
        "outerUserNo":that.patientId,
-       "realName":"陈二",
+       "realName":that.Name,
        "certType":"01",
-       "certNo":that.Name
+       "certNo":'9999999999999'+that.patientId
      },
      headers:{
       "pkgId":"0001",

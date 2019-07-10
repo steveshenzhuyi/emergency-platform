@@ -1,6 +1,6 @@
 <template>
     <div>
-      <mt-header fixed style="font-size:20px" title="心肺复苏指导">
+      <mt-header fixed style="font-size:25px;height: 50px;" title="心肺复苏指导">
         <mt-button size="small" type="danger" slot="left" icon="back"
             @click="returnA()"><small>返回</small></mt-button>
       <!-- <mt-button size="small" slot="right" @click="choosephoto()"><small>拍照</small></mt-button> -->

@@ -1,14 +1,14 @@
 <template>
   <div>
-    <mt-header fixed style="font-size:20px" title="资源详情">
+    <mt-header fixed style="font-size:25px;height: 50px;" title="资源详情">
       <mt-button size="small" type="danger" slot="left" icon="back"
         @click="returnA()"><small>返回</small></mt-button>
     </mt-header>
-    <br><br>
+    <br><br><br>
     <mt-field label="名称" v-model="name" :disabled="true"></mt-field>
     <mt-field label="编号" v-model="number" :disabled="true"></mt-field>
     <mt-field label="种类" v-model="type" :disabled="true"></mt-field>
-    <mt-field label="总量" v-model="amount" :disabled="true"></mt-field>
+    <mt-field label="总量" v-model="total" :disabled="true"></mt-field>
     <mt-field label="已用量" v-model="used" :disabled="true"></mt-field>
     <mt-field label="单位" v-model="unit" :disabled="true"></mt-field>
     <mt-field label="规格" v-model="standard" :disabled="true"></mt-field>
@@ -19,13 +19,14 @@
     <mt-field label="批号" v-model="BatchNumber" :disabled="true"></mt-field>
     <mt-field label="描述" type="textarea" v-model="describe" :disabled="true"></mt-field>
     <hr>
-    <p  style="text-align: left">数量增减</p>
-    <h3>现在数量：{{counter}}</h3>
-    <mt-button type="primary" size="normal"
-    v-on:click="counter +=1">增加</mt-button>
-    <mt-button type="danger" size="normal"
-    v-on:click="counter -=1">减少</mt-button><br><br>
-    <mt-button type="primary" size="large" @click="edit()">确认修改</mt-button>
+    <p style="text-align: left">数量增减</p>
+    <h2>现在数量：{{counter}}</h2>
+    <mt-button type="primary" style="width: 120px; height:65px; float: left; margin-left:70px" v-on:click="counter +=1">增加</mt-button>
+    <mt-button type="danger" style="width: 120px; height:65px; float: right; margin-right:70px" v-on:click="counter -=1">减少</mt-button>
+    <div style="margin-top: 120px;" align="center">
+    <mt-button type="primary"  style="width: 150px;height: 50px" @click="edit()">确认修改</mt-button>
+  </div>
+    <br><br>
     <router-view></router-view>
   </div>
 </template>
@@ -83,9 +84,10 @@ export default {
         this.number=response.data.results[0].ResourceNo;
         this.standard=response.data.results[0].Standard;
         this.time=response.data.results[0].AddTime;
+        this.amount = response.data.results[0].Amount;
         this.counter=response.data.results[0].Amount;
         this.used=response.data.results[0].Used;
-        this.amount=this.counter+this.used;
+        this.total=this.counter+this.used;
         this.Status=response.data.results[0].Status;
         if(this.Status=="1") {
           this.state="在库"
@@ -122,7 +124,7 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          // alert("上传成功");
+          this.getResource();
           Toast('上传成功');
         }
       })
@@ -136,6 +138,7 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
+          this.getResource();
           Toast("上传成功");
         }
       })
