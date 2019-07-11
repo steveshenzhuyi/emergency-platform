@@ -1100,43 +1100,46 @@
       },
       ensure() {
         if(this.flag == "1") {
-          axios.post('/prepareSend',{
-            patientId:this.patientId,
-            carNo:this.CarNo,
-            hosNo:this.HosNo
-          }).then((response) => {
-            if(response.data.results == "上传成功") {
-              // alert("病人待后送");
-              Toast('病人待后送');
-              this.isShow3 = false
-              this.isShow2 = true
-              this.isShow100 = false
-              this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carId}})
-            }else{
-              // alert("上传失败");
-              Toast('上传失败');
-            }
-          })
+          if(this.CarNo=="" || this.HosNo==""){
+            Toast("车辆或医院不能为空！")
+          }else{
+            axios.post('/prepareSend',{
+              patientId:this.patientId,
+              carNo:this.CarNo,
+              hosNo:this.HosNo
+            }).then((response) => {
+              if(response.data.results == "上传成功") {
+                Toast('病人待后送');
+                this.isShow3 = false
+                this.isShow2 = true
+                this.isShow100 = false
+                this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carId}})
+              }else{
+                Toast('上传失败');
+              }
+            })
+          }          
         }
         if(this.flag == "2") {
-          axios.post('/prepareSend',{
-            patientId:this.patientId,
-            carNo:'000',
-            hosNo:this.HosNo
-          }).then((response) => {
-            if(response.data.results == "上传成功") {
-              // alert("病人待后送");
-              Toast('病人自行前往，请手动点击送出');
-              this.isShow3 = false
-              this.isShow2 = true
-              this.isShow100 = false
-              this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往",FLAG:this.flag}})
-            }else{
-              // alert("上传失败");
-              Toast('上传失败');
+          if(this.HosNo == "")Toast("医院不能为空！")
+            else{
+              axios.post('/prepareSend',{
+                patientId:this.patientId,
+                carNo:'000',
+                hosNo:this.HosNo
+              }).then((response) => {
+                if(response.data.results == "上传成功") {
+                  Toast('病人自行前往，请手动点击送出');
+                  this.isShow3 = false
+                  this.isShow2 = true
+                  this.isShow100 = false
+                  this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:"自行前往",FLAG:this.flag}})
+                }else{
+                  Toast('上传失败');
+                }
+              })
             }
-          })
-        }
+          }
       },
       save41() {
         axios.post('/newPatientRecord',{

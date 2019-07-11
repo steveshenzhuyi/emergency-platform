@@ -319,32 +319,36 @@ export default {
       }else if(this.blood === "O型" && this.type === "Rh-") {
         this.bloodType = '8'
       }
-      console.log(typeof(this.age))
-      axios.post('/newPatient',{
-        groupId: this.groupId,
-        inputUserId: this.inputUserId,
-        gender: this.gender,
-        pname: this.pname,
-        age: this.age,
-        phone: this.phone,
-        bloodType: this.bloodType,
-        unit: this.unit,
-        position: this.position,
-        nation: this.nation,
-        email: this.email,
-        photoUrl: '',
-        memberId: this.memberId
-      }).then((response) => {
-        console.log(response)
-        if(response.data.results == "新建成功") {
-          Toast('创建成功');
-          this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
-        }else {
-          Toast('创建失败');
-        }
-      }).catch(function(error){
-        console.log("error",error);
-      });
+      if(this.gender!=1 && this.gender!=2)this.gender=0;
+      if(this.pname == "" || this.pname == null){
+        Toast('姓名不能为空');
+      }else{
+        axios.post('/newPatient',{
+          groupId: this.groupId,
+          inputUserId: this.inputUserId,
+          gender: this.gender,
+          pname: this.pname,
+          age: this.age,
+          phone: this.phone,
+          bloodType: this.bloodType,
+          unit: this.unit,
+          position: this.position,
+          nation: this.nation,
+          email: this.email,
+          photoUrl: '',
+          memberId: this.memberId
+        }).then((response) => {
+          console.log(response)
+          if(response.data.results == "新建成功") {
+            Toast('创建成功');
+            this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
+          }else {
+            Toast('创建失败');
+          }
+        }).catch(function(error){
+          console.log("error",error);
+        });
+      }
     }
   }
 }
