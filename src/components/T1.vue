@@ -25,25 +25,27 @@
         <br><br>
         <div>
           <div  style="text-align: left; margin-top: 10px">常用处置</div><hr>
-            <mt-button size="small" @click="oxygen()" style="position:relative;right:30px;width: 88px"
+          <div>
+            <mt-button size="small" @click="oxygen()" style="position:absolute;left:30px;width: 90px"
             type="primary" plain>吸&nbsp;&nbsp;氧</mt-button>
-            <mt-button size="small" @click="ECG()" style="width: 88px"
+            <mt-button size="small" @click="ECG()" style="position:relative;left:30px;width: 90px"
             type="primary" plain>&nbsp;心电图&nbsp;</mt-button>
-            <mt-button size="small" @click="bandage()" style="position:relative;left:30px"
-            type="primary" plain>包扎止血</mt-button><br><br>
-            <mt-button size="small" @click="stone()" style="position:relative;right:30px"
-            type="primary" plain>支具固定</mt-button>
-            <mt-button size="small" @click="drug()"
+            <mt-button size="small" @click="bandage()" style="position:relative;left:60px;width: 90px"
+            type="primary" plain>包扎止血</mt-button>
+          <mt-button size="small" @click="stone()" style="position:relative;left:90px;width: 90px"
+            type="primary" plain>支具固定</mt-button></div><br>
+            <div>
+            <mt-button size="small" @click="drug()" style="position:absolute;left:30px;width: 90px"
             type="primary" plain>口服药物</mt-button>
-            <mt-button size="small" @click="dd()" style="position:relative;left:30px"
-            type="primary" plain>静脉给药</mt-button><br><br>
-            <mt-button size="small" @click="elseway()"
-            type="primary" plain>其他处理</mt-button><hr>
+            <mt-button size="small" @click="dd()" style="position:absolute;left:150px;width: 90px"
+            type="primary" plain>静脉给药</mt-button>
+            <mt-button size="small" @click="elseway()" style="position:relative;left:60px;width: 90px"
+            type="primary" plain>其他处理</mt-button><hr></div>
         </div>
         <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px;" align="right">
           <div align="center">新增处置：{{methods}}</div>
           <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
-          <mt-button size="small" @click="add1()">确定</mt-button>
+          <mt-button size="small" @click="add1()" type="primary">确定</mt-button>
         </div>
         <div v-for="(item,index) in dataCZ" style="text-align: left">
         <hr> 
@@ -151,7 +153,7 @@
             <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;" align="right">
               <div align="center">新增体征：{{体征}}</div>
               <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
-              <mt-button @click="add()" size="small">确定</mt-button>
+              <mt-button @click="add()" size="small" type="primary">确定</mt-button>
             </div>
             <div v-for="(item,index) in dataTZ" style="text-align: left">
             <hr>
