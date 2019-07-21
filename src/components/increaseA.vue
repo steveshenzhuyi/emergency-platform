@@ -33,7 +33,7 @@
       <mt-field label="职务" v-model="position"></mt-field>
       <p style="position: absolute;left:52px">
         血型&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        {{blood}}{{type}}</p><hr>
+        {{blood}}{{type}}</p><hr><br>
       <div v-show="!iscamera">
         <mt-picker :slots="slots" @change="onbloodChange" :visible-item-count="3"></mt-picker>
       </div>

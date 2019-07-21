@@ -33,8 +33,10 @@
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
             <small style="color:grey;position:absolute;left:110px">车辆：{{item.CarName}}</small>
             <small style="color:grey;position:absolute;left:220px">车号：{{item.CarId}}</small>
-            {{item.Pcost}}</div></a>
+            <small style="color:grey;position:absolute;left:330px">{{item.Time}}</small>
+            </div></a>
         </div>
+        <br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="资源">
         <mt-header fixed style="font-size:25px;height: 50px;" title="资源列表">
@@ -223,6 +225,12 @@ export default {
       message: [],
       resource: [],
       videoalert:'',
+      Longitude:0,
+      Latitude:0,
+      myPosition:'',
+      hosList:[],
+      carList:[],
+      driving:'',
     };
   },
   mounted() {
@@ -230,7 +238,7 @@ export default {
     this.selected=this.$route.params.SELECTED;
     console.log(this.selected);
     this.getpagelist()
-    this.getUserInfo()
+    // this.getUserInfo()
     this.getMessageList()
     this.getResourceList()
     this.videoalert = this.showVideoAlert
@@ -246,12 +254,61 @@ export default {
         }).then((response) => {
           this.PatientlistTime=response.data.results;
           this.refreshPatient();
+          this.getUserInfo();
+          setTimeout(()=>{
+            this.addTimeToPatient()
+          },1000)
         }).catch(function(error){
           console.log("error",error);
         })
       }).catch(function(error){
         console.log("error",error);
       })
+    },
+    addTimeToPatient(){
+      for(var i=0; i<this.PatientlistClass.length;i++){
+        if(this.PatientlistClass[i].Status == 'S03'){
+          if(this.PatientlistClass[i].CarNo == "000"){
+            for(var j=0; j<this.hosList.length; j++){
+              if(this.PatientlistClass[i].HosNo == this.hosList[j].HosNo){
+                this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.hosList[j].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else if(this.PatientlistClass[i].CarNo != "" || this.PatientlistClass[i].CarNo!= null){
+            for(var k=0; k<this.carList.length; k++){
+              if(this.PatientlistClass[i].CarNo == this.carList[k].CarNo){
+                this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.carList[k].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else this.PatientlistClass[i].Time = '';
+        }
+      }
+
+      for(var i=0; i<this.PatientlistTime.length;i++){
+        if(this.PatientlistTime[i].Status == 'S03'){
+          if(this.PatientlistTime[i].CarNo == "000"){
+            for(var j=0; j<this.hosList.length; j++){
+              if(this.PatientlistTime[i].HosNo == this.hosList[j].HosNo){
+                this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.hosList[j].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else if(this.PatientlistTime[i].CarNo != "" || this.PatientlistTime[i].CarNo!= null){
+            for(var k=0; k<this.carList.length; k++){
+              if(this.PatientlistTime[i].CarNo == this.carList[k].CarNo){
+                this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.carList[k].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else this.PatientlistTime[i].Time = '';
+        }
+      }
+      console.log(this.PatientlistClass)
+      console.log(this.PatientlistTime)
+      this.refreshPatient();
+
     },
     getResourceList(){
       //获取资源列表
@@ -300,25 +357,77 @@ export default {
         this.ManageArea=response.data.results[0].ManageArea;
         this.GroupName=response.data.results[0].GroupName;
         this.GroupPosition=response.data.results[0].GroupPosition;
+        this.Latitude = response.data.results[0].Latitude;
+        this.Longitude = response.data.results[0].Longitude;
+        window.localStorage.setItem("Latitude",this.Latitude)
+        window.localStorage.setItem("Longitude",this.Longitude)
+        this.myPosition = new AMap.LngLat(this.Longitude, this.Latitude);
         var GN = this.groupNo;
-        if(this.GroupPosition == '组长'){
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
-          (result) => {
-            var sequence = result.sequence
-            var tags = result.tags
-          }, (error) => {
-            console.log(error)
-          })
-        }else{
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
-          (result) => {
-            var sequence = result.sequence
-            var tags = result.tags
-          }, (error) => {
-            console.log(error)
-          })
+        // if(this.GroupPosition == '组长'){
+        //   window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
+        //   (result) => {
+        //     var sequence = result.sequence
+        //     var tags = result.tags
+        //   }, (error) => {
+        //     console.log(error)
+        //   })
+        // }else{
+        //   window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
+        //   (result) => {
+        //     var sequence = result.sequence
+        //     var tags = result.tags
+        //   }, (error) => {
+        //     console.log(error)
+        //   })
+        // }
+
+        axios.get('/getHosList',{}).then((response) => {
+          this.hosList = response.data.results; 
+          var that = this;
+          AMap.plugin(['AMap.Driving'],function(){
+            that.driving = new AMap.Driving({ //用不上
+              policy: AMap.DrivingPolicy.LEAST_TIME
+            })
+          });
+          for(var i=0;i<that.hosList.length;i++){
+           (function(j){
+           that.hosList[j].position = new AMap.LngLat(response.data.results[j].Longitude, response.data.results[j].Latitude)             
+            new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.myPosition, that.hosList[j].position, function (status, result) {
+              that.hosList[j].searchresult = result
+            })
+          })(i) 
         }
+      }).catch(function(error){
+        console.log("error",error);
       })
+
+      axios.get('/getCarList',{}).then((response) => {
+        var that = this;
+        var carlist = response.data.results;
+        var x  =carlist.shift()
+        that.carList = response.data.results
+        
+        AMap.plugin(['AMap.Driving'],function(){
+          that.driving = new AMap.Driving({
+            policy: AMap.DrivingPolicy.LEAST_TIME
+          })
+        });
+        for(var i=0;i<that.carList.length;i++){
+         (function(j){
+          that.carList[j].position = new AMap.LngLat(response.data.results[j].Longitude, response.data.results[j].Latitude)
+          new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.carList[j].position,that.myPosition, function (status, result) {
+            that.carList[j].searchresult = result
+          })
+        })(i)
+      }
+    }).catch(function(error){
+      console.log("error",error);
+    })
+
+
+
+
+    })
     },
     //病人列表排序方法
     onPatientlistChange(picker, values) {
@@ -440,7 +549,7 @@ export default {
         groupNo: window.localStorage.getItem('GROUPNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast("成功上报指挥中心，请打开AR眼镜视频实况功能");
+          Toast("成功上报指挥中心，请打开AR眼镜视频实况功能和本系统视频通话功能");
         }else{
           Toast("上报失败");
         }

@@ -33,7 +33,8 @@
             <small style="color:grey;position:absolute;left:110px">车辆：{{item.CarName}}</small>
             <small style="color:grey;position:absolute;left:220px">车号：{{item.CarId}}</small>
             {{item.Pcost}}</div></a>
-        </div><hr>
+        </div>
+        <br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
         <mt-header fixed style="font-size:25px;height: 50px;" title="信息列表">

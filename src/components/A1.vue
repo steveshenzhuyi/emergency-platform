@@ -193,8 +193,8 @@
           </div>
           <hr>
           <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
-          <div><small style="color:grey">病人分级为I级或II级时，系统将自动上报。其他情况有需求时，可以使用手动一键上报。</small></div>
-          <mt-button type="danger" @click="alert()">一键上报</mt-button><br><br><br><br>
+          <div><small style="color:grey">病人分级为I级或II级时，系统将自动上报。其他情况有需要时，可以使用手动一键上报。</small></div>
+          <mt-button type="danger" @click="alert()">一键上报并求助</mt-button><br><br><br><br>
         </mt-tab-container-item>
         <mt-tab-container-item id="6">
           <img src="./pictrue/man.png"><hr>
@@ -311,7 +311,8 @@
               <small style="color:grey">
               ICU剩余{{item.ICUNow}}&nbsp;&nbsp;手术室剩余{{item.ORNow}}&nbsp;&nbsp;专用病房剩余{{item.GWNow}}&nbsp;&nbsp;导管室剩余{{item.DGNow}}</small><br>
               <small style="color:grey;">联系人：{{item.realManager}}</small>
-              <small style="color:grey;position:absolute;left:150px">手机：{{item.phone}}</small><br>
+              <small style="color:grey;position:absolute;left:120px">手机：{{item.phone}}</small>
+              <small style="color:grey;position:absolute;left:240px">{{item.Time}}</small><br>
               <mt-badge size="small" v-show='item.XiongtongTag'>胸痛</mt-badge>
               <mt-badge size="small" v-show='item.GanranTag'>感染</mt-badge>
               <mt-badge size="small" v-show='item.ZhongduTag'>中毒</mt-badge>
@@ -334,9 +335,11 @@
             <hr>
             <div align="left">
               <div>编号{{item.CarNo}}&nbsp;&nbsp;{{item.CarName}}&nbsp;{{item.CarId}}</div>
-              <div><span>{{item.CarStatus}}</span><span style="position:absolute;left:150px">&nbsp;当前待后送：{{item.daihousong}}人</span></div>
+              <div><span>{{item.CarStatus}}</span><span style="position:absolute;left:120px">&nbsp;当前待后送：{{item.daihousong}}人</span>
+               </div>
               <small style="color:grey;">联系人：{{item.CarManager}}</small>
-              <small style="color:grey;position:absolute;left:150px">手机：{{item.phone}}</small>
+              <small style="color:grey;position:absolute;left:120px">手机：{{item.phone}}</small>
+              <small style="color:grey;position:absolute;left:290px">{{item.Time}}</small>
             </div><hr>
             </a>
           </div>
@@ -509,6 +512,7 @@
           className: 'slot1',
         }
         ],
+        myPosition:'',
       };
     },
     mounted() {
@@ -517,7 +521,6 @@
       this.getPatientInfo()
       this.getDeviceList()
       this.getTestList()
-      
     },
     beforeDestroy () {
       navigator.geolocation.clearWatch(this.watchID1)
@@ -654,8 +657,26 @@
         this.现病史图片=[]
         this.dataTZ =[]
         this.dataCZ = []
+        var Longitude = window.localStorage.getItem("Longitude")
+        var Latitude = window.localStorage.getItem("Latitude")
+        this.myPosition = new AMap.LngLat(Longitude,Latitude);
         axios.get('/getHosList',{}).then((response) => {
-          this.hosList = response.data.results
+          var that = this
+          that.hosList = response.data.results
+          AMap.plugin(['AMap.Driving'],function(){
+            that.driving = new AMap.Driving({
+              policy: AMap.DrivingPolicy.LEAST_TIME
+            })
+          });
+          for(var i=0;i<that.hosList.length;i++){
+           (function(j){
+             that.hosList[j].position = new AMap.LngLat(response.data.results[j].Longitude, response.data.results[j].Latitude)             
+             new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.myPosition, that.hosList[j].position, function (status, result) {
+              that.hosList[j].searchresult = result
+              that.hosList[j].Time = "预计到达时间"+Math.round(that.hosList[j].searchresult.routes[0].time/60)+"分钟";
+             })
+           })(i) 
+          }
         })
         console.log(this.hosList)
         axios.get('/getCarList',{}).then((response) => {
@@ -679,8 +700,16 @@
                 that.carList[j].CarStatus = "正在前往医院："+that.carList[j].Hospital
               }   
             })(i);
+            (function(k){
+          that.carList[k].position = new AMap.LngLat(response.data.results[k].Longitude, response.data.results[k].Latitude)
+          new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.carList[k].position,that.myPosition, function (status, result) {
+            that.carList[k].searchresult = result
+            that.carList[k].Time = "预计到达时间"+Math.round(that.carList[k].searchresult.routes[0].time/60)+"分钟";
+          })
+        })(i)
           }
         })
+        console.log(this.carList)
         this.content1 = ''
         this.content = ''
 
@@ -1096,7 +1125,7 @@
         }).then((response) => {
           if(response.data.results == "上传成功") {
             // alert("上报成功");
-            Toast('上报成功');
+            Toast('成功将此病人上报指挥中心，请打开AR眼镜视频实况功能和本系统视频通话功能，与指挥中心沟通');
           }else{
             // alert("上报失败");
             Toast('上报失败');
@@ -1313,8 +1342,8 @@
           class:this.Class
         }).then((response) => {
           if(response.data.results == "上传成功") {
-            // alert("修改成功");
-            Toast('修改成功');
+            if(this.Class == '1' || this.Class == '2')Toast('成功将此病人上报指挥中心，请打开AR眼镜视频实况功能和本系统视频通话功能，与指挥中心沟通')
+              else Toast('修改成功');
             this.getpatientrecord()
             this.getPatientInfo()
           }
@@ -1867,9 +1896,9 @@ takephoto1() {
         },
 initMap () {
   var that = this
-  var carList=[{},];
-  var hosList=[{},];
-  var assList=[{},];
+  var carList1=[{},];
+  var hosList1=[{},];
+  var assList1=[{},];
   var positionHos = [];
   var positionAss = [];
   var positionCar = [];
@@ -1968,10 +1997,10 @@ initMap () {
     }
 
     axios.get('/getAssemblyList',{}).then((response) => {
-      assList = response.data.results;
-      console.log(assList)
-      for(var i=0;i<assList.length;i++){
-        positionAss[i] = new AMap.LngLat(assList[i].Longitude, assList[i].Latitude)
+      assList1 = response.data.results;
+      console.log(assList1)
+      for(var i=0;i<assList1.length;i++){
+        positionAss[i] = new AMap.LngLat(assList1[i].Longitude, assList1[i].Latitude)
         console.log(positionAss[i])
         markerAss[i] = new SvgMarker(
           new SvgMarker.Shape.IconFont({
@@ -1988,9 +2017,8 @@ initMap () {
             }
           }
           );
-        markerAss[i].assinfo = assList[i];
+        markerAss[i].assinfo = assList1[i];
         markerAss[i].on('click',function(){
-          console.log(this)
           var thisMarkerAss = this;
           AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
             var infoWindow = new SimpleInfoWindow({
@@ -2008,10 +2036,10 @@ initMap () {
     })
 
     axios.get('/getHosList',{}).then((response) => {
-      hosList = response.data.results;
-      console.log(hosList)
-      for(var i=0;i<hosList.length;i++){
-        positionHos[i] = new AMap.LngLat(hosList[i].Longitude, hosList[i].Latitude)
+      hosList1 = response.data.results;
+      console.log(hosList1)
+      for(var i=0;i<hosList1.length;i++){
+        positionHos[i] = new AMap.LngLat(hosList1[i].Longitude, hosList1[i].Latitude)
         console.log(positionHos[i])
         markerHos[i] = new SvgMarker(
           new SvgMarker.Shape.IconFont({
@@ -2027,22 +2055,30 @@ initMap () {
               color: 'red'
             }
           });
-        markerHos[i].hosinfo = hosList[i];
+        markerHos[i].hosinfo = hosList1[i];
+        markerHos[i].searchresult = that.hosList[i].searchresult
+        markerHos[i].time = that.hosList[i].Time
         markerHos[i].on('click',function(){
-          console.log(this)
           var thisMarkerHos = this;
+          console.log(this);
           // that.selectform = "3" 
           // that.HOSNO = thisMarkerHos.hosinfo.OrganizationCode
           // that.Select()
+          console.log(that.hosList);
+          (new Lib.AMap.DrivingRender()).autoRender({
+            data: thisMarkerHos.searchresult,
+            map: mapObj
+          });
           AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
-            var infoWindow = new SimpleInfoWindow({
-              infoTitle: '<strong>' + thisMarkerHos.hosinfo.OrganizationName+ '</strong>',
-              infoBody: "<div style=\"padding:0px 0px 0px 4px;\">"+thisMarkerHos.hosinfo.LocationDescription+'</div>',
-              offset: new AMap.Pixel(0, -20),
-              autoMove: true
-            })
-            infoWindow.open(mapObj, thisMarkerHos.C.position)
-          })
+                var infoWindow = new SimpleInfoWindow({
+                  infoTitle: '<strong>' + thisMarkerHos.hosinfo.OrganizationName+ '</strong>',
+                  infoBody: "<div style=\"padding:0px 0px 0px 4px;\">"+thisMarkerHos.hosinfo.LocationDescription+'<br>'+thisMarkerHos.time+'</div>',
+                  offset: new AMap.Pixel(0, -20),
+                  autoMove: true
+                });
+                infoWindow.open(mapObj, thisMarkerHos.C.position);
+              })
+          
         })
       }
     }).catch(function(error){
@@ -2050,17 +2086,17 @@ initMap () {
     })
 
     axios.get('/getCarList',{}).then((response) => {
-      carList = response.data.results;
-      console.log(carList)
-      for(var i=0;i<carList.length;i++){
-        if(carList[i].Longitude!=null && carList[i].Latitude!=null){
-          if(carList[i].CarStatus == 0){
-            carList[i].CarStatus='空闲'
+      carList1 = response.data.results;
+      console.log(carList1)
+      for(var i=0;i<carList1.length;i++){
+        if(carList1[i].Longitude!=null && carList1[i].Latitude!=null){
+          if(carList1[i].CarStatus == 0){
+            carList1[i].CarStatus='空闲'
           }
           else{
-            carList[i].CarStatus='忙碌'
+            carList1[i].CarStatus='忙碌'
           }
-          positionCar[i] = new AMap.LngLat(carList[i].Longitude, carList[i].Latitude)
+          positionCar[i] = new AMap.LngLat(carList1[i].Longitude, carList1[i].Latitude)
           console.log(positionCar[i])
           markerCar[i] = new SvgMarker(
             new SvgMarker.Shape.IconFont({
@@ -2076,7 +2112,7 @@ initMap () {
                 color: 'red'
               }
             });
-          markerCar[i].carinfo = carList[i];
+          markerCar[i].carinfo = carList1[i];
           markerCar[i].on('click',function(){
             console.log(this)
             var thisMarkerCar = this;
@@ -2096,22 +2132,22 @@ initMap () {
           })
         }
       }
-      that.intervalid1 = setInterval(() => {
+      that.intervalid1 = setInterval(() => { 
         console.log("正在获取新位置")
         axios.get('/getCarList',{}).then((response) => {
-          carList = response.data.results;
-          console.log(carList)
-          for(var i=0;i<carList.length;i++){
-            if(carList[i].Longitude!=null && carList[i].Latitude!=null){
-              if(carList[i].CarStatus == 0){
-                carList[i].CarStatus='空闲'
+          carList1 = response.data.results;
+          console.log(carList1)
+          for(var i=0;i<carList1.length;i++){
+            if(carList1[i].Longitude!=null && carList1[i].Latitude!=null){
+              if(carList1[i].CarStatus == 0){
+                carList1[i].CarStatus='空闲'
               }
               else{
-                carList[i].CarStatus='忙碌'
+                carList1[i].CarStatus='忙碌'
               }
-              positionCar[i] = new AMap.LngLat(carList[i].Longitude, carList[i].Latitude)
+              positionCar[i] = new AMap.LngLat(carList1[i].Longitude, carList1[i].Latitude)
               console.log(positionCar[i])
-              markerCar[i].carinfo = carList[i];
+              markerCar[i].carinfo = carList1[i];
               markerCar[i].setPosition(positionCar[i])
             }
           }

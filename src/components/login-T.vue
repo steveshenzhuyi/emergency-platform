@@ -34,6 +34,7 @@
             <small style="color:grey;position:absolute;left:220px">车号：{{item.CarId}}</small>
             {{item.Pcost}}</div></a>
         </div>
+        <br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="资源">
         <mt-header fixed style="font-size:25px;height: 50px;" title="资源列表">
