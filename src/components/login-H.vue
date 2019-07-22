@@ -31,6 +31,7 @@
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
             <small style="color:grey;position:absolute;left:110px">车辆：{{item.CarName}}</small>
             <small style="color:grey;position:absolute;left:220px">车号：{{item.CarId}}</small>
+            <small style="color:grey;position:absolute;left:330px">{{item.Time}}</small>
             {{item.Pcost}}</div></a>
         </div>
         <br><br>
@@ -172,12 +173,18 @@ export default {
       data3: [
         {},
       ],
+      Longitude:0,
+      Latitude:0,
+      myPosition:'',
+      assList:[],
+      carList:[],
+      driving:'',
     };
   },
   mounted() {
    this.selected=this.$route.params.SELECTED2;
    this.getpagelist()
-   this.getUserInfo()
+   // this.getUserInfo()
    this.getMessageList()
  },
   methods: {
@@ -205,12 +212,76 @@ export default {
         }).then((response) => {
           this.PatientlistTime=response.data.results;
           this.refreshPatient();
+          this.getUserInfo();
+          setTimeout(()=>{
+            console.log(this.assList)
+            this.addTimeToPatient()
+          },1000)
         }).catch(function(error){
           console.log("error",error);
         })
       }).catch(function(error){
         console.log("error",error);
       })
+    },
+    addTimeToPatient(){
+      for(var i=0; i<this.PatientlistClass.length;i++){
+        if(this.PatientlistClass[i].Status == 'S04'){
+          if(this.PatientlistClass[i].CarNo == "000"){
+            for(var j=0; j<this.assList.length; j++){
+              if(this.PatientlistClass[i].LocationNo == this.assList[j].LocationNo){
+                this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else if(this.PatientlistClass[i].CarNo != "" || this.PatientlistClass[i].CarNo!= null){
+            for(var k=0; k<this.carList.length; k++){
+              if(this.PatientlistClass[i].CarNo == this.carList[k].CarNo){
+                this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.carList[k].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else this.PatientlistClass[i].Time = '';
+        }else if(this.PatientlistClass[i].Status == 'S03'){
+          for(var j=0; j<this.assList.length; j++){
+              if(this.PatientlistClass[i].LocationNo == this.assList[j].LocationNo){
+                this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+        }else this.PatientlistClass[i].Time = '';
+      }
+
+      for(var i=0; i<this.PatientlistTime.length;i++){
+        if(this.PatientlistTime[i].Status == 'S04'){
+          if(this.PatientlistTime[i].CarNo == "000"){
+            for(var j=0; j<this.assList.length; j++){
+              if(this.PatientlistTime[i].LocationNo == this.assList[j].LocationNo){
+                this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else if(this.PatientlistTime[i].CarNo != "" || this.PatientlistTime[i].CarNo!= null){
+            for(var k=0; k<this.carList.length; k++){
+              if(this.PatientlistTime[i].CarNo == this.carList[k].CarNo){
+                this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.carList[k].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else this.PatientlistTime[i].Time = '';
+        }else if(this.PatientlistTime[i].Status == 'S03'){
+          for(var j=0; j<this.assList.length; j++){
+              if(this.PatientlistTime[i].LocationNo == this.assList[j].LocationNo){
+                this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+        }else this.PatientlistTime[i].Time = '';
+      }
+      console.log(this.PatientlistClass)
+      console.log(this.PatientlistTime)
+      this.refreshPatient();
+
     },
     getMessageList(){
       //获取现场组信息列表
@@ -244,24 +315,72 @@ export default {
         this.ManageArea=response.data.results[0].ManageArea;
         this.GroupName=response.data.results[0].GroupName;
         this.GroupPosition=response.data.results[0].GroupPosition;
+        this.Latitude = response.data.results[0].Latitude;
+        this.Longitude = response.data.results[0].Longitude;
+        window.localStorage.setItem("Latitude",this.Latitude)
+        window.localStorage.setItem("Longitude",this.Longitude)
         var GN = this.groupNo;
-        if(this.GroupPosition == '组长'){
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
-          (result) => {
-            var sequence = result.sequence
-            var tags = result.tags
-          }, (error) => {
-            console.log(error)
-          })
-        }else{
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
-          (result) => {
-            var sequence = result.sequence
-            var tags = result.tags
-          }, (error) => {
-            console.log(error)
-          })
+        this.myPosition = new AMap.LngLat(this.Longitude, this.Latitude);
+        console.log(this.myPosition)
+        // if(this.GroupPosition == '组长'){
+        //   window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
+        //   (result) => {
+        //     var sequence = result.sequence
+        //     var tags = result.tags
+        //   }, (error) => {
+        //     console.log(error)
+        //   })
+        // }else{
+        //   window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
+        //   (result) => {
+        //     var sequence = result.sequence
+        //     var tags = result.tags
+        //   }, (error) => {
+        //     console.log(error)
+        //   })
+        // }
+        axios.get('/getAssemblyList',{}).then((response) => {
+          this.assList = response.data.results; 
+          var that = this;
+          AMap.plugin(['AMap.Driving'],function(){
+            that.driving = new AMap.Driving({ //用不上
+              policy: AMap.DrivingPolicy.LEAST_TIME
+            })
+          });
+          for(var i=0;i<that.assList.length;i++){
+           (function(j){
+           that.assList[j].position = new AMap.LngLat(response.data.results[j].Longitude, response.data.results[j].Latitude)             
+            new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.assList[j].position,that.myPosition, function (status, result) {
+              that.assList[j].searchresult = result
+            })
+          })(i) 
         }
+      }).catch(function(error){
+        console.log("error",error);
+      })
+
+      axios.get('/getCarList',{}).then((response) => {
+        var that = this;
+        var carlist = response.data.results;
+        var x  =carlist.shift()
+        that.carList = response.data.results
+        
+        AMap.plugin(['AMap.Driving'],function(){
+          that.driving = new AMap.Driving({
+            policy: AMap.DrivingPolicy.LEAST_TIME
+          })
+        });
+        for(var i=0;i<that.carList.length;i++){
+         (function(j){
+          that.carList[j].position = new AMap.LngLat(response.data.results[j].Longitude, response.data.results[j].Latitude)
+          new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.carList[j].position,that.myPosition, function (status, result) {
+            that.carList[j].searchresult = result
+          })
+        })(i)
+      }
+    }).catch(function(error){
+      console.log("error",error);
+    })
       })
     },
     //病人列表排序方法

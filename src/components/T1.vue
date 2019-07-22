@@ -1310,7 +1310,7 @@ takephoto1() {
   let mapObj = new AMap.Map('map-container', {
     center: [120.154539,30.265048],
     zoom: 13,
-    mapStyle: 'amap://styles/0516a1d06df3e0080d5dfd9856967ccd',
+    mapStyle: 'amap://styles/c276159e0bece965039d24472029a3e0',
   })
   mapObj.plugin(['AMap.ToolBar','AMap.OverView', 'AMap.MapType'], function () {
     mapObj.addControl(new AMap.ToolBar())

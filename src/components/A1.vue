@@ -312,7 +312,7 @@
               ICU剩余{{item.ICUNow}}&nbsp;&nbsp;手术室剩余{{item.ORNow}}&nbsp;&nbsp;专用病房剩余{{item.GWNow}}&nbsp;&nbsp;导管室剩余{{item.DGNow}}</small><br>
               <small style="color:grey;">联系人：{{item.realManager}}</small>
               <small style="color:grey;position:absolute;left:120px">手机：{{item.phone}}</small>
-              <small style="color:grey;position:absolute;left:240px">{{item.Time}}</small><br>
+              <small style="color:grey;position:absolute;left:290px">{{item.Time}}</small><br>
               <mt-badge size="small" v-show='item.XiongtongTag'>胸痛</mt-badge>
               <mt-badge size="small" v-show='item.GanranTag'>感染</mt-badge>
               <mt-badge size="small" v-show='item.ZhongduTag'>中毒</mt-badge>
@@ -513,6 +513,7 @@
         }
         ],
         myPosition:'',
+        Drivingrender:'',
       };
     },
     mounted() {
@@ -660,6 +661,7 @@
         var Longitude = window.localStorage.getItem("Longitude")
         var Latitude = window.localStorage.getItem("Latitude")
         this.myPosition = new AMap.LngLat(Longitude,Latitude);
+        this.Drivingrender = new Lib.AMap.DrivingRender()
         axios.get('/getHosList',{}).then((response) => {
           var that = this
           that.hosList = response.data.results
@@ -1911,7 +1913,7 @@ initMap () {
   let mapObj = new AMap.Map('map-container', {
     center: [120.154539,30.265048],
     zoom: 13,
-    mapStyle: 'amap://styles/0516a1d06df3e0080d5dfd9856967ccd',
+    mapStyle: 'amap://styles/c276159e0bece965039d24472029a3e0',
   })
   mapObj.plugin(['AMap.ToolBar','AMap.OverView', 'AMap.MapType'], function () {
     mapObj.addControl(new AMap.ToolBar())
@@ -2065,7 +2067,7 @@ initMap () {
           // that.HOSNO = thisMarkerHos.hosinfo.OrganizationCode
           // that.Select()
           console.log(that.hosList);
-          (new Lib.AMap.DrivingRender()).autoRender({
+          that.Drivingrender.autoRender({
             data: thisMarkerHos.searchresult,
             map: mapObj
           });
