@@ -20,7 +20,7 @@
             <span><small style="position:absolute;left:110px">{{item.CreateTime}}</small></span></div>
             <!-- <br> -->
             <div><span style="font-size:23px;">{{item.Name}}</span>
-            <span style="position:absolute;left:110px;font-size:20px;">{{item.Classification}}</span>
+            <span style="position:absolute;left:110px;font-size:20px;" :class="item.Classification">{{item.Classification}}</span>
             <span style="position:absolute;left:220px;font-size:20px;">{{item.StatusName}}</span></div>
             <!-- <br> -->
             <div>
@@ -363,23 +363,23 @@ export default {
         window.localStorage.setItem("Longitude",this.Longitude)
         this.myPosition = new AMap.LngLat(this.Longitude, this.Latitude);
         var GN = this.groupNo;
-        // if(this.GroupPosition == '组长'){
-        //   window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
-        //   (result) => {
-        //     var sequence = result.sequence
-        //     var tags = result.tags
-        //   }, (error) => {
-        //     console.log(error)
-        //   })
-        // }else{
-        //   window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
-        //   (result) => {
-        //     var sequence = result.sequence
-        //     var tags = result.tags
-        //   }, (error) => {
-        //     console.log(error)
-        //   })
-        // }
+        if(this.GroupPosition == '组长'){
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
+          (result) => {
+            var sequence = result.sequence
+            var tags = result.tags
+          }, (error) => {
+            console.log(error)
+          })
+        }else{
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
+          (result) => {
+            var sequence = result.sequence
+            var tags = result.tags
+          }, (error) => {
+            console.log(error)
+          })
+        }
 
         axios.get('/getHosList',{}).then((response) => {
           this.hosList = response.data.results; 
@@ -569,5 +569,19 @@ export default {
 </script>
 
 <style>
-  
+  .I级{
+    color:red;
+  }
+  .II级{
+    color:orange;
+  }
+  .III级{
+    color:#E6BD1A;
+  }
+  .IV级{
+    color:blue;
+  }
+  .V级{
+    color:blue;
+  }
 </style>

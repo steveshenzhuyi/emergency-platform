@@ -18,7 +18,7 @@
             <span><small style="position:absolute;left:110px">{{item.CreateTime}}</small></span></div>
             <!-- <br> -->
             <div><span style="font-size:23px;">{{item.Name}}</span>
-            <span style="position:absolute;left:110px;font-size:20px;">{{item.Classification}}</span>
+            <span style="position:absolute;left:110px;font-size:20px;" :class="item.Classification">{{item.Classification}}</span>
             <span style="position:absolute;left:220px;font-size:20px;">{{item.StatusNameHos}}</span></div>
             <!-- <br> -->
             <div>
@@ -483,7 +483,19 @@ export default {
 </script>
 
 <style>
-  b{
-    font-size:20px;
+  .I级{
+    color:red;
+  }
+  .II级{
+    color:orange;
+  }
+  .III级{
+    color:#E6BD1A;
+  }
+  .IV级{
+    color:blue;
+  }
+  .V级{
+    color:blue;
   }
 </style>

@@ -6,7 +6,7 @@
           <mt-button size="small" icon="back" slot="left"
           @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
-          @click.native="popupVisible3 = true"><small>监护</small></mt-button>
+          @click="alertHelp()"><small>一键求助</small></mt-button>
           <hr>
         </mt-header>
         <br><br>
@@ -83,20 +83,26 @@
         <br><br><br><br><br><br>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
-          <div align="center" style="height:28px"><span style="float: left;">常用体征</span>
-          </div><hr>
-          <mt-button size="small" @click="heartrate()" style="position:relative;right:40px"
+          <div align="center" style="height:28px"><span style="float: left;">常用体征</span></div><hr>
+        <div>
+          <mt-button size="small" @click.native="popupVisible3 = true" style="position:absolute;left:30px;width: 90px"
+            type="primary" plain>监护</mt-button>
+          <mt-button size="small" @click="heartrate()" style="position:relative;left:30px;width: 90px"
             type="primary" plain>心率</mt-button>
-          <mt-button size="small" @click="bloodpressure()"
+          <mt-button size="small" @click="bloodpressure()" style="position:relative;left:60px;width: 90px"
             type="primary" plain>血压</mt-button>
-          <mt-button size="small" @click="temprature()" style="position:relative;left:40px"
-            type="primary" plain>体温</mt-button><br><br>
-          <mt-button size="small" @click="breath()" style="position:relative;right:40px"
+          <mt-button size="small" @click="temprature()" style="position:relative;left:90px;width: 90px"
+            type="primary" plain>体温</mt-button>
+          </div>
+            <br> 
+            <div>
+          <mt-button size="small" @click="breath()" style="position:absolute;left:30px;width: 90px"
             type="primary" plain>呼吸</mt-button>
-          <mt-button size="small" @click="bloodoxygen()"
+          <mt-button size="small" @click="bloodoxygen()" style="position:absolute;left:150px;width: 90px"
             type="primary" plain>血氧</mt-button>
-          <mt-button size="small" @click="symptom()" style="position:relative;left:40px"
-            type="primary" plain>其他</mt-button><br><hr>
+          <mt-button size="small" @click="symptom()" style="position:relative;left:60px;width: 90px"
+            type="primary" plain>其他</mt-button><hr>
+          </div>
           <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;" align="right">
             <div align="center">新增体征：{{体征}}</div>
             <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
@@ -194,7 +200,7 @@
           <hr>
           <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
           <div><small style="color:grey">病人分级为I级或II级时，系统将自动上报。其他情况有需要时，可以使用手动一键上报。</small></div>
-          <mt-button type="danger" @click="alert()">一键上报并求助</mt-button><br><br><br><br>
+          <mt-button type="danger" @click="alert()">一键上报</mt-button><br><br><br><br>
         </mt-tab-container-item>
         <mt-tab-container-item id="6">
           <img src="./pictrue/man.png"><hr>
@@ -1127,12 +1133,43 @@
         }).then((response) => {
           if(response.data.results == "上传成功") {
             // alert("上报成功");
-            Toast('成功将此病人上报指挥中心，请打开AR眼镜视频实况功能和本系统视频通话功能，与指挥中心沟通');
+            Toast('成功上报指挥中心');
           }else{
             // alert("上报失败");
             Toast('上报失败');
           }
         })
+      },
+      alertHelp() {
+        axios.post('/oneClickAlert',{
+          patientId:this.$route.params.PATIENTID
+        }).then((response) => {
+          if(response.data.results == "上传成功") {
+            // alert("上报成功");
+            Toast('成功上报指挥中心,请打开AR眼镜视频实况功能');
+          }else{
+            // alert("上报失败");
+            Toast('上报失败');
+          }
+        })
+        setTimeout(()=>{
+          this.GLOBAL.changeVideoAlert(false)
+          var scheme = 'com.tencent.trtc';
+          appAvailability.check(scheme,
+            function() {
+              var sApp = startApp.set({"application":"com.tencent.trtc"
+            });
+              sApp.start(function() {
+              }, function(error) {
+                alert(error);
+              });
+            },
+            function() {
+              alert(scheme + ' is not available');
+            }
+            );   
+        },1000)
+
       },
       ensure() {
         if(this.flag == "1") {
@@ -1344,7 +1381,7 @@
           class:this.Class
         }).then((response) => {
           if(response.data.results == "上传成功") {
-            if(this.Class == '1' || this.Class == '2')Toast('成功将此病人上报指挥中心，请打开AR眼镜视频实况功能和本系统视频通话功能，与指挥中心沟通')
+            if(this.Class == '1' || this.Class == '2')Toast('成功上报指挥中心')
               else Toast('修改成功');
             this.getpatientrecord()
             this.getPatientInfo()
