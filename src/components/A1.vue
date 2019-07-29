@@ -351,7 +351,7 @@
           </div>
         </mt-popup>
         <mt-popup v-model="popupVisible3" position="bottom" style="width:100%;height: 70%;overflow: auto;">
-          <h4>点选可用设备，给病人使用心电监护。结束上一个病人的监测后，设备才可以重复使用。</h4>
+          <h4>点选可用设备，给病人使用心电监护。<br>结束上一个病人的监测后，设备才可以重复使用。</h4>
           <div>
             <div align="center" style="height: 30px">
               <span><b>可用设备列表</b></span>

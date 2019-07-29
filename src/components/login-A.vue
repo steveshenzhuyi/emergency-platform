@@ -21,7 +21,7 @@
             <!-- <br> -->
             <div><span style="font-size:23px;">{{item.Name}}</span>
             <span style="position:absolute;left:110px;font-size:20px;" :class="item.Classification">{{item.Classification}}</span>
-            <span style="position:absolute;left:220px;font-size:20px;">{{item.StatusName}}</span></div>
+            <span style="position:absolute;left:220px;font-size:20px;" :class="item.StatusName">{{item.StatusName}}</span></div>
             <!-- <br> -->
             <div>
             <small style="color:grey">
@@ -583,5 +583,17 @@ export default {
   }
   .V级{
     color:blue;
+  }
+  .处置完成{
+    color:green;
+  }
+  .已后送{
+    color:green;
+  }
+  .待后送{
+    color:red;
+  }
+  .处置中{
+    color:red;
   }
 </style>
