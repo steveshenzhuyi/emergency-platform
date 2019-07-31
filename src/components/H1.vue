@@ -184,10 +184,12 @@
         <mt-header fixed style="font-size:20px" title="实时地图">
           <mt-button size="small" icon="back" slot="left"
           @click="returnH()"><small>返回</small></mt-button>
+          <mt-button size="small" slot="right"
+          @click="askExpert()"><small>通知专家</small></mt-button>
           <hr>
         </mt-header>
         <br>
-        <h3>当前状态：{{StatusNameHos}}</h3>
+        <h3>当前状态：{{StatusNameHos}}&nbsp;&nbsp; {{Time}}</h3>
         <h4>后送医院：{{hospital}}&nbsp; 车号：{{carId}}</h4>
         <!-- <h4>
         <mt-button size="normal">
@@ -248,11 +250,23 @@ export default {
       dataTZ: [],
       dataCZ:[],
       patientrecord: [],
+      startPosition:"",
+      endPosition:"",
+      mapObj:"",
+      Time:""
     };
   },
   mounted() {
     this.initMap()
     this.getpatientrecord()
+    setTimeout(()=>{
+      var that = this
+      if(that.StatusNameHos == "后送中" && that.carId != "自行前往"){
+        new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME,map:that.mapObj}).search(that.startPosition, that.endPosition, function (status, result) {
+              that.Time = "预计到达时间"+Math.round(result.routes[0].time/60)+"分钟";
+             })
+      }
+      },2000)
   },
   beforeDestroy () {
     navigator.geolocation.clearWatch(this.watchID1)
@@ -261,6 +275,17 @@ export default {
     this.intervalid1 = null
   },
   methods: {
+    askExpert(){
+      axios.post('/askExpert',{
+        patientId:this.$route.params.PATIENTID,
+        Location:window.localStorage.getItem('Location')
+      }).then((response) => {
+        if(response.data.results == "上传成功") {
+          Toast('已成功推送给专家');
+        }
+        })
+
+    },
     getpatientrecord() {
       axios.post('/getPatientRecord',{
         patientId:this.$route.params.PATIENTID
@@ -736,6 +761,7 @@ export default {
     mapObj.addControl(new AMap.OverView({isOpen:false}))
     mapObj.addControl(new AMap.MapType({showTraffic: true, showRoad: false}))
   })
+  that.mapObj = mapObj;
   var options = {
     enableHighAccuracy: true,
     maximumAge: 0
@@ -856,7 +882,9 @@ export default {
       console.log(hosList)
       for(var i=0;i<hosList.length;i++){
         positionHos[i] = new AMap.LngLat(hosList[i].Longitude, hosList[i].Latitude)
-        console.log(positionHos[i])
+        if(that.hospital==hosList[i].OrganizationName){
+          that.endPosition = positionHos[i]
+        }
         markerHos[i] = new SvgMarker(
           new SvgMarker.Shape.IconFont({
             symbolJs: null,
@@ -902,7 +930,9 @@ export default {
             carList[i].CarStatus='忙碌'
           }
           positionCar[i] = new AMap.LngLat(carList[i].Longitude, carList[i].Latitude)
-          console.log(positionCar[i])
+          if(that.carId==carList[i].CarId){
+          that.startPosition = positionCar[i]
+        }
           markerCar[i] = new SvgMarker(
             new SvgMarker.Shape.IconFont({
               symbolJs: null,

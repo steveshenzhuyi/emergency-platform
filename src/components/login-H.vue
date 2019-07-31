@@ -31,7 +31,7 @@
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
             <small style="color:grey;position:absolute;left:110px">车辆：{{item.CarName}}</small>
             <small style="color:grey;position:absolute;left:220px">车号：{{item.CarId}}</small>
-            <small style="color:grey;position:absolute;left:330px">{{item.Time}}</small>
+            <small style="color:red;position:absolute;left:330px">{{item.Time}}</small>
             {{item.Pcost}}</div></a>
         </div>
         <br><br>
@@ -242,14 +242,16 @@ export default {
               }
             }
           }else this.PatientlistClass[i].Time = '';
-        }else if(this.PatientlistClass[i].Status == 'S03'){
-          for(var j=0; j<this.assList.length; j++){
-              if(this.PatientlistClass[i].LocationNo == this.assList[j].LocationNo){
-                this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
-                break;
-              }
-            }
-        }else this.PatientlistClass[i].Time = '';
+        }
+        // else if(this.PatientlistClass[i].Status == 'S03'){
+        //   for(var j=0; j<this.assList.length; j++){
+        //       if(this.PatientlistClass[i].LocationNo == this.assList[j].LocationNo){
+        //         this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
+        //         break;
+        //       }
+        //     }
+        // }
+        else this.PatientlistClass[i].Time = '';
       }
 
       for(var i=0; i<this.PatientlistTime.length;i++){
@@ -269,14 +271,16 @@ export default {
               }
             }
           }else this.PatientlistTime[i].Time = '';
-        }else if(this.PatientlistTime[i].Status == 'S03'){
-          for(var j=0; j<this.assList.length; j++){
-              if(this.PatientlistTime[i].LocationNo == this.assList[j].LocationNo){
-                this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
-                break;
-              }
-            }
-        }else this.PatientlistTime[i].Time = '';
+        }
+        // else if(this.PatientlistTime[i].Status == 'S03'){
+        //   for(var j=0; j<this.assList.length; j++){
+        //       if(this.PatientlistTime[i].LocationNo == this.assList[j].LocationNo){
+        //         this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
+        //         break;
+        //       }
+        //     }
+        // }
+        else this.PatientlistTime[i].Time = '';
       }
       console.log(this.PatientlistClass)
       console.log(this.PatientlistTime)
@@ -317,28 +321,29 @@ export default {
         this.GroupPosition=response.data.results[0].GroupPosition;
         this.Latitude = response.data.results[0].Latitude;
         this.Longitude = response.data.results[0].Longitude;
+        window.localStorage.setItem("Location",response.data.results[0].Location)
         window.localStorage.setItem("Latitude",this.Latitude)
         window.localStorage.setItem("Longitude",this.Longitude)
         var GN = this.groupNo;
         this.myPosition = new AMap.LngLat(this.Longitude, this.Latitude);
         console.log(this.myPosition)
-        // if(this.GroupPosition == '组长'){
-        //   window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
-        //   (result) => {
-        //     var sequence = result.sequence
-        //     var tags = result.tags
-        //   }, (error) => {
-        //     console.log(error)
-        //   })
-        // }else{
-        //   window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
-        //   (result) => {
-        //     var sequence = result.sequence
-        //     var tags = result.tags
-        //   }, (error) => {
-        //     console.log(error)
-        //   })
-        // }
+        if(this.GroupPosition == '组长'){
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
+          (result) => {
+            var sequence = result.sequence
+            var tags = result.tags
+          }, (error) => {
+            console.log(error)
+          })
+        }else{
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
+          (result) => {
+            var sequence = result.sequence
+            var tags = result.tags
+          }, (error) => {
+            console.log(error)
+          })
+        }
         axios.get('/getAssemblyList',{}).then((response) => {
           this.assList = response.data.results; 
           var that = this;
