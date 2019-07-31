@@ -405,7 +405,7 @@ export default {
     },
     getpatient:function(index){
       console.log(index)
-      this.$router.push({name: 'H1',params:{PATIENTID:this.dataclass1[index].PatientId}})
+      this.$router.push({name: 'H1',params:{PATIENTID:this.dataclass1[index].PatientId,SELECTED:"既往病历"}})
     },
     //刷新各指定页面
     refreshPatient() {

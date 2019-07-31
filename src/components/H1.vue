@@ -15,7 +15,7 @@
     </div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="既往处置">
-        <mt-header fixed style="font-size:25px;height: 50px;" title="既往处置">
+        <mt-header fixed style="font-size:25px;height: 50px;" :title="title2">
           <mt-button size="small" icon="back" slot="left"
             @click="returnH()"><small>返回</small></mt-button>
           <hr>
@@ -29,7 +29,7 @@
       </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="既往病历">
-        <mt-header fixed style="font-size:25px;height: 50px;" title="既往病历">
+        <mt-header fixed style="font-size:25px;height: 50px;" :title="title1">
           <mt-button size="small" icon="back" slot="left"
             @click="returnH()"><small>返回</small></mt-button>
           <mt-button  size="small" slot="right"
@@ -77,29 +77,9 @@
               <div align="center">
            <img v-gallery :src="item.fileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
           </div>
-            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save20()">保存</mt-button> -->
             <br><br><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="3">
-            <!-- <div  style="text-align: left; margin-top: 10px">常用体征</div><hr> -->
-            <!-- <mt-button size="small" @click="heartrate()" style="position:relative;right:40px"
-            type="primary" plain>心率</mt-button>
-            <mt-button size="small" @click="bloodpressure()"
-            type="primary" plain>血压</mt-button>
-            <mt-button size="small" @click="temprature()" style="position:relative;left:40px"
-            type="primary" plain>体温</mt-button><br><br>
-            <mt-button size="small" @click="breath()" style="position:relative;right:40px"
-            type="primary" plain>呼吸</mt-button>
-            <mt-button size="small" @click="bloodoxygen()"
-            type="primary" plain>血氧</mt-button>
-            <mt-button size="small" @click="symptom()" style="position:relative;left:40px"
-            type="primary" plain>其他</mt-button><br><br><hr>
-            <div  style=" padding:3px;border:1px solid blue;margin:3px;">
-              {{体征}}<hr>
-              <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
-              <mt-button @click="add()" size="small">确定</mt-button>
-            </div> -->
             <div v-for="(item,index) in dataTZ" style="text-align: left">
             <hr>
             <small style="color:grey">{{item.OperationTime}}</small><br>
@@ -113,35 +93,18 @@
             <div align="left">
               <mt-field  type="textarea" placeholder="暂无内容" v-model="过敏史"  rows="2"></mt-field><hr>
             </div>
-            <!-- <mt-button size="small" style="float: right;position:relative;top:-50px" type="primary" @click="save41()">保存</mt-button> -->
-            <!-- <div style="height: 33px">
-    <mt-button size="small" style="float: left" type="primary" plain>
-    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
-    <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain>
-    <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button>
-            </div> -->
             <div align="center" style="height:30px">
               <span style="float: left;">疾病史</span>
             </div>
             <div align="left">
               <mt-field  type="textarea" placeholder="暂无内容" v-model="疾病史"  rows="2"></mt-field><hr>
             </div>
-            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save42()">保存</mt-button> -->
-            <!-- <div style="height: 33px">
-    <mt-button size="small" style="float: left" type="primary" plain>
-    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
-    <mt-button size="small"  style="float: left; margin-left: 10px" type="danger" plain>
-    <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button>
-            </div> -->
             <div align="center" style="height:30px">
           <span style="float: left;">目前用药</span>
         </div>
             <div align="left">
               <mt-field type="textarea" placeholder="暂无内容" v-model="目前用药"  rows="2"></mt-field><hr>
             </div>
-            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save43()">保存</mt-button> -->
               <div v-for="(item,index) in 既往史图片">
               <div align="center">
               <small style="color:grey">{{item.time}}</small></div>
@@ -181,7 +144,7 @@
         </mt-tab-container>
       </mt-tab-container-item>
       <mt-tab-container-item  id="实时地图">
-        <mt-header fixed style="font-size:20px" title="实时地图">
+        <mt-header fixed style="font-size:25px;height: 50px;" :title="title3">
           <mt-button size="small" icon="back" slot="left"
           @click="returnH()"><small>返回</small></mt-button>
           <hr>
@@ -215,12 +178,15 @@ export default {
       watchID1:null,
       patientId: this.$route.params.PATIENTID,
       PatientId: '',
-      selected: '既往病历',
+      selected: this.$route.params.SELECTED,
       selected1: '1',
       content: '',
       timevalue: '',
       timevalue1: '',
       timevalue2: '',
+      title1: '',
+      title2: '',
+      title3:'',
       主诉: '',
       主诉图片:[],
       体征: '请选择体征',
@@ -371,6 +337,9 @@ export default {
         console.log(response)
         this.PatientId=response.data.results[0].PatientId;
         this.Name=response.data.results[0].Name;
+        this.title1="既往病历："+this.Name;
+        this.title2="既往处置："+this.Name;
+        this.title3="实时地图："+this.Name;
         this.Phone=response.data.results[0].Phone
         this.Email=response.data.results[0].Email;
         this.Gender=response.data.results[0].Gender;
