@@ -11,6 +11,9 @@
     <div><b style="font-size:25px">标题：{{Title}}</b></div><br>
     <div align ="left" v-for="item in MessageDetail" style="font-size: 20px;">
       {{item}}<br>
+    </div><br>
+    <div align="center">
+      <mt-button type="primary" @click="TOH1()"><small>查看病人详情</small></mt-button>
     </div>
     <router-view></router-view>
   </div>
@@ -62,6 +65,10 @@ export default {
         }else if(window.localStorage.getItem('ROLECODE')=="R04"){
           this.$router.push({name:'专家病人列表',params:{SELECTED2:"沟通"}});
         }else alert("无角色")
+    },
+    TOHI() {
+      patientID:X;
+      this.$router.push({name:'H1',params:{PATIENTID:"patientID",SELECTED:"实时地图"}})
     }
   }
 };
