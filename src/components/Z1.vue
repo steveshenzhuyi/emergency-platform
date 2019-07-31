@@ -12,7 +12,7 @@
     </div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="既往处置">
-        <mt-header fixed style="font-size:25px;height: 50px;" title="既往处置">
+        <mt-header fixed style="font-size:25px;height: 50px;" :title="title1">
           <mt-button size="small" icon="back" slot="left"
             @click="returnZ()"><small>返回</small></mt-button>
           <hr>
@@ -26,7 +26,7 @@
       </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="既往病历">
-        <mt-header fixed style="font-size:25px;height: 50px;" title="既往病历">
+        <mt-header fixed style="font-size:25px;height: 50px;" :title="title2">
           <mt-button size="small" icon="back" slot="left"
             @click="returnZ()"><small>返回</small></mt-button>
           <!-- <mt-button  size="small" slot="right"
@@ -194,6 +194,8 @@ export default {
       intervalid1:null,
       watchID1:null,
       patientId: this.$route.params.PATIENTID,
+      title1:'',
+      title2:'',
       PatientId: '',
       selected: '既往病历',
       selected1: '1',
@@ -350,6 +352,8 @@ export default {
         console.log(response)
         this.PatientId=response.data.results[0].PatientId;
         this.Name=response.data.results[0].Name;
+        this.title2="既往病历："+this.Name;
+        this.title1="既往处置："+this.Name;
         this.Phone=response.data.results[0].Phone
         this.Email=response.data.results[0].Email;
         this.Gender=response.data.results[0].Gender;

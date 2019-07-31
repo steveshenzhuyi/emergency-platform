@@ -20,12 +20,14 @@
     <div v-show='isface'><img v-gallery id="image" style="max-height: 200px; max-width: 90%;" ></img></div>
     <mt-button v-show='isface' type="primary" size="small" @click="uploadPicture()"style="margin-bottom:10px"><small>识别</small></mt-button>
       <mt-field label="姓名" v-model="pname"></mt-field>
-      <mt-radio v-show="!iscamera"
-        v-model="gender"
-        :options="options">
-      </mt-radio>
+      <div class="warning_box_radio">  
+        <mt-radio  v-show="!iscamera"
+          v-model="gender"
+          :options="options">
+        </mt-radio>
+      </div>
       <mt-field v-show="iscamera" label="性别" v-model="gender1" disabled></mt-field>
-      <mt-field label="年龄" v-model="age" type='number'></mt-field>
+      <mt-field label="年龄" style="display:flex" v-model="age" type='number'></mt-field>
       <mt-field label="民族" v-model="nation"></mt-field>
       <mt-field label="手机" v-model="phone" type='number'></mt-field>
       <mt-field label="邮箱" v-model="email" type='email'></mt-field>
@@ -353,4 +355,18 @@ export default {
   }
 }
 </script>
+
+<style lang="less">
+.warning_box_radio{
+  display:flex;
+  margin: 0  40px 0 24px;
+  .mint-cell{
+    float: left;
+    // padding-right:40px;
+    .mint-cell-wrapper{
+      background-position: 0%;
+    }
+  }  
+}
+</style>
 

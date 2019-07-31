@@ -2,7 +2,7 @@
   <div align="center">
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="患者病历">
-        <mt-header fixed style="font-size:25px;height: 50px;" title="患者病历">
+        <mt-header fixed style="font-size:25px;height: 50px;" :title="title1">
           <mt-button size="small" icon="back" slot="left"
           @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
@@ -221,7 +221,7 @@
       </mt-tab-container>
     </mt-tab-container-item>
     <mt-tab-container-item id="处置方案">
-      <mt-header fixed style="font-size:25px;height: 50px;" title="处置方案">
+      <mt-header fixed style="font-size:25px;height: 50px;" :title="title2">
       <mt-button size="small" icon="back" slot="left"
         @click="returnA()"><small>返回</small></mt-button>
       <!-- <mt-button size="small" slot="right"
@@ -264,7 +264,7 @@
       </div><br><br><br><br>
     </mt-tab-container-item>
     <mt-tab-container-item id="病人去向">
-      <mt-header fixed style="font-size:25px;height: 50px;" title="病人去向">
+      <mt-header fixed style="font-size:25px;height: 50px;" :title="title3">
         <mt-button size="small" icon="back" slot="left"
         @click="returnA()"><small>返回</small></mt-button>
         <mt-button size="small" slot="right" v-show="isShow2"
@@ -424,6 +424,9 @@
         editing42:false,
         editing43:false,
         editing5:false,
+        title1:'',
+        title2:'',
+        title3:'',
         tempzhusu:'',
         tempxianbingshi:'',
         tempguomin:'',
@@ -830,6 +833,9 @@
           console.log(response)
           this.PatientId=response.data.results[0].PatientId;
           this.Name=response.data.results[0].Name;
+          this.title1="患者病历："+this.Name;
+          this.title2="处置方案："+this.Name;
+          this.title3="病人去向："+this.Name;
           this.Phone=response.data.results[0].Phone
           this.Email=response.data.results[0].Email;
           this.Gender=response.data.results[0].Gender;
