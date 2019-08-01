@@ -356,17 +356,16 @@ export default {
 }
 </script>
 
-<!-- <style lang="less">
+<style lang="less">
 .warning_box_radio{
   display:flex;
   margin: 0  40px 0 24px;
   .mint-cell{
     float: left;
-    // padding-right:40px;
     .mint-cell-wrapper{
       background-position: 0%;
     }
   }  
 }
-</style> -->
+</style>
 
