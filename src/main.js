@@ -9,7 +9,7 @@ import App from './App';
 import router from './router';
 import '../settings.js';
 import VueQr from 'vue-qr';
-import './assets/iconfont.js';
+import './assets/iconfont3.js';
 import QRCode from 'qrcodejs2';
 import gallery from 'img-vuer';
 import global_ from './components/global.vue'

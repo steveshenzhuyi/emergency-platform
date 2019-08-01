@@ -356,7 +356,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<!-- <style lang="less">
 .warning_box_radio{
   display:flex;
   margin: 0  40px 0 24px;
@@ -368,5 +368,5 @@ export default {
     }
   }  
 }
-</style>
+</style> -->
 
