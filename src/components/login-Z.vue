@@ -206,7 +206,8 @@ export default {
     getMessageList(){
       //获取现场组信息列表
       axios.post('/getExpertMessage',{
-        Expert: this.userId
+        Expert: this.userId,
+        groupNo: this.groupNo
       }).then((response) => {
         this.message = response.data.results
         this.refreshMessage()
@@ -238,7 +239,7 @@ export default {
         var GN = this.groupNo;
         var UI = this.userId;
         if(this.GroupPosition == '组长'){
-          window.JPush.setTags({ sequence: 1, tags: [UI, 'groupLeader']},
+          window.JPush.setTags({ sequence: 1, tags: [GN, UI, 'groupLeader']},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags
@@ -246,7 +247,7 @@ export default {
             console.log(error)
           })
         }else{
-          window.JPush.setTags({ sequence: 1, tags: [UI, 'worker']},
+          window.JPush.setTags({ sequence: 1, tags: [GN, UI, 'worker']},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags

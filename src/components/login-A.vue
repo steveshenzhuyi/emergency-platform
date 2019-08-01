@@ -19,7 +19,7 @@
             <div><span>{{item.PatientId}}</span>
             <span><small style="position:absolute;left:110px">{{item.CreateTime}}</small></span></div>
             <!-- <br> -->
-            <div ><span style="font-size:23px;">{{item.Name}}</span>
+            <div><span style="font-size:23px;" :style="{'color':(item.VIPTag == '1'?'red':'black')}">{{item.Name}}</span>
             <span style="position:absolute;left:110px;font-size:20px;margin:2px 0 0" :class="item.Classification">{{item.Classification}}</span>
             <span style="position:absolute;left:220px;font-size:20px;margin:2px 0 0" :class="item.StatusName">{{item.StatusName}}</span></div>
             <!-- <br> -->

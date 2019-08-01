@@ -1410,10 +1410,10 @@ takephoto1() {
         markerAss[i] = new SvgMarker(
           new SvgMarker.Shape.IconFont({
             symbolJs: null,
-            icon: 'icon-jianzhuwu',
+            icon: 'icon-changguan',
             size: 50,
             offset: [-25, -50],
-            fillColor: 'blue'
+            fillColor: 'grey'
           }), {
             map: mapObj,
             position: positionAss[i],
@@ -1450,7 +1450,7 @@ takephoto1() {
         markerHos[i] = new SvgMarker(
           new SvgMarker.Shape.IconFont({
             symbolJs: null,
-            icon: 'icon-yiyuan-2',
+            icon: 'icon-hospital',
             size: 50,
             offset: [-25, -50],
             fillColor: 'red'
@@ -1496,10 +1496,10 @@ takephoto1() {
           markerCar[i] = new SvgMarker(
             new SvgMarker.Shape.IconFont({
               symbolJs: null,
-              icon: 'icon-jiuhuche',
+              icon: 'icon-emergencycar',
               size: 50,
               offset: [-25, -50],
-              fillColor: 'green'
+              fillColor: 'blue'
             }), {
               map: mapObj,
               position: positionCar[i],

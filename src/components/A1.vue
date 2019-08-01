@@ -6,7 +6,8 @@
           <mt-button size="small" icon="back" slot="left"
           @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
-          @click="alertHelp()"><small>一键求助</small></mt-button>
+          @click="alertHelp()"><small>请求支援
+          </small></mt-button>
           <hr>
         </mt-header>
         <br><br>
@@ -1561,6 +1562,7 @@ getcar:function(index){
 
 startMonitor:function(index){
   var that = this
+  that.popupVisible3 = false
   that.nowTime = new Date().getTime()
   MessageBox.confirm('确定使用这台设备监护?').then(action => {
     axios('http://test.995120.cn:8088/his/outpatient/addOutpatient',{
@@ -1627,15 +1629,18 @@ startMonitor:function(index){
   }).then((response) => {
     if(response.data.respCode == "000000"){
       MessageBox.alert("开始监护成功","提示")
+      that.popupVisible3 = true
       that.getDeviceList()
       that.getTestList()
     }else{
       MessageBox.alert("开始监护失败","提示")
+      that.popupVisible3 = true
     }
   })
 
     }else{
      MessageBox.alert("下检查单失败","提示")
+     that.popupVisible3 = true
     }
   })
   
@@ -1644,6 +1649,7 @@ startMonitor:function(index){
 },
 stopMonitor:function(index){
   var that = this
+  that.popupVisible3 = false
   MessageBox.confirm('确定停止监护?').then(action => {
     axios('http://test.995120.cn:8088/his/outpatient/stopMonitoring',{
       method: 'post', 
@@ -1672,10 +1678,12 @@ stopMonitor:function(index){
   }).then((response) => {
     if(response.data.respCode == "000000"){
       MessageBox.alert("停止监护成功","提示")
+      that.popupVisible3 = true
       that.getTestList()
       that.getDeviceList()
     }else{
       MessageBox.alert("停止监护失败","提示")
+      that.popupVisible3 = true
     }
   })
 })
@@ -2050,10 +2058,10 @@ initMap () {
         markerAss[i] = new SvgMarker(
           new SvgMarker.Shape.IconFont({
             symbolJs: null,
-            icon: 'icon-jianzhuwu',
+            icon: 'icon-changguan',
             size: 50,
             offset: [-25, -50],
-            fillColor: 'blue'
+            fillColor: 'grey'
           }), {
             map: mapObj,
             position: positionAss[i],
@@ -2089,7 +2097,7 @@ initMap () {
         markerHos[i] = new SvgMarker(
           new SvgMarker.Shape.IconFont({
             symbolJs: null,
-            icon: 'icon-yiyuan-2',
+            icon: 'icon-hospital',
             size: 50,
             offset: [-25, -50],
             fillColor: 'red'
@@ -2146,10 +2154,10 @@ initMap () {
           markerCar[i] = new SvgMarker(
             new SvgMarker.Shape.IconFont({
               symbolJs: null,
-              icon: 'icon-jiuhuche',
+              icon: 'icon-emergencycar',
               size: 50,
               offset: [-25, -50],
-              fillColor: 'green'
+              fillColor: 'blue'
             }), {
               map: mapObj,
               position: positionCar[i],

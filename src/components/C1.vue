@@ -13,7 +13,7 @@
       {{item}}<br>
     </div><br>
     <div align="center">
-      <mt-button type="primary" @click="TOH1()"><small>查看病人详情</small></mt-button>
+      <mt-button type="primary" v-show="show1" @click="TOHI()"><small>查看病人详情</small></mt-button>
     </div>
     <router-view></router-view>
   </div>
@@ -31,6 +31,7 @@ export default {
       mark: '',
       MessageDetail:[],
       showbadge:'',
+      show1:false,
     };
   },
   mounted() {
@@ -38,6 +39,9 @@ export default {
   },
   methods: {
     getMessage() {
+      if(window.localStorage.getItem('ROLECODE')=="R03"){
+        this.show1 = true;
+      }
       axios.post('/getMessageDetail', {
         messageNo:window.localStorage.getItem('MESSAGENO')
       }).then((response) => {
@@ -67,8 +71,9 @@ export default {
         }else alert("无角色")
     },
     TOHI() {
-      patientID:X;
-      this.$router.push({name:'H1',params:{PATIENTID:"patientID",SELECTED:"实时地图"}})
+      var y = this.MessageDetail[1].indexOf("编号")
+      var patientID = this.MessageDetail[1].substring(y + 3, y + 8);
+      this.$router.push({name:'H1',params:{PATIENTID:patientID,SELECTED:"实时地图"}})
     }
   }
 };
