@@ -18,20 +18,20 @@
             <span><small style="position:absolute;left:110px">{{item.CreateTime}}</small></span></div>
             <!-- <br> -->
             <div><span style="font-size:23px;">{{item.Name}}</span>
-            <span style="position:absolute;left:110px;font-size:20px;" :class="item.Classification">{{item.Classification}}</span>
-            <span style="position:absolute;left:220px;font-size:20px;" :class="item.StatusNameHos">{{item.StatusNameHos}}</span></div>
+            <span style="position:absolute;left:110px;font-size:20px;margin:2px 0 0" :class="item.Classification">{{item.Classification}}</span>
+            <span style="position:absolute;left:220px;font-size:20px;margin:2px 0 0" :class="item.StatusNameHos">{{item.StatusNameHos}}</span></div>
             <!-- <br> -->
             <div>
             <small style="color:grey">
             性别：{{item.Gender}}</small>
-            <small style="color:grey;position:absolute;left:110px">年龄：{{item.Age}}</small>
+            <small style="color:grey;position:absolute;left:110px;margin:1.6px 0 0">年龄：{{item.Age}}</small>
             <small style="width:15em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
-            color:grey;position:absolute;left:220px">症状：{{item.Diagnose}}</small></div>
+            color:grey;position:absolute;left:220px;margin:2.2px 0 0">症状：{{item.Diagnose}}</small></div>
             <div>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
-            <small style="color:grey;position:absolute;left:110px">车辆：{{item.CarName}}</small>
-            <small style="color:grey;position:absolute;left:220px">车号：{{item.CarId}}</small>
-            <small style="color:grey;position:absolute;left:330px">{{item.Time}}</small>
+            <small style="color:grey;position:absolute;left:110px;margin:2.6px 0 0">车辆：{{item.CarName}}</small>
+            <small style="color:grey;position:absolute;left:220px;margin:3.2px 0 0">车号：{{item.CarId}}</small>
+            <small style="color:grey;position:absolute;left:330px;margin:3.2px 0 0">{{item.Time}}</small>
             {{item.Pcost}}</div></a>
         </div>
         <br><br>
