@@ -30,7 +30,7 @@ export default {
 
     document.addEventListener("jpush.openNotification", function (event) {
       var alertContent = event.extras.type
-      var num = event.extras.MessageNo
+      
       if(alertContent == 'video'){
         that.GLOBAL.changeVideoAlert(false)
         var scheme = 'com.tencent.trtc';
@@ -46,9 +46,14 @@ export default {
             alert(scheme + ' is not available');
           }
         );
-      }else{
+      }else if(alertContent == 'news'){
+        var num = event.extras.MessageNo
        window.localStorage.setItem('MESSAGENO',num);
        that.$router.push({name:'C1'});
+      }else if(alertContent == 'ECG'){
+        var PatientId = event.extras.PatientId
+        var StatusName = event.extras.StatusName
+        that.$router.push({name:'A1',params:{PATIENTID:PatientId,STATUSNAME:StatusName,SELECTED1:"处置方案"}});
       }
     }, false)
 

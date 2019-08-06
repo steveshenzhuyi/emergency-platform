@@ -6,7 +6,7 @@
           <mt-button size="small" icon="back" slot="left"
           @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
-          @click="alertHelp()"><small>请求支援
+          @click="alertHelp()"><small>远程支持
           </small></mt-button>
           <hr>
         </mt-header>
@@ -258,9 +258,11 @@
       </div>
       <div v-for="(item,index) in dataCZ" style="text-align: left">
         <hr> 
-        <small style="color:grey">{{item.OperationTime}}</small><br>
-        <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<br>
-        <span>{{item.Detail}}</span><br>
+        <div><small style="color:grey">{{item.OperationTime}}</small></div>
+        <div><b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span v-show="(item.OperationCode=='P112')">检查单号{{item.Detail1}}</span></div>
+        <div><span>{{item.Detail}}</span></div>
+        <div align="center" v-show="item.InfoType==3">
+           <img v-gallery :src="item.FileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
       </div><br><br><br><br>
     </mt-tab-container-item>
     <mt-tab-container-item id="病人去向">
@@ -360,12 +362,11 @@
               @click="getDeviceList()">刷新</mt-button>
               </div>
             <div v-for="(item,index) in useableDeviceList">
-            <a @click="startMonitor(index)">
+            <a @click="">
             <div align="left">
-              <div>设备编号：{{item.device_bid}}</div>
-              <div><span>设备名称：{{item.device_desc}}</span><span>&nbsp;&nbsp;&nbsp;&nbsp;序列号：{{item.device_serial_id}}</span></div>
+              <div>设备编号：{{item.device_serial_id}}</div>
+              <div><span>设备名称：{{item.device_desc}}</span><mt-button size="small" type="primary" style="float: right;margin-right: 30px" @click="startMonitor(index)">使用</mt-button></div>
               <small style="color:grey;">通道号：{{item.channel_no}}</small>
-              <!-- <small style="color:grey;position:absolute;left:100px">手机：{{}}</small> -->
             </div><hr>
             </a>
           </div>
@@ -379,8 +380,8 @@
               </div>
              <div v-for="(item,index) in testList">
             <div align="left">
+              <div><span>病人姓名：{{item.member_name}}</span><span style="position:absolute;left:150px">&nbsp;当前状态：{{item.status_descprion}}</span><mt-button size="small" type="danger" v-show="item.status==1" style="float: right;margin-right: 30px" @click="stopMonitor(index)">停止监测</mt-button> </div>
               <div>检查单号：{{item.busi_no}}</div>
-              <div><span>病人姓名：{{item.member_name}}</span><span style="position:absolute;left:140px">&nbsp;当前状态：{{item.status_descprion}}</span><mt-button size="small" type="primary" v-show="item.status==1" style="float: right;margin-right: 30px" @click="stopMonitor(index)">停止监测</mt-button> </div>
              <!--  <small style="color:grey;">联系人：{{}}</small>
               <small style="color:grey;position:absolute;left:100px">手机：{{}}</small> -->
             </div><hr>
@@ -527,11 +528,19 @@
       };
     },
     mounted() {
-      this.initMap()
-      this.getpatientrecord()
-      this.getPatientInfo()
-      this.getDeviceList()
-      this.getTestList()
+      var that = this
+      that.initMap()
+      that.getpatientrecord()
+      that.getPatientInfo()
+      that.getDeviceList()
+      that.getTestList()
+
+      document.addEventListener("jpush.openNotification", function (event) {
+      var alertContent = event.extras.type
+      if(alertContent == 'ECG'){
+        that.getpatientrecord()
+      }
+    }, false)
     },
     beforeDestroy () {
       navigator.geolocation.clearWatch(this.watchID1)
@@ -819,6 +828,13 @@
             this.timevalue2=''
           }
           this.dataCZ=this.patientrecord.P11
+          for(var j=0; j<this.patientrecord.P11.length;j++) {
+            if(this.patientrecord.P11[j].InfoType == 3) {
+              var fileUrl =  this.patientrecord.P11[j].FileUrl
+              this.dataCZ[j].FileUrl = global.photoUrl+fileUrl
+              
+            }
+          }
           if(this.patientrecord.P06.length>0) {
             this.doctortell=this.patientrecord.P06[0].Detail
           }else{
@@ -1024,26 +1040,31 @@
         })
       },
       ECG() {
+        MessageBox.confirm('确定申请心电检查?').then(action => {
+        Indicator.open('下单中，请稍候...');
         this.methods = "心电图"
         this.content1 = ""
         this.isShow4 = false
-        axios.post('/newPatientRecord',{
-          patientId:this.$route.params.PATIENTID,
-          inputUserId:window.localStorage.getItem('USERID'),
-          operator:window.localStorage.getItem('USERID'),
-          detail: "",
-          operationCode: "P112",
-          detail1: "",
-          address: "1",
-          infoType: "1",
-          fileUrl: '' 
+        var sex
+        if(this.Gender == '男')sex='M'
+          else if(this.Gender== '女')sex='F'
+            else sex='U'
+        axios.post('/testLIBANG',{
+          PatientId:this.$route.params.PATIENTID,
+          name:this.Name,
+          age:this.Age,
+          sex:sex
         }).then((response) => {
-          if(response.data.results == "新建成功") {
-            // alert("上传成功");
-            Toast('上传成功');
+          if(response.data.results == "上传成功") {
+            Indicator.close();
+            Toast('成功申请心电检查');
             this.getpatientrecord()
+          }else{
+            Indicator.close();
+            Toast('下检查单失败');
           }
         })
+      })
       },
       bandage() {
         this.methods = "包扎止血"
@@ -1135,7 +1156,7 @@
         this.istizheng = true
       },
       alert() {
-        axios.post('/oneClickAlert',{
+        axios.post('/reportPatient',{
           patientId:this.$route.params.PATIENTID
         }).then((response) => {
           if(response.data.results == "上传成功") {
@@ -1153,7 +1174,7 @@
         }).then((response) => {
           if(response.data.results == "上传成功") {
             // alert("上报成功");
-            Toast('成功上报指挥中心,请打开AR眼镜视频实况功能');
+            Toast('成功上报指挥中心,请打开AR眼镜视频通话功能');
           }else{
             // alert("上报失败");
             Toast('上报失败');

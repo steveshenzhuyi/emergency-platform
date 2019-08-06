@@ -148,7 +148,7 @@
           <mt-button size="small" icon="back" slot="left"
           @click="returnH()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
-          @click="askExpert()"><small>通知专家</small></mt-button>
+          @click.native="popupVisible = true"><small>通知专家</small></mt-button>
           <hr>
         </mt-header>
         <br>
@@ -163,6 +163,10 @@
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
+     <mt-popup v-model="popupVisible" position="right">
+
+      
+     </mt-popup>
     <router-view></router-view>
   </div>
 </template>
@@ -213,13 +217,16 @@ export default {
       situations:'',
       carId: '',
       hospital:'',
+      EmergencyGroup:'',
       dataTZ: [],
       dataCZ:[],
       patientrecord: [],
       startPosition:"",
       endPosition:"",
+      dropbyPosition:"",
       mapObj:"",
-      Time:""
+      Time:"",
+      popupVisible:false
     };
   },
   mounted() {
@@ -230,6 +237,10 @@ export default {
       if(that.StatusNameHos == "后送中" && that.carId != "自行前往"){
         new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME,map:that.mapObj}).search(that.startPosition, that.endPosition, function (status, result) {
               that.Time = "预计到达时间"+Math.round(result.routes[0].time/60)+"分钟";
+             })
+      }else if(that.StatusNameHos == "待后送" && that.carId != "自行前往"){
+        new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME,map:that.mapObj}).search(that.startPosition, that.endPosition, { waypoints: [that.dropbyPosition] },function (status, result) {
+              // that.Time = "预计到达时间"+Math.round(result.routes[0].time/60)+"分钟";
              })
       }
       },2000)
@@ -375,6 +386,7 @@ export default {
         this.bloodType=response.data.results[0].BloodType;
         this.StatusNameHos = response.data.results[0].StatusNameHos;
         this.hospital = response.data.results[0].OrganizationName;
+        this.EmergencyGroup = response.data.results[0].EmergencyGroup;
         this.level=response.data.results[0].Classification;
         this.carId = response.data.results[0].CarId;
         if(this.StatusNameHos == "已入院") {
@@ -811,7 +823,9 @@ export default {
       console.log(assList)
       for(var i=0;i<assList.length;i++){
         positionAss[i] = new AMap.LngLat(assList[i].Longitude, assList[i].Latitude)
-        console.log(positionAss[i])
+        if(that.EmergencyGroup==assList[i].GroupNo){
+          that.dropbyPosition = positionAss[i]
+        }
         markerAss[i] = new SvgMarker(
           new SvgMarker.Shape.IconFont({
             symbolJs: null,

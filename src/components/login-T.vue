@@ -19,19 +19,19 @@
             <span><small style="position:absolute;left:110px">{{item.CreateTime}}</small></span></div>
             <!-- <br> -->
             <div><span style="font-size:23px;">{{item.Name}}</span>
-            <span style="position:absolute;left:110px;font-size:20px;margin:2px 0 0" :class="item.Classification">{{item.Classification}}</span>
-            <span style="position:absolute;left:220px;font-size:20px;margin:2px 0 0" :class="item.StatusNameCar">{{item.StatusNameCar}}</span></div>
+            <span style="position:absolute;left:110px;font-size:20px;" :class="item.Classification">{{item.Classification}}</span>
+            <span style="position:absolute;left:220px;font-size:20px;" :class="item.StatusNameCar">{{item.StatusNameCar}}</span></div>
             <!-- <br> -->
             <div>
             <small style="color:grey">
             性别：{{item.Gender}}</small>
-            <small style="color:grey;position:absolute;left:110px;margin:1.6px 0 0">年龄：{{item.Age}}</small>
+            <small style="color:grey;position:absolute;left:110px;">年龄：{{item.Age}}</small>
             <small style="width:15em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
-            color:grey;position:absolute;left:220px;margin:2.2px 0 0">症状：{{item.Diagnose}}</small></div>
+            color:grey;position:absolute;left:220px;">症状：{{item.Diagnose}}</small></div>
             <div>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
-            <small style="color:grey;position:absolute;left:110px;margin:2.6px 0 0">车辆：{{item.CarName}}</small>
-            <small style="color:grey;position:absolute;left:220px;margin:3.2px 0 0">车号：{{item.CarId}}</small>
+            <small style="color:grey;position:absolute;left:110px;">车辆：{{item.CarName}}</small>
+            <small style="color:grey;position:absolute;left:220px;">车号：{{item.CarId}}</small>
             {{item.Pcost}}</div></a>
         </div>
         <br><br>
@@ -52,9 +52,9 @@
           <div style="font-size: 20px;">{{ item.ResourceNo }} &nbsp;&nbsp;&nbsp;
              {{item.ResourceName}}</div>
           <small style="color:grey">规格：{{item.Standard}}</small>
-          <small style="color:grey;position:absolute;left:100px;margin:3px 0 0">状态：{{item.Status}}</small>
-          <small style="color:grey;position:absolute;left:192px;margin:3px 0 0">数量：{{item.Amount}}</small>
-        <small style="color:grey;position:absolute;left:280px;margin:3px 0 0">单位：{{item.Unit}}</small></a>
+          <small style="color:grey;position:absolute;left:100px;">状态：{{item.Status}}</small>
+          <small style="color:grey;position:absolute;left:192px">数量：{{item.Amount}}</small>
+        <small style="color:grey;position:absolute;left:280px;">单位：{{item.Unit}}</small></a>
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
