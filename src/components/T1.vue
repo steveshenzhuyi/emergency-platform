@@ -51,7 +51,10 @@
         <hr> 
         <small style="color:grey">{{item.OperationTime}}</small><br>
         <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<br>
-        <span>{{item.Detail}}</span><br>
+        <div>
+          <span style="display:inline-block;width:380px">{{item.Detail}}</span>
+          <mt-button size="small" type="danger"  @click="deleteCZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button>
+        </div>
       </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="既往病历">
@@ -157,8 +160,11 @@
             </div>
             <div v-for="(item,index) in dataTZ" style="text-align: left">
             <hr>
-            <small style="color:grey">{{item.OperationTime}}</small><br>
-            <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span>{{item.Detail}}</span>
+            <div>
+              <small style="color:grey">{{item.OperationTime}}</small><br>
+              <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span style="display:inline-block;width:380px">{{item.Detail}}</span>
+              <mt-button size="small" type="danger"  @click="deleteTZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button>
+            </div>
           </div><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
@@ -358,6 +364,26 @@ export default {
     this.intervalid1 = null
   },
   methods: {
+    deleteTZ(index) {
+        axios.post('/deleteRecord',{
+          SortNo:this.dataTZ[index].SortNo
+        }).then((response)=>{
+          if(response.data.results=="删除成功") {
+            Toast('删除成功！')
+            this.getpatientrecord()
+          }
+        }) 
+      },
+      deleteCZ(index) {
+        axios.post('/deleteRecord',{
+          SortNo:this.dataCZ[index].SortNo
+        }).then((response)=>{
+          if(response.data.results=="删除成功") {
+            Toast('删除成功！')
+            this.getpatientrecord()
+          }
+        }) 
+      },
     focus1(){
       this.editing1 = true;
       this.tempzhusu = this.主诉;
