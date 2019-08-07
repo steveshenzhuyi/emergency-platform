@@ -379,7 +379,7 @@
           </div>
           <br>
           <div>
-             <div align="center" style="height: 30px">
+             <div align="center" style="height: 30px;margin-bottom: 10px;">
               <span><b>检查单列表</b></span>
               <mt-button size="small" type="primary" style="float: right;margin-right: 30px"
               @click="getTestList()">刷新</mt-button>
