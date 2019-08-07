@@ -49,9 +49,11 @@
         </div>
         <div v-for="(item,index) in dataCZ" style="text-align: left">
         <hr> 
-        <small style="color:grey">{{item.OperationTime}}</small><br>
-        <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<br>
-        <span>{{item.Detail}}</span><br>
+        <div><small style="color:grey">{{item.OperationTime}}</small></div>
+        <div><b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span v-show="(item.OperationCode=='P112')">检查单号{{item.Detail1}}</span></div>
+        <div><span>{{item.Detail}}</span></div>
+        <div align="center" v-show="item.InfoType==3">
+           <img v-gallery :src="item.FileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
       </div><br><br><br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="既往病历">
@@ -566,6 +568,13 @@ export default {
         }
         //处置方案
         this.dataCZ=this.patientrecord.P11
+          for(var j=0; j<this.patientrecord.P11.length;j++) {
+            if(this.patientrecord.P11[j].InfoType == 3) {
+              var fileUrl =  this.patientrecord.P11[j].FileUrl
+              this.dataCZ[j].FileUrl = global.photoUrl+fileUrl
+              
+            }
+          }
         //医嘱
         if(this.patientrecord.P06.length>0) {
           this.doctortell=this.patientrecord.P06[0].Detail
