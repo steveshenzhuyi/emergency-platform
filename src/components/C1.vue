@@ -39,9 +39,6 @@ export default {
   },
   methods: {
     getMessage() {
-      if(window.localStorage.getItem('ROLECODE')=="R03"){
-        this.show1 = true;
-      }
       axios.post('/getMessageDetail', {
         messageNo:window.localStorage.getItem('MESSAGENO')
       }).then((response) => {
@@ -51,6 +48,9 @@ export default {
         var c = b.filter( i => i)
         this.MessageDetail = c
         console.log(this.MessageDetail)
+        if(this.MessageDetail[1].indexOf("编号")!=-1){
+        this.show1 = true;
+      }
         this.sendtime=response.data.results[0].SendTime
         this.messageNo=response.data.results[0].MessageNo
         this.mark=response.data.results[0].Mark
@@ -73,7 +73,15 @@ export default {
     TOHI() {
       var y = this.MessageDetail[1].indexOf("编号")
       var patientID = this.MessageDetail[1].substring(y + 3, y + 8);
-      this.$router.push({name:'H1',params:{PATIENTID:patientID,SELECTED:"实时地图"}})
+       if(window.localStorage.getItem('ROLECODE')=="R01"){
+        this.$router.push({name: 'A1',params:{PATIENTID:patientID,SELECTED:"实时地图"}});
+        }else if(window.localStorage.getItem('ROLECODE')=="R02"){
+          this.$router.push({name:'T1',params:{PATIENTID:patientID,SELECTED:"实时地图"}});
+        }else if(window.localStorage.getItem('ROLECODE')=="R03"){
+          this.$router.push({name:'H1',params:{PATIENTID:patientID,SELECTED:"实时地图"}});
+        }else if(window.localStorage.getItem('ROLECODE')=="R04"){
+          this.$router.push({name:'Z1',params:{PATIENTID:patientID,SELECTED:"既往病历"}});
+        }else alert("无角色")
     }
   }
 };

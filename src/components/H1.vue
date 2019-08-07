@@ -155,7 +155,7 @@
         </mt-header>
         <br>
         <h3>当前状态：{{StatusNameHos}}&nbsp;&nbsp; {{Time}}</h3>
-        <h4>后送医院：{{hospital}}&nbsp; 车号：{{carId}}</h4>
+        <h4>发生地点：{{LocationName}} &nbsp; 后送车号：{{carId}}</h4>
         <!-- <h4>
         <mt-button size="normal">
         <img src="./icon/语音通话.png" height="40" width="40" slot="icon">
@@ -172,8 +172,8 @@
           :options="options">
         </mt-radio>
       </div>
-      <hr>
-      <mt-button type="primary" @click="askExpert()">通知专家</mt-button><hr>
+      <br>
+      <div><mt-button type="primary" size="small" @click="askExpert()">通知专家</mt-button></div><br>
     </mt-popup>
     <router-view></router-view>
   </div>
@@ -223,6 +223,7 @@ export default {
       Position: '',
       bloodType: '',
       StatusNameHos: '',
+      LocationName:'',
       situations:'',
       carId: '',
       hospital:'',
@@ -238,20 +239,7 @@ export default {
       popupVisible:false,
       expertgroup:'',
       expertlist:[],
-      options:[
-        {
-          label: '',
-          value: ''
-        },
-        {
-          label: '',
-          value: ''
-        },
-        {
-          label: '',
-          value: ''
-         }
-      ],
+      options:[],
     };
   },
   mounted() {
@@ -284,8 +272,11 @@ export default {
       }).then((response) => {
         this.expertlist=response.data.results;
         for(var i=0; i<this.expertlist.length; i++) {
-          this.options[i].label=this.expertlist[i].GroupName+this.expertlist[i].Manager+this.expertlist[i].phone;
-          this.options[i].value=this.expertlist[i].GroupNo
+         var a = {
+            label:this.expertlist[i].GroupName+this.expertlist[i].Manager+this.expertlist[i].phone,
+            value:this.expertlist[i].GroupNo
+          }
+          this.options.push(a)
         }
       })
     },
@@ -438,6 +429,7 @@ export default {
         this.Nation=response.data.results[0].Nation;
         this.bloodType=response.data.results[0].BloodType;
         this.StatusNameHos = response.data.results[0].StatusNameHos;
+        this.LocationName = response.data.results[0].LocationName;
         this.hospital = response.data.results[0].OrganizationName;
         this.EmergencyGroup = response.data.results[0].EmergencyGroup;
         this.level=response.data.results[0].Classification;

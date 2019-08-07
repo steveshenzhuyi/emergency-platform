@@ -268,7 +268,7 @@
         </mt-header>
         <br><br>
         <h3>当前状态：{{StatusNameCar}}</h3>
-        <h4>后送医院：{{OrganizationName}}&nbsp; 车号：{{CarId}}</h4>
+        <h4>发生地点：{{LocationName}} &nbsp; 后送医院：{{OrganizationName}}</h4>
         <div id="map-container" class="map-root" style="width:97%;height:500px;padding:1px;border:1px solid black;margin-bottom:5px;">
         </div>
       </mt-tab-container-item>
