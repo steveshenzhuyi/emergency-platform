@@ -163,10 +163,16 @@
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
-     <mt-popup v-model="popupVisible" position="right">
-
-      
-     </mt-popup>
+    <mt-popup v-model="popupVisible" position="middle" style="width:100%">
+      <div>
+        <mt-radio 
+           v-model="expertgroup"
+          :options="options">
+        </mt-radio>
+      </div>
+      <hr>
+      <mt-button type="primary" @click="askExpert()">通知专家</mt-button><hr>
+    </mt-popup>
     <router-view></router-view>
   </div>
 </template>
@@ -183,6 +189,7 @@ export default {
       intervalid1:null,
       watchID1:null,
       patientId: this.$route.params.PATIENTID,
+      GroupNo:'',
       PatientId: '',
       selected: this.$route.params.SELECTED,
       selected1: '1',
@@ -226,12 +233,29 @@ export default {
       dropbyPosition:"",
       mapObj:"",
       Time:"",
-      popupVisible:false
+      popupVisible:false,
+      expertgroup:'',
+      expertlist:[],
+      options:[
+        {
+          label: '',
+          value: ''
+        },
+        {
+          label: '',
+          value: ''
+        },
+        {
+          label: '',
+          value: ''
+         }
+      ],
     };
   },
   mounted() {
     this.initMap()
     this.getpatientrecord()
+    this.getLocationExpert()
     setTimeout(()=>{
       var that = this
       if(that.StatusNameHos == "后送中" && that.carId != "自行前往"){
@@ -252,16 +276,33 @@ export default {
     this.intervalid1 = null
   },
   methods: {
+    getLocationExpert(){
+      axios.post('/getLocationExpert',{
+        LocationNo:window.localStorage.getItem('Location')
+      }).then((response) => {
+        this.expertlist=response.data.results;
+        for(var i=0; i<this.expertlist.length; i++) {
+          this.options[i].label=this.expertlist[i].GroupName+this.expertlist[i].Manager+this.expertlist[i].phone;
+          this.options[i].value=this.expertlist[i].GroupNo
+        }
+      })
+    },
     askExpert(){
       axios.post('/askExpert',{
         patientId:this.$route.params.PATIENTID,
-        Location:window.localStorage.getItem('Location')
+        GroupNo:this.expertgroup
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('已成功推送给专家');
+          Toast({
+            message:'已成功推送给专家',
+            position:'top'
+          });
+          this.popupVisible=false;
+        }
+        else{
+          Toast('推送失败')
         }
         })
-
     },
     getpatientrecord() {
       axios.post('/getPatientRecord',{
