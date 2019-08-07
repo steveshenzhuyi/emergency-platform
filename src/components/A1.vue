@@ -111,8 +111,11 @@
           </div>
           <div v-for="(item,index) in dataTZ" style="text-align: left">
             <hr>
-            <small style="color:grey">{{item.OperationTime}}</small><br>
-            <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span>{{item.Detail}}</span>
+            <div>
+              <small style="color:grey">{{item.OperationTime}}</small><br>
+              <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span style="display:inline-block;width:380px">{{item.Detail}}</span>
+              <mt-button size="small" type="danger"  @click="deleteTZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button>
+            </div>
           </div>
           <br><br><br><br>
         </mt-tab-container-item>
@@ -260,7 +263,10 @@
         <hr> 
         <div><small style="color:grey">{{item.OperationTime}}</small></div>
         <div><b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span v-show="(item.OperationCode=='P112')">检查单号{{item.Detail1}}</span></div>
-        <div><span>{{item.Detail}}</span></div>
+        <div>
+          <span style="display:inline-block;width:380px">{{item.Detail}}</span>
+          <mt-button size="small" type="danger"  @click="deleteCZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button>
+        </div>
         <div align="center" v-show="item.InfoType==3">
            <img v-gallery :src="item.FileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
       </div><br><br><br><br>
@@ -568,6 +574,26 @@
       handler:function(e) {
         e.preventDefault();
       },
+      deleteTZ(index) {
+        axios.post('/deleteRecord',{
+          SortNo:this.dataTZ[index].SortNo
+        }).then((response)=>{
+          if(response.data.results=="删除成功") {
+            Toast('删除成功！')
+            this.getpatientrecord()
+          }
+        }) 
+      },
+      deleteCZ(index) {
+        axios.post('/deleteRecord',{
+          SortNo:this.dataCZ[index].SortNo
+        }).then((response)=>{
+          if(response.data.results=="删除成功") {
+            Toast('删除成功！')
+            this.getpatientrecord()
+          }
+        }) 
+      },
       focus1(){
         this.editing1 = true;
         this.tempzhusu = this.主诉;
@@ -675,7 +701,7 @@
         this.主诉图片 = []
         this.既往史图片=[]
         this.现病史图片=[]
-        this.dataTZ =[]
+        this.dataTZ = []
         this.dataCZ = []
         var Longitude = window.localStorage.getItem("Longitude")
         var Latitude = window.localStorage.getItem("Latitude")
