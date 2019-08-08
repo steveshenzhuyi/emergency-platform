@@ -47,10 +47,11 @@
           <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
           <mt-button size="small" @click="add1()" type="primary">确定</mt-button>
         </div>
+        <div style="margin-top: 15px;margin-bottom: 15px" align="left"><span style="text-align: left;">处置列表</span><span><mt-button size="small" type="primary"  @click="Showdelete()" style="float: right;margin-right: 5px">管理</mt-button></span></div>
         <div v-for="(item,index) in dataCZ" style="text-align: left">
         <hr> 
         <div><small style="color:grey">{{item.OperationTime}}&nbsp;&nbsp;&nbsp;{{item.Address==1?'地点：会场':'地点：车辆'}}</small>
-          <mt-button size="small" type="danger"  @click="deleteCZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button></div>
+          <mt-button v-show="showdelete" size="small" type="danger"  @click="deleteCZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button></div>
         <div><b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span v-show="(item.OperationCode=='P112')">检查单号{{item.Detail1}}</span></div>
         <div>
           <span style="display:inline-block;width:380px">{{item.Detail}}</span>
@@ -160,11 +161,12 @@
               <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
               <mt-button @click="add()" size="small" type="primary">确定</mt-button>
             </div>
+             <div style="margin-top: 15px;margin-bottom: 15px" align="left"><span style="text-align: left;">体征列表</span><span><mt-button size="small" type="primary"  @click="Showdelete()" style="float: right;margin-right: 5px">管理</mt-button></span></div>
             <div v-for="(item,index) in dataTZ" style="text-align: left">
             <hr>
             <div>
               <div><small style="color:grey">{{item.OperationTime}}&nbsp;&nbsp;&nbsp;{{item.Address==1?'地点：会场':'地点：车辆'}}</small>
-              <mt-button size="small" type="danger"  @click="deleteTZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button></div>
+              <mt-button v-show="showdelete" size="small" type="danger"  @click="deleteTZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button></div>
               <div><b>{{item.OperationName}}</b></div><div><span style="display:inline-block;width:380px">{{item.Detail}}</span></div>
             </div>
           </div><br><br><br><br>
@@ -352,6 +354,7 @@ export default {
       zhusu:'',
       dataCZ: [],
       dataTZ: [],
+      showdelete:false,
     };
   },
   mounted() {
@@ -373,23 +376,34 @@ export default {
         }).then((response)=>{
           if(response.data.results=="删除成功") {
             Toast('删除成功！')
+            this.showdelete=false
+            this.getpatientrecord()
+          }else{
+            Toast('删除失败！')
             this.getpatientrecord()
           }
         }) 
       })
-      },
-      deleteCZ(index) {
-        MessageBox.confirm('确定删除?').then(action => {
+    },
+    deleteCZ(index) {
+      MessageBox.confirm('确定删除?').then(action => {
         axios.post('/deleteRecord',{
           SortNo:this.dataCZ[index].SortNo
         }).then((response)=>{
           if(response.data.results=="删除成功") {
             Toast('删除成功！')
+            this.showdelete=false
+            this.getpatientrecord()
+          }else{
+            Toast('删除失败！')
             this.getpatientrecord()
           }
         }) 
       })
-      },
+    },
+    Showdelete(){
+      this.showdelete=true
+    },
     focus1(){
       this.editing1 = true;
       this.tempzhusu = this.主诉;
