@@ -23,7 +23,7 @@
         <br><br>
         <div v-for="(item,index) in dataCZ" style="text-align: left">
         <hr> 
-        <div><small style="color:grey">{{item.OperationTime}}</small></div>
+        <div><small style="color:grey">{{item.OperationTime}}&nbsp;&nbsp;&nbsp;{{item.Address==1?'地点：会场':'地点：车辆'}}</small></div>
         <div><b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span v-show="(item.OperationCode=='P112')">检查单号{{item.Detail1}}</span></div>
         <div><span>{{item.Detail}}</span></div>
         <div align="center" v-show="item.InfoType==3">
@@ -84,7 +84,7 @@
           <mt-tab-container-item id="3">
             <div v-for="(item,index) in dataTZ" style="text-align: left">
             <hr>
-            <div><small style="color:grey">{{item.OperationTime}}</small></div>
+            <div><small style="color:grey">{{item.OperationTime}}&nbsp;&nbsp;&nbsp;{{item.Address==1?'地点：会场':'地点：车辆'}}</small></div>
             <div><b>{{item.OperationName}}</b></div><div><span style="display:inline-block;width:380px">{{item.Detail}}</span></div>
           </div><br><br><br><br>
           </mt-tab-container-item>

@@ -49,7 +49,7 @@
         </div>
         <div v-for="(item,index) in dataCZ" style="text-align: left">
         <hr> 
-        <div><small style="color:grey">{{item.OperationTime}}</small>
+        <div><small style="color:grey">{{item.OperationTime}}&nbsp;&nbsp;&nbsp;{{item.Address==1?'地点：会场':'地点：车辆'}}</small>
           <mt-button size="small" type="danger"  @click="deleteCZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button></div>
         <div><b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span v-show="(item.OperationCode=='P112')">检查单号{{item.Detail1}}</span></div>
         <div>
@@ -163,7 +163,7 @@
             <div v-for="(item,index) in dataTZ" style="text-align: left">
             <hr>
             <div>
-              <div><small style="color:grey">{{item.OperationTime}}</small>
+              <div><small style="color:grey">{{item.OperationTime}}&nbsp;&nbsp;&nbsp;{{item.Address==1?'地点：会场':'地点：车辆'}}</small>
               <mt-button size="small" type="danger"  @click="deleteTZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button></div>
               <div><b>{{item.OperationName}}</b></div><div><span style="display:inline-block;width:380px">{{item.Detail}}</span></div>
             </div>
@@ -697,25 +697,31 @@ export default {
       })
     },
     ECG() {
-      this.methods = "心电图"
-      this.content1 = ""
-      this.isShow4 = false
-      axios.post('/newPatientRecord',{
-        patientId:this.$route.params.PATIENTID,
-        inputUserId:window.localStorage.getItem('USERID'),
-        operator:window.localStorage.getItem('USERID'),
-        detail: "",
-        operationCode: "P112",
-        detail1: "",
-        address: "2",
-        infoType: "1",
-        fileUrl: '' 
-      }).then((response) => {
-        if(response.data.results == "新建成功") {
-          // alert("上传成功");
-          Toast('上传成功');
-          this.getpatientrecord()
-        }
+      MessageBox.confirm('确定申请心电检查?').then(action => {
+        Indicator.open('下单中，请稍候...');
+        this.methods = "心电图"
+        this.content1 = ""
+        this.isShow4 = false
+        var sex
+        if(this.Gender == '男')sex='M'
+          else if(this.Gender== '女')sex='F'
+            else sex='U'
+        axios.post('/testLIBANG',{
+          PatientId:this.$route.params.PATIENTID,
+          name:this.Name,
+          age:this.Age,
+          sex:sex,
+          address:2
+        }).then((response) => {
+          if(response.data.results == "上传成功") {
+            Indicator.close();
+            Toast('成功申请心电检查');
+            this.getpatientrecord()
+          }else{
+            Indicator.close();
+            Toast('下检查单失败');
+          }
+        })
       })
     },
     bandage() {

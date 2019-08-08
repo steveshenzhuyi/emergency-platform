@@ -52,8 +52,7 @@ export default {
        that.$router.push({name:'C1'});
       }else if(alertContent == 'ECG'){
         var PatientId = event.extras.PatientId
-        var StatusName = event.extras.StatusName
-        that.$router.push({name:'A1',params:{PATIENTID:PatientId,STATUSNAME:StatusName,SELECTED1:"处置方案"}});
+        that.$router.push({name:'A1',params:{PATIENTID:PatientId,SELECTED1:"处置方案"}});
       }
     }, false)
 

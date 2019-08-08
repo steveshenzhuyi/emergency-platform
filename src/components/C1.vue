@@ -74,7 +74,7 @@ export default {
       var y = this.MessageDetail[1].indexOf("编号")
       var patientID = this.MessageDetail[1].substring(y + 3, y + 8);
        if(window.localStorage.getItem('ROLECODE')=="R01"){
-        this.$router.push({name: 'A1',params:{PATIENTID:patientID,SELECTED:"实时地图"}});
+        this.$router.push({name: 'A1',params:{PATIENTID:patientID,SELECTED:"病人去向"}});
         }else if(window.localStorage.getItem('ROLECODE')=="R02"){
           this.$router.push({name:'T1',params:{PATIENTID:patientID,SELECTED:"实时地图"}});
         }else if(window.localStorage.getItem('ROLECODE')=="R03"){

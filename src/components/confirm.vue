@@ -84,7 +84,7 @@ export default {
       // console.log(json);
     },
     returnA1() {
-      this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",FLAG1:"1",PATIENTID:this.patientid}})
+      this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",PATIENTID:this.patientid}})
     },
     confirm() {
       axios.post('/confirmSend', {
@@ -93,7 +93,7 @@ export default {
         if(response.data.results == "上传成功") {
           // alert("确认送出");
           Toast('确认送出');
-           this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",STATE1:"已后送",PATIENTID:this.patientid}})
+           this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",PATIENTID:this.patientid}})
         }else{
           // alert("送出失败");
           Toast('送出失败');
