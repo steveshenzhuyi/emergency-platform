@@ -49,11 +49,11 @@
         </div>
         <div v-for="(item,index) in dataCZ" style="text-align: left">
         <hr> 
-        <div><small style="color:grey">{{item.OperationTime}}</small></div>
+        <div><small style="color:grey">{{item.OperationTime}}</small>
+          <mt-button size="small" type="danger"  @click="deleteCZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button></div>
         <div><b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span v-show="(item.OperationCode=='P112')">检查单号{{item.Detail1}}</span></div>
         <div>
           <span style="display:inline-block;width:380px">{{item.Detail}}</span>
-          <mt-button size="small" type="danger"  @click="deleteCZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button>
         </div>
         <div align="center" v-show="item.InfoType==3">
            <img v-gallery :src="item.FileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
@@ -163,9 +163,9 @@
             <div v-for="(item,index) in dataTZ" style="text-align: left">
             <hr>
             <div>
-              <small style="color:grey">{{item.OperationTime}}</small><br>
-              <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span style="display:inline-block;width:380px">{{item.Detail}}</span>
-              <mt-button size="small" type="danger"  @click="deleteTZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button>
+              <div><small style="color:grey">{{item.OperationTime}}</small>
+              <mt-button size="small" type="danger"  @click="deleteTZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button></div>
+              <div><b>{{item.OperationName}}</b></div><div><span style="display:inline-block;width:380px">{{item.Detail}}</span></div>
             </div>
           </div><br><br><br><br>
           </mt-tab-container-item>
@@ -367,6 +367,7 @@ export default {
   },
   methods: {
     deleteTZ(index) {
+      MessageBox.confirm('确定删除?').then(action => {
         axios.post('/deleteRecord',{
           SortNo:this.dataTZ[index].SortNo
         }).then((response)=>{
@@ -375,8 +376,10 @@ export default {
             this.getpatientrecord()
           }
         }) 
+      })
       },
       deleteCZ(index) {
+        MessageBox.confirm('确定删除?').then(action => {
         axios.post('/deleteRecord',{
           SortNo:this.dataCZ[index].SortNo
         }).then((response)=>{
@@ -385,6 +388,7 @@ export default {
             this.getpatientrecord()
           }
         }) 
+      })
       },
     focus1(){
       this.editing1 = true;

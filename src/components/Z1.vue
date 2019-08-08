@@ -101,8 +101,8 @@
             </div> -->
             <div v-for="(item,index) in dataTZ" style="text-align: left">
             <hr>
-            <small style="color:grey">{{item.OperationTime}}</small><br>
-            <b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span>{{item.Detail}}</span>
+           <div><small style="color:grey">{{item.OperationTime}}</small></div>
+            <div><b>{{item.OperationName}}</b></div><div><span style="display:inline-block;width:380px">{{item.Detail}}</span></div>
           </div><br><br><br><br>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
