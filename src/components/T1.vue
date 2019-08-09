@@ -402,7 +402,7 @@ export default {
       })
     },
     Showdelete(){
-      this.showdelete=true
+      this.showdelete = !this.showdelete;
     },
     focus1(){
       this.editing1 = true;

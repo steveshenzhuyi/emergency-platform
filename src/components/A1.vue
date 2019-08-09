@@ -606,6 +606,9 @@
         }) 
       })
       },
+      Showdelete(){
+      this.showdelete = !this.showdelete;
+    },
       focus1(){
         this.editing1 = true;
         this.tempzhusu = this.主诉;
