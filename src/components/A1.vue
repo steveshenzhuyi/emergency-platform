@@ -321,7 +321,7 @@
             <a @click="gethospital(index)">
             <hr>
             <div align="left">
-              编号{{item.OrganizationCode}}&nbsp;&nbsp;{{item.OrganizationName}}&nbsp;&nbsp;
+              编号{{item.OrganizationCode}}&nbsp;&nbsp;&nbsp;{{item.OrganizationName}}&nbsp;&nbsp;&nbsp;
               {{item.LocationDescription}}<br>
               <small style="color:grey">
               ICU剩余{{item.ICUNow}}&nbsp;&nbsp;手术室剩余{{item.ORNow}}&nbsp;&nbsp;专用病房剩余{{item.GWNow}}&nbsp;&nbsp;导管室剩余{{item.DGNow}}</small><br>
@@ -349,8 +349,8 @@
             <a @click="getcar(index)">
             <hr>
             <div align="left">
-              <div>编号{{item.CarNo}}&nbsp;&nbsp;{{item.CarName}}&nbsp;{{item.CarId}}</div>
-              <div><span>{{item.CarStatus}}</span><span style="position:absolute;left:120px">&nbsp;当前待后送：{{item.daihousong}}人</span>
+              <div>编号{{item.CarNo}}&nbsp;&nbsp;&nbsp;{{item.CarName}}&nbsp;&nbsp;&nbsp;{{item.CarId}}</div>
+              <div><span>{{item.CarStatus}}</span><span style="position:absolute;left:170px">&nbsp;当前待后送：{{item.daihousong}}人</span>
                </div>
               <small style="color:grey;">联系人：{{item.CarManager}}</small>
               <small style="color:grey;position:absolute;left:120px">手机：{{item.phone}}</small>
@@ -1692,13 +1692,13 @@ startMonitor:function(index){
       that.getDeviceList()
       that.getTestList()
     }else{
-      MessageBox.alert("开始监护失败","提示")
+      MessageBox.alert("开始监护失败 "+response.data.respMsg,"提示")
       that.popupVisible3 = true
     }
   })
 
     }else{
-     MessageBox.alert("下检查单失败","提示")
+     MessageBox.alert("下检查单失败 "+response.data.respMsg,"提示")
      that.popupVisible3 = true
     }
   })
@@ -1741,7 +1741,7 @@ stopMonitor:function(index){
       that.getTestList()
       that.getDeviceList()
     }else{
-      MessageBox.alert("停止监护失败","提示")
+      MessageBox.alert("停止监护失败 "+response.data.respMsg,"提示")
       that.popupVisible3 = true
     }
   })
@@ -2147,56 +2147,55 @@ initMap () {
       console.log("error",error);
     })
 
-    axios.get('/getHosList',{}).then((response) => {
-      hosList1 = response.data.results;
-      console.log(hosList1)
-      for(var i=0;i<hosList1.length;i++){
-        positionHos[i] = new AMap.LngLat(hosList1[i].Longitude, hosList1[i].Latitude)
-        console.log(positionHos[i])
-        markerHos[i] = new SvgMarker(
-          new SvgMarker.Shape.IconFont({
-            symbolJs: null,
-            icon: 'icon-hospital',
-            size: 50,
-            offset: [-25, -50],
-            fillColor: 'red'
-          }), {
-            map: mapObj,
-            position: positionHos[i],
-            showPositionPoint: {
-              color: 'red'
-            }
-          });
-        markerHos[i].hosinfo = hosList1[i];
-        markerHos[i].searchresult = that.hosList[i].searchresult
-        markerHos[i].time = that.hosList[i].Time
-        markerHos[i].on('click',function(){
-          var thisMarkerHos = this;
-          console.log(this);
-          // that.selectform = "3" 
-          // that.HOSNO = thisMarkerHos.hosinfo.OrganizationCode
-          // that.Select()
-          console.log(that.hosList);
-          that.Drivingrender.autoRender({
-            data: thisMarkerHos.searchresult,
-            map: mapObj
-          });
-          AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
-                var infoWindow = new SimpleInfoWindow({
-                  infoTitle: '<strong>' + thisMarkerHos.hosinfo.OrganizationName+ '</strong>',
-                  infoBody: "<div style=\"padding:0px 0px 0px 4px;\">"+thisMarkerHos.hosinfo.LocationDescription+'<br>'+thisMarkerHos.time+'</div>',
-                  offset: new AMap.Pixel(0, -20),
-                  autoMove: true
-                });
-                infoWindow.open(mapObj, thisMarkerHos.C.position);
-              })
-          
-        })
-      }
-    }).catch(function(error){
-      console.log("error",error);
-    })
+    setTimeout(()=>{
+      axios.get('/getHosList',{}).then((response) => {
+        hosList1 = response.data.results;
+        console.log(hosList1)
+        for(var i=0;i<hosList1.length;i++){
+          positionHos[i] = new AMap.LngLat(hosList1[i].Longitude, hosList1[i].Latitude)
+          console.log(positionHos[i])
+          markerHos[i] = new SvgMarker(
+            new SvgMarker.Shape.IconFont({
+              symbolJs: null,
+              icon: 'icon-hospital',
+              size: 50,
+              offset: [-25, -50],
+              fillColor: 'red'
+            }), {
+              map: mapObj,
+              position: positionHos[i],
+              showPositionPoint: {
+                color: 'red'
+              }
+            });
+          markerHos[i].hosinfo = hosList1[i];
+          markerHos[i].searchresult = that.hosList[i].searchresult
+          markerHos[i].time = that.hosList[i].Time
+          markerHos[i].on('click',function(){
+            var thisMarkerHos = this;
+            console.log(this);
+            console.log(that.hosList);
+            that.Drivingrender.autoRender({
+              data: thisMarkerHos.searchresult,
+              map: mapObj
+            });
+            AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
+              var infoWindow = new SimpleInfoWindow({
+                infoTitle: '<strong>' + thisMarkerHos.hosinfo.OrganizationName+ '</strong>',
+                infoBody: "<div style=\"padding:0px 0px 0px 4px;\">"+thisMarkerHos.hosinfo.LocationDescription+'<br>'+thisMarkerHos.time+'</div>',
+                offset: new AMap.Pixel(0, -20),
+                autoMove: true
+              });
+              infoWindow.open(mapObj, thisMarkerHos.C.position);
+            })
 
+          })
+        }
+      }).catch(function(error){
+        console.log("error",error);
+      })
+      
+    },3000)
     axios.get('/getCarList',{}).then((response) => {
       carList1 = response.data.results;
       console.log(carList1)

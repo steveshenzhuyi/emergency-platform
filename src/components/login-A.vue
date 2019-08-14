@@ -3,8 +3,8 @@
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
         <mt-header fixed style="font-size:25px;height: 50px;" title="病人列表">
-          <mt-button size="small" type="danger" slot="left"
-            @click="$goRoute('/CPR')"><small>CPR</small></mt-button>
+          <!-- <mt-button size="small" type="danger" slot="left"
+            @click="$goRoute('/CPR')"><small>CPR</small></mt-button> -->
           <mt-button size="small" slot="right"
             @click="$goRoute('/increaseA')"><small>新增病人</small></mt-button>
           <hr>
