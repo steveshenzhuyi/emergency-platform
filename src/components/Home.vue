@@ -9,7 +9,7 @@
     <br>
     <mt-button size="large" type="primary" @click="check()">登录</mt-button>
     <br>
-    <mt-button size="large" type="danger" @click="$goRoute('/forget')">忘记密码</mt-button>
+    <mt-button size="large" type="danger" @click="">忘记密码</mt-button>
     <router-view></router-view>
   </div>
 </template>
