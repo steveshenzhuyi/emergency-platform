@@ -175,8 +175,7 @@
           <br><br><br><br><br><br>
         </mt-tab-container-item>
         <mt-tab-container-item id="5">
-          <div align="center" style="height:30px">
-              <span style="float: left;">初步诊断</span></div>
+          <div align="center" style="height:30px"><span style="float: left;"><b>初步诊断</b></span></div>
           <div align="left">
             <small style="color:grey">{{timevalue2}}</small>
             <mt-field type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="3" v-on:focus.native.capture="focus5()" v-on:blur.native.capture="blur5()"></mt-field>
@@ -196,9 +195,23 @@
             <mt-button size="small" type="primary" style="float: right" @click="uploadPicture()">上传</mt-button>
           </div> -->
           <hr>
-          <div align="center" style="height:30px"><span style="float: left;">预检分级</span></div>
+          <div align="center" style="height:30px"><span style="float: left;"><b>MEWS评分</b></span></div>
           <div align="left" style="height:30px">
-            <span><b>当前分级：{{level}}</b></span>
+            <span>心率：{{heartratescore}}次/min</span><span style="position:absolute;left:170px">收缩压：{{bloodpressurescore}}mmHg</span><span style="position:absolute;left:350px">呼吸：{{breathscore}}次/min</span>
+          </div>
+          <mt-picker :slots="slots1" @change="onScoreChange1" :visible-item-count="3"></mt-picker>
+          <div align="left" style="height:30px;margin-top: 10px">
+            <span>体温：{{tempraturescore}}℃</span><span style="position:absolute;left:170px">意识：{{awarescore}}</span>
+          </div>
+          <mt-picker :slots="slots2" @change="onScoreChange2" :visible-item-count="3"></mt-picker>
+          <div align="left" style="height:60px">
+            <span>总分：{{score}}</span><br>
+            <span>转运建议：{{advice}}</span>
+          </div>
+          <hr>
+          <div align="center" style="height:30px"><span style="float: left;"><b>预检分级</b></span></div>
+          <div align="left" style="height:30px">
+            <span>当前分级：{{level}}</span>
           <mt-button @click="setclass()" size="small" style="float: right;margin-right: 10px" v-show="settingclass">修改分级</mt-button>
           </div>
           <hr>
@@ -528,6 +541,57 @@
           className: 'slot1',
         }
         ],
+        slots1: [
+        { 
+          flex: 1,
+          defaultIndex: 0,
+          values: ['请选择','<40','41~50', '51~100', '101~110', '111~129', '≥130'],
+          textAlign: 'left',
+          className: 'slot1',
+        },
+        {
+          flex: 1,
+          defaultIndex: 0,
+          values: ['请选择','<70','70~80', '81~100', '101~199', '≥200'],
+          textAlign: 'left',
+          className: 'slot2',
+        },
+        { 
+          flex: 1,
+          defaultIndex: 0,
+          values: ['请选择','<9','9~14','15~20','21~29','≥30'],
+          textAlign: 'left',
+          className: 'slot3',
+        }
+        ],
+        slots2:[
+        { 
+          flex: 1,
+          defaultIndex: 0,
+          values: ['请选择','<35.0', '35.0~38.4','>38.4'],
+          textAlign: 'left',
+          className: 'slot4',
+        },
+        {
+          flex: 1,
+          values: ['请选择','清楚','对声音有反应', '对疼痛有反应', '无反应'],
+          textAlign: 'left',
+          className: 'slot5',
+        },
+        {
+          flex: 1,
+          values: [],
+          textAlign: 'left',
+          className: 'slot6',
+        }
+        ],
+        advice:'',
+        score:'',
+        heartratescore:'',
+        bloodpressurescore:'',
+        breathscore:'',
+        tempraturescore:'',
+        awarescore:'',
         myPosition:'',
         Drivingrender:'',
         showdelete:false,
@@ -830,7 +894,7 @@
           }
           this.dataTZ=this.patientrecord.P03
           console.log(this.dataTZ)
-
+          this.autoScore()
           for(var i=0; i<this.patientrecord.P04.length;i++) {
             if(this.patientrecord.P04[i].OperationCode == "P041") {
               this.过敏史=this.patientrecord.P04[i].Detail
@@ -1025,6 +1089,133 @@
         if(this.level == this.Classification || values[0]=="选择分级"){this.settingclass=false}
           else this.settingclass=true
       },
+    onScoreChange1(picker, values) {
+      this.heartratescore = values[0];
+      this.bloodpressurescore = values[1];
+      this.breathscore = values[2];
+      this.plusScore()
+     
+    },
+    onScoreChange2(picker, values) {
+      this.tempraturescore = values[0];
+      this.awarescore = values[1];
+      this.plusScore()
+    },
+    plusScore(){
+      var score=[];
+      switch(this.heartratescore){
+        case '<40':score[0] = 2;break;
+        case '41~50':score[0] = 1;break;
+        case '51~100':score[0] = 0;break;
+        case '101~110':score[0] = 1;break;
+        case '111~129':score[0] = 2;break;
+        case '≥130':score[0] = 3;break;
+        default:score[0] = '请选择'
+      }
+      switch(this.bloodpressurescore){
+        case '<70':score[1] = 3;break;
+        case '70~80':score[1] = 2;break;
+        case '81~100':score[1] = 1;break;
+        case '101~199':score[1] = 0;break;
+        case '≥200':score[1] = 2;break;
+        default:score[1] = '请选择'
+      }
+      switch(this.breathscore){
+        case '<9':score[2] = 2;break;
+        case '9~14':score[2] = 0;break;
+        case '15~20':score[2] = 1;break;
+        case '21~29':score[2] = 2;break;
+        case '≥30':score[2] = 3;break;
+        default:score[2] = '请选择'
+      }
+      switch(this.tempraturescore){
+        case '<35.0':score[3] = 2;break;
+        case '35.0~38.4':score[3] = 0;break;
+        case '>38.4':score[3] = 2;break;
+        default:score[3] = '请选择'
+      }
+      switch(this.awarescore){
+        case '清楚':score[4] = 0;break;
+        case '对声音有反应':score[4] = 1;break;
+        case '对疼痛有反应':score[4] = 2;break;
+        case '无反应':score[4] = 3;break;
+        default:score[4] = '请选择'
+      }
+      score[5] = score[0]+score[1]+score[2]+score[3]+score[4]
+      if(typeof(score[5]) == 'number'){
+        this.score = score[5]
+        if(this.score>=0 && this.score<=3)this.advice = '提示患者病情较稳定，转运较安全'
+          else if(this.score>=4 && this.score<=7)this.advice = '在转运过程中需密切观察患者的病情，携带好抢救物品和仪器'
+            else if(this.score>=8)this.advice = '提醒该患者死亡的危险性大，患者随时可能发生生命危险，应立即抢救，待病情允许时方可在医生和护士共同陪同下转运到病房'
+      }else{
+        this.score = '请补全单项评分'
+        this.advice = ''
+      }
+    },
+    setScore(){
+      
+    },
+    autoScore(){
+      for(var i=this.dataTZ.length-1;i>=0;i--){
+        if(this.dataTZ[i].InfoType==1){
+          if(this.dataTZ[i].OperationCode == 'P031'){
+            var num = parseInt(this.dataTZ[i].Detail);
+            if(num<=40 && num>0){
+              this.slots1[0].defaultIndex  = 1
+            }else if(num>40 && num <=50){
+              this.slots1[0].defaultIndex = 2
+            }else if(num>50 && num <=100){
+              this.slots1[0].defaultIndex = 3
+            }else if(num>100 && num <=110){
+              this.slots1[0].defaultIndex = 4
+            }else if(num>110 && num <=129){
+              this.slots1[0].defaultIndex = 5
+            }else if(num>129){
+              this.slots1[0].defaultIndex = 6
+            }
+          }
+          if(this.dataTZ[i].OperationCode == 'P032'){
+            var num = parseFloat(this.dataTZ[i].Detail.substring(4));
+            console.log(num)
+            if(num<70 && num>0){
+              this.slots1[1].defaultIndex  = 1
+            }else if(num>=70 && num <80){
+              this.slots1[1].defaultIndex = 2
+            }else if(num>=80 && num <100){
+              this.slots1[1].defaultIndex = 3
+            }else if(num>=100 && num <200){
+              this.slots1[1].defaultIndex = 4
+            }else if(num>=200){
+              this.slots1[1].defaultIndex = 5
+            }
+          }
+          if(this.dataTZ[i].OperationCode == 'P034'){
+            var num = parseInt(this.dataTZ[i].Detail);
+            if(num<9 && num>0){
+              this.slots1[2].defaultIndex  = 1
+            }else if(num>=9 && num <15){
+              this.slots1[2].defaultIndex = 2
+            }else if(num>=15 && num <21){
+              this.slots1[2].defaultIndex = 3
+            }else if(num>=21 && num <30){
+              this.slots1[2].defaultIndex = 4
+            }else if(num>=30){
+              this.slots1[2].defaultIndex = 5
+            }
+          }
+          if(this.dataTZ[i].OperationCode == 'P033'){
+            var num = parseFloat(this.dataTZ[i].Detail);
+            if(num<35 && num>0){
+              this.slots2[0].defaultIndex = 1
+            }else if(num>=35 && num <38.4){
+              this.slots2[0].defaultIndex = 2
+            }else if(num>=38.4){
+              this.slots2[0].defaultIndex = 3
+            }
+          }
+        }
+      }
+    },
       returnA() {
         this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
       },
@@ -2194,7 +2385,7 @@ initMap () {
       }).catch(function(error){
         console.log("error",error);
       })
-      
+
     },3000)
     axios.get('/getCarList',{}).then((response) => {
       carList1 = response.data.results;
