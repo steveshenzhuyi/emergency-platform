@@ -1176,7 +1176,6 @@
           }
           if(this.dataTZ[i].OperationCode == 'P032'){
             var num = parseFloat(this.dataTZ[i].Detail.substring(4));
-            console.log(num)
             if(num<70 && num>0){
               this.slots1[1].defaultIndex  = 1
             }else if(num>=70 && num <80){
