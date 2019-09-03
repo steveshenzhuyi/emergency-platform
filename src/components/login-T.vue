@@ -341,6 +341,7 @@ export default {
           this.assembly=response.data.results[0].Assembly
           this.hospital=response.data.results[0].Hospital
           this.CarStatus=response.data.results[0].CarStatus
+          window.localStorage.setItem('CARSTATUS',this.CarStatus);
           window.localStorage.setItem('PATIENTID1',response.data.results[0].NowPatient);
           if(this.CarStatus == "0") {
             this.carstate = "空闲"

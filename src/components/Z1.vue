@@ -37,34 +37,92 @@
         </mt-header>
         <br><br>
         <mt-navbar v-model="selected1">
-          <mt-tab-item id="1">主诉</mt-tab-item>
-          <mt-tab-item id="2">现病史</mt-tab-item>
+          <mt-tab-item id="1">病史</mt-tab-item>
+          <!-- <mt-tab-item id="2">现病史</mt-tab-item> -->
           <mt-tab-item id="3">体征</mt-tab-item>
-          <mt-tab-item id="4">既往史</mt-tab-item>
+          <!-- <mt-tab-item id="4">既往史</mt-tab-item> -->
           <mt-tab-item id="5">初步诊断</mt-tab-item>
           <mt-tab-item id="6">基本信息</mt-tab-item>
         </mt-navbar>
         <br>
         <mt-tab-container v-model="selected1">
-          <mt-tab-container-item id="1">
-            <div align="left">
+           <mt-tab-container-item id="1">
+            <!-- <div align="left">
               <small style="color:grey">{{timevalue}}</small>
-              <mt-field  type="textarea" placeholder="暂无内容" v-model="主诉" rows="5"></mt-field>
+              <mt-field type="textarea" placeholder="请输入内容" v-model="主诉" rows="5" v-on:focus.native.capture="focus1()" v-on:blur.native.capture="blur1()"></mt-field>
             </div>
-            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save10()">保存</mt-button> -->
-           <hr>
-            <div v-for="(item,index) in 主诉图片">
-              <div align="center">
-              <small style="color:grey">{{item.time}}</small></div>
-              <div align="center">
-           <img v-gallery :src="item.fileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
-          </div>
-            <!-- <mt-button size="small" style="float: left" type="primary" plain>
-            <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button> -->
-            <br><br><br><br><br><br>
-          </mt-tab-container-item>
-          <mt-tab-container-item id="2">
+            <div align="center" v-show="editing1" style="height: 35px">
+              <mt-button  v-show="editing1" size="small" type="primary" style="float: right;margin-top: 5px"
+              @click="save10()">保存</mt-button>
+             <mt-button  v-show="editing1" size="small" style="float: right; margin-right:10px;margin-top: 5px"
+              @click="cancel1()">取消</mt-button>
+              </div>
+              <hr> -->
+              <div align="center" style="height:30px">
+                <mt-button v-show="editing1" size="small" style="float: right;margin-top: 2px" type="primary" @click="save10()">保存</mt-button>
+                <mt-button  v-show="editing1" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel1()">取消</mt-button>
+                <span style="float: left;">主诉</span>
+              </div>
+              <div align="left">
+                <small style="color:grey">{{timevalue}} </small>
+                <mt-field  type="textarea" placeholder="请输入内容" v-model="主诉" rows="3" v-on:focus.native.capture="focus1()" v-on:blur.native.capture="blur1()"></mt-field><hr>
+              </div>
+              <div align="center" style="height:30px">
+                <mt-button v-show="editing2" size="small" style="float: right;margin-top: 2px" type="primary" @click="save20()">保存</mt-button>
+                <mt-button  v-show="editing2" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel2()">取消</mt-button>
+                <span style="float: left;">现病史</span>
+              </div>
+              <div align="left">
+                <small style="color:grey">{{timevalue1}} </small>
+                <mt-field  type="textarea" placeholder="请输入内容" v-model="现病史" rows="3" v-on:focus.native.capture="focus2()" v-on:blur.native.capture="blur2()"></mt-field><hr>
+              </div>
+              <div align="center" style="height:30px">
+                <mt-button v-show="editing41" size="small" style="float: right;margin-top: 2px" type="primary" @click="save41()">保存</mt-button>
+                <mt-button  v-show="editing41" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel41()">取消</mt-button>
+                <span style="float: left;">过敏史</span>
+              </div>
+              <div align="left">
+                <small style="color:grey">{{timevalue41}} </small>
+                <mt-field  type="textarea" placeholder="请输入内容" v-model="过敏史" rows="2" v-on:focus.native.capture="focus41()" v-on:blur.native.capture="blur41()"></mt-field><hr>
+              </div>
+              <div align="center" style="height:30px">
+                <mt-button v-show="editing42" size="small" style="float: right;margin-top: 2px" type="primary" @click="save42()">保存</mt-button>
+                <mt-button  v-show="editing42" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel42()">取消</mt-button>
+                <span style="float: left;">疾病史</span>
+              </div>
+              <div align="left">
+                <small style="color:grey">{{timevalue42}} </small>
+                <mt-field type="textarea" placeholder="请输入内容" v-model="疾病史"  rows="2" v-on:focus.native.capture="focus42()" v-on:blur.native.capture="blur42()"></mt-field><hr>
+              </div>
+              <div align="center" style="height:30px">
+                <mt-button v-show="editing43" size="small" style="float: right;margin-top: 2px" type="primary" @click="save43()">保存</mt-button>
+                <mt-button  v-show="editing43" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel43()">取消</mt-button>
+                <span style="float: left;">目前用药</span>
+              </div>
+              <div align="left">
+                <small style="color:grey">{{timevalue43}} </small>
+                <mt-field type="textarea" placeholder="请输入内容" v-model="目前用药"  rows="2" v-on:focus.native.capture="focus43()" v-on:blur.native.capture="blur43()"></mt-field><hr>
+              </div>
+              <div v-for="(item,index) in 主诉图片">
+                <div align="center">
+                  <small style="color:grey">{{item.time}}</small></div>
+                  <div align="center">
+                   <img v-gallery :src="item.fileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
+                 </div>
+                 <hr>
+                 <div align="center">
+                  <img v-gallery v-show="photoing" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;" id='image1'>
+                </div>
+                <div align="center">
+                  <mt-button size="small"  style="float: left" type="primary" plain  @click="takephoto1()">
+                    <img src="./icon/添加图片.png" height="35" width="35" slot="icon">拍照</mt-button>
+                    <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain @click="choosephoto1()">
+                      <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
+                      <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture1()">上传</mt-button>
+                    </div>
+                    <br><br><br><br><br><br>
+                  </mt-tab-container-item>
+          <!-- <mt-tab-container-item id="2">
             <div align="left">
               <small style="color:grey">{{timevalue1}}</small>
               <mt-field  type="textarea" placeholder="暂无内容" v-model="现病史" rows="5"></mt-field>
@@ -76,10 +134,8 @@
               <div align="center">
            <img v-gallery :src="item.fileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
           </div>
-            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save20()">保存</mt-button> -->
             <br><br><br><br><br><br>
-          </mt-tab-container-item>
+          </mt-tab-container-item> -->
           <mt-tab-container-item id="3">
             <!-- <div  style="text-align: left; margin-top: 10px">常用体征</div><hr> -->
             <!-- <mt-button size="small" @click="heartrate()" style="position:relative;right:40px"
@@ -105,42 +161,25 @@
             <div><b>{{item.OperationName}}</b></div><div><span style="display:inline-block;width:380px">{{item.Detail}}</span></div>
           </div><br><br><br><br>
           </mt-tab-container-item>
-          <mt-tab-container-item id="4">
+         <!--  <mt-tab-container-item id="4">
             <div align="center" style="height:30px">
               <span style="float: left;">过敏史</span>
             </div>
             <div align="left">
               <mt-field  type="textarea" placeholder="暂无内容" v-model="过敏史"  rows="2"></mt-field><hr>
             </div>
-            <!-- <mt-button size="small" style="float: right;position:relative;top:-50px" type="primary" @click="save41()">保存</mt-button> -->
-            <!-- <div style="height: 33px">
-    <mt-button size="small" style="float: left" type="primary" plain>
-    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
-    <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain>
-    <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button>
-            </div> -->
             <div align="center" style="height:30px">
               <span style="float: left;">疾病史</span>
             </div>
             <div align="left">
               <mt-field  type="textarea" placeholder="暂无内容" v-model="疾病史"  rows="2"></mt-field><hr>
             </div>
-            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save42()">保存</mt-button> -->
-            <!-- <div style="height: 33px">
-    <mt-button size="small" style="float: left" type="primary" plain>
-    <img src="./icon/录音.png" height="35" width="35" slot="icon">语音</mt-button>
-    <mt-button size="small"  style="float: left; margin-left: 10px" type="danger" plain>
-    <img src="./icon/添加图片.png" height="35" width="35" slot="icon">图片</mt-button>
-            </div> -->
             <div align="center" style="height:30px">
           <span style="float: left;">目前用药</span>
         </div>
             <div align="left">
               <mt-field type="textarea" placeholder="暂无内容" v-model="目前用药"  rows="2"></mt-field><hr>
             </div>
-            <!-- <mt-button size="small" type="primary" style="float: right;position:relative;top:-50px"
-              @click="save43()">保存</mt-button> -->
               <div v-for="(item,index) in 既往史图片">
               <div align="center">
               <small style="color:grey">{{item.time}}</small></div>
@@ -148,7 +187,7 @@
            <img v-gallery :src="item.fileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
           </div>
             <br><br><br><br><br><br>
-          </mt-tab-container-item>
+          </mt-tab-container-item> -->
           <mt-tab-container-item id="5">
             <div align="center" style="height:30px">
               <span style="float: left;">初步诊断</span></div>
@@ -204,6 +243,9 @@ export default {
       content: '',
       timevalue: '',
       timevalue1: '',
+      timevalue41: '',
+        timevalue42: '',
+        timevalue43: '',
       timevalue2: '',
       主诉: '',
       主诉图片:[],
@@ -305,12 +347,14 @@ export default {
         for(var i=0; i<this.patientrecord.P04.length;i++) {
           if(this.patientrecord.P04[i].OperationCode == "P041") {
             this.过敏史=this.patientrecord.P04[i].Detail
+            this.timevalue41=this.patientrecord.P04[i].OperationTime;
             break;
           }
         }
         for(var k=0; k<this.patientrecord.P04.length;k++) {
           if(this.patientrecord.P04[k].OperationCode == "P042") {
             this.疾病史=this.patientrecord.P04[k].Detail
+            this.timevalue42=this.patientrecord.P04[k].OperationTime;
             break;
           }
         }
@@ -318,6 +362,7 @@ export default {
         for(var j=0; j<this.patientrecord.P04.length;j++) {
           if(this.patientrecord.P04[j].OperationCode == "P043") {
             this.目前用药=this.patientrecord.P04[j].Detail
+            this.timevalue43=this.patientrecord.P04[j].OperationTime;
             break;
           }
         }
