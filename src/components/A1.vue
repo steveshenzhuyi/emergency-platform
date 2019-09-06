@@ -213,6 +213,7 @@
               @click="cancel5()">取消</mt-button>
               </div>
           <hr>
+          <div align="center" style="height:40px"><mt-button size="small" @click.native="popupVisible4 = true" style="position:absolute;left: 0px; width: 90px" type="primary" plain>特殊情况</mt-button></div>
           <div align="center" style="height:30px"><span style="float: left;"><b>MEWS评分</b></span></div>
           <div align="left" style="height:30px">
             <span>心率：{{heartratescore}}次/min</span><span style="position:absolute;left:170px">收缩压：{{bloodpressurescore}}mmHg</span><span style="position:absolute;left:350px">呼吸：{{breathscore}}次/min</span>
@@ -425,6 +426,25 @@
           </div>
           </div>
         </mt-popup>
+        <mt-popup v-model="popupVisible4"  position="bottom" closeOnClickModal="false" style="width:100%;height: 50%;overflow: auto;">
+          <div align="left" style="">
+             <mt-checklist @change="checkon"
+            title="危急征象/情况指标（自动分级I级）"
+            v-model="critical1"
+            :options="critical1list">
+          </mt-checklist>
+          <mt-checklist @change="checkon"
+            title="高风险/潜在危险情况（自动分级II级）"
+            v-model="critical2"
+            :options="critical2list">
+          </mt-checklist>
+        </div>
+         <div align="left"><b>已选：{{tempcritical}}</b></div>
+          <div align="center" style="height: 35px">
+              <mt-button  size="small" type="primary" style="float: right;margin: 5px 30px 15px"
+              @click="pluscritical()">确定</mt-button>
+              </div>
+        </mt-popup>
     <div>
       <mt-tabbar v-model= "selected" fixed>
         <mt-tab-item id="患者病历">
@@ -449,6 +469,7 @@
   import { Toast } from 'mint-ui';
   import { Popup } from 'mint-ui';
   import { Indicator } from 'mint-ui';
+  import { Checklist } from 'mint-ui';
   import global from './global.vue'
   export default {
     inject:['reload'],
@@ -491,6 +512,7 @@
         popupVisible1: false,
         popupVisible2: false,
         popupVisible3: false,
+        popupVisible4:false,
         useableDeviceList:[],
         testList:[],
         nowTime:'',
@@ -516,6 +538,7 @@
         isothers:false,
         isovering:false,
         settingclass:false,
+        isshowcritical:false,
         hide: true,
         value3: '',
         selected1: '1',
@@ -574,6 +597,7 @@
         slots: [
         { 
           flex: 1,
+          defaultIndex: 0,
           values: ['选择分级','I级', 'II级', 'III级', 'IV级','V级'],
           className: 'slot1',
         }
@@ -622,6 +646,35 @@
           className: 'slot6',
         }
         ],
+        critical1list:[
+        {label:'心搏/呼吸骤停',value:'心搏/呼吸骤停'}, 
+        {label:'气道阻塞/窒息',value:'气道阻塞/窒息'},
+        {label:'需紧急气管插管/切开',value:'需紧急气管插管/切开'},
+        {label:'休克征象',value:'休克征象'},
+        {label:'急性大出血',value:'急性大出血'},
+        {label:'突发意识丧失',value:'突发意识丧失'},
+        {label:'抽搐持续状态',value:'抽搐持续状态'},
+        {label:'胸痛/胸闷（疑急性心肌梗死/主动脉夹层/肺栓塞/张力性气胸',value:'胸痛/胸闷（疑急性心肌梗死/主动脉夹层/肺栓塞/张力性气胸'},
+        {label:'特重度烧伤',value:'特重度烧伤'},
+        {label:'脑疝征象',value:'脑疝征象'},
+        {label:'急性中毒危及生命',value:'急性中毒危及生命'},
+        {label:'脐带脱垂，可见胎先露位',value:'脐带脱垂，可见胎先露位'},
+        {label:'孕妇剧烈腹痛',value:'孕妇剧烈腹痛'},
+        {label:'其他分诊护士认为患者存在危及生命，需要紧急抢救的情况',value:'其他需要紧急抢救的情况'}
+        ],
+        critical2list:[
+        {label:'活动性胸痛，怀疑急性冠脉综合征但不需要立即进行抢救，稳定',value:'活动性胸痛，怀疑急性冠脉综合征'},
+        {label:'有脑梗表现，但不符合I级标准',value:'有脑梗表现，但不符合I级标准'},
+        {label:'腹痛（考虑绞窄性肠梗阻）',value:'腹痛（考虑绞窄性肠梗阻）'},
+        {label:'中毒患者（但不符合I级标准）',value:'中毒患者（但不符合I级标准）'},
+        {label:'突发意识程度改变情况（嗜睡、定向障碍、昏厥）',value:'突发意识程度改变情况（嗜睡、定向障碍、昏厥）'},
+        {label:'糖尿病酮症酸中毒',value:'糖尿病酮症酸中毒'},
+        {label:'骨筋膜室综合征',value:'骨筋膜室综合征'},
+        {label:'精神障碍（有自伤或伤人倾向）',value:'精神障碍（有自伤或伤人倾向）'},
+        {label:'阴道出血，宫外孕，血流动力学稳定',value:'阴道出血，宫外孕，血流动力学稳定'},
+        {label:'创伤患者，有高危险性受伤机制',value:'创伤患者，有高危险性受伤机制'},
+        {label:'其他分诊护士认为患者存在高风险，但不需紧急抢救或潜在危险情况',value:'其他高风险但不需紧急抢救或潜在危险情况'},
+        ],
         advice:'',
         score:'',
         heartratescore:'',
@@ -629,6 +682,15 @@
         breathscore:'',
         tempraturescore:'',
         awarescore:'',
+        critical1:[],
+        critical2:[],
+        tempcritical:'',
+        criticalillness:0,
+        hrclassflag:0,
+        spclassflag:0,
+        rrclassflag:0,
+        boclassflag:0,
+        tpclassflag:0,
         myPosition:'',
         Drivingrender:'',
         showdelete:false,
@@ -1131,6 +1193,31 @@
           }
         })
       },
+      showcritical(){
+        this.isshowcritical = !this.isshowcritical
+      },
+      pluscritical(){
+        console.log()
+        this.popupVisible4 = false
+        this.初步诊断+= this.tempcritical
+        this.save50()
+        if(this.critical1.length>0)this.criticalillness =1
+          else if(this.critical2.length>0)this.criticalillness =2
+            else this.criticalillness =0
+        this.autoClass()
+      },
+      checkon: function(){
+      console.log(this.critical1)
+      console.log(this.critical2)
+      this.tempcritical = ''
+      for (var i = 0; i < this.critical1.length; i++) {
+        this.tempcritical+=this.critical1[i]+' '
+      }
+      for (var i = 0; i < this.critical2.length; i++) {
+        this.tempcritical+=this.critical2[i]+' '
+      }
+      console.log(this.tempcritical)
+    },
       onPatientlistChange(picker, values) {
         this.level = values[0];
         if(this.level == this.Classification || values[0]=="选择分级"){this.settingclass=false}
@@ -1194,21 +1281,31 @@
         if(this.score>=0 && this.score<=3)this.advice = '提示患者病情较稳定，转运较安全'
           else if(this.score>=4 && this.score<=7)this.advice = '在转运过程中需密切观察患者的病情，携带好抢救物品和仪器'
             else if(this.score>=8)this.advice = '提醒该患者死亡的危险性大，患者随时可能发生生命危险，应立即抢救，待病情允许时方可在医生和护士共同陪同下转运到病房'
+        this.autoClass()
       }else{
         this.score = '请补全单项评分'
         this.advice = ''
       }
     },
-    setScore(){
-      
+    autoClass(){
+      console.log(this.score)
+      if(this.score>=5 || this.criticalillness==1 || this.hrclassflag ==1 || this.spclassflag ==1 || this.rrclassflag ==1 || this.boclassflag ==1 || this.tpclassflag ==1)this.slots[0].defaultIndex =1
+        else if(this.score>=3 || this.criticalillness==2 || this.hrclassflag ==2 || this.spclassflag ==2 || this.rrclassflag ==2 || this.boclassflag ==2 || this.tpclassflag ==2)this.slots[0].defaultIndex =2
+          else if(this.score==2)this.slots[0].defaultIndex =3
+            else if(this.score==1)this.slots[0].defaultIndex =4
+              else this.slots[0].defaultIndex =5
+
     },
     autoScore(){
       for(var i=this.dataTZ.length-1;i>=0;i--){
         if(this.dataTZ[i].InfoType==1){
           if(this.dataTZ[i].OperationCode == 'P031'){
             var num = parseInt(this.dataTZ[i].Detail);
+            if(num<=40 || num>=180) this.hrclassflag =1
+              else if(num<=50 || num >=141) this.hrclassflag =2
+                else this.hrclassflag =0
             if(num<=40 && num>0){
-              this.slots1[0].defaultIndex  = 1
+              this.slots1[0].defaultIndex = 1
             }else if(num>40 && num <=50){
               this.slots1[0].defaultIndex = 2
             }else if(num>50 && num <=100){
@@ -1223,6 +1320,9 @@
           }
           if(this.dataTZ[i].OperationCode == 'P032'){
             var num = parseFloat(this.dataTZ[i].Detail.substring(4));
+            if(num<70 || num>=220) this.spclassflag =1
+              else if(num<=80 || num >=200) this.spclassflag =2
+                else this.spclassflag =0
             if(num<70 && num>0){
               this.slots1[1].defaultIndex  = 1
             }else if(num>=70 && num <80){
@@ -1237,6 +1337,8 @@
           }
           if(this.dataTZ[i].OperationCode == 'P034'){
             var num = parseInt(this.dataTZ[i].Detail);
+            if(num<=8 || num>=36)this.rrclassflag =1
+              else this.rrclassflag =0
             if(num<9 && num>0){
               this.slots1[2].defaultIndex  = 1
             }else if(num>=9 && num <15){
@@ -1251,6 +1353,8 @@
           }
           if(this.dataTZ[i].OperationCode == 'P033'){
             var num = parseFloat(this.dataTZ[i].Detail);
+            if(num>41 || num<32)this.tpclassflag =1
+              else this.tpclassflag =0
             if(num<35 && num>0){
               this.slots2[0].defaultIndex = 1
             }else if(num>=35 && num <38.4){
@@ -1259,8 +1363,16 @@
               this.slots2[0].defaultIndex = 3
             }
           }
+          if(this.dataTZ[i].OperationCode == 'P035'){
+            var num = parseFloat(this.dataTZ[i].Detail);
+            if(num<85)this.boclassflag = 1
+              else if(num>=85&& num<89)this.boclassflag = 2
+                else this.boclassflag = 0
+                
+          }
         }
       }
+      this.autoClass()
     },
       returnA() {
         this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
@@ -1686,6 +1798,7 @@
           if(response.data.results == "上传成功") {
             if(this.Class == '1' || this.Class == '2')Toast('成功上报指挥中心')
               else Toast('修改成功');
+            this.settingclass =false
             this.getpatientrecord()
             this.getPatientInfo()
           }
