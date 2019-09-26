@@ -12,7 +12,9 @@ import VueQr from 'vue-qr';
 import './assets/iconfont3.js';
 import QRCode from 'qrcodejs2';
 import gallery from 'img-vuer';
-import global_ from './components/global.vue'
+import global_ from './components/global.vue';
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 
 axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = true;

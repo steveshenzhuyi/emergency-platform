@@ -73,7 +73,7 @@
           <mt-field label="职称" v-model="TitleName" disabled></mt-field>
           <!-- <div style="text-align: left; margin-top: 10px">角色：专家</div> -->
           <mt-field label="专长" v-model="Specific" disabled></mt-field><hr>
-          <mt-button size="large">修改密码</mt-button><br>
+          <!-- <mt-button size="large">修改密码</mt-button><br> -->
           <mt-button size="large"  type="danger" @click="logout()">退出登录</mt-button><br><br><br><br>
       </mt-tab-container-item>
     </mt-tab-container>

@@ -1567,23 +1567,23 @@
             Toast('上报失败');
           }
         })
-        setTimeout(()=>{
-          this.GLOBAL.changeVideoAlert(false)
-          var scheme = 'com.tencent.trtc';
-          appAvailability.check(scheme,
-            function() {
-              var sApp = startApp.set({"application":"com.tencent.trtc"
-            });
-              sApp.start(function() {
-              }, function(error) {
-                alert(error);
-              });
-            },
-            function() {
-              alert(scheme + ' is not available');
-            }
-            );   
-        },1000)
+        // setTimeout(()=>{
+        //   this.GLOBAL.changeVideoAlert(false)
+        //   var scheme = 'com.tencent.trtc';
+        //   appAvailability.check(scheme,
+        //     function() {
+        //       var sApp = startApp.set({"application":"com.tencent.trtc"
+        //     });
+        //       sApp.start(function() {
+        //       }, function(error) {
+        //         alert(error);
+        //       });
+        //     },
+        //     function() {
+        //       alert(scheme + ' is not available');
+        //     }
+        //     );   
+        // },1000)
 
       },
       ensure() {
@@ -2465,7 +2465,7 @@ initMap () {
   var marker;
 
   let mapObj = new AMap.Map('map-container', {
-    center: [120.154539,30.265048],
+    center: [120.581828, 30.621622],
     zoom: 13,
     mapStyle: 'amap://styles/c276159e0bece965039d24472029a3e0',
   })

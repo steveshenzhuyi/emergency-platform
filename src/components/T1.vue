@@ -1539,7 +1539,7 @@ takephoto1() {
   var marker;
 
   let mapObj = new AMap.Map('map-container', {
-    center: [120.154539,30.265048],
+    center: [120.581828, 30.621622],
     zoom: 13,
     mapStyle: 'amap://styles/c276159e0bece965039d24472029a3e0',
   })

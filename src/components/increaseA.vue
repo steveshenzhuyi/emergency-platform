@@ -155,7 +155,8 @@ export default {
                 if(response.data.results[0].VIPTag == true){
                   that.pname = 'VIP'+that.faceid
                 }else{
-                  that.pname = response.data.results[0].Name
+                  var tempname = response.data.results[0].Name
+                  that.pname = tempname.substring(0,1)+'*'+tempname.substring(2)
                 }
                 that.age = response.data.results[0].Age
                 that.gender = response.data.results[0].Gender
@@ -235,7 +236,8 @@ export default {
                 if(response.data.results[0].VIPTag == true){
                   that.pname = 'VIP'+result.text
                 }else{
-                  that.pname = response.data.results[0].Name
+                  var tempname = response.data.results[0].Name
+                  that.pname = tempname.substring(0,1)+'*'+tempname.substring(2)
                 }
                 that.age = response.data.results[0].Age
                 that.gender = response.data.results[0].Gender

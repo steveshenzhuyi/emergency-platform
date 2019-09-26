@@ -3,6 +3,8 @@
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
         <mt-header fixed style="font-size:25px;height: 50px;" title="病人列表">
+          <mt-button size="small" slot="left"
+            @click="$goRoute('/CPR')"><small>今日统计</small></mt-button>
           <mt-button size="small" slot="right"
             @click="SEE()"><small>接收病人</small></mt-button>
           <hr>
@@ -77,7 +79,7 @@
           <mt-field label="组内职务" v-model="GroupPosition" disabled></mt-field>
           <mt-field label="责任区域" v-model="ManageArea" disabled></mt-field>
           <mt-field label="重点保障对象" v-model="GuaranteeObject" disabled></mt-field><hr>
-          <mt-button size="large">修改密码</mt-button><br>
+          <!-- <mt-button size="large">修改密码</mt-button><br> -->
           <mt-button size="large"  type="danger" @click="logout()">退出登录</mt-button><br><br><br><br>
       </mt-tab-container-item>
     </mt-tab-container>

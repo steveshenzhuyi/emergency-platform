@@ -20,7 +20,7 @@
         <mt-field label="组内职务" v-model="work" disabled></mt-field>
         <mt-field label="责任区域" v-model="region" disabled></mt-field>
         <mt-field label="重点保障对象" v-model="target" disabled></mt-field><hr>
-        <mt-button size="large">修改密码</mt-button><br>
+        <!-- <mt-button size="large">修改密码</mt-button><br> -->
         <mt-button size="large" type="danger" @click="logout()">退出登录</mt-button><br>
     <router-view></router-view>
   </div>
