@@ -353,14 +353,15 @@ newPatient() {
         }).then((response) => {
           console.log(response)
           if(response.data.results != "新建失败") {
+            var pid = response.data.results[0].PatientId
             Toast('创建成功');
             axios.post('/reportPatient',{
-          patientId:this.$route.params.PATIENTID
+          patientId:pid
         }).then((response) => {
           if(response.data.results == "上传成功") {
             // alert("上报成功");
             Toast('成功上报指挥中心');
-            this.$router.push({name: 'A2',params:{PATIENTID:response.data.results[0].PatientId,SELECTED1:"患者病历"}})
+            this.$router.push({name: 'A2',params:{PATIENTID:pid,SELECTED1:"患者病历"}})
           }else{
             // alert("上报失败");
             Toast('上报失败');
@@ -395,14 +396,15 @@ newPatient() {
       }).then((response) => {
         console.log(response)
         if(response.data.results != "新建失败") {
+          var pid = response.data.results[0].PatientId
           Toast('创建成功');
           axios.post('/reportPatient',{
-          patientId:this.$route.params.PATIENTID
+          patientId:pid
         }).then((response) => {
           if(response.data.results == "上传成功") {
             // alert("上报成功");
             Toast('成功上报指挥中心');
-            this.$router.push({name: 'A2',params:{PATIENTID:response.data.results[0].PatientId,SELECTED1:"患者病历"}})
+            this.$router.push({name: 'A2',params:{PATIENTID:pid,SELECTED1:"患者病历"}})
           }else{
             // alert("上报失败");
             Toast('上报失败');
