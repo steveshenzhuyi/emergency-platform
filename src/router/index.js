@@ -17,7 +17,7 @@ import command from '@/components/command';
 // import Z1 from '@/components/Z1';
 // import 资源详情 from '@/components/B1';
 // import B2 from '@/components/B2';
-// import C1 from '@/components/C1';
+import C1 from '@/components/C1';
 // import C2 from '@/components/C2';
 // import C3 from '@/components/C3';
 // import C4 from '@/components/C4';
@@ -44,6 +44,11 @@ export default new Router({
       path: '/command',
       name: 'command',
       component: command,
+    },
+    {
+      path: '/C1',
+      name: 'C1',
+      component: C1,
     },
     
   ],

@@ -29,7 +29,7 @@ export default {
   methods: {
     check() {
      if(this.pwd == '123'){
-      this.$router.push({name: 'command'});
+      this.$router.push({name:'command',params:{SELECTED:"指挥",SELECTED1:'1'}});
      }else{
       Toast('密码错误');
      }

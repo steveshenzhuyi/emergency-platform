@@ -14,10 +14,12 @@ export default {
   },
   data() {
     return {
-      isRouterAlive:true
+      isRouterAlive:true,
+      exitAppTicker:0
     }
   },
   mounted(){
+    this.backbutton()
     var that = this
     document.addEventListener("jpush.receiveNotification", function (event) {
       var alertContent
@@ -58,6 +60,37 @@ export default {
 
   },
   methods: {
+    backbutton(){
+  var that=this
+    document.addEventListener("deviceready",function(){
+        document.addEventListener("backbutton", function(){
+      console.log(navigator)
+//     //         if(this.isHomePage()){
+//        // console.log("222")
+                if(that.exitAppTicker == 0){
+                    that.exitAppTicker++;
+Toast({
+  message: '再按一次返回桌面',
+  position: 'bottom',
+  duration: 1000
+});
+                    setTimeout(function(){
+                            that.exitAppTicker = 0;
+                    },2000);
+                }else if(that.exitAppTicker == 1){
+//                     navigator.app.exitApp(); //退出app
+ navigator.Backbutton.goHome(function() { //进入后台
+                  // console.log('go home success');
+              }, function() {
+                  // console.log('go home fail');
+              });
+                }  
+// //                 }else{
+// //                     history.back();
+// //                 }
+        }, false);
+    },false);
+},
     reload() {
       this.isRouterAlive = false
       this.$nextTick(function() {
