@@ -20,7 +20,12 @@
         <mt-field label="组内职务" v-model="work" disabled></mt-field>
         <mt-field label="责任区域" v-model="region" disabled></mt-field>
         <mt-field label="重点保障对象" v-model="target" disabled></mt-field><hr>
-        <!-- <mt-button size="large">修改密码</mt-button><br> -->
+        <mt-button size="large" @click="showchangepwd=true">修改密码</mt-button><br>
+        <mt-field label="新密码" v-model="pwd1" v-show="showchangepwd"></mt-field>
+        <mt-field label="确认密码" v-model="pwd2" v-show="showchangepwd"></mt-field>
+        <mt-button v-show="showchangepwd" size="small" style="margin-right:40px" @click="showchangepwd=false">取消</mt-button>
+        <mt-button v-show="showchangepwd" size="small" type="primary" @click="changepwd()">确定</mt-button>
+        <hr v-show="showchangepwd">
         <mt-button size="large" type="danger" @click="logout()">退出登录</mt-button><br>
     <router-view></router-view>
   </div>
@@ -28,7 +33,7 @@
 
 <script>
 import axios from 'axios';
-
+import { Toast } from 'mint-ui';
 export default {
   data() {
     return {
@@ -46,6 +51,9 @@ export default {
       work: '',
       region: '',
       target: '',
+      showchangepwd:false,
+      pwd2:'',
+      pwd1:''
     };
   },
   mounted() {
@@ -86,6 +94,25 @@ export default {
         }, (error) => {
           console.log(err)
         })
+    },
+    changepwd(){
+      if(this.pwd1==this.pwd2){
+         axios.post('/changePwd',{
+        userId:window.localStorage.getItem('USERID'),
+        pwd:this.pwd2
+      }).then((response) => {
+        if(response.data.results == "修改成功") {
+          Toast("修改成功");
+          this.pwd1 = ''
+          this.pwd2 = ''
+          this.showchangepwd = false
+        }else{
+          Toast("修改失败");
+        }
+      })
+      }else{
+        Toast("两次密码不一致");
+      }
     }
   }
 };

@@ -6,7 +6,7 @@
           <mt-button size="small" icon="back" slot="left"
           @click="returnA()"><small>返回</small></mt-button>
           <mt-button size="small" slot="right"
-          @click="alertHelp()"><small>远程支持
+          @click="alertHelp()"><small>一键上报
           </small></mt-button>
           <hr>
         </mt-header>
@@ -236,7 +236,8 @@
           <hr>
           <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
           <div><small style="color:grey">病人分级为I级或II级时，系统将自动上报。其他情况有需要时，可以使用手动一键上报。</small></div>
-          <mt-button type="danger" @click="alert()">一键上报</mt-button><br><br><br><br>
+          <!-- <mt-button type="danger" @click="alert()">一键上报</mt-button> -->
+          <br><br><br><br>
         </mt-tab-container-item>
         <mt-tab-container-item id="6">
           <img src="./pictrue/man.png"><hr>
@@ -259,8 +260,9 @@
       <mt-header fixed style="font-size:25px;height: 50px;" :title="title2">
       <mt-button size="small" icon="back" slot="left"
         @click="returnA()"><small>返回</small></mt-button>
-      <!-- <mt-button size="small" slot="right"
-        @click="()"><small>监护</small></mt-button> -->
+      <mt-button size="small" slot="right"
+          @click="alertHelp()"><small>一键上报
+          </small></mt-button>
       <hr>
       </mt-header>
       <br><br>
@@ -1561,7 +1563,7 @@
         }).then((response) => {
           if(response.data.results == "上传成功") {
             // alert("上报成功");
-            Toast('成功上报指挥中心,请打开AR眼镜视频通话功能');
+            Toast('成功上报指挥中心');
           }else{
             // alert("上报失败");
             Toast('上报失败');

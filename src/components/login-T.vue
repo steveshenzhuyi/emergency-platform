@@ -65,7 +65,7 @@
           <hr>
         </mt-header>
         <br><br>
-        <h4 v-show="GLOBAL.showVideoAlert" style="color:red">您有视频通话邀请，请点击左上角进入</h4>
+        <!-- <h4 v-show="GLOBAL.showVideoAlert" style="color:red">您有视频通话邀请，请点击左上角进入</h4> -->
         <div style="width:80%;">
           <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3" :itemHeight='30'></mt-picker>
         </div>
@@ -311,8 +311,9 @@ export default {
         userId: this.userId
       }).then((response) => {
         var GN = this.groupNo;
+        var videoid = window.localStorage.getItem("VIDEOUSERID")
         if(response.data.results[0].GroupPosition == '组长'){
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader', 'R02', videoid]},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags
@@ -320,7 +321,7 @@ export default {
             console.log(error)
           })
         }else{
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker', 'R02', videoid]},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags

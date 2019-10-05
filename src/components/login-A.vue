@@ -4,7 +4,7 @@
       <mt-tab-container-item id="病人">
         <mt-header fixed style="font-size:25px;height: 50px;" title="病人列表">
           <mt-button size="small" slot="left"
-            @click="$goRoute('/CPR')"><small>今日统计</small></mt-button>
+            @click="$goRoute('/increaseA1')"><small>快速通道</small></mt-button>
           <mt-button size="small" slot="right"
             @click="$goRoute('/increaseA')"><small>新增病人</small></mt-button>
           <hr>
@@ -66,7 +66,7 @@
           <hr>
         </mt-header>
         <br><br>
-        <h4 v-show="GLOBAL.showVideoAlert" style="color:red">您有视频通话邀请，请点击左上角进入</h4>
+        <!-- <h4 v-show="GLOBAL.showVideoAlert" style="color:red">您有视频通话邀请，请点击左上角进入</h4> -->
         <div style="width:80%;">
         <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3" :itemHeight='30'></mt-picker></div>
         <div align="right">
@@ -100,7 +100,13 @@
         <mt-field label="组内职务" v-model="GroupPosition" disabled></mt-field>
         <mt-field label="责任区域" v-model="ManageArea" disabled></mt-field>
         <mt-field label="重点保障对象" v-model="GuaranteeObject" disabled></mt-field><hr>
-        <!-- <mt-button size="large">修改密码</mt-button><br> -->
+        <mt-button size="large" type="primary"  @click="$goRoute('/CPR')">今日统计</mt-button><br>
+        <mt-button size="large" @click="showchangepwd=true">修改密码</mt-button><br>
+        <mt-field label="新密码" v-model="pwd1" v-show="showchangepwd"></mt-field>
+        <mt-field label="确认密码" v-model="pwd2" v-show="showchangepwd"></mt-field>
+        <mt-button v-show="showchangepwd" size="small" style="margin-right:40px" @click="showchangepwd=false">取消</mt-button>
+        <mt-button v-show="showchangepwd" size="small" type="primary" @click="changepwd()">确定</mt-button>
+        <hr v-show="showchangepwd">
         <mt-button size="large" type="danger" @click="logout()">退出登录</mt-button><br><br><br><br>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -231,6 +237,9 @@ export default {
       hosList:[],
       carList:[],
       driving:'',
+      showchangepwd:false,
+      pwd2:'',
+      pwd1:''
     };
   },
   mounted() {
@@ -363,8 +372,9 @@ export default {
         window.localStorage.setItem("Longitude",this.Longitude)
         this.myPosition = new AMap.LngLat(this.Longitude, this.Latitude);
         var GN = this.groupNo;
+        var videoid = window.localStorage.getItem("VIDEOUSERID")
         if(this.GroupPosition == '组长'){
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader']},
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader', 'R01', videoid]},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags
@@ -372,7 +382,7 @@ export default {
             console.log(error)
           })
         }else{
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker']},
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker', 'R01', videoid]},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags
@@ -528,21 +538,7 @@ export default {
       }
     },
     phone(){
-      this.GLOBAL.changeVideoAlert(false)
-      var scheme = 'com.tencent.trtc';
-      appAvailability.check(scheme,
-        function() {
-          var sApp = startApp.set({"application":"com.tencent.trtc"
-        });
-        sApp.start(function() {
-          }, function(error) {
-            alert(error);
-          });
-        },
-        function() {
-          alert(scheme + ' is not available');
-        }
-      );     
+        this.$router.push({name:'D1',params:{SELECTED1:'1'}});
     },
     oneClickNeedHelp(){
       axios.post('/oneClickNeedHelp',{
@@ -563,6 +559,25 @@ export default {
         }, (error) => {
           console.log(err)
         })
+    },
+    changepwd(){
+      if(this.pwd1==this.pwd2){
+         axios.post('/changePwd',{
+        userId:window.localStorage.getItem('USERID'),
+        pwd:this.pwd2
+      }).then((response) => {
+        if(response.data.results == "修改成功") {
+          Toast("修改成功");
+          this.pwd1 = ''
+          this.pwd2 = ''
+          this.showchangepwd = false
+        }else{
+          Toast("修改失败");
+        }
+      })
+      }else{
+        Toast("两次密码不一致");
+      }
     }
   },
 };

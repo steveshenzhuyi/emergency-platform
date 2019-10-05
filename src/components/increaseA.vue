@@ -343,9 +343,9 @@ export default {
           memberId: this.memberId
         }).then((response) => {
           console.log(response)
-          if(response.data.results == "新建成功") {
+          if(response.data.results != "新建失败") {
             Toast('创建成功');
-            this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
+            this.$router.push({name: 'A1',params:{PATIENTID:response.data.results[0].PatientId,SELECTED1:"患者病历"}})
           }else {
             Toast('创建失败');
           }

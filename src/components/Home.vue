@@ -42,6 +42,7 @@ export default {
           return;
         } 
         this.RoleCode = response.data.results[0].RoleCode
+        window.localStorage.setItem("VIDEOUSERID",response.data.results[0].VideoId)
         if (response.data.results[0].RoleCode == "R01") {
           //现场组登录
           this.groupNo = response.data.results[0].GroupNo;

@@ -6,6 +6,8 @@
     var photoUrl = 'http://47.98.252.131:8001/photos/'
     var uploadUrl = "http://47.98.252.131:3000/upload"
     var facecheck = "http://47.98.252.131:3000/facecheck"
+
+    var nowversion = '1.0'
     
     var showVideoAlert = false
     function changeVideoAlert(now) {
@@ -15,6 +17,7 @@
     export default {
         photoUrl,
         uploadUrl,
+        nowversion,
         changeVideoAlert,
         showVideoAlert
     }

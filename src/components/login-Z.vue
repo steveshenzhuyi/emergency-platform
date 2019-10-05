@@ -44,7 +44,7 @@
           <hr>
         </mt-header>
         <br><br>
-        <h4 v-show="GLOBAL.showVideoAlert" style="color:red">您有视频通话邀请，请点击左上角进入</h4>
+        <!-- <h4 v-show="GLOBAL.showVideoAlert" style="color:red">您有视频通话邀请，请点击左上角进入</h4> -->
         <div style="width:80%">
         <mt-picker :slots="slots1" @change="onMessagechange" :visible-item-count="3"></mt-picker></div>
         <div align="right">
@@ -73,7 +73,12 @@
           <mt-field label="职称" v-model="TitleName" disabled></mt-field>
           <!-- <div style="text-align: left; margin-top: 10px">角色：专家</div> -->
           <mt-field label="专长" v-model="Specific" disabled></mt-field><hr>
-          <!-- <mt-button size="large">修改密码</mt-button><br> -->
+          <mt-button size="large" @click="showchangepwd=true">修改密码</mt-button><br>
+        <mt-field label="新密码" v-model="pwd1" v-show="showchangepwd"></mt-field>
+        <mt-field label="确认密码" v-model="pwd2" v-show="showchangepwd"></mt-field>
+        <mt-button v-show="showchangepwd" size="small" style="margin-right:40px" @click="showchangepwd=false">取消</mt-button>
+        <mt-button v-show="showchangepwd" size="small" type="primary" @click="changepwd()">确定</mt-button>
+        <hr v-show="showchangepwd">
           <mt-button size="large"  type="danger" @click="logout()">退出登录</mt-button><br><br><br><br>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -170,6 +175,9 @@ export default {
       data3: [
         {},
       ],
+      showchangepwd:false,
+      pwd2:'',
+      pwd1:''
     };
   },
   mounted() {
@@ -238,8 +246,9 @@ export default {
         this.GroupPosition=response.data.results[0].GroupPosition;
         var GN = this.groupNo;
         var UI = this.userId;
+        var videoid = window.localStorage.getItem("VIDEOUSERID")
         if(this.GroupPosition == '组长'){
-          window.JPush.setTags({ sequence: 1, tags: [GN, UI, 'groupLeader']},
+          window.JPush.setTags({ sequence: 1, tags: [GN, UI, 'groupLeader', 'R04', videoid]},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags
@@ -247,7 +256,7 @@ export default {
             console.log(error)
           })
         }else{
-          window.JPush.setTags({ sequence: 1, tags: [GN, UI, 'worker']},
+          window.JPush.setTags({ sequence: 1, tags: [GN, UI, 'worker', 'R04', videoid]},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags
@@ -348,6 +357,25 @@ export default {
         }, (error) => {
           console.log(err)
         })
+    },
+    changepwd(){
+      if(this.pwd1==this.pwd2){
+         axios.post('/changePwd',{
+        userId:window.localStorage.getItem('USERID'),
+        pwd:this.pwd2
+      }).then((response) => {
+        if(response.data.results == "修改成功") {
+          Toast("修改成功");
+          this.pwd1 = ''
+          this.pwd2 = ''
+          this.showchangepwd = false
+        }else{
+          Toast("修改失败");
+        }
+      })
+      }else{
+        Toast("两次密码不一致");
+      }
     }
   },
 };
