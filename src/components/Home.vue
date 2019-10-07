@@ -1,9 +1,9 @@
 <template>
   <div align="center">
     <img src="./pictrue/logo.png">
-    <h2>之江实验室</h2>
-    <h2>重大会议急救保障系统</h2><hr>
-    <mt-field label="用户名" placeholder="请输入用户名" v-model="userId"></mt-field>
+    <h2>第六届世界互联网大会</h2>
+    <h2>急救保障系统指挥端</h2><hr>
+    <!-- <mt-field label="用户名" placeholder="请输入用户名" v-model="userId"></mt-field> -->
     <mt-field label="密码" placeholder="请输入密码" type="password" v-model="pwd"></mt-field>
     <hr>
     <br>
@@ -24,13 +24,11 @@ export default {
     return {
       userId: '',
       pwd: '',
-      groupNo: '',
-      RoleCode:''
     };
   },
   methods: {
-    //先判断用户的小组
     check() {
+<<<<<<< HEAD
       console.log(this.userId)
       axios.post('/getUserGroup',{
         userId: this.userId
@@ -158,13 +156,15 @@ export default {
           })
         }
       })
+=======
+     if(this.pwd == '123'){
+      this.$router.push({name:'command',params:{SELECTED:"指挥",SELECTED1:'1'}});
+     }else{
+      Toast('密码错误');
+     }
+>>>>>>> 2137f39155c985cc4cf9c3d42da9e81baac3cdbe
     },
-    hospital() {
-      this.$router.push({name: '医院病人列表'});
-    },
-    trans() {
-      this.$router.push({name: '转运列表'});
-    }
+    
   }
 };
 </script>

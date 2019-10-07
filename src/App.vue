@@ -22,8 +22,11 @@ export default {
   },
   mounted(){
     this.backbutton()
+<<<<<<< HEAD
     this.checkversion()
     window.localStorage.setItem("VIDEOUSERID",0)
+=======
+>>>>>>> 2137f39155c985cc4cf9c3d42da9e81baac3cdbe
     var that = this
     document.addEventListener("jpush.receiveNotification", function (event) {
       var alertContent = event.extras.type
@@ -90,10 +93,15 @@ export default {
 
   },
   methods: {
+<<<<<<< HEAD
 
 backbutton(){
   var that=this
   // console.log("111")
+=======
+    backbutton(){
+  var that=this
+>>>>>>> 2137f39155c985cc4cf9c3d42da9e81baac3cdbe
     document.addEventListener("deviceready",function(){
         document.addEventListener("backbutton", function(){
       console.log(navigator)
@@ -112,6 +120,7 @@ Toast({
                 }else if(that.exitAppTicker == 1){
 //                     navigator.app.exitApp(); //退出app
  navigator.Backbutton.goHome(function() { //进入后台
+<<<<<<< HEAD
 
                   // console.log('go home success');
 
@@ -119,6 +128,11 @@ Toast({
 
                   // console.log('go home fail');
 
+=======
+                  // console.log('go home success');
+              }, function() {
+                  // console.log('go home fail');
+>>>>>>> 2137f39155c985cc4cf9c3d42da9e81baac3cdbe
               });
                 }  
 // //                 }else{
@@ -127,6 +141,7 @@ Toast({
         }, false);
     },false);
 },
+<<<<<<< HEAD
 checkversion(){
   axios.get('/getNewestVersion',{}).then((response) => {
     if(response.data.results[0].AppVersion != this.GLOBAL.nowversion) {
@@ -158,6 +173,8 @@ checkversion(){
     }
   })
 },
+=======
+>>>>>>> 2137f39155c985cc4cf9c3d42da9e81baac3cdbe
     reload() {
       this.isRouterAlive = false
       this.$nextTick(function() {
