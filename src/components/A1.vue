@@ -320,6 +320,7 @@
           <mt-button plain type="danger" @click="gotohospital()">前往医院</mt-button>
           <mt-button plain  @click="self()">自行前往</mt-button>
           <!-- <mt-button plain  @click="sure()">确定选择</mt-button> -->
+
         </div>
         <hr>
         <div v-show="isShow">
@@ -2311,6 +2312,7 @@ takephoto1() {
       }
 
     },
+
      uploadPicture1() {
       Indicator.open('上传中...');
       var that = this;
@@ -2337,6 +2339,7 @@ takephoto1() {
           address: "1",
           infoType: "3",
           fileUrl: photoname
+
         }).then((response) => {
           if(response.data.results == "新建成功") {
             Indicator.close();
@@ -2384,6 +2387,7 @@ takephoto1() {
           address: "1",
           infoType: "3",
           fileUrl: photoname
+
         }).then((response) => {
           if(response.data.results == "新建成功") {
             Indicator.close();
@@ -2396,6 +2400,8 @@ takephoto1() {
             Toast("信息上传失败");
           }
         })
+      }else{
+        Toast('请选择车辆和医院')
       }
           function fail(error) {
             Indicator.close();
