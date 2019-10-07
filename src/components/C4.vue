@@ -1,8 +1,8 @@
 <template>
-  <div align = left>
+  <div align=left>
     <mt-header fixed style="font-size:20px" title="消息详情">
     <mt-button size="small" type="danger" slot="left" icon="back"
-        @click="returnT()"><small>返回</small></mt-button>
+        @click="returnZ()"><small>返回</small></mt-button>
     </mt-header>
     <br><br>
     <hr>
@@ -51,8 +51,8 @@ export default {
         }
       })
     },
-    returnT() {
-      this.$router.push({name: '转运列表',params:{SELECTED1:"沟通"}});
+    returnH() {
+      this.$router.push({name: '专家病人列表',params:{SELECTED2:"沟通"}});
     }
   }
 };

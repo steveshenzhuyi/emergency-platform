@@ -4,6 +4,7 @@ import Home from '@/components/Home';
 import 病人列表 from '@/components/login-A';
 import CPR from '@/components/CPR';
 import increaseA from '@/components/increaseA';
+import increaseA1 from '@/components/increaseA1';
 import forget from '@/components/forget';
 import increaseB from '@/components/increaseB';
 import increaseBT from '@/components/increaseBT';
@@ -13,18 +14,22 @@ import increaseCH from '@/components/increaseCH';
 import A1 from '@/components/A1';
 import T1 from '@/components/T1';
 import H1 from '@/components/H1';
+import Z1 from '@/components/Z1';
 import 资源详情 from '@/components/B1';
 import B2 from '@/components/B2';
 import C1 from '@/components/C1';
 import C2 from '@/components/C2';
 import C3 from '@/components/C3';
+import C4 from '@/components/C4';
+import D1 from '@/components/D1';
+import E1 from '@/components/E1';
 import confirm from '@/components/confirm';
 import confirmt from '@/components/confirmt';
 import confirmh from '@/components/confirmh';
-import choosehospital from '@/components/choosehospital';
 import map from '@/components/map';
 import 转运列表 from '@/components/login-T';
 import 医院病人列表 from '@/components/login-H';
+import 专家病人列表 from '@/components/login-Z';
 import 个人信息运输 from '@/components/个人信息运输';
 import 接收病人 from '@/components/接收病人';
 
@@ -58,6 +63,11 @@ export default new Router({
       component: 医院病人列表,
     },
     {
+      path: '/login-Z',
+      name: '专家病人列表',
+      component: 专家病人列表,
+    },
+    {
       path: '/CPR',
       name: 'CPR',
       component: CPR,
@@ -66,6 +76,11 @@ export default new Router({
       path: '/increaseA',
       name: 'increaseA',
       component: increaseA,
+    },
+    {
+      path: '/increaseA1',
+      name: 'increaseA1',
+      component: increaseA1,
     },
     {
       path: '/increaseB',
@@ -128,6 +143,21 @@ export default new Router({
       component: C3,
     },
     {
+      path: '/C4',
+      name: 'C4',
+      component: C4,
+    },
+    {
+      path: '/D1',
+      name: 'D1',
+      component: D1,
+    },
+    {
+      path: '/E1',
+      name: 'E1',
+      component: E1,
+    },
+    {
       path: '/T1',
       name: 'T1',
       component: T1,
@@ -136,6 +166,11 @@ export default new Router({
       path: '/H1',
       name: 'H1',
       component: H1,
+    },
+    {
+      path: '/Z1',
+      name: 'Z1',
+      component: Z1,
     },
     {
       path: '/confirm',
@@ -151,11 +186,6 @@ export default new Router({
       path: '/confirmh',
       name: 'confirmh',
       component: confirmh,
-    },
-    {
-      path: '/choosehospital',
-      name: 'choosehospital',
-      component: choosehospital,
     },
     {
       path: '/map',

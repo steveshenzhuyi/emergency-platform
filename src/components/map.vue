@@ -27,6 +27,7 @@
 import { Header } from 'mint-ui';
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 /* eslint-disable no-undef */
   // import AMap from 'AMap'
   // import AMapUI from 'AMapUI'
@@ -62,8 +63,10 @@ export default {
         hosNo:this.$route.params.HOSNO
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast('病人待后送');
+          MessageBox.alert('病人待后送', '提示');
           this.$router.push({name:'confirm',params:{HOSPITAL:this.hospital,CARID:this.carID}})
+        }else{
+          MessageBox.alert('上传失败', '提示');
         }
       })
     },

@@ -1,118 +1,128 @@
 <template>
-  <div align="center">
+  <div>
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
-        <mt-header fixed style="font-size:20px" title="病人列表">
-          <mt-button size="small" type="danger" slot="left"
-            @click="$goRoute('/CPR')"><small>CPR</small></mt-button>
+        <mt-header fixed style="font-size:25px;height: 50px;" title="病人列表">
+          <mt-button size="small" slot="left"
+            @click="$goRoute('/increaseA1')"><small>快速通道</small></mt-button>
           <mt-button size="small" slot="right"
             @click="$goRoute('/increaseA')"><small>新增病人</small></mt-button>
           <hr>
         </mt-header>
-        <br><br>
-        <mt-cell>
-          <p v-show="false">{{chooselevel}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosestate}}&nbsp;&nbsp;&nbsp;&nbsp;{{sortway}}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-          <mt-button size="small" type="primary" @click="refreshPatient()">刷新</mt-button>
-        </mt-cell>
-        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker>
-        <div v-for="(item,index) in dataclass1" align="left">
+        <br><br>  
+        <div align="left"  style="width:80%;">
+        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3" :itemHeight='30'></mt-picker></div>
+        <div align="right"><mt-button size="small" type="primary" style="position:relative;top:-60px"
+        @click="getpagelist()">刷新</mt-button></div>
+        <div v-for="(item,index) in dataclass1" align="left" style="position:relative;top:-40px">
             <hr><a @click="getpatient(index)">
-            <b class="first">{{item.PatientId}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;<small>{{item.CreateTime}}</small><br>
-            <b class="second">{{item.Name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <b>
-            {{item.Classification}} &nbsp;
-            {{item.StatusNameCar}}</b><br><small>
-            性别：{{item.Gender}} &nbsp; 
-            年龄：{{item.Age}} &nbsp;&nbsp;&nbsp;&nbsp;
-            {{item.OrganizationName}}&nbsp;&nbsp; 
-            {{item.CarName}}&nbsp;
-            {{item.CarId}}
-            {{item.Pcost}}</small></a>
-        </div><br><br><br><br>
+            <div><span>{{item.PatientId}}</span>
+            <span><small style="position:absolute;left:110px">{{item.CreateTime}}</small></span></div>
+            <!-- <br> -->
+            <div><span style="font-size:23px;" :style="{'color':(item.VIPTag == '1'?'red':'black')}">{{item.Name}}</span>
+            <span style="position:absolute;left:110px;font-size:20px;" :class="item.Classification">{{item.Classification}}</span>
+            <span style="position:absolute;left:220px;font-size:20px;" :class="item.StatusName">{{item.StatusName}}</span></div>
+            <!-- <br> -->
+            <div>
+            <small style="color:grey">
+            性别：{{item.Gender}}</small>
+            <small style="color:grey;position:absolute;left:110px;">年龄：{{item.Age}}</small>
+            <small style="width:15em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
+            color:grey;position:absolute;left:220px;">症状：{{item.Diagnose}}</small></div>
+            <div>
+            <small style="color:grey">医院：{{item.OrganizationName}}</small>
+            <small style="color:grey;position:absolute;left:110px;">车辆：{{item.CarName}}</small>
+            <small style="color:grey;position:absolute;left:220px;">车号：{{item.CarId}}</small>
+            <small style="color:grey;position:absolute;left:330px;">{{item.Time}}</small>
+            </div></a>
+        </div>
+        <br><br>
       </mt-tab-container-item>
       <mt-tab-container-item id="资源">
-        <mt-header fixed style="font-size:20px" title="资源列表">
-          <mt-button size="small" slot="right"
-            @click="$goRoute('/increaseB')"><small>新增资源</small></mt-button>
+        <mt-header fixed style="font-size:25px;height: 50px;" title="资源列表">
+          <!-- <mt-button size="small" slot="right" @click="$goRoute('/increaseB')"><small>新增资源</small></mt-button> -->
           <hr>
         </mt-header>
         <br><br>
-        <mt-cell>
-          <p v-show="false">{{choosekind}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosenumber}}&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-          <mt-button size="small" type="primary" @click="refreshresource()">刷新</mt-button>
-        </mt-cell>
-        <mt-picker :slots="slots1" @change="onResourcelistChange" :visible-item-count="3"></mt-picker>
-        <div v-for=" (item,index) in data2" :data2-index="{index}" align="left">
+        <div style="width:80%;">
+        <mt-picker :slots="slots1" @change="onResourcelistChange" :visible-item-count="3" :itemHeight='30'></mt-picker>
+        </div>
+        <div align="right">
+        <mt-button size="small" type="primary" style="position:relative;top:-60px" @click="getResourceList()">刷新</mt-button></div>
+        <div v-for=" (item,index) in data2" :data2-index="{index}" align="left" style="position:relative;top:-40px">
           <hr><a @click="getResource(index)">
-          <b>{{ item.ResourceNo }} &nbsp;&nbsp;
-             {{item.ResourceName}}</b><br>
-          <small>规格：{{item.Standard}} &nbsp;&nbsp;
-                 {{item.Sstate}}状态：在库 &nbsp;&nbsp;
-                 数量：{{item.Amount}}</small></a>
-        </div><br><br><br><br>
+          <div style="font-size: 20px;">{{ item.ResourceNo }} &nbsp;&nbsp;&nbsp;
+             {{item.ResourceName}}</div>
+          <small style="color:grey">规格：{{item.Standard}}</small>
+          <small style="color:grey;position:absolute;left:100px;">状态：{{item.Status}}</small>
+          <small style="color:grey;position:absolute;left:192px;">数量：{{item.Amount}}</small>
+        <small style="color:grey;position:absolute;left:280px;">单位：{{item.Unit}}</small></a>
+        </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="沟通">
-        <mt-header fixed style="font-size:20px" title="信息列表">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="信息列表">
           <mt-button slot="left" @click="phone()"><small>视频通话</small></mt-button>
-          <!-- <mt-button slot="right" @click="$goRoute('/increaseC')"><small>新增信息</small></mt-button> -->
+          <mt-button slot="right" @click="oneClickNeedHelp()"><small>一键求助</small></mt-button>
           <hr>
         </mt-header>
         <br><br>
-        <mt-cell>
-          <p v-show="false">{{choosesituation}}&nbsp;&nbsp;&nbsp;&nbsp;{{choosesort}}&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-          <mt-button size="small" type="primary" @click="refreshMessage()">刷新</mt-button>
-        </mt-cell>
-        <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3"></mt-picker>
-        <div v-for=" (item,index) in data3" align="left">
+        <!-- <h4 v-show="GLOBAL.showVideoAlert" style="color:red">您有视频通话邀请，请点击左上角进入</h4> -->
+        <div style="width:80%;">
+        <mt-picker :slots="slots2" @change="onMessagechange" :visible-item-count="3" :itemHeight='30'></mt-picker></div>
+        <div align="right">
+          <mt-button size="small" type="primary" style="position:relative;top:-60px" @click="getMessageList()">刷新</mt-button>
+        </div>
+        <div v-for=" (item,index) in data3" align="left" style="position:relative;top:-40px">
           <hr><a @click="getMessage(index)">
-            <big><b>
-              序号{{item.MessageNo}}</b></big><br>
-              <b>{{item.MessageTitle}}</b><br>
-           <!--  <small>{{item.MessageDetail}}&nbsp;<br> -->
-              发送时间：{{item.SendTime}}</small>
+            <div>
+              序号{{item.MessageNo}}<br></div>
+              <div style="font-size: 20px;">{{item.MessageTitle}}<br></div>
+              <small style="color:grey">发送时间：{{item.SendTime}}</small>
           </a>
-        </div><br><br><br><br>
+        </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="个人">
-        <mt-header fixed style="font-size:20px" title="个人信息">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="个人信息">
           <!-- <mt-button slot="right" @click="edit"><small>修改</small></mt-button> -->
           <hr>
         </mt-header>
-        <br><br>
-        <p style="text-align: left">个人信息</p>
-        <mt-field label="姓名" v-model="Name" disabled="true"></mt-field>
-        <mt-field label="性别" v-model="Gender" disabled="true"></mt-field>
-        <mt-field label="年龄" v-model="Age" disabled="true"></mt-field>
-        <mt-field label="手机" v-model="Phone" disabled="true"></mt-field>
-        <mt-field label="邮箱" v-model="Email" disabled="true"></mt-field>
-        <mt-field label="职称" v-model="TitleName" disabled="true"></mt-field>
-        <mt-field label="科室" v-model="DepartmentName" disabled="true"></mt-field><hr>
-        <p style="text-align: left">角色：现场组</p>
-        <mt-field label="所属小组" v-model="GroupName" disabled="true"></mt-field>
-        <mt-field label="组内职务" v-model="GroupPosition" disabled="true"></mt-field>
-        <mt-field label="责任区域" v-model="ManageArea" disabled="true"></mt-field>
-        <mt-field label="重点保障对象" v-model="GuaranteeObject" disabled="true"></mt-field><hr>
-        <mt-button size="large">修改密码</mt-button><br>
-        <mt-button size="large" type="danger" @click="$goRoute('/Home')">退出登录</mt-button><br><br><br><br>
+        <br><br><br>
+        <div style="text-align: left; margin-top: 10px">个人信息</div>
+        <mt-field label="姓名" v-model="Name" disabled></mt-field>
+        <mt-field label="性别" v-model="Gender" disabled></mt-field>
+        <mt-field label="年龄" v-model="Age" disabled></mt-field>
+        <mt-field label="手机" v-model="Phone" disabled></mt-field>
+        <mt-field label="邮箱" v-model="Email" disabled></mt-field>
+        <mt-field label="职称" v-model="TitleName" disabled></mt-field>
+        <mt-field label="科室" v-model="DepartmentName" disabled></mt-field><hr>
+        <div style="text-align: left; margin-top: 10px">角色：现场组</div>
+        <mt-field label="所属小组" v-model="GroupName" disabled></mt-field>
+        <mt-field label="组内职务" v-model="GroupPosition" disabled></mt-field>
+        <mt-field label="责任区域" v-model="ManageArea" disabled></mt-field>
+        <mt-field label="重点保障对象" v-model="GuaranteeObject" disabled></mt-field><hr>
+        <mt-button size="large" type="primary"  @click="$goRoute('/CPR')">今日统计</mt-button><br>
+        <mt-button size="large" @click="showchangepwd=true">修改密码</mt-button><br>
+        <mt-field label="新密码" v-model="pwd1" v-show="showchangepwd"></mt-field>
+        <mt-field label="确认密码" v-model="pwd2" v-show="showchangepwd"></mt-field>
+        <mt-button v-show="showchangepwd" size="small" style="margin-right:40px" @click="showchangepwd=false">取消</mt-button>
+        <mt-button v-show="showchangepwd" size="small" type="primary" @click="changepwd()">确定</mt-button>
+        <hr v-show="showchangepwd">
+        <mt-button size="large" type="danger" @click="logout()">退出登录</mt-button><br><br><br><br>
       </mt-tab-container-item>
     </mt-tab-container>
     <div>
       <mt-tabbar v-model= "selected" fixed>
         <mt-tab-item id="病人">
-          <img slot="icon" src="./icon/病人.png"><b style="font-size:15px">病人</b>
+          <img slot="icon" src="./icon/病人.png"><div style="font-size:12px">病人</div>
         </mt-tab-item>
         <mt-tab-item id="资源">
-         <img slot="icon" src="./icon/资源.png"><b style="font-size:15px">资源</b>
+         <img slot="icon" src="./icon/资源.png"><div style="font-size:12px">资源</div>
         </mt-tab-item>
         <mt-tab-item id="沟通">
-          <img slot="icon" src="./icon/沟通.png"><b style="font-size:15px">沟通</b>
+          <img slot="icon" src="./icon/沟通.png"><div style="font-size:12px">沟通</div>
         </mt-tab-item>
         <mt-tab-item id="个人">
-          <img slot="icon" src="./icon/个人.png"><b style="font-size:15px">个人</b>
+          <img slot="icon" src="./icon/个人.png"><div style="font-size:12px">个人</div>
         </mt-tab-item>
       </mt-tabbar>
     </div>
@@ -123,16 +133,21 @@
 <script>
 import {picker} from 'mint-ui';
 import axios from 'axios';
-
+import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 export default {
-  inject:['reload'],
+  // inject:['reload'],
   data() {
     return {
       userId: window.localStorage.getItem('USERID'),
       groupNo: window.localStorage.getItem('GROUPNO'),
       StatusName: '',
-      selected: '',
+      selected: '沟通',
       mark: '',
+      isshow1: false,
+      isshow2: false,
+      isshow3: false,
+      isshow4: false,
       ResourceType: '',
       search: '',
       search1: '',
@@ -147,13 +162,13 @@ export default {
       GroupPosition: '', 
       ManageArea: '',
       GuaranteeObject: '',
-      chooselevel: '',
-      choosestate: '',
-      choosekind: '',
-      choosenumber: '',
-      choosesituation: '',
-      choosesort: '',
-      sortway: '',
+      chooselevel: '选择分级',
+      choosestate: '选择状态',
+      choosekind: '全部',
+      choosenumber: '编号正序',
+      choosesituation: '全部',
+      choosesort: '时间倒序',
+      sortway: "时间排序",
       resourceNo: '',
       Selected: '',
       slots: [
@@ -170,7 +185,7 @@ export default {
           },
           { 
             flex: 1,
-            values: ['分级排序','时间排序'],
+            values: ['时间排序','分级排序'],
             textAlign: 'right',
             className: 'slot3',
           },
@@ -195,7 +210,7 @@ export default {
           },
           { 
             flex: 3,
-            values: ['时间正序','时间倒序'],
+            values: ['时间倒序','时间正序'],
             className: 'slot8',
           },
         ],
@@ -215,57 +230,123 @@ export default {
       ],
       message: [],
       resource: [],
+      videoalert:'',
+      Longitude:0,
+      Latitude:0,
+      myPosition:'',
+      hosList:[],
+      carList:[],
+      driving:'',
+      showchangepwd:false,
+      pwd2:'',
+      pwd1:''
     };
   },
   mounted() {
+    console.log(this.groupNo);
+    this.selected=this.$route.params.SELECTED;
+    console.log(this.selected);
     this.getpagelist()
+    // this.getUserInfo()
+    this.getMessageList()
+    this.getResourceList()
+    this.videoalert = this.showVideoAlert
   },
   methods: {
     getpagelist() {
-      console.log(this.groupNo);
-      this.selected=this.$route.params.SELECTED;
-      console.log(this.selected);
-      //获取病人列表分级
       axios.post('/getPatientlistEmergencyClass',{
         groupNo: this.groupNo
       }).then((response) => {
         this.PatientlistClass=response.data.results;
-        this.dataclass1=this.PatientlistClass
-        console.log(this.dataclass1);
+        axios.post('/getPatientlistEmergencyCreatetime',{
+          groupNo: this.groupNo
+        }).then((response) => {
+          this.PatientlistTime=response.data.results;
+          this.refreshPatient();
+          this.getUserInfo();
+          setTimeout(()=>{
+            this.addTimeToPatient()
+          },1000)
+        }).catch(function(error){
+          console.log("error",error);
+        })
       }).catch(function(error){
         console.log("error",error);
       })
-      //获取病人列表时间排序
-      axios.post('/getPatientlistEmergencyCreatetime',{
-        groupNo: this.groupNo
-      }).then((response) => {
-        this.PatientlistTime=response.data.results;
-        console.log(this.dataclass1);
-      }).catch(function(error){
-        console.log("error",error);
-      })
+    },
+    addTimeToPatient(){
+      for(var i=0; i<this.PatientlistClass.length;i++){
+        if(this.PatientlistClass[i].Status == 'S03'){
+          if(this.PatientlistClass[i].CarNo == "000"){
+            for(var j=0; j<this.hosList.length; j++){
+              if(this.PatientlistClass[i].HosNo == this.hosList[j].HosNo){
+                this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.hosList[j].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else if(this.PatientlistClass[i].CarNo != "" || this.PatientlistClass[i].CarNo!= null){
+            for(var k=0; k<this.carList.length; k++){
+              if(this.PatientlistClass[i].CarNo == this.carList[k].CarNo){
+                this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.carList[k].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else this.PatientlistClass[i].Time = '';
+        }
+      }
+
+      for(var i=0; i<this.PatientlistTime.length;i++){
+        if(this.PatientlistTime[i].Status == 'S03'){
+          if(this.PatientlistTime[i].CarNo == "000"){
+            for(var j=0; j<this.hosList.length; j++){
+              if(this.PatientlistTime[i].HosNo == this.hosList[j].HosNo){
+                this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.hosList[j].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else if(this.PatientlistTime[i].CarNo != "" || this.PatientlistTime[i].CarNo!= null){
+            for(var k=0; k<this.carList.length; k++){
+              if(this.PatientlistTime[i].CarNo == this.carList[k].CarNo){
+                this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.carList[k].searchresult.routes[0].time/60)+"分钟";
+                break;
+              }
+            }
+          }else this.PatientlistTime[i].Time = '';
+        }
+      }
+      console.log(this.PatientlistClass)
+      console.log(this.PatientlistTime)
+      this.refreshPatient();
+
+    },
+    getResourceList(){
       //获取资源列表
       axios.post('/getResourceListByGroup',{
         groupNo: this.groupNo
       }).then((response) => {
         this.resource=response.data.results
-        this.data2=this.resource
-        console.log(response);
-        console.log(this.data2);
+        for(var i=0; i<this.resource.length;i++) {
+          if(this.resource[i].Status == "1"){
+            this.resource[i].Status = "在库"
+          }
+        }
+        this.refreshresource()
       }).catch(function(error){
         console.log("error",error);
       })
+    },
+    getMessageList(){
       //获取现场组信息列表
       axios.post('/getAssemblyMessage',{
         groupNo: this.groupNo
       }).then((response) => {
         this.message = response.data.results
-        this.data3=this.message
-        console.log(response);
-        console.log(this.data3);
+        this.refreshMessage()
       }).catch(function(error){
         console.log("error",error);
       })
+    },
+    getUserInfo(){
       //获取用户个人信息
       axios.post('/getUserInfo',{
         userId: this.userId
@@ -285,7 +366,78 @@ export default {
         this.ManageArea=response.data.results[0].ManageArea;
         this.GroupName=response.data.results[0].GroupName;
         this.GroupPosition=response.data.results[0].GroupPosition;
+        this.Latitude = response.data.results[0].Latitude;
+        this.Longitude = response.data.results[0].Longitude;
+        window.localStorage.setItem("Latitude",this.Latitude)
+        window.localStorage.setItem("Longitude",this.Longitude)
+        this.myPosition = new AMap.LngLat(this.Longitude, this.Latitude);
+        var GN = this.groupNo;
+        var videoid = window.localStorage.getItem("VIDEOUSERID")
+        if(this.GroupPosition == '组长'){
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader', 'R01', videoid]},
+          (result) => {
+            var sequence = result.sequence
+            var tags = result.tags
+          }, (error) => {
+            console.log(error)
+          })
+        }else{
+          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker', 'R01', videoid]},
+          (result) => {
+            var sequence = result.sequence
+            var tags = result.tags
+          }, (error) => {
+            console.log(error)
+          })
+        }
+
+        axios.get('/getHosList',{}).then((response) => {
+          this.hosList = response.data.results; 
+          var that = this;
+          AMap.plugin(['AMap.Driving'],function(){
+            that.driving = new AMap.Driving({ //用不上
+              policy: AMap.DrivingPolicy.LEAST_TIME
+            })
+          });
+          for(var i=0;i<that.hosList.length;i++){
+           (function(j){
+           that.hosList[j].position = new AMap.LngLat(response.data.results[j].Longitude, response.data.results[j].Latitude)             
+            new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.myPosition, that.hosList[j].position, function (status, result) {
+              that.hosList[j].searchresult = result
+            })
+          })(i) 
+        }
+      }).catch(function(error){
+        console.log("error",error);
       })
+
+      axios.get('/getCarList',{}).then((response) => {
+        var that = this;
+        var carlist = response.data.results;
+        var x  =carlist.shift()
+        that.carList = response.data.results
+        
+        AMap.plugin(['AMap.Driving'],function(){
+          that.driving = new AMap.Driving({
+            policy: AMap.DrivingPolicy.LEAST_TIME
+          })
+        });
+        for(var i=0;i<that.carList.length;i++){
+         (function(j){
+          that.carList[j].position = new AMap.LngLat(response.data.results[j].Longitude, response.data.results[j].Latitude)
+          new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.carList[j].position,that.myPosition, function (status, result) {
+            that.carList[j].searchresult = result
+          })
+        })(i)
+      }
+    }).catch(function(error){
+      console.log("error",error);
+    })
+
+
+
+
+    })
     },
     //病人列表排序方法
     onPatientlistChange(picker, values) {
@@ -308,7 +460,8 @@ export default {
     },
     getMessage:function(index){
       console.log(index)
-      this.$router.push({name: 'C1',params:{MESSAGENO:this.data3[index].MessageNo}});
+      window.localStorage.setItem('MESSAGENO',this.data3[index].MessageNo)
+      this.$router.push({name: 'C1'});
     },
     getpatient:function(index){
       console.log(index)
@@ -317,6 +470,7 @@ export default {
     },
     //刷新各指定页面
     refreshPatient() {
+      this.dataclass1 = []
       if(this.sortway == "时间排序") {
         this.dataclass1=this.PatientlistTime
       }else if(this.sortway == "分级排序"){
@@ -339,9 +493,12 @@ export default {
       this.dataclass1 = tmp;
     },
     refreshMessage() {
-      this.data3=this.message;
-      var tmp = new Array();
-      for(var i=0; i<this.data3.length;i++) {
+      this.data3 = []
+      var x =this.message;
+      if(this.choosesort == '时间正序') {
+          x.reverse();
+        }
+      for(var i=0; i<x.length;i++) {
         if(this.choosesituation != '全部') {
           if(this.choosesituation == '普通消息'){
             this.mark = '0'
@@ -349,18 +506,20 @@ export default {
           if(this.choosesituation == '紧急标识'){
             this.mark = '1'
           }
-          if(this.mark != this.data3[i].Mark) {
+          if(this.mark != x[i].Mark) {
             continue;
           }
         }
-        tmp.push(this.data3[i]);
+        this.data3.push(x[i]);
       }
-      this.data3 = tmp;
     },
     refreshresource() {
-      this.data2=this.resource;
-      var tmp = new Array();
-      for(var i=0; i<this.data2.length; i++) {
+      this.data2=[];
+      var tmp = this.resource;
+      if(this.choosenumber == '编号倒序') {
+          tmp.reverse();
+        }
+      for(var i=0; i<tmp.length; i++) {
         if(this.choosekind != '全部') {
           if(this.choosekind == '药品') {
             this.ResourceType = '1'
@@ -371,23 +530,85 @@ export default {
           if(this.choosekind == '其他') {
             this.ResourceType = '3'
           }
-          if(this.ResourceType != this.data2[i].ResourceType) {
+          if(this.ResourceType != tmp[i].ResourceType) {
             continue;
           }
         }
-        tmp.push(this.data2[i]);
+        this.data2.push(tmp[i]);
       }
-      this.data2 = tmp;
+    },
+    phone(){
+        this.$router.push({name:'D1',params:{SELECTED1:'1'}});
+    },
+    oneClickNeedHelp(){
+      axios.post('/oneClickNeedHelp',{
+        groupNo: window.localStorage.getItem('GROUPNO')
+      }).then((response) => {
+        if(response.data.results == "上传成功") {
+          Toast("成功上报指挥中心，请打开AR眼镜视频实况功能和本系统视频通话功能");
+        }else{
+          Toast("上报失败");
+        }
+      })
+    },
+    logout(){
+      window.JPush.cleanTags({ sequence: 1 },
+        (result) => {
+          console.log(result)
+          this.$router.push({name:'Home'})
+        }, (error) => {
+          console.log(err)
+        })
+    },
+    changepwd(){
+      if(this.pwd1==this.pwd2){
+         axios.post('/changePwd',{
+        userId:window.localStorage.getItem('USERID'),
+        pwd:this.pwd2
+      }).then((response) => {
+        if(response.data.results == "修改成功") {
+          Toast("修改成功");
+          this.pwd1 = ''
+          this.pwd2 = ''
+          this.showchangepwd = false
+        }else{
+          Toast("修改失败");
+        }
+      })
+      }else{
+        Toast("两次密码不一致");
+      }
     }
   },
 };
 </script>
 
 <style>
-  b.second{
-    font-size:20px;
-  };
-  b.first{
-    font-size:15px;
+  .I级{
+    color:red;
+  }
+  .II级{
+    color:orange;
+  }
+  .III级{
+    color:#E6BD1A;
+  }
+  .IV级{
+    color:blue;
+  }
+  .V级{
+    color:blue;
+  }
+  .处置完成{
+    color:green;
+  }
+  .已后送{
+    color:green;
+  }
+  .待后送{
+    color:red;
+  }
+  .处置中{
+    color:red;
   }
 </style>
