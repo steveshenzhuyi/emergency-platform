@@ -428,13 +428,13 @@
           </div>
           </div>
         </mt-popup>
-        <mt-popup v-model="popupVisible4"  position="bottom" closeOnClickModal="false" style="width:100%;height: 50%;overflow: auto;">
+        <mt-popup v-model="popupVisible4"  position="bottom" closeOnClickModal="false" style="width:100%;height: 70%;overflow: auto;">
           <div align="left" style="">
              <mt-checklist @change="checkon"
             title="危急征象/情况指标（自动分级I级）"
             v-model="critical1"
             :options="critical1list">
-          </mt-checklist>
+          </mt-checklist><br>
           <mt-checklist @change="checkon"
             title="高风险/潜在危险情况（自动分级II级）"
             v-model="critical2"
