@@ -14,7 +14,7 @@
         <mt-navbar v-model="selected1">
           <mt-tab-item id="1">病史</mt-tab-item>
           <!-- <mt-tab-item id="2">现病史</mt-tab-item> -->
-          <mt-tab-item id="3">体征</mt-tab-item>
+          <!-- <mt-tab-item id="3">体征</mt-tab-item> -->
           <!-- <mt-tab-item id="4">既往史</mt-tab-item> -->
           <mt-tab-item id="5">初步诊断</mt-tab-item>
           <mt-tab-item id="6">基本信息</mt-tab-item>
@@ -128,22 +128,12 @@
         </div>
         <br><br><br><br><br><br>
         </mt-tab-container-item> -->
-        <mt-tab-container-item id="3">
-          <!-- <div align="center" style="height:28px"><span style="float: left;">常用体征</span></div><hr> -->
+        <!-- <mt-tab-container-item id="3">
+          
         <div>
           <mt-button size="small" @click.native="popupVisible3 = true" style="position:absolute;left:30px;width: 90px" type="primary" plain>监护</mt-button>
           <mt-button size="small" @click="commonTZ()" style="position:absolute;left:150px;width: 90px" type="primary" plain>常规</mt-button>
-          <!-- <mt-button size="small" @click="bloodpressure()" style="position:relative;left:60px;width: 90px"
-            type="primary" plain>血压</mt-button>
-          <mt-button size="small" @click="temprature()" style="position:relative;left:90px;width: 90px"
-            type="primary" plain>体温</mt-button>
-          </div>
-            <br> 
-            <div>
-          <mt-button size="small" @click="breath()" style="position:absolute;left:30px;width: 90px"
-            type="primary" plain>呼吸</mt-button>
-          <mt-button size="small" @click="bloodoxygen()" style="position:absolute;left:150px;width: 90px"
-            type="primary" plain>血氧</mt-button> -->
+         
           <mt-button size="small" @click="otherTZ()" style="position:relative;left:60px;width: 90px" type="primary" plain>其他</mt-button><hr>
           </div>
           <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;" align="left">
@@ -165,11 +155,7 @@
               <mt-button @click="addot()" size="small" type="primary">确定</mt-button>
             </div>
           </div>
-          <!-- <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;" align="right">
-            <div align="center">新增体征：{{体征}}</div>
-            <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
-            <mt-button @click="add()" size="small" type="primary">确定</mt-button>
-          </div> -->
+          
            <div style="margin-top: 15px;margin-bottom: 15px" align="left"><span style="text-align: left;">体征列表</span><span><mt-button size="small" type="primary"  @click="Showdelete()" style="float: right;margin-right: 5px">管理</mt-button></span></div>
           <div v-for="(item,index) in dataTZ" style="text-align: left">
             <hr>
@@ -179,7 +165,7 @@
             </div>
           </div>
           <br><br><br><br>
-        </mt-tab-container-item>
+        </mt-tab-container-item> -->
         <!-- <mt-tab-container-item id="4">
             <div v-for="(item,index) in 既往史图片">
               <div align="center">
@@ -256,7 +242,7 @@
         </mt-tab-container-item>
       </mt-tab-container>
     </mt-tab-container-item>
-    <mt-tab-container-item id="处置方案">
+    <!-- <mt-tab-container-item id="处置方案">
       <mt-header fixed style="font-size:25px;height: 50px;" :title="title2">
       <mt-button size="small" icon="back" slot="left"
         @click="returnA()"><small>返回</small></mt-button>
@@ -304,7 +290,7 @@
         <div align="center" v-show="item.InfoType==3">
            <img v-gallery :src="item.FileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
       </div><br><br><br><br>
-    </mt-tab-container-item>
+    </mt-tab-container-item> -->
     <mt-tab-container-item id="病人去向">
       <mt-header fixed style="font-size:25px;height: 50px;" :title="title3">
         <mt-button size="small" icon="back" slot="left"
@@ -453,9 +439,9 @@
         <mt-tab-item id="患者病历">
           <img slot="icon" src="./icon/病历.png"><div style="font-size:12px">患者病历</div>
         </mt-tab-item>
-        <mt-tab-item id="处置方案">
+        <!-- <mt-tab-item id="处置方案">
           <img slot="icon" src="./icon/处置方案.png"><div style="font-size:12px">处置方案</div>
-        </mt-tab-item>
+        </mt-tab-item> -->
         <mt-tab-item id="病人去向">
           <img slot="icon" src="./icon/去向.png"><div style="font-size:12px">病人去向</div>
         </mt-tab-item>
