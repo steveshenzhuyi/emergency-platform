@@ -12,6 +12,7 @@ import increaseC from '@/components/increaseC';
 import increaseCT from '@/components/increaseCT';
 import increaseCH from '@/components/increaseCH';
 import A1 from '@/components/A1';
+import A2 from '@/components/A2';
 import T1 from '@/components/T1';
 import H1 from '@/components/H1';
 import Z1 from '@/components/Z1';
@@ -116,6 +117,11 @@ export default new Router({
       path: '/A1',
       name: 'A1',
       component: A1,
+    },
+    {
+      path: '/A2',
+      name: 'A2',
+      component: A2,
     },
     {
       path: '/B1',
