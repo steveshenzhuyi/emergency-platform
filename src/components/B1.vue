@@ -21,10 +21,10 @@
     <hr>
     <p style="text-align: left">数量增减</p>
     <h2>现在数量：{{counter}}</h2>
-    <mt-button type="primary" style="width: 120px; height:65px; float: left; margin-left:70px" v-on:click="counter +=1">增加</mt-button>
-    <mt-button type="danger" style="width: 120px; height:65px; float: right; margin-right:70px" v-on:click="counter -=1">减少</mt-button>
+    <mt-button type="primary" style="width: 100px; height:50px; float: left; margin-left:40px" v-on:click="counter +=1">增加</mt-button>
+    <mt-button type="danger" style="width: 100px; height:50px; float: right; margin-right:40px" v-on:click="counter -=1">减少</mt-button>
     <div style="margin-top: 120px;" align="center">
-    <mt-button type="primary"  style="width: 150px;height: 50px" @click="edit()">确认修改</mt-button>
+    <mt-button type="primary"  style="width: 120px;height: 40px" @click="edit()">确认修改</mt-button>
   </div>
     <br><br>
     <router-view></router-view>

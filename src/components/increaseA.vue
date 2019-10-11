@@ -327,6 +327,13 @@ export default {
       if(this.pname == "" || this.pname == null){
         Toast('姓名不能为空');
       }else{
+        if(this.iscamera == false){
+      axios.post('/newMember',{
+        name:this.pname
+      }).then((response) => {
+        this.memberId = response.data.results[0].memberId
+        var tempname = response.data.results[0].Name
+        this.pname = tempname.substring(0,1)+'*'+tempname.substring(2)
         axios.post('/newPatient',{
           groupId: this.groupId,
           inputUserId: this.inputUserId,
@@ -344,14 +351,47 @@ export default {
         }).then((response) => {
           console.log(response)
           if(response.data.results != "新建失败") {
+            var pid = response.data.results[0].PatientId
             Toast('创建成功');
-            this.$router.push({name: 'A1',params:{PATIENTID:response.data.results[0].PatientId,SELECTED1:"患者病历"}})
+            this.$router.push({name: 'A1',params:{PATIENTID:pid,SELECTED1:"患者病历"}})
           }else {
             Toast('创建失败');
           }
         }).catch(function(error){
           console.log("error",error);
         });
+
+      }).catch(function(error){
+        console.log("error",error);
+      });
+    }else{
+      axios.post('/newPatient',{
+        groupId: this.groupId,
+        inputUserId: this.inputUserId,
+        gender: this.gender,
+        pname: this.pname,
+        age: this.age,
+        phone: this.phone,
+        bloodType: this.bloodType,
+        unit: this.unit,
+        position: this.position,
+        nation: this.nation,
+        email: this.email,
+        photoUrl: '',
+        memberId: this.memberId
+      }).then((response) => {
+        console.log(response)
+        if(response.data.results != "新建失败") {
+          var pid = response.data.results[0].PatientId
+          Toast('创建成功');
+          this.$router.push({name: 'A1',params:{PATIENTID:pid,SELECTED1:"患者病历"}}) 
+          }else {
+            Toast('创建失败');
+          }
+      }).catch(function(error){
+        console.log("error",error);
+      });
+    }
       }
     }
   }

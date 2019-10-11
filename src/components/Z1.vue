@@ -406,8 +406,8 @@ export default {
         console.log(response)
         this.PatientId=response.data.results[0].PatientId;
         this.Name=response.data.results[0].Name;
-        this.title2="既往病历："+this.Name;
-        this.title1="既往处置："+this.Name;
+        this.title2="既往病历";
+        this.title1="既往处置";
         this.Phone=response.data.results[0].Phone
         this.Email=response.data.results[0].Email;
         this.Gender=response.data.results[0].Gender;

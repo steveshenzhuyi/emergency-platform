@@ -27,7 +27,7 @@
             <small style="color:grey">
             性别：{{item.Gender}}</small>
             <small style="color:grey;position:absolute;left:110px;">年龄：{{item.Age}}</small>
-            <small style="width:15em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
+            <small style="width:9em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
             color:grey;position:absolute;left:220px;">症状：{{item.Diagnose}}</small></div>
             <div>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>

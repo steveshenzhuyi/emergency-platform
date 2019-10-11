@@ -131,8 +131,8 @@
         <mt-tab-container-item id="3">
           <!-- <div align="center" style="height:28px"><span style="float: left;">常用体征</span></div><hr> -->
         <div>
-          <mt-button size="small" @click.native="popupVisible3 = true" style="position:absolute;left:30px;width: 90px" type="primary" plain>监护</mt-button>
-          <mt-button size="small" @click="commonTZ()" style="position:absolute;left:150px;width: 90px" type="primary" plain>常规</mt-button>
+          <mt-button size="small" @click.native="popupVisible3 = true" style="position:relative;right:30px;width: 90px" type="primary" plain>监护</mt-button>
+          <mt-button size="small" @click="commonTZ()" style="width: 90px" type="primary" plain>常规</mt-button>
           <!-- <mt-button size="small" @click="bloodpressure()" style="position:relative;left:60px;width: 90px"
             type="primary" plain>血压</mt-button>
           <mt-button size="small" @click="temprature()" style="position:relative;left:90px;width: 90px"
@@ -144,7 +144,7 @@
             type="primary" plain>呼吸</mt-button>
           <mt-button size="small" @click="bloodoxygen()" style="position:absolute;left:150px;width: 90px"
             type="primary" plain>血氧</mt-button> -->
-          <mt-button size="small" @click="otherTZ()" style="position:relative;left:60px;width: 90px" type="primary" plain>其他</mt-button><hr>
+          <mt-button size="small" @click="otherTZ()" style="position:relative;left:30px;width: 90px" type="primary" plain>其他</mt-button><hr>
           </div>
           <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;" align="left">
             <div align="center">新增常规体征</div>
@@ -216,14 +216,14 @@
           <div align="center" style="height:40px"><mt-button size="small" @click.native="popupVisible4 = true" style="position:absolute;left: 0px; width: 90px" type="primary" plain>特殊情况</mt-button></div>
           <div align="center" style="height:30px"><span style="float: left;"><b>MEWS评分</b></span></div>
           <div align="left" style="height:30px">
-            <span>心率：{{heartratescore}}次/min</span><span style="position:absolute;left:170px">收缩压：{{bloodpressurescore}}mmHg</span><span style="position:absolute;left:350px">呼吸：{{breathscore}}次/min</span>
+            <span>心率</span><span style="position:absolute;left:120px">收缩压</span><span style="position:absolute;left:240px">呼吸</span>
           </div>
           <mt-picker :slots="slots1" @change="onScoreChange1" :visible-item-count="3"></mt-picker>
           <div align="left" style="height:30px;margin-top: 10px">
-            <span>体温：{{tempraturescore}}℃</span><span style="position:absolute;left:170px">意识：{{awarescore}}</span>
+            <span>体温</span><span style="position:absolute;left:120px">意识</span>
           </div>
           <mt-picker :slots="slots2" @change="onScoreChange2" :visible-item-count="3"></mt-picker>
-          <div align="left" style="height:60px">
+          <div align="left" style="height:80px">
             <span>总分：{{score}}</span><br>
             <span>转运建议：{{advice}}</span>
           </div>
@@ -268,29 +268,33 @@
       <br><br>
       <div>
         <div style="text-align: left; margin-top: 10px">常用处置</div><hr>
-        <div>
-        <mt-button size="small" @click="oxygen()" style="position:absolute;left:30px;width: 90px"
-          type="primary" plain>吸&nbsp;&nbsp;氧</mt-button>
-        <mt-button size="small" @click="ECG()" style="position:relative;left:30px;width: 90px"
-          type="primary" plain>&nbsp;心电图&nbsp;</mt-button>
-        <mt-button size="small" @click="bandage()" style="position:relative;left:60px;width: 90px"
-          type="primary" plain>包扎止血</mt-button>
-           <mt-button size="small" @click="stone()" style="position:relative;left:90px;width: 90px"
-          type="primary" plain>支具固定</mt-button>
-        </div>
-          <br>
-          <div>
-        <mt-button size="small" @click="drug()" style="position:absolute;left:30px;width: 90px"
-          type="primary" plain>口服药物</mt-button>
-        <mt-button size="small" @click="dd()" style="position:absolute;left:150px;width: 90px"
-          type="primary" plain>静脉给药</mt-button>
-        <mt-button size="small" @click="elseway()" style="position:relative;left:60px;width: 90px"
-          type="primary" plain>其他处理</mt-button><hr>
-          </div> 
+       <div>
+            <mt-button size="small" @click="oxygen()" style="position:relative;right:30px;width: 90px"
+            type="primary" plain>吸&nbsp;&nbsp;氧</mt-button>
+            <mt-button size="small" @click="ECG()" style="width: 90px"
+            type="primary" plain>&nbsp;心电图&nbsp;</mt-button>
+            <mt-button size="small" @click="bandage()" style="position:relative;left:30px;width: 90px"
+            type="primary" plain>包扎止血</mt-button></div><br>
+            <div>
+          <mt-button size="small" @click="stone()" style="position:relative;right:30px;width: 90px"
+            type="primary" plain>支具固定</mt-button>
+            <mt-button size="small" @click="drug()" style="width: 90px"
+            type="primary" plain>口服药物</mt-button>
+            <mt-button size="small" @click="dd()" style="position:relative;left:30px;width: 90px"
+            type="primary" plain>静脉给药</mt-button>
+            </div><br>
+            <div>
+            <mt-button size="small" @click="elseway()" style="width: 90px"
+            type="primary" plain>其他处理</mt-button><hr></div>
       </div>
       <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px" align="right">
         <div align="center">新增处置：{{methods}}</div>
-        <mt-field placeholder="内容" v-model="content1" type="textarea" rows="3"></mt-field>
+       <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
+       <div v-for="(item,index) in selectedMedicineList" style="text-align: left;color: grey;">
+         <a @click="selectmedicine(index)">
+           （备选）{{item}}
+         </a>
+       </div>
         <mt-button size="small" @click="add1()" type="primary">确定</mt-button>
       </div>
        <div style="margin-top: 15px;margin-bottom: 15px" align="left"><span style="text-align: left;">处置列表</span><span><mt-button size="small" type="primary"  @click="Showdelete()" style="float: right;margin-right: 5px">管理</mt-button></span></div>
@@ -320,7 +324,6 @@
           <mt-button plain type="danger" @click="gotohospital()">前往医院</mt-button>
           <mt-button plain  @click="self()">自行前往</mt-button>
           <!-- <mt-button plain  @click="sure()">确定选择</mt-button> -->
-
         </div>
         <hr>
         <div v-show="isShow">
@@ -334,7 +337,7 @@
           @click="save60()">确定</mt-button>
         </div>
         <div v-show="isShow1" align="left">
-          <span><b>推荐医院：</b>{{goodhos}} &nbsp;&nbsp;</span><span v-show="hide"><b>推荐车辆：</b>{{goodcar}}</span>
+          <!-- <span><b>推荐医院：</b>{{goodhos}} &nbsp;&nbsp;</span><span v-show="hide"><b>推荐车辆：</b>{{goodcar}}</span> -->
           <div style="margin-top:10px;text-align: left"><b>已选医院：</b>
           {{HosNo}}&nbsp;&nbsp;&nbsp;{{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}</div>
           <div v-show="hide" style="text-align: left;"><b>已选车辆：</b>
@@ -361,8 +364,8 @@
               <small style="color:grey">
               ICU剩余{{item.ICUNow}}&nbsp;&nbsp;手术室剩余{{item.ORNow}}&nbsp;&nbsp;专用病房剩余{{item.GWNow}}&nbsp;&nbsp;导管室剩余{{item.DGNow}}</small><br>
               <small style="color:grey;">联系人：{{item.realManager}}</small>
-              <small style="color:grey;position:absolute;left:120px">手机：{{item.phone}}</small>
-              <small style="color:grey;position:absolute;left:290px">{{item.Time}}</small><br>
+              <small style="color:grey;position:absolute;left:120px">手机：{{item.phone}}</small><br>
+              <small style="color:grey;position:absolute;left:0px">{{item.Time}}</small><br>
               <mt-badge size="small" v-show='item.XiongtongTag'>胸痛</mt-badge>
               <mt-badge size="small" v-show='item.GanranTag'>感染</mt-badge>
               <mt-badge size="small" v-show='item.ZhongduTag'>中毒</mt-badge>
@@ -384,12 +387,11 @@
             <a @click="getcar(index)">
             <hr>
             <div align="left">
-              <div>编号{{item.CarNo}}&nbsp;&nbsp;&nbsp;{{item.CarName}}&nbsp;&nbsp;&nbsp;{{item.CarId}}</div>
-              <div><span>{{item.CarStatus}}</span><span style="position:absolute;left:170px">&nbsp;当前待后送：{{item.daihousong}}人</span>
-               </div>
+              编号{{item.CarNo}}&nbsp;&nbsp;&nbsp;{{item.CarName}}&nbsp;&nbsp;&nbsp;{{item.CarId}}<br>
+              <span>{{item.CarStatus}}</span><span style="position:absolute;left:100px">&nbsp;当前待后送：{{item.daihousong}}人</span><br>
               <small style="color:grey;">联系人：{{item.CarManager}}</small>
-              <small style="color:grey;position:absolute;left:120px">手机：{{item.phone}}</small>
-              <small style="color:grey;position:absolute;left:290px">{{item.Time}}</small>
+              <small style="color:grey;position:absolute;left:120px">手机：{{item.phone}}</small><br>
+              <small style="color:grey;position:absolute;left:0px">{{item.Time}}</small><br>
             </div><hr>
             </a>
           </div>
@@ -678,6 +680,42 @@
         {label:'创伤患者，有高危险性受伤机制',value:'创伤患者，有高危险性受伤机制'},
         {label:'其他分诊护士认为患者存在高风险，但不需紧急抢救或潜在危险情况',value:'其他高风险但不需紧急抢救或潜在危险情况'},
         ],
+        medicineList:[
+        '拜新同30mg  1片 口服',
+        '达喜500mg  1片 口服',
+        '耐信20mg  1片 口服',
+        '得舒特50mg  1片 口服',
+        '思密达3g  冲服',
+
+        '泛捷复0.25g  1粒 口服',
+        '开瑞坦10mg  1片 口服',
+        '拜阿司匹林100mg  1片 口服',
+        '硝酸甘油片0.5mg  1片 舌下含服',
+        '盐酸小檗碱片0.1g  1片 口服',
+
+        '可乐必妥片0.5g  1片 口服',
+        '速效救心丸40mg   粒 含服',
+        '芙朴感冒颗粒10g 冲服',
+        '连花清瘟  口服',
+        '咽立爽口含滴丸25mg  含服',
+
+        '强力枇杷露100ml  口服',
+        '白加黑  口服',
+        '沐舒坦片30mg  1片 口服',
+        '泰利必妥滴眼液  外用',
+        '万托林100ug  揿 口腔吸入',
+
+        '思诺思10mg  1片 口服',
+        '舒乐安定1mg  1片 口服',
+        '锡类散  外用',
+        '敏使朗6mg  1片 口服',
+        '麝香镇痛膏  外用',
+
+        '肾上腺素针2mg  皮下注射 肌注',
+        '纳洛酮针0.4mg  静注',
+        '地塞米松5mg  肌注'
+        ],
+        selectedMedicineList:[],
         advice:'',
         score:'',
         heartratescore:'',
@@ -1064,9 +1102,9 @@
           console.log(response)
           this.PatientId=response.data.results[0].PatientId;
           this.Name=response.data.results[0].Name;
-          this.title1="患者病历："+this.Name;
-          this.title2="处置方案："+this.Name;
-          this.title3="病人去向："+this.Name;
+          this.title1=this.Name;
+          this.title2=this.Name;
+          this.title3=this.Name;
           this.Phone=response.data.results[0].Phone
           this.Email=response.data.results[0].Email;
           this.Gender=response.data.results[0].Gender;
@@ -1504,16 +1542,73 @@
         this.methods = "口服药物"
         this.content1 = "药物名称：    用法：    用量：   "
         this.isShow4 = true
+        this.selectDrug()
       },
       dd() {
         this.methods = "静脉给药"
         this.content1 = "药物名称：    用法：    用量：   "
         this.isShow4 = true
+        this.selectDd()
       },
       elseway () {
         this.methods = "其他处理"
         this.content1 = ""
         this.isShow4 = true
+        this.selectElse()
+      },
+      selectDrug(){
+        this.selectedMedicineList = []
+        if(this.初步诊断!=''){
+          if(this.初步诊断.search(/(冠心病|高血压|心绞痛)/g)>=0){this.selectedMedicineList.push(this.medicineList[0])}
+            if(this.初步诊断.search(/(胃炎|食管炎|胃溃疡|十二指肠溃疡)/g)>=0){this.selectedMedicineList.push(this.medicineList[1])}
+              if(this.初步诊断.search(/(反流|胃溃疡|十二指肠溃疡)/g)>=0){this.selectedMedicineList.push(this.medicineList[2])}
+                if(this.初步诊断.search(/(肠易激)/g)>=0){this.selectedMedicineList.push(this.medicineList[3])}
+                  if(this.初步诊断.search(/(腹泻)/g)>=0){this.selectedMedicineList.push(this.medicineList[4])}
+
+                    if(this.初步诊断.search(/(感染|上呼吸道感染|上感|扁桃体炎)/g)>=0){this.selectedMedicineList.push(this.medicineList[5])}
+                      if(this.初步诊断.search(/(过敏)/g)>=0){this.selectedMedicineList.push(this.medicineList[6])}
+                        if(this.初步诊断.search(/(心脏病|冠状动脉|粥样硬化|心肌梗死|中风|卒中|心绞痛|心梗|心肌梗塞)/g)>=0){this.selectedMedicineList.push(this.medicineList[7])}
+                          if(this.初步诊断.search(/(心脏病|冠状动脉|粥样硬化)/g)>=0){this.selectedMedicineList.push(this.medicineList[8])}
+                            if(this.初步诊断.search(/(腹泻)/g)>=0){this.selectedMedicineList.push(this.medicineList[9])}
+
+                              if(this.初步诊断.search(/(感染)/g)>=0){this.selectedMedicineList.push(this.medicineList[10])}
+                                if(this.初步诊断.search(/(心脏病|冠状动脉|粥样硬化|心肌梗死|心梗|心肌梗塞)/g)>=0){this.selectedMedicineList.push(this.medicineList[11])}
+                                  if(this.初步诊断.search(/(上感|上呼吸道感染|感冒)/g)>=0){this.selectedMedicineList.push(this.medicineList[12])}
+                                    if(this.初步诊断.search(/(流感|上呼吸道感染|感冒|流行)/g)>=0){this.selectedMedicineList.push(this.medicineList[13])}
+                                      if(this.初步诊断.search(/(咽炎|咽喉炎)/g)>=0){this.selectedMedicineList.push(this.medicineList[14])}
+
+                                        if(this.初步诊断.search(/(支气管|肺炎)/g)>=0){this.selectedMedicineList.push(this.medicineList[15])}
+                                          if(this.初步诊断.search(/(上感|上呼吸道感染|感冒)/g)>=0){this.selectedMedicineList.push(this.medicineList[16])}
+                                            if(this.初步诊断.search(/(咳嗽|哮喘)/g)>=0){this.selectedMedicineList.push(this.medicineList[17])}
+                                              
+
+                                                  if(this.初步诊断.search(/(失眠)/g)>=0){this.selectedMedicineList.push(this.medicineList[20])}
+                                                    if(this.初步诊断.search(/(焦虑|失眠)/g)>=0){this.selectedMedicineList.push(this.medicineList[21])}
+                                                      
+                                                        if(this.初步诊断.search(/(梅尼埃|眩晕)/g)>=0){this.selectedMedicineList.push(this.medicineList[23])}
+        }
+      },
+      selectElse(){
+        this.selectedMedicineList = []
+        if(this.初步诊断!=''){
+          if(this.初步诊断.search(/(眼)/g)>=0){this.selectedMedicineList.push(this.medicineList[18])}
+            if(this.初步诊断.search(/(哮喘)/g)>=0){this.selectedMedicineList.push(this.medicineList[19])}
+              if(this.初步诊断.search(/(口腔溃疡)/g)>=0){this.selectedMedicineList.push(this.medicineList[22])}
+                if(this.初步诊断.search(/(风湿|关节|扭伤)/g)>=0){this.selectedMedicineList.push(this.medicineList[24])}
+        }
+      },
+      selectDd(){
+        this.selectedMedicineList = []
+        if(this.初步诊断!=''){
+          if(this.初步诊断!=''){
+           if(this.初步诊断.search(/(骤停|休克)/g)>=0){this.selectedMedicineList.push(this.medicineList[25])}
+            if(this.初步诊断.search(/(酒精中毒|中毒)/g)>=0){this.selectedMedicineList.push(this.medicineList[26])}
+              if(this.初步诊断.search(/(过敏)/g)>=0){this.selectedMedicineList.push(this.medicineList[27])}
+          }
+        }
+      },
+      selectmedicine(index){
+        this.content1 = this.selectedMedicineList[index]
       },
       heartrate() {
         this.体征 = "心率"

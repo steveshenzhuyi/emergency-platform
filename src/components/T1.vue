@@ -26,20 +26,22 @@
         <div>
           <div  style="text-align: left; margin-top: 10px">常用处置</div><hr>
           <div>
-            <mt-button size="small" @click="oxygen()" style="position:absolute;left:30px;width: 90px"
+            <mt-button size="small" @click="oxygen()" style="position:relative;right:30px;width: 90px"
             type="primary" plain>吸&nbsp;&nbsp;氧</mt-button>
-            <mt-button size="small" @click="ECG()" style="position:relative;left:30px;width: 90px"
+            <mt-button size="small" @click="ECG()" style="width: 90px"
             type="primary" plain>&nbsp;心电图&nbsp;</mt-button>
-            <mt-button size="small" @click="bandage()" style="position:relative;left:60px;width: 90px"
-            type="primary" plain>包扎止血</mt-button>
-          <mt-button size="small" @click="stone()" style="position:relative;left:90px;width: 90px"
-            type="primary" plain>支具固定</mt-button></div><br>
+            <mt-button size="small" @click="bandage()" style="position:relative;left:30px;width: 90px"
+            type="primary" plain>包扎止血</mt-button></div><br>
             <div>
-            <mt-button size="small" @click="drug()" style="position:absolute;left:30px;width: 90px"
+          <mt-button size="small" @click="stone()" style="position:relative;right:30px;width: 90px"
+            type="primary" plain>支具固定</mt-button>
+            <mt-button size="small" @click="drug()" style="width: 90px"
             type="primary" plain>口服药物</mt-button>
-            <mt-button size="small" @click="dd()" style="position:absolute;left:150px;width: 90px"
+            <mt-button size="small" @click="dd()" style="position:relative;left:30px;width: 90px"
             type="primary" plain>静脉给药</mt-button>
-            <mt-button size="small" @click="elseway()" style="position:relative;left:60px;width: 90px"
+            </div><br>
+            <div>
+            <mt-button size="small" @click="elseway()" style="width: 90px"
             type="primary" plain>其他处理</mt-button><hr></div>
         </div>
         <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px;" align="right">
@@ -188,8 +190,8 @@
           </mt-tab-container-item> -->
           <mt-tab-container-item id="3">
            <div>
-          <mt-button size="small" @click="commonTZ()" style="position:absolute;left:30px;width: 90px" type="primary" plain>常规</mt-button>
-          <mt-button size="small" @click="otherTZ()" style="position:relative;left:30px;width: 90px" type="primary" plain>其他</mt-button><hr>
+          <mt-button size="small" @click="commonTZ()" style="position:absolute;left:10px;width: 90px" type="primary" plain>常规</mt-button>
+          <mt-button size="small" @click="otherTZ()" style="position:relative;left:0px;width: 90px" type="primary" plain>其他</mt-button><hr>
           </div>
             <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;" align="left">
             <div align="center">新增常规体征</div>
@@ -704,9 +706,9 @@ export default {
         console.log(response)
         this.PatientId=response.data.results[0].PatientId;
         this.Name=response.data.results[0].Name;
-        this.title2="既往病历："+this.Name;
-        this.title1="新增处置："+this.Name;
-        this.title3="实时地图："+this.Name;
+        this.title2="既往病历";
+        this.title1="新增处置";
+        this.title3="实时地图";
         this.Phone=response.data.results[0].Phone
         this.Email=response.data.results[0].Email;
         this.Gender=response.data.results[0].Gender;
