@@ -16,7 +16,7 @@
           <!-- <mt-tab-item id="2">现病史</mt-tab-item> -->
           <!-- <mt-tab-item id="3">体征</mt-tab-item> -->
           <!-- <mt-tab-item id="4">既往史</mt-tab-item> -->
-          <mt-tab-item id="5">初步诊断</mt-tab-item>
+          <!-- <mt-tab-item id="5">初步诊断</mt-tab-item> -->
           <mt-tab-item id="6">基本信息</mt-tab-item>
         </mt-navbar>
         <br>
@@ -33,16 +33,25 @@
               @click="cancel1()">取消</mt-button>
               </div>
               <hr> -->
-              <div align="center" style="height:30px">
+              <div align="center" style="height:35px">
                 <mt-button v-show="editing1" size="small" style="float: right;margin-top: 2px" type="primary" @click="save10()">保存</mt-button>
                 <mt-button  v-show="editing1" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel1()">取消</mt-button>
-                <span style="float: left;">主诉</span>
+                <span style="float: left;"><b>主诉</b></span>
               </div>
               <div align="left">
                 <small style="color:grey">{{timevalue}} </small>
                 <mt-field  type="textarea" placeholder="请输入内容" v-model="主诉" rows="3" v-on:focus.native.capture="focus1()" v-on:blur.native.capture="blur1()"></mt-field><hr>
               </div>
-              <div align="center" style="height:30px">
+              <div align="center" style="height:35px">
+                 <mt-button  v-show="editing5" size="small" type="primary" style="float: right;margin-top: 2px" @click="save50()">保存</mt-button>
+             <mt-button  v-show="editing5" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel5()">取消</mt-button>
+                <span style="float: left;"><b>初步诊断</b></span></div>
+          <div align="left">
+            <small style="color:grey">{{timevalue2}}</small>
+            <mt-field type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="3" v-on:focus.native.capture="focus5()" v-on:blur.native.capture="blur5()"></mt-field>
+          </div>
+          <hr>
+              <!-- <div align="center" style="height:30px">
                 <mt-button v-show="editing2" size="small" style="float: right;margin-top: 2px" type="primary" @click="save20()">保存</mt-button>
                 <mt-button  v-show="editing2" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel2()">取消</mt-button>
                 <span style="float: left;">现病史</span>
@@ -77,7 +86,7 @@
               <div align="left">
                 <small style="color:grey">{{timevalue43}} </small>
                 <mt-field type="textarea" placeholder="请输入内容" v-model="目前用药"  rows="2" v-on:focus.native.capture="focus43()" v-on:blur.native.capture="blur43()"></mt-field><hr>
-              </div>
+              </div> -->
               <div v-for="(item,index) in 主诉图片">
                 <div align="center">
                   <small style="color:grey">{{item.time}}</small></div>
@@ -186,19 +195,7 @@
         </div>
           <br><br><br><br><br><br>
         </mt-tab-container-item> -->
-        <mt-tab-container-item id="5">
-          <div align="center" style="height:30px"><span style="float: left;"><b>初步诊断</b></span></div>
-          <div align="left">
-            <small style="color:grey">{{timevalue2}}</small>
-            <mt-field type="textarea" placeholder="请输入内容" v-model="初步诊断" rows="3" v-on:focus.native.capture="focus5()" v-on:blur.native.capture="blur5()"></mt-field>
-          </div>
-          <div align="center" v-show="editing5" style="height: 35px">
-              <mt-button  v-show="editing5" size="small" type="primary" style="float: right;margin-top: 5px"
-              @click="save50()">保存</mt-button>
-             <mt-button  v-show="editing5" size="small" style="float: right; margin-right:10px;margin-top: 5px"
-              @click="cancel5()">取消</mt-button>
-              </div>
-          <hr>
+        <!-- <mt-tab-container-item id="5">
           <div align="center" style="height:40px"><mt-button size="small" @click.native="popupVisible4 = true" style="position:absolute;left: 0px; width: 90px" type="primary" plain>特殊情况</mt-button></div>
           <div align="center" style="height:30px"><span style="float: left;"><b>MEWS评分</b></span></div>
           <div align="left" style="height:30px">
@@ -222,9 +219,8 @@
           <hr>
           <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
           <div><small style="color:grey">病人分级为I级或II级时，系统将自动上报。其他情况有需要时，可以使用手动一键上报。</small></div>
-          <!-- <mt-button type="danger" @click="alert()">一键上报</mt-button> -->
           <br><br><br><br>
-        </mt-tab-container-item>
+        </mt-tab-container-item> -->
         <mt-tab-container-item id="6">
           <img src="./pictrue/man.png"><hr>
           <mt-field label="编号" v-model="PatientId" disabled></mt-field>

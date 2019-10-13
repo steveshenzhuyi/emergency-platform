@@ -33,10 +33,13 @@
               @click="cancel1()">取消</mt-button>
               </div>
               <hr> -->
+               <div align="center" style="height:30px">
+              <mt-button size="small" @click="ECG()" style="width: 120px"
+            type="primary" plain>&nbsp;心电图检查&nbsp;</mt-button></div>
               <div align="center" style="height:30px">
                 <mt-button v-show="editing1" size="small" style="float: right;margin-top: 2px" type="primary" @click="save10()">保存</mt-button>
                 <mt-button  v-show="editing1" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel1()">取消</mt-button>
-                <span style="float: left;">主诉</span>
+                <span style="float: left;"><b>主诉</b></span>
               </div>
               <div align="left">
                 <small style="color:grey">{{timevalue}} </small>
@@ -45,36 +48,36 @@
               <div align="center" style="height:30px">
                 <mt-button v-show="editing2" size="small" style="float: right;margin-top: 2px" type="primary" @click="save20()">保存</mt-button>
                 <mt-button  v-show="editing2" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel2()">取消</mt-button>
-                <span style="float: left;">现病史</span>
+                <span style="float: left;" @click="showxianbingshi1()"><b>现病史</b></span>
               </div>
-              <div align="left">
+              <div align="left" v-show="showxianbingshi">
                 <small style="color:grey">{{timevalue1}} </small>
                 <mt-field  type="textarea" placeholder="请输入内容" v-model="现病史" rows="3" v-on:focus.native.capture="focus2()" v-on:blur.native.capture="blur2()"></mt-field><hr>
               </div>
               <div align="center" style="height:30px">
                 <mt-button v-show="editing41" size="small" style="float: right;margin-top: 2px" type="primary" @click="save41()">保存</mt-button>
                 <mt-button  v-show="editing41" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel41()">取消</mt-button>
-                <span style="float: left;">过敏史</span>
+                <span style="float: left;" @click="showguominshi1()"><b>过敏史</b></span>
               </div>
-              <div align="left">
+              <div align="left" v-show="showguominshi">
                 <small style="color:grey">{{timevalue41}} </small>
                 <mt-field  type="textarea" placeholder="请输入内容" v-model="过敏史" rows="2" v-on:focus.native.capture="focus41()" v-on:blur.native.capture="blur41()"></mt-field><hr>
               </div>
               <div align="center" style="height:30px">
                 <mt-button v-show="editing42" size="small" style="float: right;margin-top: 2px" type="primary" @click="save42()">保存</mt-button>
                 <mt-button  v-show="editing42" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel42()">取消</mt-button>
-                <span style="float: left;">疾病史</span>
+                <span style="float: left;" @click="showjibingshi1()"><b>疾病史</b></span>
               </div>
-              <div align="left">
+              <div align="left" v-show="showjibingshi">
                 <small style="color:grey">{{timevalue42}} </small>
                 <mt-field type="textarea" placeholder="请输入内容" v-model="疾病史"  rows="2" v-on:focus.native.capture="focus42()" v-on:blur.native.capture="blur42()"></mt-field><hr>
               </div>
               <div align="center" style="height:30px">
                 <mt-button v-show="editing43" size="small" style="float: right;margin-top: 2px" type="primary" @click="save43()">保存</mt-button>
                 <mt-button  v-show="editing43" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel43()">取消</mt-button>
-                <span style="float: left;">目前用药</span>
+                <span style="float: left;" @click="showmuqianyongyao1()"><b>目前用药</b></span>
               </div>
-              <div align="left">
+              <div align="left" v-show="showmuqianyongyao">
                 <small style="color:grey">{{timevalue43}} </small>
                 <mt-field type="textarea" placeholder="请输入内容" v-model="目前用药"  rows="2" v-on:focus.native.capture="focus43()" v-on:blur.native.capture="blur43()"></mt-field><hr>
               </div>
@@ -131,8 +134,8 @@
         <mt-tab-container-item id="3">
           <!-- <div align="center" style="height:28px"><span style="float: left;">常用体征</span></div><hr> -->
         <div>
-          <mt-button size="small" @click.native="popupVisible3 = true" style="position:relative;right:30px;width: 90px" type="primary" plain>监护</mt-button>
-          <mt-button size="small" @click="commonTZ()" style="width: 90px" type="primary" plain>常规</mt-button>
+         <!--  <mt-button size="small" @click.native="popupVisible3 = true" style="position:relative;right:30px;width: 90px" type="primary" plain>监护</mt-button> -->
+          <mt-button size="small" @click="commonTZ()" style="position:relative;right:30px;width: 90px" type="primary" plain>常规</mt-button>
           <!-- <mt-button size="small" @click="bloodpressure()" style="position:relative;left:60px;width: 90px"
             type="primary" plain>血压</mt-button>
           <mt-button size="small" @click="temprature()" style="position:relative;left:90px;width: 90px"
@@ -214,7 +217,8 @@
               </div>
           <hr>
           <div align="center" style="height:40px"><mt-button size="small" @click.native="popupVisible4 = true" style="position:absolute;left: 0px; width: 90px" type="primary" plain>特殊情况</mt-button></div>
-          <div align="center" style="height:30px"><span style="float: left;"><b>MEWS评分</b></span></div>
+          <div align="center" style="height:30px" @click="showpingfen1()"><span style="float: left;"><b>MEWS评分</b></span></div>
+          <div v-show="showpingfen">
           <div align="left" style="height:30px">
             <span>心率</span><span style="position:absolute;left:120px">收缩压</span><span style="position:absolute;left:240px">呼吸</span>
           </div>
@@ -228,7 +232,9 @@
             <span>转运建议：{{advice}}</span>
           </div>
           <hr>
-          <div align="center" style="height:30px"><span style="float: left;"><b>预检分级</b></span></div>
+        </div>
+          <div align="center" style="height:30px" @click="showfenji1()"><span style="float: left;"><b>预检分级</b></span></div>
+          <div v-show="showfenji">
           <div align="left" style="height:30px">
             <span>当前分级：{{level}}</span>
           <mt-button @click="setclass()" size="small" style="float: right;margin-right: 10px" v-show="settingclass">修改分级</mt-button>
@@ -236,6 +242,7 @@
           <hr>
           <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
           <div><small style="color:grey">病人分级为I级或II级时，系统将自动上报。其他情况有需要时，可以使用手动一键上报。</small></div>
+        </div>
           <!-- <mt-button type="danger" @click="alert()">一键上报</mt-button> -->
           <br><br><br><br>
         </mt-tab-container-item>
@@ -271,8 +278,8 @@
        <div>
             <mt-button size="small" @click="oxygen()" style="position:relative;right:30px;width: 90px"
             type="primary" plain>吸&nbsp;&nbsp;氧</mt-button>
-            <mt-button size="small" @click="ECG()" style="width: 90px"
-            type="primary" plain>&nbsp;心电图&nbsp;</mt-button>
+            <mt-button size="small" @click.native="popupVisible3 = true" style="width: 90px"
+            type="primary" plain>监&nbsp;&nbsp;护</mt-button>
             <mt-button size="small" @click="bandage()" style="position:relative;left:30px;width: 90px"
             type="primary" plain>包扎止血</mt-button></div><br>
             <div>
@@ -382,7 +389,7 @@
             </a>
           </div>
         </mt-popup>
-        <mt-popup v-model="popupVisible2" position="bottom" style="width:100%;overflow: auto;">
+        <mt-popup v-model="popupVisible2" position="bottom" style="width:100%;height: 50%;overflow: auto;">
           <div v-for="(item,index) in carList">
             <a @click="getcar(index)">
             <hr>
@@ -699,7 +706,7 @@
         '连花清瘟  口服',
         '咽立爽口含滴丸25mg  含服',
 
-        '强力枇杷露100ml  口服',
+        '强力枇杷露15ml  口服',
         '白加黑  口服',
         '沐舒坦片30mg  1片 口服',
         '泰利必妥滴眼液  外用',
@@ -711,9 +718,12 @@
         '敏使朗6mg  1片 口服',
         '麝香镇痛膏  外用',
 
-        '肾上腺素针2mg  皮下注射 肌注',
+        '肾上腺素针2mg  皮下注射',
         '纳洛酮针0.4mg  静注',
-        '地塞米松5mg  肌注'
+        '地塞米松5mg  肌注',
+        '阿司匹林100mg  3片 嚼服',
+        '替格瑞洛90mg  2片 口服'
+
         ],
         selectedMedicineList:[],
         advice:'',
@@ -741,7 +751,13 @@
         bo:'',
         tp:'',
         rr:'',
-        ot:''
+        ot:'',
+        showxianbingshi:false,
+        showguominshi:false,
+        showjibingshi:false,
+        showmuqianyongyao:false,
+        showpingfen:false,
+        showfenji:false
       };
     },
     mounted() {
@@ -820,6 +836,25 @@
       Showdelete(){
       this.showdelete = !this.showdelete;
     },
+    showfenji1(){
+      this.showfenji = !this.showfenji
+    },
+    showpingfen1(){
+      this.showpingfen = !this.showpingfen
+    },
+    showmuqianyongyao1(){
+      this.showmuqianyongyao = !this.showmuqianyongyao
+    },
+    showjibingshi1(){
+      this.showjibingshi = !this.showjibingshi
+    },
+    showguominshi1(){
+      this.showguominshi = !this.showguominshi
+    },
+    showxianbingshi1(){
+      this.showxianbingshi = !this.showxianbingshi
+    },
+
       focus1(){
         this.editing1 = true;
         this.tempzhusu = this.主诉;
@@ -1586,6 +1621,8 @@
                                                     if(this.初步诊断.search(/(焦虑|失眠)/g)>=0){this.selectedMedicineList.push(this.medicineList[21])}
                                                       
                                                         if(this.初步诊断.search(/(梅尼埃|眩晕)/g)>=0){this.selectedMedicineList.push(this.medicineList[23])}
+                                                          if(this.初步诊断.search(/(心脏病|冠状动脉|粥样硬化|心肌梗死|心梗|心肌梗塞|急性|冠脉|综合)/g)>=0){this.selectedMedicineList.push(this.medicineList[28])}
+                                                            if(this.初步诊断.search(/(心脏病|冠状动脉|粥样硬化|心肌梗死|心梗|心肌梗塞|急性|冠脉|综合)/g)>=0){this.selectedMedicineList.push(this.medicineList[29])}
         }
       },
       selectElse(){

@@ -23,6 +23,8 @@ import C2 from '@/components/C2';
 import C3 from '@/components/C3';
 import C4 from '@/components/C4';
 import D1 from '@/components/D1';
+import D2 from '@/components/D2';
+import D3 from '@/components/D3';
 import E1 from '@/components/E1';
 import confirm from '@/components/confirm';
 import confirmt from '@/components/confirmt';
@@ -157,6 +159,16 @@ export default new Router({
       path: '/D1',
       name: 'D1',
       component: D1,
+    },
+    {
+      path: '/D2',
+      name: 'D2',
+      component: D2,
+    },
+    {
+      path: '/D3',
+      name: 'D3',
+      component: D3,
     },
     {
       path: '/E1',

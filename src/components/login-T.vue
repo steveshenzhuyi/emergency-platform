@@ -498,22 +498,8 @@ export default {
       }
     },
     phone(){
-      this.GLOBAL.changeVideoAlert(false)
-      var scheme = 'com.tencent.trtc';
-      appAvailability.check(scheme,
-        function() {
-          var sApp = startApp.set({"application":"com.tencent.trtc"
-        });
-        sApp.start(function() {
-          }, function(error) {
-            alert(error);
-          });
-        },
-        function() {
-          alert(scheme + ' is not available');
-        }
-      );     
-    }
+        this.$router.push({name:'D1',params:{SELECTED1:'1'}});
+    },
   },
 };
 </script>

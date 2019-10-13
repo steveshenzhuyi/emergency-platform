@@ -13,10 +13,11 @@
       <mt-button size="small" type="primary" plain>
         <img src="./icon/照相.png" height="35" width="35" slot="icon">
         拍照</mt-button>
-    </mt-cell> -->
+    </mt-cell> --> 
     <hr>
     <!-- <p style="text-align: left">个人信息</p> -->
-    <mt-button size="small" @click="getface()" style="margin-bottom:10px"><small>人脸识别拍照</small></mt-button>
+    <mt-button size="small" @click="getface()" style="margin-bottom:10px;margin-right: 10px"><small>人脸识别拍照</small></mt-button>
+    <mt-button size="small" @click="getAnEmergencyNum()" style="margin-bottom:10px"><small>获取紧急编号</small></mt-button>
     <div v-show='isface'><img v-gallery id="image" style="max-height: 200px; max-width: 90%;" ></img></div>
     <mt-button v-show='isface' type="primary" size="small" @click="uploadPicture()"style="margin-bottom:10px"><small>识别</small></mt-button>
       <mt-field label="姓名" v-model="pname"></mt-field>
@@ -59,6 +60,7 @@ export default {
     return {
       confidence:0,
       base64:'',
+      isem:false,
       faceid:'0',
       isface:false,
       iscamera:false,
@@ -305,6 +307,15 @@ export default {
     returnA() {
       this.$router.push({name: '病人列表',params:{SELECTED:"病人"}})
     },
+    getAnEmergencyNum(){
+  axios.get('/getAnEmergencyNum',{}).then((response) => {
+    this.isem = true
+    this.pname = '紧急'+String(response.data.results).substr(2)
+
+  }).catch(function(error){
+    console.log("error",error);
+  })
+},
     newPatient() {
       if(this.blood === "A型" && this.type === "Rh+") {
         this.bloodType = '1'
@@ -327,7 +338,7 @@ export default {
       if(this.pname == "" || this.pname == null){
         Toast('姓名不能为空');
       }else{
-        if(this.iscamera == false){
+        if(this.isem == false && this.iscamera == false){
       axios.post('/newMember',{
         name:this.pname
       }).then((response) => {

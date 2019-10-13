@@ -32,8 +32,9 @@
             <div>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
             <small style="color:grey;position:absolute;left:110px;">车辆：{{item.CarName}}</small>
-            <small style="color:grey;position:absolute;left:220px;">车号：{{item.CarId}}</small>
-            <small style="color:grey;position:absolute;left:330px;">{{item.Time}}</small>
+            <small style="color:grey;position:absolute;left:220px;">车号：{{item.CarId}}</small></div>
+            <div>
+            <small style="color:grey;">{{item.Time}}</small>
             </div></a>
         </div>
         <br><br>
@@ -93,7 +94,7 @@
         <mt-field label="年龄" v-model="Age" disabled></mt-field>
         <mt-field label="手机" v-model="Phone" disabled></mt-field>
         <mt-field label="邮箱" v-model="Email" disabled></mt-field>
-        <mt-field label="职称" v-model="TitleName" disabled></mt-field>
+        <mt-field label="职务" v-model="TitleName" disabled></mt-field>
         <mt-field label="科室" v-model="DepartmentName" disabled></mt-field><hr>
         <div style="text-align: left; margin-top: 10px">角色：现场组</div>
         <mt-field label="所属小组" v-model="GroupName" disabled></mt-field>
@@ -351,9 +352,9 @@ export default {
       axios.post('/getUserInfo',{
         userId: this.userId
       }).then((response) => {
-        this.TitleName=response.data.results[0].TitleName;
+        this.TitleName=response.data.results[0].TitleCode;
         this.Name=response.data.results[0].Name;
-        this.DepartmentName=response.data.results[0].DepartmentName;
+        this.DepartmentName=response.data.results[0].DepartmentCode;
         this.Gender=response.data.results[0].Gender;
         this.Age=response.data.results[0].Age;
         this.Phone=response.data.results[0].Phone;

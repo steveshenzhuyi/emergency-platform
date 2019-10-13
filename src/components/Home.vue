@@ -1,14 +1,17 @@
 <template>
   <div align="center">
     <img src="./pictrue/logo.png">
-    <h2>之江实验室</h2>
-    <h2>重大会议急救保障系统</h2><hr>
+    <h2>第六届世界互联网大会</h2>
+    <h2>急救保障系统</h2><hr>
     <mt-field label="用户名" placeholder="请输入用户名" v-model="userId"></mt-field>
     <mt-field label="密码" placeholder="请输入密码" type="password" v-model="pwd"></mt-field>
     <hr>
     <br>
     <mt-button size="large" type="primary" @click="check()">登录</mt-button>
     <br>
+    <br>
+    <br>
+    <small style="color: grey">{{version}}</small>
     <!-- <mt-button size="large" type="danger" @click="">忘记密码</mt-button> -->
     <router-view></router-view>
   </div>
@@ -18,6 +21,7 @@
 import axios from 'axios';
 import { Toast } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
+import global from './global.vue'
 
 export default {
   data() {
@@ -25,7 +29,8 @@ export default {
       userId: '',
       pwd: '',
       groupNo: '',
-      RoleCode:''
+      RoleCode:'',
+      version:'版本号：v'+global.nowversion
     };
   },
   methods: {
