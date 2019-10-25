@@ -1,12 +1,12 @@
 <template>
   <div>
-    <mt-header fixed style="font-size:20px" title="新增资源项目">
+    <mt-header fixed style="font-size:25px;height: 50px;" title="新增资源项目">
       <mt-button size="small" type="danger" slot="left" icon="back"
             @click="resourcetoT()"><small>返回</small></mt-button>
       <mt-button slot="right" @click="NewResource()"><small>确定</small></mt-button>
       <hr>
     </mt-header>
-    <br><br>
+    <br><br><br>
     <mt-field label="名称" v-model="resourceName"></mt-field>
     <mt-picker :slots="slots" @change="ontypeChange" :visible-item-count="3"></mt-picker>
     <mt-field label="规格" v-model="standard"></mt-field>
@@ -25,6 +25,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 
 export default {
 
@@ -90,16 +91,14 @@ export default {
       }).then((response) => {
         console.log(this.resourceType)
         if(response.data.results == "新建成功") {
-          Toast({
-            message: '新建成功',
-            position: 'top'
-          });
+          // MessageBox.alert('新建成功', '提示');
+          // alert("新建成功");
+          Toast('新建成功');
           this.$router.push({name: '转运列表',params:{SELECTED1:"资源"}});
         }else {
-          Toast({
-            message: '创建失败',
-            position: 'top'
-          });
+          // MessageBox.alert('创建失败', '提示');
+          // alert("创建失败");
+          Toast('创建失败');
         }console.log(response);
             console.log(response.data.results);
         }).catch(function(error){

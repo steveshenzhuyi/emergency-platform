@@ -3,15 +3,14 @@
     <mt-tab-container class="page-tabbar-container" v-model="selected">
       <mt-tab-container-item id="病人">
         <mt-header fixed style="font-size:25px;height: 50px;" title="病人列表">
-          <mt-button size="small" slot="left"
-            @click="$goRoute('/CPR')"><small>今日统计</small></mt-button>
-          <mt-button size="small" slot="right"
+          <!-- <mt-button size="small" slot="right"
             @click="SEE()"><small>接收病人</small></mt-button>
-          <hr>
+          <hr> -->
         </mt-header>
         <br><br>
-        <div  style="width:80%;">
-        <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3" :itemHeight='30'></mt-picker></div>
+        <div  style="width:80%;height: 60px">
+        <!-- <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3" :itemHeight='30'></mt-picker> -->
+      </div>
         <div align="right"><mt-button size="small" type="primary" style="position:relative;top:-60px"
         @click="getpagelist()">刷新</mt-button></div>
         <div v-for="(item,index) in dataclass1" align="left" style="position:relative;top:-40px">
@@ -32,10 +31,8 @@
             <div>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
             <small style="color:grey;position:absolute;left:110px;">车辆：{{item.CarName}}</small>
-            <small style="color:grey;position:absolute;left:220px;">车号：{{item.CarId}}</small></div>
-            <div>
-            <small style="color:red;">{{item.Time}}</small>
-            </div></a>
+            <small style="color:grey;position:absolute;left:220px;">车号：{{item.CarId}}</small>
+            {{item.Pcost}}</div></a>
         </div>
         <br><br>
       </mt-tab-container-item>
@@ -55,11 +52,11 @@
         <div v-for=" (item,index) in data3" align="left" style="position:relative;top:-40px">
           <hr><a @click="getMessage(index)">
             <div>
-              序号{{item.MessageNo}}<br></div>
-              <div style="font-size: 20px;">{{item.MessageTitle}}<br></div>
+              序号{{item.MessageNo}}<br>
+              {{item.MessageTitle}}<br></div>
               <small style="color:grey">发送时间：{{item.SendTime}}</small>
           </a>
-        </div>
+        </div><hr>
       </mt-tab-container-item>
       <mt-tab-container-item id="个人">
         <mt-header fixed style="font-size:25px;height: 50px;" title="个人信息">
@@ -74,12 +71,8 @@
           <mt-field label="邮箱" v-model="Email" disabled></mt-field>
           <mt-field label="单位" v-model="DepartmentName" disabled></mt-field>
           <mt-field label="职务" v-model="TitleName" disabled></mt-field>
-          <hr>
-          <div style="text-align: left; margin-top: 10px">角色：医院组</div>
-          <mt-field label="所属小组" v-model="GroupName" disabled></mt-field>
-          <mt-field label="组内职务" v-model="GroupPosition" disabled></mt-field>
-          <mt-field label="责任区域" v-model="ManageArea" disabled></mt-field>
-          <mt-field label="重点保障对象" v-model="GuaranteeObject" disabled></mt-field><hr>
+          <!-- <div style="text-align: left; margin-top: 10px">角色：专家</div> -->
+          <mt-field label="专长" v-model="Specific" disabled></mt-field><hr>
           <mt-button size="large" @click="showchangepwd=true">修改密码</mt-button><br>
         <mt-field label="新密码" v-model="pwd1" v-show="showchangepwd"></mt-field>
         <mt-field label="确认密码" v-model="pwd2" v-show="showchangepwd"></mt-field>
@@ -123,6 +116,7 @@ export default {
       TitleName: '',
       DepartmentName: '',
       Gender: '',
+      Specific: '',
       Age: '',
       Phone: '',
       Email: '',
@@ -181,13 +175,7 @@ export default {
       data3: [
         {},
       ],
-      Longitude:0,
-      Latitude:0,
-      myPosition:'',
-      assList:[],
-      carList:[],
-      driving:'',
-       showchangepwd:false,
+      showchangepwd:false,
       pwd2:'',
       pwd1:''
     };
@@ -195,7 +183,7 @@ export default {
   mounted() {
    this.selected=this.$route.params.SELECTED2;
    this.getpagelist()
-   // this.getUserInfo()
+   this.getUserInfo()
    this.getMessageList()
  },
   methods: {
@@ -213,94 +201,20 @@ export default {
 
     },
      getpagelist() {
-      console.log(this.groupNo);
-      axios.post('/getPatientListHospitalClass',{
-        groupNo: this.groupNo
+      console.log(this.userId);
+      axios.post('/getExpertPatientList',{
+        expertId: this.userId
       }).then((response) => {
-        this.PatientlistClass=response.data.results;
-        axios.post('/getPatientListHospitalCreatetime',{
-          groupNo: this.groupNo
-        }).then((response) => {
-          this.PatientlistTime=response.data.results;
-          this.refreshPatient();
-          this.getUserInfo();
-          setTimeout(()=>{
-            console.log(this.assList)
-            this.addTimeToPatient()
-          },1000)
-        }).catch(function(error){
-          console.log("error",error);
-        })
+        this.dataclass1 = []
+      this.dataclass1=response.data.results
       }).catch(function(error){
         console.log("error",error);
       })
     },
-    addTimeToPatient(){
-      for(var i=0; i<this.PatientlistClass.length;i++){
-        if(this.PatientlistClass[i].Status == 'S04'){
-          if(this.PatientlistClass[i].CarNo == "000"){
-            for(var j=0; j<this.assList.length; j++){
-              if(this.PatientlistClass[i].LocationNo == this.assList[j].LocationNo){
-                this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
-                break;
-              }
-            }
-          }else if(this.PatientlistClass[i].CarNo != "" || this.PatientlistClass[i].CarNo!= null){
-            for(var k=0; k<this.carList.length; k++){
-              if(this.PatientlistClass[i].CarNo == this.carList[k].CarNo){
-                this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.carList[k].searchresult.routes[0].time/60)+"分钟";
-                break;
-              }
-            }
-          }else this.PatientlistClass[i].Time = '';
-        }
-        // else if(this.PatientlistClass[i].Status == 'S03'){
-        //   for(var j=0; j<this.assList.length; j++){
-        //       if(this.PatientlistClass[i].LocationNo == this.assList[j].LocationNo){
-        //         this.PatientlistClass[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
-        //         break;
-        //       }
-        //     }
-        // }
-        else this.PatientlistClass[i].Time = '';
-      }
-
-      for(var i=0; i<this.PatientlistTime.length;i++){
-        if(this.PatientlistTime[i].Status == 'S04'){
-          if(this.PatientlistTime[i].CarNo == "000"){
-            for(var j=0; j<this.assList.length; j++){
-              if(this.PatientlistTime[i].LocationNo == this.assList[j].LocationNo){
-                this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
-                break;
-              }
-            }
-          }else if(this.PatientlistTime[i].CarNo != "" || this.PatientlistTime[i].CarNo!= null){
-            for(var k=0; k<this.carList.length; k++){
-              if(this.PatientlistTime[i].CarNo == this.carList[k].CarNo){
-                this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.carList[k].searchresult.routes[0].time/60)+"分钟";
-                break;
-              }
-            }
-          }else this.PatientlistTime[i].Time = '';
-        }
-        // else if(this.PatientlistTime[i].Status == 'S03'){
-        //   for(var j=0; j<this.assList.length; j++){
-        //       if(this.PatientlistTime[i].LocationNo == this.assList[j].LocationNo){
-        //         this.PatientlistTime[i].Time = "预计到达时间"+Math.round(this.assList[j].searchresult.routes[0].time/60)+"分钟";
-        //         break;
-        //       }
-        //     }
-        // }
-        else this.PatientlistTime[i].Time = '';
-      }
-      console.log(this.PatientlistClass)
-      console.log(this.PatientlistTime)
-      this.refreshPatient();
-
-    },
     getMessageList(){
       //获取现场组信息列表
-      axios.post('/getHosMessage',{
+      axios.post('/getExpertMessage',{
+        Expert: this.userId,
         groupNo: this.groupNo
       }).then((response) => {
         this.message = response.data.results
@@ -330,17 +244,11 @@ export default {
         this.ManageArea=response.data.results[0].ManageArea;
         this.GroupName=response.data.results[0].GroupName;
         this.GroupPosition=response.data.results[0].GroupPosition;
-        this.Latitude = response.data.results[0].Latitude;
-        this.Longitude = response.data.results[0].Longitude;
-        window.localStorage.setItem("Location",response.data.results[0].Location)
-        window.localStorage.setItem("Latitude",this.Latitude)
-        window.localStorage.setItem("Longitude",this.Longitude)
         var GN = this.groupNo;
+        var UI = this.userId;
         var videoid = window.localStorage.getItem("VIDEOUSERID")
-        this.myPosition = new AMap.LngLat(this.Longitude, this.Latitude);
-        console.log(this.myPosition)
         if(this.GroupPosition == '组长'){
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'groupLeader', 'R03', videoid]},
+          window.JPush.setTags({ sequence: 1, tags: [GN, UI, 'groupLeader', 'R04', videoid]},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags
@@ -348,7 +256,7 @@ export default {
             console.log(error)
           })
         }else{
-          window.JPush.setTags({ sequence: 1, tags: [GN, 'worker', 'R03', videoid]},
+          window.JPush.setTags({ sequence: 1, tags: [GN, UI, 'worker', 'R04', videoid]},
           (result) => {
             var sequence = result.sequence
             var tags = result.tags
@@ -356,48 +264,6 @@ export default {
             console.log(error)
           })
         }
-        axios.get('/getAssemblyList',{}).then((response) => {
-          this.assList = response.data.results; 
-          var that = this;
-          AMap.plugin(['AMap.Driving'],function(){
-            that.driving = new AMap.Driving({ //用不上
-              policy: AMap.DrivingPolicy.LEAST_TIME
-            })
-          });
-          for(var i=0;i<that.assList.length;i++){
-           (function(j){
-           that.assList[j].position = new AMap.LngLat(response.data.results[j].Longitude, response.data.results[j].Latitude)             
-            new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.assList[j].position,that.myPosition, function (status, result) {
-              that.assList[j].searchresult = result
-            })
-          })(i) 
-        }
-      }).catch(function(error){
-        console.log("error",error);
-      })
-
-      axios.get('/getCarList',{}).then((response) => {
-        var that = this;
-        var carlist = response.data.results;
-        var x  =carlist.shift()
-        that.carList = response.data.results
-        
-        AMap.plugin(['AMap.Driving'],function(){
-          that.driving = new AMap.Driving({
-            policy: AMap.DrivingPolicy.LEAST_TIME
-          })
-        });
-        for(var i=0;i<that.carList.length;i++){
-         (function(j){
-          that.carList[j].position = new AMap.LngLat(response.data.results[j].Longitude, response.data.results[j].Latitude)
-          new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.carList[j].position,that.myPosition, function (status, result) {
-            that.carList[j].searchresult = result
-          })
-        })(i)
-      }
-    }).catch(function(error){
-      console.log("error",error);
-    })
       })
     },
     //病人列表排序方法
@@ -422,16 +288,13 @@ export default {
     },
     getpatient:function(index){
       console.log(index)
-      this.$router.push({name: 'H1',params:{PATIENTID:this.dataclass1[index].PatientId,SELECTED:"既往病历"}})
+      this.$router.push({name: 'Z1',params:{PATIENTID:this.dataclass1[index].PatientId}})
     },
     //刷新各指定页面
     refreshPatient() {
       this.dataclass1 = []
-      if(this.sortway == "时间排序") {
-        this.dataclass1=this.PatientlistTime
-      }else if(this.sortway == "分级排序"){
-        this.dataclass1=this.PatientlistClass
-      }
+      this.dataclass1=this.PatientlistClass
+      
       var tmp = new Array();
       for(var i=0; i<this.dataclass1.length;i++) {
         if (this.chooselevel != '选择分级') {
@@ -520,19 +383,16 @@ export default {
   .V级{
     color:blue;
   }
-  .已出院{
+  /* .已出院{
     color:green;
   }
   .处置完成{
     color:green;
   }
-  .已入院{
-    color:#E6BD1A;
-  }
   .待后送{
     color:red;
   }
   .后送中{
-    color:red;
-  }
+    color:#E6BD1A;
+  } */
 </style>

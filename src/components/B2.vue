@@ -29,6 +29,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 
 export default {
   data() {
@@ -96,7 +97,9 @@ export default {
       })
     },
     edit() {
-      if(this.counter==this.amount)Toast('未作修改')
+      if(this.counter==this.amount)
+        // alert("未做修改");
+        Toast('未做修改');
         else if(this.counter>this.amount) {
         this.difference=this.counter-this.amount
         axios.post('/setResourceAmount',{
@@ -107,10 +110,8 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          // alert("上传成功");
+          Toast('上传成功');
         }
       })
       }else{
@@ -123,10 +124,8 @@ export default {
         varyAmount:this.difference
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '保存成功',
-            position: 'top'
-          });
+          // alert("上传成功");
+          Toast('上传成功');
         }
       })
       }

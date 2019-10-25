@@ -1,10 +1,10 @@
 <template>
   <div align="center">
-    <mt-header fixed style="font-size:20px" title="确认送达">
+    <mt-header fixed style="font-size:25px;height: 50px;" title="确认送达">
       <mt-button size="small" icon="back" slot="left"
         @click="returnT()"><small>返回</small></mt-button>
     </mt-header>
-    <br><br>
+    <br><br><br>
     <br>医院端扫描此二维码，完成交接
     <div id="code-container" class="code-root">
       <div id="qrcode"></div>
@@ -16,11 +16,12 @@
     <mt-field label="姓名" v-model="name" disabled="true"></mt-field>
     <mt-field label="性别" v-model="gender" disabled="true"></mt-field>
     <mt-field label="年龄" v-model="age" disabled="true"></mt-field>
-    <!-- <mt-field label="症状" v-model="situation" disabled="true"></mt-field> -->
+    <mt-field label="症状" v-model="situation" disabled="true"></mt-field>
     <mt-field label="接收时间" v-model="CarTime" disabled="true"></mt-field>
     <mt-field label="目标车号" v-model="carId" disabled="true"></mt-field>
     <mt-field label="目标医院" v-model="OrganizationName" disabled="true"></mt-field>
-    <mt-field label="现在时间" v-model="HospitalTime" disabled="true"></mt-field><hr>
+    <!-- <mt-field label="后送时间" v-model="HospitalTime" disabled="true"></mt-field> -->
+    <hr>
     <mt-button size="normal" type="primary" @click="returnT1()">确认送达</mt-button>
     <router-view></router-view>
   </div>
@@ -29,6 +30,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 import QRCode from 'qrcodejs2';
 
 
@@ -44,6 +46,7 @@ export default {
       carId: '',
       OrganizationName: '',
       HospitalTime: '',
+      situation:'',
     };
   },
   mounted() {
@@ -74,7 +77,7 @@ export default {
         this.carId = response.data.results[0].CarId;
         this.organizationName = response.data.results[0].OrganizationName;
         this.CarTime = response.data.results[0].CarTime;
-        this.HospitalTime = response.data.results[0].HospitalTime
+        this.situation = response.data.results[0].Diagnose
       })
     },
     returnT() {
@@ -85,16 +88,14 @@ export default {
         carNo:window.localStorage.getItem('CARNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '确认送达',
-            position: 'top'
-          });
+          // MessageBox.alert('确认送达', '提示');
+          // alert("确认送达");
+          Toast('确认送达');
           this.$router.push({name: '转运列表',params:{SELECTED1:"病人"}})
         }else {
-          Toast({
-            message: '送错地方了！',
-            position: 'top'
-          });
+          // MessageBox.alert('送错地方了！', '提示');
+          // alert("送错地方了");
+          Toast('送错地方了');
         }
       })      
     }

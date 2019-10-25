@@ -1,11 +1,11 @@
 <template>
   <div align="center">
-    <mt-header fixed style="font-size:20px" title="确认后送">
+    <mt-header fixed style="font-size:25px;height: 50px;" title="确认后送">
       <mt-button size="small" icon="back" slot="left"
         @click="returnA1()"><small>返回</small></mt-button>
     </mt-header>
-    <br><br>
-    <br>车辆端扫描此二维码，完成交接
+    <br><br><br>
+    车辆端扫描此二维码，完成交接
     <div id="code-container" class="code-root">
       <div id="qrcode"></div>
     </div>
@@ -26,6 +26,7 @@
 <script>
 import axios from 'axios';
 import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 import QRCode from 'qrcodejs2';
 
 export default {
@@ -83,23 +84,19 @@ export default {
       // console.log(json);
     },
     returnA1() {
-      this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",FLAG1:"1",PATIENTID:this.patientid}})
+      this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",PATIENTID:this.patientid}})
     },
     confirm() {
       axios.post('/confirmSend', {
         patientId:window.localStorage.getItem('PATIENTNO')
       }).then((response) => {
         if(response.data.results == "上传成功") {
-          Toast({
-            message: '确认送出',
-            position: 'top'
-          });
-           this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",STATE1:"已后送",PATIENTID:this.patientid}})
+          // alert("确认送出");
+          Toast('确认送出');
+           this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",PATIENTID:this.patientid}})
         }else{
-         Toast({
-            message: '送出失败',
-            position: 'top'
-          });
+          // alert("送出失败");
+          Toast('送出失败');
         }
        
       })
