@@ -302,7 +302,6 @@
           <mt-button plain type="danger" @click="gotohospital()">前往医院</mt-button>
           <mt-button plain  @click="self()">自行前往</mt-button>
           <!-- <mt-button plain  @click="sure()">确定选择</mt-button> -->
-
         </div>
         <hr>
         <div v-show="isShow">
@@ -316,7 +315,7 @@
           @click="save60()">确定</mt-button>
         </div>
         <div v-show="isShow1" align="left">
-          <span><b>推荐医院：</b>{{goodhos}} &nbsp;&nbsp;</span><span v-show="hide"><b>推荐车辆：</b>{{goodcar}}</span>
+          <!-- <span><b>推荐医院：</b>{{goodhos}} &nbsp;&nbsp;</span><span v-show="hide"><b>推荐车辆：</b>{{goodcar}}</span> -->
           <div style="margin-top:10px;text-align: left"><b>已选医院：</b>
           {{HosNo}}&nbsp;&nbsp;&nbsp;{{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}</div>
           <div v-show="hide" style="text-align: left;"><b>已选车辆：</b>
@@ -361,7 +360,7 @@
             </a>
           </div>
         </mt-popup>
-        <mt-popup v-model="popupVisible2" position="bottom" style="width:100%;overflow: auto;">
+        <mt-popup v-model="popupVisible2" position="bottom" style="width:100%;height: 50%;overflow: auto;">
           <div v-for="(item,index) in carList">
             <a @click="getcar(index)">
             <hr>

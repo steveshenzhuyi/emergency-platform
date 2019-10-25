@@ -162,7 +162,7 @@ export default {
     },
     callcom(){
       axios.post('/pushVideo',{
-        roomnumber:this.myvideoid,
+        roomnumber:999,
         type:7,
         tag:['902']
       }).then((response) => {
@@ -174,7 +174,7 @@ export default {
           appAvailability.check(scheme,
             function() {
               var sApp = startApp.set({"application":"com.tencent.trtc"}, { 
-                "roomnumber":roomnumber,
+                "roomnumber":999,
                 "videoid":roomnumber
               });
               sApp.start(function() {

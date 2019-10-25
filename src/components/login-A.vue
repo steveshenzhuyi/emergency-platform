@@ -63,7 +63,7 @@
       <mt-tab-container-item id="沟通">
         <mt-header fixed style="font-size:25px;height: 50px;" title="信息列表">
           <mt-button slot="left" @click="phone()"><small>视频通话</small></mt-button>
-          <mt-button slot="right" @click="oneClickNeedHelp()"><small>一键求助</small></mt-button>
+          <!-- <mt-button slot="right" @click="oneClickNeedHelp()"><small>一键求助</small></mt-button> -->
           <hr>
         </mt-header>
         <br><br>

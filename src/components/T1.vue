@@ -432,7 +432,7 @@ export default {
       this.getPatientInfo()
   },
   beforeDestroy () {
-    navigator.geolocation.clearWatch(this.watchID1)
+    // navigator.geolocation.clearWatch(this.watchID1)
     this.watchID1 = null
     clearInterval(this.intervalid1)
     this.intervalid1 = null
@@ -1554,7 +1554,7 @@ takephoto1() {
     enableHighAccuracy: true,
     maximumAge: 0
   }
-  var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+  // var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
   // var gps = [119,30];
   //   AMap.convertFrom(gps, 'gps', function (status, result) {           
   //     lnglats = result.locations[0];
@@ -1596,25 +1596,25 @@ takephoto1() {
       enableHighAccuracy: true,
       maximumAge: 60000
     }
-    that.watchID1 = navigator.geolocation.watchPosition(onSuccess1, onError1, options1);
-    function onSuccess1(position) {
-      var gps1 = [position.coords.longitude, position.coords.latitude];
-      AMap.convertFrom(gps1, 'gps', function (status, result) {         
-        var lnglats2 = result.locations[0];
-        marker.setPosition(lnglats2)
-        axios.post('/setCarLocation',{
-          longitude:lnglats2.lng,
-          latitude:lnglats2.lat,
-          carNo:window.localStorage.getItem('CARNO')
-        }).then((response) => {
-          if(response.data.results == "上传成功") {
-            //alert('定位成功1')
-          }else {
-            //alert('上传失败1')
-          }
-        })
-      });
-    };
+    // that.watchID1 = navigator.geolocation.watchPosition(onSuccess1, onError1, options1);
+    // function onSuccess1(position) {
+    //   var gps1 = [position.coords.longitude, position.coords.latitude];
+    //   AMap.convertFrom(gps1, 'gps', function (status, result) {         
+    //     var lnglats2 = result.locations[0];
+    //     marker.setPosition(lnglats2)
+    //     axios.post('/setCarLocation',{
+    //       longitude:lnglats2.lng,
+    //       latitude:lnglats2.lat,
+    //       carNo:window.localStorage.getItem('CARNO')
+    //     }).then((response) => {
+    //       if(response.data.results == "上传成功") {
+    //         //alert('定位成功1')
+    //       }else {
+    //         //alert('上传失败1')
+    //       }
+    //     })
+    //   });
+    // };
     function onError1(error) {
       // alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
     }
