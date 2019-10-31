@@ -302,7 +302,6 @@ export default {
     onbloodChange(picker, values) {
        this.blood = values[0];
        this.type = values[1];
-       console.log(this.gender)
     },
     returnA() {
       this.$router.push({name: '病人列表',params:{SELECTED:"病人"}})
@@ -364,7 +363,7 @@ export default {
           if(response.data.results != "新建失败") {
             var pid = response.data.results[0].PatientId
             Toast('创建成功');
-            this.$router.push({name: 'A1',params:{PATIENTID:pid,SELECTED1:"患者病历"}})
+            this.$router.push({name: 'A1',params:{PATIENTID:pid,SELECTED1:"1"}})
           }else {
             Toast('创建失败');
           }
@@ -395,7 +394,7 @@ export default {
         if(response.data.results != "新建失败") {
           var pid = response.data.results[0].PatientId
           Toast('创建成功');
-          this.$router.push({name: 'A1',params:{PATIENTID:pid,SELECTED1:"患者病历"}}) 
+          this.$router.push({name: 'A1',params:{PATIENTID:pid,SELECTED1:"1"}}) 
           }else {
             Toast('创建失败');
           }

@@ -11,13 +11,13 @@
     </div>
     <hr>
     病人信息
-    <mt-field label="编号" v-model= "patientid" disabled= true></mt-field>
-    <mt-field label="分级" v-model= "level" disabled= true></mt-field>
-    <mt-field label="姓名" v-model= "name" disabled= true></mt-field>
-    <mt-field label="年龄" v-model= "age" disabled= true></mt-field>
-    <mt-field label="症状" v-model= "situation" disabled= true></mt-field>
-    <mt-field label="目标车号" v-model= "car" disabled= true></mt-field>
-    <mt-field label="目标医院" v-model= "hospital" disabled= true></mt-field><hr>
+    <mt-field label="编号" v-model= "patientid" disabled></mt-field>
+    <mt-field label="分级" v-model= "level" disabled></mt-field>
+    <mt-field label="姓名" v-model= "name" disabled></mt-field>
+    <mt-field label="年龄" v-model= "age" disabled></mt-field>
+    <mt-field label="诊断" v-model= "situation" disabled></mt-field>
+    <mt-field label="目标车号" v-model= "car" disabled></mt-field>
+    <mt-field label="目标医院" v-model= "hospital" disabled></mt-field><hr>
     <mt-button v-show="isShow" size="normal" type="primary" @click="confirm()">确认送出</mt-button>
     <router-view></router-view>
   </div>
@@ -84,7 +84,7 @@ export default {
       // console.log(json);
     },
     returnA1() {
-      this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",PATIENTID:this.patientid}})
+      this.$router.push({name: 'A1',params:{SELECTED1:"5",PATIENTID:this.patientid}})
     },
     confirm() {
       axios.post('/confirmSend', {
@@ -93,7 +93,7 @@ export default {
         if(response.data.results == "上传成功") {
           // alert("确认送出");
           Toast('确认送出');
-           this.$router.push({name: 'A1',params:{SELECTED1:"病人去向",PATIENTID:this.patientid}})
+           this.$router.push({name: 'A1',params:{SELECTED1:"5",PATIENTID:this.patientid}})
         }else{
           // alert("送出失败");
           Toast('送出失败');

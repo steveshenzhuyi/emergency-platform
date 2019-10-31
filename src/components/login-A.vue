@@ -467,7 +467,7 @@ export default {
     getpatient:function(index){
       console.log(index)
       this.$router.push({name: 'A1',
-      params:{PATIENTID:this.dataclass1[index].PatientId,STATUSNAME:this.dataclass1[index].StatusName,SELECTED1:"患者病历"}})
+      params:{PATIENTID:this.dataclass1[index].PatientId,STATUSNAME:this.dataclass1[index].StatusName,SELECTED1:"1"}})
     },
     //刷新各指定页面
     refreshPatient() {

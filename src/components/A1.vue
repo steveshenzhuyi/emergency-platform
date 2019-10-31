@@ -1,7 +1,5 @@
 <template>
   <div align="center">
-    <mt-tab-container class="page-tabbar-container" v-model="selected">
-      <mt-tab-container-item id="患者病历">
         <mt-header fixed style="font-size:25px;height: 50px;" :title="title1">
           <mt-button size="small" icon="back" slot="left"
           @click="returnA()"><small>返回</small></mt-button>
@@ -13,26 +11,15 @@
         <br><br>
         <mt-navbar v-model="selected1">
           <mt-tab-item id="1">病史</mt-tab-item>
-          <!-- <mt-tab-item id="2">现病史</mt-tab-item> -->
-          <mt-tab-item id="3">体征</mt-tab-item>
-          <!-- <mt-tab-item id="4">既往史</mt-tab-item> -->
-          <mt-tab-item id="5">初步诊断</mt-tab-item>
+          <mt-tab-item id="2">体征</mt-tab-item>
+          <mt-tab-item id="3">诊断</mt-tab-item>
+          <mt-tab-item id="4">处置</mt-tab-item>
+          <mt-tab-item id="5">去向</mt-tab-item>
           <mt-tab-item id="6">基本信息</mt-tab-item>
         </mt-navbar>
         <br>
-        <mt-tab-container v-model="selected1">
-          <mt-tab-container-item id="1">
-            <!-- <div align="left">
-              <small style="color:grey">{{timevalue}}</small>
-              <mt-field type="textarea" placeholder="请输入内容" v-model="主诉" rows="5" v-on:focus.native.capture="focus1()" v-on:blur.native.capture="blur1()"></mt-field>
-            </div>
-            <div align="center" v-show="editing1" style="height: 35px">
-              <mt-button  v-show="editing1" size="small" type="primary" style="float: right;margin-top: 5px"
-              @click="save10()">保存</mt-button>
-             <mt-button  v-show="editing1" size="small" style="float: right; margin-right:10px;margin-top: 5px"
-              @click="cancel1()">取消</mt-button>
-              </div>
-              <hr> -->
+        <mt-tab-container v-model="selected1" swipeable>
+        <mt-tab-container-item id="1" style="min-height:500px">
                <div align="center" style="height:30px">
               <mt-button size="small" @click="ECG()" style="width: 120px"
             type="primary" plain>&nbsp;心电图检查&nbsp;</mt-button></div>
@@ -45,7 +32,7 @@
                 <small style="color:grey">{{timevalue}} </small>
                 <mt-field  type="textarea" placeholder="请输入内容" v-model="主诉" rows="3" v-on:focus.native.capture="focus1()" v-on:blur.native.capture="blur1()"></mt-field><hr>
               </div>
-              <div align="center" style="height:30px">
+              <div align="center" style="height:35px">
                 <mt-button v-show="editing2" size="small" style="float: right;margin-top: 2px" type="primary" @click="save20()">保存</mt-button>
                 <mt-button  v-show="editing2" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel2()">取消</mt-button>
                 <span style="float: left;" @click="showxianbingshi1()"><b>现病史</b></span>
@@ -54,7 +41,7 @@
                 <small style="color:grey">{{timevalue1}} </small>
                 <mt-field  type="textarea" placeholder="请输入内容" v-model="现病史" rows="3" v-on:focus.native.capture="focus2()" v-on:blur.native.capture="blur2()"></mt-field><hr>
               </div>
-              <div align="center" style="height:30px">
+              <div align="center" style="height:35px">
                 <mt-button v-show="editing41" size="small" style="float: right;margin-top: 2px" type="primary" @click="save41()">保存</mt-button>
                 <mt-button  v-show="editing41" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel41()">取消</mt-button>
                 <span style="float: left;" @click="showguominshi1()"><b>过敏史</b></span>
@@ -63,7 +50,7 @@
                 <small style="color:grey">{{timevalue41}} </small>
                 <mt-field  type="textarea" placeholder="请输入内容" v-model="过敏史" rows="2" v-on:focus.native.capture="focus41()" v-on:blur.native.capture="blur41()"></mt-field><hr>
               </div>
-              <div align="center" style="height:30px">
+              <div align="center" style="height:35px">
                 <mt-button v-show="editing42" size="small" style="float: right;margin-top: 2px" type="primary" @click="save42()">保存</mt-button>
                 <mt-button  v-show="editing42" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel42()">取消</mt-button>
                 <span style="float: left;" @click="showjibingshi1()"><b>疾病史</b></span>
@@ -72,7 +59,7 @@
                 <small style="color:grey">{{timevalue42}} </small>
                 <mt-field type="textarea" placeholder="请输入内容" v-model="疾病史"  rows="2" v-on:focus.native.capture="focus42()" v-on:blur.native.capture="blur42()"></mt-field><hr>
               </div>
-              <div align="center" style="height:30px">
+              <div align="center" style="height:35px">
                 <mt-button v-show="editing43" size="small" style="float: right;margin-top: 2px" type="primary" @click="save43()">保存</mt-button>
                 <mt-button  v-show="editing43" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel43()">取消</mt-button>
                 <span style="float: left;" @click="showmuqianyongyao1()"><b>目前用药</b></span>
@@ -98,56 +85,12 @@
                       <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
                       <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture1()">上传</mt-button>
                     </div>
-                    <br><br><br><br><br><br>
-                  </mt-tab-container-item>
-        <!-- <mt-tab-container-item id="2">
-          <div align="left">
-            <small style="color:grey">{{timevalue1}}</small>
-            <mt-field type="textarea" placeholder="请输入内容" v-model="现病史" rows="5" v-on:focus.native.capture="focus2()" v-on:blur.native.capture="blur2()" ></mt-field>
-          </div>
-          <div align="center" v-show="editing2" style="height: 35px">
-              <mt-button  v-show="editing2" size="small" type="primary" style="float: right;margin-top: 5px"
-              @click="save20()">保存</mt-button>
-             <mt-button  v-show="editing2" size="small" style="float: right; margin-right:10px;margin-top: 5px"
-              @click="cancel2()">取消</mt-button>
-              </div>
-              <hr>
-          <div v-for="(item,index) in 现病史图片">
-              <div align="center">
-              <small style="color:grey">{{item.time}}</small></div>
-              <div align="center">
-           <img v-gallery :src="item.fileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
-          </div>
-          <hr>
-          <div align="center">
-          <img v-gallery v-show="photoing" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;" id='image2'>
-        </div>
-        <div align="center">
-          <mt-button size="small"  style="float: left" type="primary" plain  @click="takephoto2()">
-          <img src="./icon/添加图片.png" height="35" width="35" slot="icon">拍照</mt-button>
-          <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain @click="choosephoto2()">
-          <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
-          <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture2()">上传</mt-button>
-        </div>
-        <br><br><br><br><br><br>
-        </mt-tab-container-item> -->
-        <mt-tab-container-item id="3">
-          <!-- <div align="center" style="height:28px"><span style="float: left;">常用体征</span></div><hr> -->
-        <div>
-         <!--  <mt-button size="small" @click.native="popupVisible3 = true" style="position:relative;right:30px;width: 90px" type="primary" plain>监护</mt-button> -->
+                    <br><br><br>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="2" style="min-height:500px">
+          <div>
           <mt-button size="small" @click="commonTZ()" style="position:relative;right:30px;width: 90px" type="primary" plain>常规</mt-button>
-          <!-- <mt-button size="small" @click="bloodpressure()" style="position:relative;left:60px;width: 90px"
-            type="primary" plain>血压</mt-button>
-          <mt-button size="small" @click="temprature()" style="position:relative;left:90px;width: 90px"
-            type="primary" plain>体温</mt-button>
-          </div>
-            <br> 
-            <div>
-          <mt-button size="small" @click="breath()" style="position:absolute;left:30px;width: 90px"
-            type="primary" plain>呼吸</mt-button>
-          <mt-button size="small" @click="bloodoxygen()" style="position:absolute;left:150px;width: 90px"
-            type="primary" plain>血氧</mt-button> -->
-          <mt-button size="small" @click="otherTZ()" style="position:relative;left:30px;width: 90px" type="primary" plain>其他</mt-button><hr>
+          <mt-button size="small" @click="otherTZ()" style="width: 90px" type="primary" plain>其他</mt-button><hr>
           </div>
           <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;" align="left">
             <div align="center">新增常规体征</div>
@@ -168,11 +111,6 @@
               <mt-button @click="addot()" size="small" type="primary">确定</mt-button>
             </div>
           </div>
-          <!-- <div v-show="istizheng" style=" padding:3px;border:1px solid blue;margin:3px;" align="right">
-            <div align="center">新增体征：{{体征}}</div>
-            <mt-field placeholder="内容" v-model="content" type="textarea" rows="2"></mt-field>
-            <mt-button @click="add()" size="small" type="primary">确定</mt-button>
-          </div> -->
            <div style="margin-top: 15px;margin-bottom: 15px" align="left"><span style="text-align: left;">体征列表</span><span><mt-button size="small" type="primary"  @click="Showdelete()" style="float: right;margin-right: 5px">管理</mt-button></span></div>
           <div v-for="(item,index) in dataTZ" style="text-align: left">
             <hr>
@@ -181,29 +119,9 @@
               <div><b>{{item.OperationName}}</b></div><div><span style="display:inline-block;width:380px">{{item.Detail}}</span></div>
             </div>
           </div>
-          <br><br><br><br>
+          <br><br>
         </mt-tab-container-item>
-        <!-- <mt-tab-container-item id="4">
-            <div v-for="(item,index) in 既往史图片">
-              <div align="center">
-              <small style="color:grey">{{item.time}}</small></div>
-              <div align="center">
-           <img v-gallery :src="item.fileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
-          </div>
-          <hr>
-          <div align="center">
-          <img v-gallery v-show="photoing" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;" id='image4'>
-        </div>
-        <div align="center">
-          <mt-button size="small"  style="float: left" type="primary" plain  @click="takephoto4()">
-          <img src="./icon/添加图片.png" height="35" width="35" slot="icon">拍照</mt-button>
-          <mt-button size="small" style="float: left; margin-left: 10px" type="danger" plain @click="choosephoto4()">
-          <img src="./icon/添加图片.png" height="35" width="35" slot="icon" >相册</mt-button>
-          <mt-button size="small" type="primary" style="float: right;position" @click="uploadPicture4()">上传</mt-button>
-        </div>
-          <br><br><br><br><br><br>
-        </mt-tab-container-item> -->
-        <mt-tab-container-item id="5">
+        <mt-tab-container-item id="3" style="min-height:500px">
           <div align="center" style="height:30px"><span style="float: left;"><b>初步诊断</b></span></div>
           <div align="left">
             <small style="color:grey">{{timevalue2}}</small>
@@ -216,15 +134,15 @@
               @click="cancel5()">取消</mt-button>
               </div>
           <hr>
-          <div align="center" style="height:40px"><mt-button size="small" @click.native="popupVisible4 = true" style="position:absolute;left: 0px; width: 90px" type="primary" plain>特殊情况</mt-button></div>
-          <div align="center" style="height:30px" @click="showpingfen1()"><span style="float: left;"><b>MEWS评分</b></span></div>
+          <div align="left" style="height:40px"><mt-button size="small" @click.native="popupVisible4 = true" style="width: 90px" type="primary" plain>特殊情况</mt-button></div>
+          <div align="center" style="height:35px" @click="showpingfen1()"><span style="float: left;margin-top: 8px"><b>MEWS评分</b></span></div>
           <div v-show="showpingfen">
           <div align="left" style="height:30px">
-            <span>心率</span><span style="position:absolute;left:120px">收缩压</span><span style="position:absolute;left:240px">呼吸</span>
+            <span>心率</span><span style="position:relative;left:90px">收缩压</span><span style="position:relative;left:160px">呼吸</span>
           </div>
           <mt-picker :slots="slots1" @change="onScoreChange1" :visible-item-count="3"></mt-picker>
           <div align="left" style="height:30px;margin-top: 10px">
-            <span>体温</span><span style="position:absolute;left:120px">意识</span>
+            <span>体温</span><span style="position:relative;left:90px">意识</span>
           </div>
           <mt-picker :slots="slots2" @change="onScoreChange2" :visible-item-count="3"></mt-picker>
           <div align="left" style="height:80px">
@@ -232,8 +150,8 @@
             <span>转运建议：{{advice}}</span>
           </div>
           <hr>
-        </div>
-          <div align="center" style="height:30px" @click="showfenji1()"><span style="float: left;"><b>预检分级</b></span></div>
+          </div>
+          <div align="center" style="height:35px" @click="showfenji1()"><span style="float: left;margin-top: 5px"><b>预检分级</b></span></div>
           <div v-show="showfenji">
           <div align="left" style="height:30px">
             <span>当前分级：{{level}}</span>
@@ -242,125 +160,105 @@
           <hr>
           <mt-picker :slots="slots" @change="onPatientlistChange" :visible-item-count="3"></mt-picker><hr>
           <div><small style="color:grey">病人分级为I级或II级时，系统将自动上报。其他情况有需要时，可以使用手动一键上报。</small></div>
-        </div>
+          </div>
           <!-- <mt-button type="danger" @click="alert()">一键上报</mt-button> -->
-          <br><br><br><br>
+          <br>
         </mt-tab-container-item>
-        <mt-tab-container-item id="6">
-          <img src="./pictrue/man.png"><hr>
-          <mt-field label="编号" v-model="PatientId" disabled></mt-field>
-          <mt-field label="姓名" v-model="Name" disabled></mt-field>
-          <mt-field label="性别" v-model="Gender" disabled></mt-field>
-          <mt-field label="年龄" v-model="Age" disabled></mt-field>
-          <mt-field label="民族" v-model="Nation" disabled></mt-field>
-          <mt-field label="手机" v-model="Phone" disabled></mt-field>
-          <mt-field label="邮箱" v-model="Email" disabled></mt-field>
-          <mt-field label="单位" v-model="Unit" disabled></mt-field>
-          <mt-field label="职务" v-model="Position" disabled></mt-field>
-          <mt-field label="血型" v-model="bloodType" disabled></mt-field><br><br><br><br>
-         <!-- <mt-button size="small" style="position:relative;left:100px"
-          type="danger" @click="edit">修改</mt-button><br><hr> -->
-        </mt-tab-container-item>
-      </mt-tab-container>
-    </mt-tab-container-item>
-    <mt-tab-container-item id="处置方案">
-      <mt-header fixed style="font-size:25px;height: 50px;" :title="title2">
-      <mt-button size="small" icon="back" slot="left"
-        @click="returnA()"><small>返回</small></mt-button>
-      <mt-button size="small" slot="right"
-          @click="alertHelp()"><small>一键上报
-          </small></mt-button>
-      <hr>
-      </mt-header>
-      <br><br>
-      <div>
-        <div style="text-align: left; margin-top: 10px">常用处置</div><hr>
-       <div>
+        <mt-tab-container-item id="4" style="min-height:500px">
+        <div>
+          <div>
             <mt-button size="small" @click="oxygen()" style="position:relative;right:30px;width: 90px"
             type="primary" plain>吸&nbsp;&nbsp;氧</mt-button>
-            <mt-button size="small" @click.native="popupVisible3 = true" style="width: 90px"
-            type="primary" plain>监&nbsp;&nbsp;护</mt-button>
-            <mt-button size="small" @click="bandage()" style="position:relative;left:30px;width: 90px"
-            type="primary" plain>包扎止血</mt-button></div><br>
-            <div>
-          <mt-button size="small" @click="stone()" style="position:relative;right:30px;width: 90px"
+           <!--  <mt-button size="small" @click.native="popupVisible3 = true" style="width: 90px"
+            type="primary" plain>监&nbsp;&nbsp;护</mt-button> -->
+            <mt-button size="small" @click="bandage()" style="width: 90px"
+            type="primary" plain>包扎止血</mt-button>
+            <mt-button size="small" @click="stone()" style="position:relative;left:30px;width: 90px"
             type="primary" plain>支具固定</mt-button>
-            <mt-button size="small" @click="drug()" style="width: 90px"
+          </div><br>
+          <div>
+            <mt-button size="small" @click="drug()" style="position:relative;right:30px;width: 90px"
             type="primary" plain>口服药物</mt-button>
-            <mt-button size="small" @click="dd()" style="position:relative;left:30px;width: 90px"
+            <mt-button size="small" @click="dd()" style="width: 90px"
             type="primary" plain>静脉给药</mt-button>
-            </div><br>
-            <div>
-            <mt-button size="small" @click="elseway()" style="width: 90px"
-            type="primary" plain>其他处理</mt-button><hr></div>
-      </div>
-      <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px" align="right">
-        <div align="center">新增处置：{{methods}}</div>
-       <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
-       <div v-for="(item,index) in selectedMedicineList" style="text-align: left;color: grey;">
-         <a @click="selectmedicine(index)">
-           （备选）{{item}}
-         </a>
-       </div>
-        <mt-button size="small" @click="add1()" type="primary">确定</mt-button>
-      </div>
-       <div style="margin-top: 15px;margin-bottom: 15px" align="left"><span style="text-align: left;">处置列表</span><span><mt-button size="small" type="primary"  @click="Showdelete()" style="float: right;margin-right: 5px">管理</mt-button></span></div>
-      <div v-for="(item,index) in dataCZ" style="text-align: left">
-        <hr> 
-        <div><small style="color:grey">{{item.OperationTime}}&nbsp;&nbsp;&nbsp;{{item.Address==1?'地点：会场':'地点：车辆'}}</small><mt-button v-show="showdelete" size="small" type="danger"  @click="deleteCZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button></div>
-        <div><b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span v-show="(item.OperationCode=='P112')">检查单号{{item.Detail1}}</span></div>
-        <div>
-          <span style="display:inline-block;width:380px">{{item.Detail}}</span>
-        </div>
-        <div align="center" v-show="item.InfoType==3">
+             <mt-button size="small" @click="elseway()" style="position:relative;left:30px;width: 90px"
+            type="primary" plain>其他处理</mt-button>
+          </div>
+          </div>
+          <div v-show="isShow4" style=" padding:3px;border:1px solid blue;margin:3px" align="right">
+            <div align="center">新增处置：{{methods}}</div>
+            <mt-field placeholder="内容" v-model="content1" type="textarea" rows="2"></mt-field>
+            <div v-for="(item,index) in selectedMedicineList" style="text-align: left;color: grey;">
+             <a @click="selectmedicine(index)">
+               （备选）{{item}}
+             </a>
+           </div>
+           <mt-button size="small" @click="add1()" type="primary">确定</mt-button>
+         </div>
+         <div style="margin-top: 15px;margin-bottom: 15px" align="left"><span style="text-align: left;">处置列表</span><span><mt-button size="small" type="primary"  @click="Showdelete()" style="float: right;margin-right: 5px">管理</mt-button></span></div>
+         <div v-for="(item,index) in dataCZ" style="text-align: left">
+          <hr> 
+          <div><small style="color:grey">{{item.OperationTime}}&nbsp;&nbsp;&nbsp;{{item.Address==1?'地点：会场':'地点：车辆'}}</small><mt-button v-show="showdelete" size="small" type="danger"  @click="deleteCZ(index)" style="position:absolute;right:5px" text-align="right">删除</mt-button></div>
+          <div><b>{{item.OperationName}}</b>&nbsp;&nbsp;&nbsp;<span v-show="(item.OperationCode=='P112')">检查单号{{item.Detail1}}</span></div>
+          <div>
+            <span style="display:inline-block;width:380px">{{item.Detail}}</span>
+          </div>
+          <div align="center" v-show="item.InfoType==3">
            <img v-gallery :src="item.FileUrl" style="max-height: 200px; max-width: 90%;margin-bottom: 5px;"></div>
-      </div><br><br><br><br>
-    </mt-tab-container-item>
-    <mt-tab-container-item id="病人去向">
-      <mt-header fixed style="font-size:25px;height: 50px;" :title="title3">
-        <mt-button size="small" icon="back" slot="left"
-        @click="returnA()"><small>返回</small></mt-button>
-        <mt-button size="small" slot="right" v-show="isShow2"
-        @click="confirm()"><small>后送</small></mt-button>
-        <hr>
-      </mt-header>
-      <br><br><br>
-      <div style="font-size:20px">选择分流：{{state}}</div>
+         </div><br>
+        </mt-tab-container-item>
+    <mt-tab-container-item id="5" style="min-height:500px">
+      <div style="font-size:20px"><b>选择分流：{{state}}</b></div>
         <div v-show="isShow3">
           <mt-button plain type="primary" @click="changestate()">处置完成</mt-button>
           <mt-button plain type="danger" @click="gotohospital()">前往医院</mt-button>
           <mt-button plain  @click="self()">自行前往</mt-button>
-          <!-- <mt-button plain  @click="sure()">确定选择</mt-button> -->
         </div>
         <hr>
         <div v-show="isShow">
           <div  align="center" style="height:30px">
           <span style="float: left;">添加医嘱</span></div>
           <mt-field placeholder="输入医嘱" v-model="doctortell" type="textarea" :disabled="!isovering" rows="5"></mt-field><hr>
-          <!-- <mt-button size="small" type="danger" plain style="float: left; margin-left: 10px">
-          <img src="./icon/添加图片.png" height="35" width="35" slot="icon">
-          图片</mt-button> -->
           <mt-button size="small" type="primary" style="float: right" v-show="isovering"
           @click="save60()">确定</mt-button>
         </div>
         <div v-show="isShow1" align="left">
-          <!-- <span><b>推荐医院：</b>{{goodhos}} &nbsp;&nbsp;</span><span v-show="hide"><b>推荐车辆：</b>{{goodcar}}</span> -->
           <div style="margin-top:10px;text-align: left"><b>已选医院：</b>
-          {{HosNo}}&nbsp;&nbsp;&nbsp;{{OrganizationName}}&nbsp;&nbsp;&nbsp;{{LocationDescription}}</div>
+          {{HosNo}}&nbsp;&nbsp;&nbsp;{{OrganizationName}}</div>
           <div v-show="hide" style="text-align: left;"><b>已选车辆：</b>
           {{CarNo}}&nbsp;&nbsp;&nbsp;{{carname}}&nbsp;&nbsp;&nbsp;{{carId}}</div>
-          <div align="center" v-show="isShow100" style="margin: 10px 0px; width: 98%">
-          <mt-button size="small"  style="float: left" type="primary" plain  @click.native="popupVisible1 = true">医院列表</mt-button>
-          <mt-button size="small" style="float: left; margin-left: 10px" type="primary" plain @click.native="popupVisible2 = true">车辆列表</mt-button>
+          <div align="center" style="margin: 10px 0px; width: 98%">
+          <mt-button v-show="isShow100" size="small"  style="float: left" type="primary" plain  @click.native="popupVisible1 = true">医院列表</mt-button>
+          <mt-button v-show="isShow100" size="small" style="float: left; margin-left: 10px" type="primary" plain @click.native="popupVisible2 = true">车辆列表</mt-button>
           <mt-button v-show="isShow100" size="small" type="danger" style="float: right;" @click="ensure()">确定</mt-button>
+          <mt-button size="large" v-show="isShow2" @click="confirm()"><small>后送二维码页面</small></mt-button>
         </div>
-          <div id="map-container" class="map-root" style="width:99%;height:420px;padding:1px;border:1px solid black;margin-top: 50px;">
+          <div id="map-container" class="map-root" style="width:99%;height:420px;padding:1px;border:1px solid black;margin-top: 0px;">
           </div>
         </div>
         <br>
-        <br><br>
       </mt-tab-container-item>
-    </mt-tab-container>
+      <mt-tab-container-item id="6" style="min-height:500px">
+          <img src="./pictrue/man.png" width="100px">
+          <mt-field label="编号" v-model="PatientId" disabled></mt-field>
+          <mt-field label="姓名" v-model="Name" v-on:focus.native.capture="focus6()"></mt-field>
+          <mt-field label="性别" v-model="Gender" disabled></mt-field>
+          <mt-field label="年龄" v-model="Age" v-on:focus.native.capture="focus6()"></mt-field>
+          <mt-field label="民族" v-model="Nation" v-on:focus.native.capture="focus6()"></mt-field>
+          <mt-field label="手机" v-model="Phone" v-on:focus.native.capture="focus6()"></mt-field>
+          <mt-field label="邮箱" v-model="Email" v-on:focus.native.capture="focus6()"></mt-field>
+          <mt-field label="单位" v-model="Unit" v-on:focus.native.capture="focus6()"></mt-field>
+          <mt-field label="职务" v-model="Position" v-on:focus.native.capture="focus6()"></mt-field>
+          <mt-field label="血型" v-model="bloodType" v-on:focus.native.capture="focus6()"></mt-field>
+          <p v-show="setprofile" style="position: relative;left:0px">{{bloodtype1}}{{bloodtype2}}</p>
+          <div v-show="setprofile">
+        <mt-picker :slots="slotsA" @change="onbloodChange" :visible-item-count="3"></mt-picker>
+      </div>
+          <br>
+          <mt-button size="small" style="position:relative;" v-show="setprofile" @click="cancel6()">取消</mt-button>
+          <mt-button size="small" style="position:relative;left: 30px" type="primary" v-show="setprofile" @click="setProfile()">确定</mt-button><br><br><br>
+        </mt-tab-container-item>
+      </mt-tab-container>
     <mt-popup v-model="popupVisible1"  position="bottom" closeOnClickModal="true" style="width:100%;height: 50%;overflow: auto;">
           <div v-for="(item,index) in hosList">
             <a @click="gethospital(index)">
@@ -457,19 +355,6 @@
               @click="pluscritical()">确定</mt-button>
               </div>
         </mt-popup>
-    <div>
-      <mt-tabbar v-model= "selected" fixed>
-        <mt-tab-item id="患者病历">
-          <img slot="icon" src="./icon/病历.png"><div style="font-size:12px">患者病历</div>
-        </mt-tab-item>
-        <mt-tab-item id="处置方案">
-          <img slot="icon" src="./icon/处置方案.png"><div style="font-size:12px">处置方案</div>
-        </mt-tab-item>
-        <mt-tab-item id="病人去向">
-          <img slot="icon" src="./icon/去向.png"><div style="font-size:12px">病人去向</div>
-        </mt-tab-item>
-      </mt-tabbar>
-    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -486,20 +371,20 @@
   export default {
     inject:['reload'],
     directives: {
-    lkey13:{
-      inserted:function (el) {
-        let oInput = el.querySelector('input');
-        oInput.onkeyup = function(ev) {
-          console.log(ev)
-          if(ev.keyCode == 13){
-            console.log(el)
-          let nextDOM = el.nextElementSibling
-          nextDOM.querySelector('input').focus()
-          }
-        };     
+      lkey13:{
+        inserted:function (el) {
+          let oInput = el.querySelector('input');
+          oInput.onkeyup = function(ev) {
+            console.log(ev)
+            if(ev.keyCode == 13){
+              console.log(el)
+              let nextDOM = el.nextElementSibling
+              nextDOM.querySelector('input').focus()
+            }
+          };     
+        }
       }
-    }
-  },
+    },
     data() {
       return {
         goodcar:'车辆1',
@@ -511,8 +396,8 @@
         editing43:false,
         editing5:false,
         title1:'',
-        title2:'',
-        title3:'',
+        bloodtype1:'',
+        bloodtype2:'',
         tempzhusu:'',
         tempxianbingshi:'',
         tempguomin:'',
@@ -520,7 +405,6 @@
         tempyongyao:'',
         tempzhenduan:'',
         photoing:false,
-        photosrc: global.photoUrl+"zyh_1557216080825test.jpg",
         popupVisible1: false,
         popupVisible2: false,
         popupVisible3: false,
@@ -530,13 +414,12 @@
         nowTime:'',
         intervalid1:null,
         watchID1:null,
-        selected: this.$route.params.SELECTED1,
+        // selected: this.$route.params.SELECTED1,
         patientId: this.$route.params.PATIENTID,
         methods: '请选择处置',
         OrganizationName: '',
         ICUNum: '',
         LocationDescription:'',
-        // LocationDescription1: '浙医二院',
         carname:'',
         carstate: '',
         destination: '',
@@ -551,9 +434,10 @@
         isovering:false,
         settingclass:false,
         isshowcritical:false,
+        setprofile:false,
         hide: true,
         value3: '',
-        selected1: '1',
+        selected1: this.$route.params.SELECTED1,
         timevalue: '',
         timevalue1: '',
         timevalue41: '',
@@ -606,6 +490,18 @@
         doctortell: '',
         selectform: '',
         flag:'',
+        slotsA: [
+          {
+            flex: 1,
+            values: ['A型','B型', 'AB型', 'O型'],
+            className: 'slot1',
+          },
+          { 
+            flex: 1,
+            values: ['Rh+', 'Rh-'],
+            className: 'slot2',
+          },
+        ],
         slots: [
         { 
           flex: 1,
@@ -757,8 +653,18 @@
         showjibingshi:false,
         showmuqianyongyao:false,
         showpingfen:false,
-        showfenji:false
-      };
+        showfenji:false,
+        oldprofile:{
+          Name:'',
+          Age:'',
+          Nation:'',
+          Phone:'',
+          Email:'',
+          Unit:'',
+          Position:'',
+          bloodType:''
+        }
+      }
     },
     mounted() {
       var that = this
@@ -802,7 +708,7 @@
         e.preventDefault();
       },
       deleteTZ(index) {
-         MessageBox.confirm('确定删除?').then(action => {
+       MessageBox.confirm('确定删除?').then(action => {
         axios.post('/deleteRecord',{
           SortNo:this.dataTZ[index].SortNo
         }).then((response)=>{
@@ -816,9 +722,9 @@
           }
         }) 
       })
-      },
-      deleteCZ(index) {
-        MessageBox.confirm('确定删除?').then(action => {
+     },
+     deleteCZ(index) {
+      MessageBox.confirm('确定删除?').then(action => {
         axios.post('/deleteRecord',{
           SortNo:this.dataCZ[index].SortNo
         }).then((response)=>{
@@ -832,8 +738,8 @@
           }
         }) 
       })
-      },
-      Showdelete(){
+    },
+    Showdelete(){
       this.showdelete = !this.showdelete;
     },
     showfenji1(){
@@ -854,421 +760,481 @@
     showxianbingshi1(){
       this.showxianbingshi = !this.showxianbingshi
     },
-
-      focus1(){
-        this.editing1 = true;
-        this.tempzhusu = this.主诉;
-      },
-      blur1(){
-        if(this.tempzhusu == this.主诉){
-          this.editing1 = false;
-          this.tempzhusu = '';
-        }else{
-          this.editing1 = true;
+    setProfile(){
+      if(this.bloodtype1 === "A型" && this.bloodtype2 === "Rh+") {
+        con
+        this.bloodType = '1'
+      }else if(this.bloodtype1 === "A型" && this.bloodtype2 === "Rh-") {
+        this.bloodType = '2'
+      }else if(this.bloodtype1 === "B型" && this.bloodtype2 === "Rh+") {
+        this.bloodType = '3'
+      }else if(this.bloodtype1 === "B型" && this.bloodtype2 === "Rh-") {
+        this.bloodType = '4'
+      }else if(this.bloodtype1 === "AB型" && this.bloodtype2 === "Rh+") {
+        this.bloodType = '5'
+      }else if(this.bloodtype1 === "AB型" && this.bloodtype2 === "Rh-") {
+        this.bloodType = '6'
+      }else if(this.bloodtype1 === "O型" && this.bloodtype2 === "Rh+") {
+        this.bloodType = '7'
+      }else if(this.bloodtype1 === "O型" && this.bloodtype2 === "Rh-") {
+        this.bloodType = '8'
+      }
+      if(this.Name == "" || this.Name == null){
+        Toast('姓名不能为空');
+      }else{
+        var data = {
+          patientId:this.patientId,
+          Name:this.Name,
+          Age:this.Age,
+          Nation:this.Nation,
+          Unit:this.Unit,
+          Position:this.Position,
+          Phone:this.Phone,
+          Email:this.Email,
+          bloodType:this.bloodType
         }
-      },
-      cancel1(){
-        this.主诉 = this.tempzhusu;
+        console.log(data)
+      axios.post('/setPatientInfo',data).then((response)=>{
+          if(response.data.results=="修改成功") {
+            Toast('修改成功')
+            this.setprofile = false
+            this.getpatientrecord()
+          }else{
+            Toast('修改失败')
+            this.getpatientrecord()
+          }
+        })
+      }
+    },
+    onbloodChange(picker, values) {
+       this.bloodtype1 = values[0];
+       this.bloodtype2 = values[1];
+    },
+    focus1(){
+      this.editing1 = true;
+      this.tempzhusu = this.主诉;
+    },
+    blur1(){
+      if(this.tempzhusu == this.主诉){
         this.editing1 = false;
         this.tempzhusu = '';
-      },
-      focus2(){
-        this.editing2 = true;
-        this.tempxianbingshi = this.现病史;
-      },
-      blur2(){
-        if(this.tempxianbingshi == this.现病史){
-          this.editing2 = false;
-          this.tempxianbingshi = '';
-        }else{
-          this.editing2 = true;
-        }
-      },
-      cancel2(){
-        this.现病史 = this.tempxianbingshi;
+      }else{
+        this.editing1 = true;
+      }
+    },
+    cancel1(){
+      this.主诉 = this.tempzhusu;
+      this.editing1 = false;
+      this.tempzhusu = '';
+    },
+    focus2(){
+      this.editing2 = true;
+      this.tempxianbingshi = this.现病史;
+    },
+    blur2(){
+      if(this.tempxianbingshi == this.现病史){
         this.editing2 = false;
         this.tempxianbingshi = '';
-      },
-      focus5(){
-        this.editing5 = true;
-        this.tempzhenduan = this.初步诊断;
-      },
-      blur5(){
-        if(this.tempzhenduan == this.初步诊断){
-          this.editing5 = false;
-          this.tempzhenduan = '';
-        }else{
-          this.editing5 = true;
-        }
-      },
-      cancel5(){
-        this.初步诊断 = this.tempzhenduan;
+      }else{
+        this.editing2 = true;
+      }
+    },
+    cancel2(){
+      this.现病史 = this.tempxianbingshi;
+      this.editing2 = false;
+      this.tempxianbingshi = '';
+    },
+    focus5(){
+      this.editing5 = true;
+      this.tempzhenduan = this.初步诊断;
+    },
+    blur5(){
+      if(this.tempzhenduan == this.初步诊断){
         this.editing5 = false;
         this.tempzhenduan = '';
-      },
-      focus41(){
-        this.editing41 = true;
-        this.tempguomin = this.过敏史;
-      },
-      blur41(){
-        if(this.tempguomin == this.过敏史){
-          this.editing41 = false;
-          this.tempguomin = '';
-        }else{
-          this.editing41 = true;
-        }
-      },
-      cancel41(){
-        this.过敏史 = this.tempguomin;
+      }else{
+        this.editing5 = true;
+      }
+    },
+    cancel5(){
+      this.初步诊断 = this.tempzhenduan;
+      this.editing5 = false;
+      this.tempzhenduan = '';
+    },
+    focus6(){
+      this.setprofile = true;
+      this.oldprofile.Name = this.Name
+      this.oldprofile.Age = this.Age
+      this.oldprofile.Nation = this.Nation
+      this.oldprofile.Phone = this.Phone
+      this.oldprofile.Email = this.Email
+      this.oldprofile.Unit = this.Unit
+      this.oldprofile.Position = this.Position
+      this.oldprofile.bloodType = this.bloodType
+    },
+    cancel6(){
+      this.setprofile = false;
+      this.Name = this.oldprofile.Name
+      this.Age = this.oldprofile.Age
+      this.Nation = this.oldprofile.Nation
+      this.Phone = this.oldprofile.Phone
+      this.Email = this.oldprofile.Email
+      this.Unit = this.oldprofile.Unit
+      this.Position = this.oldprofile.Position
+      this.bloodType = this.oldprofile.bloodType
+    },
+    focus41(){
+      this.editing41 = true;
+      this.tempguomin = this.过敏史;
+    },
+    blur41(){
+      if(this.tempguomin == this.过敏史){
         this.editing41 = false;
         this.tempguomin = '';
-      },
-      focus42(){
-        this.editing42 = true;
-        this.tempjibing = this.疾病史;
-      },
-      blur42(){
-        if(this.tempjibing == this.疾病史){
-          this.editing42 = false;
-          this.tempjibing = '';
-        }else{
-          this.editing42 = true;
-        }
-      },
-      cancel42(){
-        this.疾病史 = this.tempjibing;
+      }else{
+        this.editing41 = true;
+      }
+    },
+    cancel41(){
+      this.过敏史 = this.tempguomin;
+      this.editing41 = false;
+      this.tempguomin = '';
+    },
+    focus42(){
+      this.editing42 = true;
+      this.tempjibing = this.疾病史;
+    },
+    blur42(){
+      if(this.tempjibing == this.疾病史){
         this.editing42 = false;
         this.tempjibing = '';
-      },
-      focus43(){
-        this.editing43 = true;
-        this.tempyongyao = this.目前用药;
-      },
-      blur43(){
-        if(this.tempyongyao == this.目前用药){
-          this.editing43 = false;
-          this.tempyongyao = '';
-        }else{
-          this.editing43 = true;
-        }
-      },
-      cancel43(){
-        this.目前用药 = this.tempyongyao;
+      }else{
+        this.editing42 = true;
+      }
+    },
+    cancel42(){
+      this.疾病史 = this.tempjibing;
+      this.editing42 = false;
+      this.tempjibing = '';
+    },
+    focus43(){
+      this.editing43 = true;
+      this.tempyongyao = this.目前用药;
+    },
+    blur43(){
+      if(this.tempyongyao == this.目前用药){
         this.editing43 = false;
         this.tempyongyao = '';
-      },
-      getpatientrecord() {
-        //重置
-        this.主诉图片 = []
-        this.既往史图片=[]
-        this.现病史图片=[]
-        this.dataTZ = []
-        this.dataCZ = []
-        var Longitude = window.localStorage.getItem("Longitude")
-        var Latitude = window.localStorage.getItem("Latitude")
-        this.myPosition = new AMap.LngLat(Longitude,Latitude);
-        this.Drivingrender = new Lib.AMap.DrivingRender()
-        axios.get('/getHosList',{}).then((response) => {
-          var that = this
-          that.hosList = response.data.results
-          AMap.plugin(['AMap.Driving'],function(){
-            that.driving = new AMap.Driving({
-              policy: AMap.DrivingPolicy.LEAST_TIME
-            })
-          });
-          for(var i=0;i<that.hosList.length;i++){
-           (function(j){
-             that.hosList[j].position = new AMap.LngLat(response.data.results[j].Longitude, response.data.results[j].Latitude)             
-             new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.myPosition, that.hosList[j].position, function (status, result) {
-              that.hosList[j].searchresult = result
-              that.hosList[j].Time = "预计到达时间"+Math.round(that.hosList[j].searchresult.routes[0].time/60)+"分钟";
-             })
-           })(i) 
-          }
-        })
-        console.log(this.hosList)
-        axios.get('/getCarList',{}).then((response) => {
-          var that = this
-          var carlist = response.data.results
-          var x  =carlist.shift()
-          that.carList = response.data.results
-          for(var i=0; i<that.carList.length;i++) {
-            (function(j){
-              axios.post('/getCarStatusCount', {'groupNo': that.carList[j].GroupNo})
-              .then((response) => {
-                that.carList[j].daihousong = response.data['results'].daihousong
-              }).catch(function (error) {
-                console.log("error", error);
-              })
-              if(that.carList[j].CarStatus == "0"){
-                that.carList[j].CarStatus = "空闲"
-              }else if(that.carList[j].CarStatus == "1") {
-                that.carList[j].CarStatus = "正在前往会场："+that.carList[j].Assembly
-              }else if(that.carList[j].CarStatus == "2") {
-                that.carList[j].CarStatus = "正在前往医院："+that.carList[j].Hospital
-              }   
-            })(i);
-            (function(k){
-          that.carList[k].position = new AMap.LngLat(response.data.results[k].Longitude, response.data.results[k].Latitude)
-          new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.carList[k].position,that.myPosition, function (status, result) {
-            that.carList[k].searchresult = result
-            that.carList[k].Time = "预计到达时间"+Math.round(that.carList[k].searchresult.routes[0].time/60)+"分钟";
+      }else{
+        this.editing43 = true;
+      }
+    },
+    cancel43(){
+      this.目前用药 = this.tempyongyao;
+      this.editing43 = false;
+      this.tempyongyao = '';
+    },
+    getpatientrecord() {
+      this.getPatientInfo()
+      this.主诉图片 = []
+      this.既往史图片=[]
+      this.现病史图片=[]
+      this.dataTZ = []
+      this.dataCZ = []
+      var Longitude = window.localStorage.getItem("Longitude")
+      var Latitude = window.localStorage.getItem("Latitude")
+      this.myPosition = new AMap.LngLat(Longitude,Latitude);
+      this.Drivingrender = new Lib.AMap.DrivingRender()
+      axios.get('/getHosList',{}).then((response) => {
+        var that = this
+        that.hosList = response.data.results
+        AMap.plugin(['AMap.Driving'],function(){
+          that.driving = new AMap.Driving({
+            policy: AMap.DrivingPolicy.LEAST_TIME
           })
-        })(i)
-          }
-        })
-        console.log(this.carList)
-        this.content1 = ''
-        this.content = ''
+        });
+        for(var i=0;i<that.hosList.length;i++){
+         (function(j){
+           that.hosList[j].position = new AMap.LngLat(response.data.results[j].Longitude, response.data.results[j].Latitude)             
+           new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.myPosition, that.hosList[j].position, function (status, result) {
+            that.hosList[j].searchresult = result
+            that.hosList[j].Time = "预计到达时间"+Math.round(that.hosList[j].searchresult.routes[0].time/60)+"分钟";
+          })
+         })(i) 
+       }
+     })
+      console.log(this.hosList)
+      axios.get('/getCarList',{}).then((response) => {
+        var that = this
+        var carlist = response.data.results
+        var x  =carlist.shift()
+        that.carList = response.data.results
+        for(var i=0; i<that.carList.length;i++) {
+          (function(j){
+            axios.post('/getCarStatusCount', {'groupNo': that.carList[j].GroupNo})
+            .then((response) => {
+              that.carList[j].daihousong = response.data['results'].daihousong
+            }).catch(function (error) {
+              console.log("error", error);
+            })
+            if(that.carList[j].CarStatus == "0"){
+              that.carList[j].CarStatus = "空闲"
+            }else if(that.carList[j].CarStatus == "1") {
+              that.carList[j].CarStatus = "正在前往会场："+that.carList[j].Assembly
+            }else if(that.carList[j].CarStatus == "2") {
+              that.carList[j].CarStatus = "正在前往医院："+that.carList[j].Hospital
+            }   
+          })(i);
+          (function(k){
+            that.carList[k].position = new AMap.LngLat(response.data.results[k].Longitude, response.data.results[k].Latitude)
+            new AMap.Driving({policy: AMap.DrivingPolicy.LEAST_TIME}).search(that.carList[k].position,that.myPosition, function (status, result) {
+              that.carList[k].searchresult = result
+              that.carList[k].Time = "预计到达时间"+Math.round(that.carList[k].searchresult.routes[0].time/60)+"分钟";
+            })
+          })(i)
+        }
+      })
+      console.log(this.carList)
+      this.content1 = ''
+      this.content = ''
 
-       
-        axios.post('/getPatientRecord',{
-          patientId:this.$route.params.PATIENTID
-        }).then((response) => {
-          window.localStorage.setItem('PATIENTNO',this.patientId);
-          this.patientrecord=response.data.results
-          this.zhusu=this.patientrecord.P01;
-          if(this.zhusu.length>0) {
-            for(var i=0; i<this.zhusu.length;i++) {
-              if(this.zhusu[i].InfoType == 3) {
-                var fileUrl = this.zhusu[i].FileUrl
-                var time = this.zhusu[i].OperationTime
-                this.主诉图片.unshift({
-                  fileUrl:global.photoUrl+fileUrl,
-                  time:time
-                })              
-              }
-            }
-            for(var k=0; k<this.zhusu.length;k++) {
-              if(this.zhusu[k].InfoType == 1) {
-                this.主诉=this.zhusu[k].Detail;
-                this.timevalue=this.zhusu[k].OperationTime;
-                break;
-              }
-            }
-          }else{
-            this.主诉='';
-            this.timevalue='';
-          }
-          if(this.patientrecord.P02.length>0) {
-            for(var i=0; i<this.patientrecord.P02.length;i++) {
-              if(this.patientrecord.P02[i].InfoType == 3) {
-                var fileUrl = this.patientrecord.P02[i].FileUrl
-                var time = this.patientrecord.P02[i].OperationTime
-                this.现病史图片.unshift({
-                  fileUrl:global.photoUrl+fileUrl,
-                  time:time
-                })
-              }
-            }
-            console.log(this.现病史图片)
-            for(var k=0; k<this.patientrecord.P02.length;k++) {
-              if(this.patientrecord.P02[k].InfoType == 1) {
-                this.现病史=this.patientrecord.P02[k].Detail;
-                this.timevalue1=this.patientrecord.P02[k].OperationTime;
-                break;
-              }
-            }
 
-          }else{
-            this.现病史 = '';
-            this.timevalue1 = '';
+      axios.post('/getPatientRecord',{
+        patientId:this.$route.params.PATIENTID
+      }).then((response) => {
+        window.localStorage.setItem('PATIENTNO',this.patientId);
+        this.patientrecord=response.data.results
+        this.zhusu=this.patientrecord.P01;
+        if(this.zhusu.length>0) {
+          for(var i=0; i<this.zhusu.length;i++) {
+            if(this.zhusu[i].InfoType == 3) {
+              var fileUrl = this.zhusu[i].FileUrl
+              var time = this.zhusu[i].OperationTime
+              this.主诉图片.unshift({
+                fileUrl:global.photoUrl+fileUrl,
+                time:time
+              })              
+            }
           }
-          this.dataTZ=this.patientrecord.P03
-          console.log(this.dataTZ)
-          this.autoScore()
-          for(var i=0; i<this.patientrecord.P04.length;i++) {
-            if(this.patientrecord.P04[i].OperationCode == "P041") {
-              this.过敏史=this.patientrecord.P04[i].Detail
-              this.timevalue41=this.patientrecord.P04[i].OperationTime;
+          for(var k=0; k<this.zhusu.length;k++) {
+            if(this.zhusu[k].InfoType == 1) {
+              this.主诉=this.zhusu[k].Detail;
+              this.timevalue=this.zhusu[k].OperationTime;
               break;
             }
           }
-          for(var k=0; k<this.patientrecord.P04.length;k++) {
-            if(this.patientrecord.P04[k].OperationCode == "P042") {
-              this.疾病史=this.patientrecord.P04[k].Detail
-              this.timevalue42=this.patientrecord.P04[k].OperationTime;
-              break;
-            }
-          }
-          for(var j=0; j<this.patientrecord.P04.length;j++) {
-            if(this.patientrecord.P04[j].OperationCode == "P043") {
-              this.目前用药=this.patientrecord.P04[j].Detail
-              this.timevalue43=this.patientrecord.P04[j].OperationTime;
-              break;
-            }
-          }
-          for(var j=0; j<this.patientrecord.P04.length;j++) {
-            if(this.patientrecord.P04[j].OperationCode == "P040") {
-              var fileUrl =  this.patientrecord.P04[j].FileUrl
-              var time = this.patientrecord.P04[j].OperationTime
-              this.既往史图片.unshift({
+        }else{
+          this.主诉='';
+          this.timevalue='';
+        }
+        if(this.patientrecord.P02.length>0) {
+          for(var i=0; i<this.patientrecord.P02.length;i++) {
+            if(this.patientrecord.P02[i].InfoType == 3) {
+              var fileUrl = this.patientrecord.P02[i].FileUrl
+              var time = this.patientrecord.P02[i].OperationTime
+              this.现病史图片.unshift({
                 fileUrl:global.photoUrl+fileUrl,
                 time:time
               })
             }
           }
-          if(this.patientrecord.P05.length>0) {
-            this.初步诊断=this.patientrecord.P05[0].Detail
-            this.timevalue2=this.patientrecord.P05[0].OperationTime
-          }else{
-            this.初步诊断=''
-            this.timevalue2=''
-          }
-          this.dataCZ=this.patientrecord.P11
-          for(var j=0; j<this.patientrecord.P11.length;j++) {
-            if(this.patientrecord.P11[j].InfoType == 3) {
-              var fileUrl =  this.patientrecord.P11[j].FileUrl
-              this.dataCZ[j].FileUrl = global.photoUrl+fileUrl
-              
+          console.log(this.现病史图片)
+          for(var k=0; k<this.patientrecord.P02.length;k++) {
+            if(this.patientrecord.P02[k].InfoType == 1) {
+              this.现病史=this.patientrecord.P02[k].Detail;
+              this.timevalue1=this.patientrecord.P02[k].OperationTime;
+              break;
             }
           }
-          if(this.patientrecord.P06.length>0) {
-            this.doctortell=this.patientrecord.P06[0].Detail
-          }else{
-            this.doctortell= ''
-          }
-        })
-      },
-      getPatientInfo(){
-        axios.post('/getPatientInfo',{
-          patientId:this.$route.params.PATIENTID
-        }).then((response) => {
-          console.log(response)
-          this.PatientId=response.data.results[0].PatientId;
-          this.Name=response.data.results[0].Name;
-          this.title1=this.Name;
-          this.title2=this.Name;
-          this.title3=this.Name;
-          this.Phone=response.data.results[0].Phone
-          this.Email=response.data.results[0].Email;
-          this.Gender=response.data.results[0].Gender;
-          this.Unit=response.data.results[0].Unit;
-          this.Position=response.data.results[0].Position;
-          this.Age=response.data.results[0].Age;
-          this.Nation=response.data.results[0].Nation;
-          this.bloodType=response.data.results[0].BloodType;
-          this.Status=response.data.results[0].Status;
-          this.StatusName=response.data.results[0].StatusName;
-          this.level=response.data.results[0].Classification;
-          this.Classification = response.data.results[0].Classification;
-          // this.hospital=response.data.results[0].OrganizationName;
-          // this.carId=response.data.results[0].CarId;
-          this.CarNo=response.data.results[0].CarNo;
-          this.HosNo=response.data.results[0].HosNo;
-          // if(this.flag1 == "1") {
-          //   this.StatusName = "待后送"
-          //   this.isShow2 = true
-          // }
-          this.state=this.StatusName;
-          console.log(this.StatusName)
-          if(this.StatusName == "处置中") {
-            this.isShow1 = false
-            this.isShow2 = false
-          }else if(this.StatusName == "处置完成") {
-            this.isShow = true
-            this.isShow1 = false
-            this.isShow2 = false
-            this.isShow3 = false
-          }else if(this.StatusName == "待后送") {
-            this.isShow1 = true
-            this.isShow2 = true
-            this.isShow3 = false
-          }else if(this.StatusName == "已后送") {
-            this.isShow1 = true
-            this.isShow2 = false
-            this.isShow3 = false
-          }
-          if(this.CarNo != "") {
-            axios.post('/getCarInfo',{
-              carNo:this.CarNo
-            }).then((response) => {
-              if(this.CarNo == "000") {
-                this.hide = false
-              }
-              this.carname = response.data.results[0].CarName
-              this.carId = response.data.results[0].CarId
-              console.log(this.carId)
-              var state2= '';
-              this.state2=response.data.results[0].CarStatus
-              if(this.state2 == "0") {
-                this.carstate = "空闲"
-              }else if(this.state2 == "1") {
-                this.carstate = "正在去会场"
-              }else if(this.state2 == "2") {
-                this.carstate = "正在去医院"
-              }
-            })
-          }
-          if(this.HosNo != "") {
-            axios.post('/getHosInfo',{
-              hosNo:this.HosNo
-            }).then((response) => {
-              this.OrganizationName = response.data.results[0].OrganizationName
-              this.LocationDescription = response.data.results[0].LocationDescription
-              this.ICUNum = response.data.results[0].ICUNum
-            })
-          }
-          // if(this.StatusName != "处置中") {
-          //   this.isShow1 = true
-          // }
-          // window.localStorage.setItem('STATE',this.state);
 
-        })
-      },
-      getDeviceList() {
-        axios('http://test.995120.cn:8088/his/outpatient/queryDeviceList',{
-          method: 'post', 
-          data:{  
-         "hospital_bid":"810000"
-       },
-       headers:{
-        "pkgId":"0001",
-        "transCode":"500008",
-        "senderOrgCode":"810000",
-        "senderPltCode":"88888899",
-        "senderSysCode":"81",
-        "createDate":"20190713",
-        "createTime":"11:17:00",
-        "version":"1.0",
-        "token":"0001",
-        "recverOrgCode":"999999",
-        "recverPltCode":"99999999",
-        "recverSysCode":"99",
-        "Content-Type":"application/json"
-       }
-        }).then((response) => {
-          this.useableDeviceList = response.data.recordList
-        })
-      },
-      getTestList() {
-        axios('http://test.995120.cn:8088/his/outpatient/getTestList',{
-          method: 'post', 
-          data:{
-         "hospital_bid":"810000"
-       },
-       headers:{
-        "pkgId":"0001",
-        "transCode":"500008",
-        "senderOrgCode":"810000",
-        "senderPltCode":"88888899",
-        "senderSysCode":"81",
-        "createDate":"20190713",
-        "createTime":"11:17:00",
-        "version":"1.0",
-        "token":"0001",
-        "recverOrgCode":"999999",
-        "recverPltCode":"99999999",
-        "recverSysCode":"99",
-        "Content-Type":"application/json"
-       }
-        }).then((response) => {
-          this.testList = []
-          for(var i=0;i<5;i++){
-            this.testList.push(response.data.recordList[i]) 
+        }else{
+          this.现病史 = '';
+          this.timevalue1 = '';
+        }
+        this.dataTZ=this.patientrecord.P03
+        console.log(this.dataTZ)
+        this.autoScore()
+        for(var i=0; i<this.patientrecord.P04.length;i++) {
+          if(this.patientrecord.P04[i].OperationCode == "P041") {
+            this.过敏史=this.patientrecord.P04[i].Detail
+            this.timevalue41=this.patientrecord.P04[i].OperationTime;
+            break;
           }
-        })
-      },
+        }
+        for(var k=0; k<this.patientrecord.P04.length;k++) {
+          if(this.patientrecord.P04[k].OperationCode == "P042") {
+            this.疾病史=this.patientrecord.P04[k].Detail
+            this.timevalue42=this.patientrecord.P04[k].OperationTime;
+            break;
+          }
+        }
+        for(var j=0; j<this.patientrecord.P04.length;j++) {
+          if(this.patientrecord.P04[j].OperationCode == "P043") {
+            this.目前用药=this.patientrecord.P04[j].Detail
+            this.timevalue43=this.patientrecord.P04[j].OperationTime;
+            break;
+          }
+        }
+        for(var j=0; j<this.patientrecord.P04.length;j++) {
+          if(this.patientrecord.P04[j].OperationCode == "P040") {
+            var fileUrl =  this.patientrecord.P04[j].FileUrl
+            var time = this.patientrecord.P04[j].OperationTime
+            this.既往史图片.unshift({
+              fileUrl:global.photoUrl+fileUrl,
+              time:time
+            })
+          }
+        }
+        if(this.patientrecord.P05.length>0) {
+          this.初步诊断=this.patientrecord.P05[0].Detail
+          this.timevalue2=this.patientrecord.P05[0].OperationTime
+        }else{
+          this.初步诊断=''
+          this.timevalue2=''
+        }
+        this.dataCZ=this.patientrecord.P11
+        for(var j=0; j<this.patientrecord.P11.length;j++) {
+          if(this.patientrecord.P11[j].InfoType == 3) {
+            var fileUrl =  this.patientrecord.P11[j].FileUrl
+            this.dataCZ[j].FileUrl = global.photoUrl+fileUrl
+
+          }
+        }
+        if(this.patientrecord.P06.length>0) {
+          this.doctortell=this.patientrecord.P06[0].Detail
+        }else{
+          this.doctortell= ''
+        }
+      })
+    },
+    getPatientInfo(){
+      axios.post('/getPatientInfo',{
+        patientId:this.$route.params.PATIENTID
+      }).then((response) => {
+        console.log(response)
+        this.PatientId=response.data.results[0].PatientId;
+        this.Name=response.data.results[0].Name;
+        this.title1=this.Name;
+        this.title2=this.Name;
+        this.title3=this.Name;
+        this.Phone=response.data.results[0].Phone
+        this.Email=response.data.results[0].Email;
+        this.Gender=response.data.results[0].Gender;
+        this.Unit=response.data.results[0].Unit;
+        this.Position=response.data.results[0].Position;
+        this.Age=response.data.results[0].Age;
+        this.Nation=response.data.results[0].Nation;
+        this.bloodType=response.data.results[0].BloodType;
+        this.Status=response.data.results[0].Status;
+        this.StatusName=response.data.results[0].StatusName;
+        this.level=response.data.results[0].Classification;
+        this.Classification = response.data.results[0].Classification;
+        this.CarNo=response.data.results[0].CarNo;
+        this.HosNo=response.data.results[0].HosNo;
+        this.state=this.StatusName;
+        console.log(this.StatusName)
+        if(this.StatusName == "处置中") {
+          this.isShow1 = false
+          this.isShow2 = false
+        }else if(this.StatusName == "处置完成") {
+          this.isShow = true
+          this.isShow1 = false
+          this.isShow2 = false
+          this.isShow3 = false
+        }else if(this.StatusName == "待后送") {
+          this.isShow1 = true
+          this.isShow2 = true
+          this.isShow3 = false
+        }else if(this.StatusName == "已后送") {
+          this.isShow1 = true
+          this.isShow2 = false
+          this.isShow3 = false
+        }
+        if(this.CarNo != "") {
+          axios.post('/getCarInfo',{
+            carNo:this.CarNo
+          }).then((response) => {
+            if(this.CarNo == "000") {
+              this.hide = false
+            }
+            this.carname = response.data.results[0].CarName
+            this.carId = response.data.results[0].CarId
+            console.log(this.carId)
+            var state2= '';
+            this.state2=response.data.results[0].CarStatus
+            if(this.state2 == "0") {
+              this.carstate = "空闲"
+            }else if(this.state2 == "1") {
+              this.carstate = "正在去会场"
+            }else if(this.state2 == "2") {
+              this.carstate = "正在去医院"
+            }
+          })
+        }
+        if(this.HosNo != "") {
+          axios.post('/getHosInfo',{
+            hosNo:this.HosNo
+          }).then((response) => {
+            this.OrganizationName = response.data.results[0].OrganizationName
+            this.LocationDescription = response.data.results[0].LocationDescription
+            this.ICUNum = response.data.results[0].ICUNum
+          })
+        }
+      })
+    },
+    getDeviceList() {
+      axios('http://test.995120.cn:8088/his/outpatient/queryDeviceList',{
+        method: 'post',
+        data:{  
+         "hospital_bid":"810000"
+       },
+       headers:{
+        "pkgId":"0001",
+        "transCode":"500008",
+        "senderOrgCode":"810000",
+        "senderPltCode":"88888899",
+        "senderSysCode":"81",
+        "createDate":"20190713",
+        "createTime":"11:17:00",
+        "version":"1.0",
+        "token":"0001",
+        "recverOrgCode":"999999",
+        "recverPltCode":"99999999",
+        "recverSysCode":"99",
+        "Content-Type":"application/json"
+      }
+    }).then((response) => {
+      this.useableDeviceList = response.data.recordList
+    })
+  },
+  getTestList() {
+    axios('http://test.995120.cn:8088/his/outpatient/getTestList',{
+      method: 'post', 
+      data:{
+       "hospital_bid":"810000"
+     },
+     headers:{
+      "pkgId":"0001",
+      "transCode":"500008",
+      "senderOrgCode":"810000",
+      "senderPltCode":"88888899",
+      "senderSysCode":"81",
+      "createDate":"20190713",
+      "createTime":"11:17:00",
+      "version":"1.0",
+      "token":"0001",
+      "recverOrgCode":"999999",
+      "recverPltCode":"99999999",
+      "recverSysCode":"99",
+      "Content-Type":"application/json"
+    }
+  }).then((response) => {
+    this.testList = []
+    for(var i=0;i<5;i++){
+      this.testList.push(response.data.recordList[i]) 
+    }
+  })
+},
       showcritical(){
         this.isshowcritical = !this.isshowcritical
       },
@@ -1459,7 +1425,6 @@
         this.isShow1 = false;
         this.isShow100 = false;
         this.isovering = true;
-        // this.isShow3 = false
       },
       gotohospital() {
         this.state = "待后送";
@@ -1495,7 +1460,6 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            // alert("上传成功");
             Toast('上传成功');
             this.getpatientrecord()
           }
@@ -1545,7 +1509,6 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            // alert("上传成功");
             Toast('上传成功');
             this.getpatientrecord()
           }
@@ -1567,7 +1530,6 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            // alert("上传成功");
             Toast('上传成功');
             this.getpatientrecord()
           }
@@ -1682,10 +1644,8 @@
           patientId:this.$route.params.PATIENTID
         }).then((response) => {
           if(response.data.results == "上传成功") {
-            // alert("上报成功");
             Toast('成功上报指挥中心');
           }else{
-            // alert("上报失败");
             Toast('上报失败');
           }
         })
@@ -1695,10 +1655,8 @@
           patientId:this.$route.params.PATIENTID
         }).then((response) => {
           if(response.data.results == "上传成功") {
-            // alert("上报成功");
             Toast('成功上报指挥中心');
           }else{
-            // alert("上报失败");
             Toast('上报失败');
           }
         })
@@ -1857,7 +1815,6 @@
           fileUrl: '' 
         }).then((response) => {
           if(response.data.results == "新建成功") {
-            // alert("上传成功");
             Toast('上传成功');
             this.editing1 = false;
             this.tempzhusu = ''
@@ -1939,43 +1896,6 @@
           }
         })
       },
-      // add() {
-      //   this.operationCode = ''
-      //   if(this.体征 == "心率") {
-      //     this.operationCode = "P031"
-      //   }else if(this.体征 == "血压") {
-      //     this.operationCode = "P032"
-      //   }else if(this.体征 == "体温") {
-      //     this.operationCode = "P033"
-      //   }else if(this.体征 == "呼吸") {
-      //     this.operationCode = "P034"
-      //   }else if(this.体征 == "血氧") {
-      //     this.operationCode = "P035"
-      //   }else if(this.体征 == "其他") {
-      //     this.operationCode = "P036"
-      //   }
-      //   if(this.operationCode != ''){
-      //     axios.post('/newPatientRecord',{
-      //       patientId:this.$route.params.PATIENTID,
-      //       inputUserId:window.localStorage.getItem('USERID'),
-      //       operator:window.localStorage.getItem('USERID'),
-      //       detail:this.content,
-      //       operationCode: this.operationCode,
-      //       detail1: this.体征,
-      //       address: "1",
-      //       infoType: "1",
-      //       fileUrl: '' 
-      //     }).then((response) => {
-      //       if(response.data.results == "新建成功") {
-      //         Toast('上传成功');
-      //         this.getpatientrecord()
-      //         this.istizheng = false
-      //       }
-      //     })
-      //   }else{
-      //     Toast('请选择体征');
-      //   }
-      // },
       commonTZ(){
         this.istizheng = !this.istizheng
         this.isothers = false
@@ -2102,14 +2022,12 @@
             fileUrl: '' 
           }).then((response) => {
             if(response.data.results == "新建成功") {
-              // alert("上传成功");
               Toast('上传成功');
               this.getpatientrecord()
               this.isShow4 = false
             }
           })
         }else{
-          // alert("请选择处置"); 
           Toast('请选择处置');    
         }
       },
