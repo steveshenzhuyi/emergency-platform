@@ -88,6 +88,7 @@ export default {
       this.$router.push({name: '转运列表',params:{SELECTED1:"个人"}});
     },
     logout(){
+      window.localStorage.removeItem("PWD");
       window.JPush.cleanTags({ sequence: 1 },
         (result) => {
          this.$router.push({name:'Home'})
@@ -106,6 +107,7 @@ export default {
           this.pwd1 = ''
           this.pwd2 = ''
           this.showchangepwd = false
+          this.logout()
         }else{
           Toast("修改失败");
         }

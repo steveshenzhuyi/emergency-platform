@@ -553,6 +553,7 @@ export default {
       })
     },
     logout(){
+      window.localStorage.removeItem("PWD");
       window.JPush.cleanTags({ sequence: 1 },
         (result) => {
           console.log(result)
@@ -572,6 +573,7 @@ export default {
           this.pwd1 = ''
           this.pwd2 = ''
           this.showchangepwd = false
+          this.logout()
         }else{
           Toast("修改失败");
         }
