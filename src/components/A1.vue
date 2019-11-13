@@ -15,7 +15,7 @@
           <mt-tab-item id="3">诊断</mt-tab-item>
           <mt-tab-item id="4">处置</mt-tab-item>
           <mt-tab-item id="5">去向</mt-tab-item>
-          <mt-tab-item id="6">基本信息</mt-tab-item>
+          <mt-tab-item id="6">基本</mt-tab-item>
         </mt-navbar>
         <br>
         <mt-tab-container v-model="selected1" swipeable>
@@ -135,7 +135,7 @@
               </div>
           <hr>
           <div align="left" style="height:40px"><mt-button size="small" @click.native="popupVisible4 = true" style="width: 90px" type="primary" plain>特殊情况</mt-button></div>
-          <div align="center" style="height:35px" @click="showpingfen1()"><span style="float: left;margin-top: 8px"><b>MEWS评分</b></span></div>
+          <div align="left" style="height:35px" @click="showpingfen1()"><span style="margin-top: 8px"><b>MEWS评分</b></span></div>
           <div v-show="showpingfen">
           <div align="left" style="height:30px">
             <span>心率</span><span style="position:relative;left:90px">收缩压</span><span style="position:relative;left:160px">呼吸</span>
@@ -151,7 +151,7 @@
           </div>
           <hr>
           </div>
-          <div align="center" style="height:35px" @click="showfenji1()"><span style="float: left;margin-top: 5px"><b>预检分级</b></span></div>
+          <div align="left" style="height:35px" @click="showfenji1()"><span style="margin-top: 5px"><b>预检分级</b></span></div>
           <div v-show="showfenji">
           <div align="left" style="height:30px">
             <span>当前分级：{{level}}</span>
@@ -208,7 +208,7 @@
          </div><br>
         </mt-tab-container-item>
     <mt-tab-container-item id="5" style="min-height:500px">
-      <div style="font-size:20px"><b>选择分流：{{state}}</b></div>
+      <div style="font-size:20px;margin-bottom: 10px"><b>选择分流：{{state}}</b></div>
         <div v-show="isShow3">
           <mt-button plain type="primary" @click="changestate()">处置完成</mt-button>
           <mt-button plain type="danger" @click="gotohospital()">前往医院</mt-button>
@@ -230,16 +230,15 @@
           <div align="center" style="margin: 10px 0px; width: 98%">
           <mt-button v-show="isShow100" size="small"  style="float: left" type="primary" plain  @click.native="popupVisible1 = true">医院列表</mt-button>
           <mt-button v-show="isShow100" size="small" style="float: left; margin-left: 10px" type="primary" plain @click.native="popupVisible2 = true">车辆列表</mt-button>
-          <mt-button v-show="isShow100" size="small" type="danger" style="float: right;" @click="ensure()">确定</mt-button>
-          <mt-button size="large" v-show="isShow2" @click="confirm()"><small>后送二维码页面</small></mt-button>
+          <mt-button v-show="isShow100" size="small" type="danger" style="float: right;margin-bottom: 10px" @click="ensure()">确定</mt-button>
+          <mt-button size="large" v-show="isShow2" @click="confirm()" type="primary" plain><small>后送二维码页面</small></mt-button>
+          <mt-button size="large" style="margin-top: 10px" @click.native="popupVisible5 = true" type="primary" plain><small>打开地图</small></mt-button>
         </div>
-          <div id="map-container" class="map-root" style="width:99%;height:420px;padding:1px;border:1px solid black;margin-top: 0px;">
-          </div>
         </div>
         <br>
       </mt-tab-container-item>
       <mt-tab-container-item id="6" style="min-height:500px">
-          <img src="./pictrue/man.png" width="100px">
+          <!-- <img src="./pictrue/man.png" width="100px"> -->
           <mt-field label="编号" v-model="PatientId" disabled></mt-field>
           <mt-field label="姓名" v-model="Name" v-on:focus.native.capture="focus6()"></mt-field>
           <mt-field label="性别" v-model="Gender" disabled></mt-field>
@@ -256,7 +255,7 @@
       </div>
           <br>
           <mt-button size="small" style="position:relative;" v-show="setprofile" @click="cancel6()">取消</mt-button>
-          <mt-button size="small" style="position:relative;left: 30px" type="primary" v-show="setprofile" @click="setProfile()">确定</mt-button><br><br><br>
+          <mt-button size="small" style="position:relative;left: 30px" type="primary" v-show="setprofile" @click="setProfile()">确定</mt-button><br><br>
         </mt-tab-container-item>
       </mt-tab-container>
     <mt-popup v-model="popupVisible1"  position="bottom" closeOnClickModal="true" style="width:100%;height: 50%;overflow: auto;">
@@ -355,6 +354,10 @@
               @click="pluscritical()">确定</mt-button>
               </div>
         </mt-popup>
+        <mt-popup v-model="popupVisible5"  position="bottom" closeOnClickModal="false" style="width:100%;height: 70%;overflow: auto;">
+          <div id="map-container" class="map-root" style="width:98%;height:440px;padding:1px;border:1px solid black;margin-top: 0px;">
+          </div>
+        </mt-popup>
     <router-view></router-view>
   </div>
 </template>
@@ -409,6 +412,7 @@
         popupVisible2: false,
         popupVisible3: false,
         popupVisible4:false,
+        popupVisible5:false,
         useableDeviceList:[],
         testList:[],
         nowTime:'',
@@ -493,7 +497,7 @@
         slotsA: [
           {
             flex: 1,
-            values: ['A型','B型', 'AB型', 'O型'],
+            values: ['A型','B型', 'AB型', 'O型','不明'],
             className: 'slot1',
           },
           { 
@@ -778,6 +782,8 @@
         this.bloodType = '7'
       }else if(this.bloodtype1 === "O型" && this.bloodtype2 === "Rh-") {
         this.bloodType = '8'
+      }else if(this.bloodtype1 === "不明") {
+        this.bloodType = '0'
       }
       if(this.Name == "" || this.Name == null){
         Toast('姓名不能为空');

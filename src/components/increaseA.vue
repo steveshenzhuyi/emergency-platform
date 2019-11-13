@@ -93,7 +93,7 @@ export default {
       slots: [
           {
             flex: 1,
-            values: ['A型','B型', 'AB型', 'O型'],
+            values: ['A型','B型', 'AB型', 'O型','不明'],
             className: 'slot1',
           },
           { 
@@ -203,6 +203,10 @@ export default {
                   that.blood = "O型"
                   that.type = "Rh-"
                 }
+                else if(that.bloodType == 0){
+                  that.blood = "不明"
+                  that.type = ""
+                }
 
                 if(that.gender == 1){
                   that.gender1 = '男'
@@ -284,6 +288,10 @@ export default {
                   that.blood = "O型"
                   that.type = "Rh-"
                 }
+                else if(that.bloodType == 0){
+                  that.blood = "不明"
+                  that.type = ""
+                }
 
                 if(that.gender == 1){
                   that.gender1 = '男'
@@ -332,6 +340,8 @@ export default {
         this.bloodType = '7'
       }else if(this.blood === "O型" && this.type === "Rh-") {
         this.bloodType = '8'
+      }else if(this.blood === "不明") {
+        this.bloodType = '0'
       }
       if(this.gender!=1 && this.gender!=2)this.gender=0;
       if(this.pname == "" || this.pname == null){

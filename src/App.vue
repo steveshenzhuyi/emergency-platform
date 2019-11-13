@@ -137,35 +137,35 @@ checkversion(){
         var fileURL = 'cdvfile://localhost/temporary/1.apk'
         fileTransfer.download(
           uri, fileURL, function (entry) {
-             Toast('下载完成')
-            cordova.plugins.fileOpener2.open(
-  'cdvfile://localhost/temporary/1.apk',
-  'application/vnd.android.package-archive'
-)
-          },
-          function (error) {
-            alert('download error: ' + error.source + error.target + error.code)
-          },
-          false, {
-            headers: {
-              'Authorization': 'Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=='
-            }
+           Toast('下载完成')
+           cordova.plugins.fileOpener2.open(
+            'cdvfile://localhost/temporary/1.apk',
+            'application/vnd.android.package-archive'
+            )
+         },
+         function (error) {
+          alert('download error: ' + error.source + error.target + error.code)
+        },
+        false, {
+          headers: {
+            'Authorization': 'Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=='
           }
-          )
+        }
+        )
       },2000);
 
 
     }
   })
 },
-    reload() {
-      this.isRouterAlive = false
-      this.$nextTick(function() {
-        this.isRouterAlive = true
-      })
-    }
-  },
-  components: {
-  }
+reload() {
+  this.isRouterAlive = false
+  this.$nextTick(function() {
+    this.isRouterAlive = true
+  })
+}
+},
+components: {
+}
 };
 </script>
