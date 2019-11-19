@@ -1,14 +1,20 @@
 <template>
   <div align="center">
     <img src="./pictrue/logo.png">
-    <h2>第六届世界互联网大会</h2>
-    <h2>急救保障系统指挥端</h2><hr>
-    <!-- <mt-field label="用户名" placeholder="请输入用户名" v-model="userId"></mt-field> -->
+    <h2>第五届世界浙商大会</h2>
+    <h2>医疗保障系统</h2><hr>
+    <mt-field label="用户名" placeholder="请输入用户名" v-model="userId"></mt-field>
     <mt-field label="密码" placeholder="请输入密码" type="password" v-model="pwd"></mt-field>
+    <div align="center">
+    <mt-checklist title="" v-model="savepwdcheck" :options="['保存密码']" style="margin-left: 0px"></mt-checklist>
+    </div>
     <hr>
     <br>
     <mt-button size="large" type="primary" @click="check()">登录</mt-button>
     <br>
+    <br>
+    <br>
+    <small style="color: grey">{{version}}</small>
     <!-- <mt-button size="large" type="danger" @click="">忘记密码</mt-button> -->
     <router-view></router-view>
   </div>
@@ -18,13 +24,28 @@
 import axios from 'axios';
 import { Toast } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
+import global from './global.vue'
 
 export default {
   data() {
     return {
       userId: '',
       pwd: '',
+      groupNo: '',
+      RoleCode:'',
+      version:'版本号：v'+global.nowversion,
+      savepwd:false,
+      savepwdcheck:[]
     };
+  },
+  mounted(){
+    if(window.localStorage.getItem('USERID')!=null && window.localStorage.getItem('USERID')!=undefined){
+      this.userId = window.localStorage.getItem('USERID')
+    }
+    if(window.localStorage.getItem('PWD')!=null && window.localStorage.getItem('PWD')!=undefined){
+      this.pwd = window.localStorage.getItem('PWD')
+      this.savepwdcheck = ['保存密码']
+    }
   },
   methods: {
     check() {
@@ -54,6 +75,11 @@ export default {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
               window.localStorage.setItem('ROLECODE',this.RoleCode);
+              if(this.savepwdcheck[0] == '保存密码'){
+                window.localStorage.setItem('PWD',this.pwd)
+              }else{
+                window.localStorage.removeItem("PWD");
+              }
               this.$router.push({name: '病人列表',params:{SELECTED:"病人"}});
             }else{
               Toast('密码错误');
@@ -73,6 +99,11 @@ export default {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
               window.localStorage.setItem('ROLECODE',this.RoleCode);
+              if(this.savepwdcheck[0] == '保存密码'){
+                window.localStorage.setItem('PWD',this.pwd)
+              }else{
+                window.localStorage.removeItem("PWD");
+              }
   //             window.JPush.setTags({ sequence: 1, tags: [GN] },
   // (result) => {
   //   var sequence = result.sequence
@@ -104,6 +135,11 @@ export default {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
               window.localStorage.setItem('ROLECODE',this.RoleCode);
+              if(this.savepwdcheck[0] == '保存密码'){
+                window.localStorage.setItem('PWD',this.pwd)
+              }else{
+                window.localStorage.removeItem("PWD");
+              }
   //             window.JPush.setTags({ sequence: 1, tags: [GN] },
   // (result) => {
   //   var sequence = result.sequence
@@ -135,6 +171,11 @@ export default {
             if (response.data.results == "密码正确") {
               window.localStorage.setItem('USERID',this.userId);
               window.localStorage.setItem('ROLECODE',this.RoleCode);
+              if(this.savepwdcheck[0] == '保存密码'){
+                window.localStorage.setItem('PWD',this.pwd)
+              }else{
+                window.localStorage.removeItem("PWD");
+              }
   //             window.JPush.setTags({ sequence: 1, tags: [GN] },
   // (result) => {
   //   var sequence = result.sequence

@@ -28,7 +28,7 @@
             <small style="color:grey">
             性别：{{item.Gender}}</small>
             <small style="color:grey;position:absolute;left:110px;">年龄：{{item.Age}}</small>
-            <small style="width:15em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
+            <small style="width:9em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
             color:grey;position:absolute;left:220px;">症状：{{item.Diagnose}}</small></div>
             <div>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
@@ -231,7 +231,7 @@ export default {
     this.getResourceList()
   },
   beforeDestroy () {
-    navigator.geolocation.clearWatch(this.watchID2)
+    // navigator.geolocation.clearWatch(this.watchID2)
     this.watchID2 = null
   },
   methods: {
@@ -367,32 +367,32 @@ export default {
           enableHighAccuracy: true,
           maximumAge: 60000
         }
-        this.watchID2 = navigator.geolocation.watchPosition(onSuccess1, onError1, options1);
-        function onSuccess1(position) {
-          // alert('1Latitude: '          + position.coords.latitude          + '\n' +
-          //   'Longitude: '         + position.coords.longitude         + '\n' +
-          //   'Altitude: '          + position.coords.altitude          + '\n' +
-          //   'Accuracy: '          + position.coords.accuracy          + '\n' +
-          //   'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-          //   'Heading: '           + position.coords.heading           + '\n' +
-          //   'Speed: '             + position.coords.speed             + '\n' +
-          //   'Timestamp: '         + position.timestamp                + '\n');
-          var gps1 = [position.coords.longitude, position.coords.latitude];
-          AMap.convertFrom(gps1, 'gps', function (status, result) {         
-            var lnglats2 = result.locations[0];
-            axios.post('/setCarLocation',{
-              longitude:lnglats2.lng,
-              latitude:lnglats2.lat,
-              carNo:window.localStorage.getItem('CARNO')
-            }).then((response) => {
-              if(response.data.results == "上传成功") {
-                //alert('定位成功')
-              }else {
-                //alert('上传失败')
-              }
-            })
-          });
-        };
+        // this.watchID2 = navigator.geolocation.watchPosition(onSuccess1, onError1, options1);
+        // function onSuccess1(position) {
+        //   // alert('1Latitude: '          + position.coords.latitude          + '\n' +
+        //   //   'Longitude: '         + position.coords.longitude         + '\n' +
+        //   //   'Altitude: '          + position.coords.altitude          + '\n' +
+        //   //   'Accuracy: '          + position.coords.accuracy          + '\n' +
+        //   //   'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+        //   //   'Heading: '           + position.coords.heading           + '\n' +
+        //   //   'Speed: '             + position.coords.speed             + '\n' +
+        //   //   'Timestamp: '         + position.timestamp                + '\n');
+        //   var gps1 = [position.coords.longitude, position.coords.latitude];
+        //   AMap.convertFrom(gps1, 'gps', function (status, result) {         
+        //     var lnglats2 = result.locations[0];
+        //     axios.post('/setCarLocation',{
+        //       longitude:lnglats2.lng,
+        //       latitude:lnglats2.lat,
+        //       carNo:window.localStorage.getItem('CARNO')
+        //     }).then((response) => {
+        //       if(response.data.results == "上传成功") {
+        //         //alert('定位成功')
+        //       }else {
+        //         //alert('上传失败')
+        //       }
+        //     })
+        //   });
+        // };
         function onError1(error) {
           console.log(error)
           // alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
@@ -498,22 +498,8 @@ export default {
       }
     },
     phone(){
-      this.GLOBAL.changeVideoAlert(false)
-      var scheme = 'com.tencent.trtc';
-      appAvailability.check(scheme,
-        function() {
-          var sApp = startApp.set({"application":"com.tencent.trtc"
-        });
-        sApp.start(function() {
-          }, function(error) {
-            alert(error);
-          });
-        },
-        function() {
-          alert(scheme + ' is not available');
-        }
-      );     
-    }
+        this.$router.push({name:'D1',params:{SELECTED1:'1'}});
+    },
   },
 };
 </script>

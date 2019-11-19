@@ -22,11 +22,6 @@ export default {
   },
   mounted(){
     this.backbutton()
-<<<<<<< HEAD
-    this.checkversion()
-    window.localStorage.setItem("VIDEOUSERID",0)
-=======
->>>>>>> 2137f39155c985cc4cf9c3d42da9e81baac3cdbe
     var that = this
     document.addEventListener("jpush.receiveNotification", function (event) {
       var alertContent = event.extras.type
@@ -93,15 +88,8 @@ export default {
 
   },
   methods: {
-<<<<<<< HEAD
-
-backbutton(){
-  var that=this
-  // console.log("111")
-=======
     backbutton(){
   var that=this
->>>>>>> 2137f39155c985cc4cf9c3d42da9e81baac3cdbe
     document.addEventListener("deviceready",function(){
         document.addEventListener("backbutton", function(){
       console.log(navigator)
@@ -120,19 +108,9 @@ Toast({
                 }else if(that.exitAppTicker == 1){
 //                     navigator.app.exitApp(); //退出app
  navigator.Backbutton.goHome(function() { //进入后台
-<<<<<<< HEAD
-
-                  // console.log('go home success');
-
-              }, function() {
-
-                  // console.log('go home fail');
-
-=======
                   // console.log('go home success');
               }, function() {
                   // console.log('go home fail');
->>>>>>> 2137f39155c985cc4cf9c3d42da9e81baac3cdbe
               });
                 }  
 // //                 }else{
@@ -152,27 +130,28 @@ checkversion(){
         var fileURL = 'cdvfile://localhost/temporary/1.apk'
         fileTransfer.download(
           uri, fileURL, function (entry) {
-             Toast('下载完成')
-            cordova.plugins.fileOpener2.open(
-  'cdvfile://localhost/temporary/1.apk',
-  'application/vnd.android.package-archive'
-)
-          },
-          function (error) {
-            alert('download error: ' + error.source + error.target + error.code)
-          },
-          false, {
-            headers: {
-              'Authorization': 'Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=='
-            }
+           Toast('下载完成')
+           cordova.plugins.fileOpener2.open(
+            'cdvfile://localhost/temporary/1.apk',
+            'application/vnd.android.package-archive'
+            )
+         },
+         function (error) {
+          alert('download error: ' + error.source + error.target + error.code)
+        },
+        false, {
+          headers: {
+            'Authorization': 'Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=='
           }
-          )
+        }
+        )
       },2000);
 
 
     }
   })
 },
+<<<<<<< HEAD
 =======
 >>>>>>> 2137f39155c985cc4cf9c3d42da9e81baac3cdbe
     reload() {
@@ -184,5 +163,16 @@ checkversion(){
   },
   components: {
   }
+=======
+reload() {
+  this.isRouterAlive = false
+  this.$nextTick(function() {
+    this.isRouterAlive = true
+  })
+}
+},
+components: {
+}
+>>>>>>> d3bfda2c8899e4bc063a7dc72b2476c49f272918
 };
 </script>

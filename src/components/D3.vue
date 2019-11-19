@@ -1,56 +1,34 @@
 <template>
   <div>
-        <mt-header fixed style="font-size:25px;height: 50px;" title="视频通话">
+        <mt-header fixed style="font-size:25px;height: 50px;" title="群组通话">
          <mt-button size="small" type="danger" slot="left" icon="back"
         @click="returnA()"><small>返回</small></mt-button>
           <hr>
         </mt-header>
         <br><br> 
-        <mt-navbar v-model="selected1">
-          <mt-tab-item id="1">呼叫</mt-tab-item>
-          <mt-tab-item id="2">记录</mt-tab-item>
-        </mt-navbar>
         <br>
-        <mt-tab-container v-model="selected1">
-          <mt-tab-container-item id="1">
-            <br><br>
-            <div >
-             <mt-button @click="callhall()" size="small"  style="position:relative;height: 50px; width: 200px;font-size: 20px"
-            type="primary"><b>接通指挥中心</b></mt-button></div><br>
-             <div >
-            <mt-button @click="callcom()" size="small"  style="position:relative;height: 50px; width: 200px;font-size: 20px"
-            type="primary"><b>呼叫现场指挥</b></mt-button></div><br>
-            <div >
-            <mt-button @click="callsingle()" size="small"  style="position:relative;height: 50px; width: 200px;font-size: 20px"
-            type="primary"><b>单独通话</b></mt-button></div><br>
-            <div>
-            <mt-button @click="callgroup()" size="small"  style="position:relative;height: 50px; width: 200px;font-size: 20px"
-            type="primary"><b>群组通话</b></mt-button></div>
+             <div @click="callall()">
+            <mt-cell><span style="font-size: 20px" slot="title"><b>加入全体成员</b></span></mt-cell></div>
+            <div v-show="role=='R01'" @click="callass()">
+            <mt-cell><span style="font-size: 20px" slot="title"><b>加入全体现场组</b></span></mt-cell></div>
+            <div v-show="role=='R02'" @click="callcar()">
+            <mt-cell><span style="font-size: 20px" slot="title"><b>加入全体车辆组</b></span></mt-cell></div>
+            <div v-show="role=='R03'" @click="callhos()">
+            <mt-cell><span style="font-size: 20px" slot="title"><b>加入全体医院组</b></span></mt-cell></div>
+            <div align="left" style="">
+            <mt-checklist @change="checkon"
+            title="成员列表"
+            v-model="critical1"
+            :options="critical1list">
+          </mt-checklist></div>
+          <div align="left"><b>已选：{{tempcritical}}</b></div>
+          <div align="center" style="height: 35px">
+            <mt-button  size="small" type="danger" style="float: left;margin: 5px 30px 15px"
+              @click="cancel()">取消勾选</mt-button>
+              <mt-button  size="small" type="primary" style="float: right;margin: 5px 30px 15px"
+              @click="confirmpush()">确定呼叫</mt-button>
+              </div>
               <br><br><br><br>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="2"> 
-          <br><br>
-          <div  >
-            <mt-button @click="seeall()" size="small"  style="position:relative;height: 50px; width: 200px;font-size: 20px"
-            type="primary"><b>全体成员</b></mt-button></div><br>
-            <div v-show="role=='R01'">
-            <mt-button  @click="seeass()" size="small"  style="position:relative;height: 50px; width: 200px;font-size: 20px"
-            type="primary"><b>全体现场组</b></mt-button></div>
-            <div v-show="role=='R02'">
-            <mt-button  @click="seecar()" size="small"  style="position:relative;height: 50px; width: 200px;font-size: 20px"
-            type="primary"><b>全体车辆组</b></mt-button></div>
-            <div v-show="role=='R03'" >
-            <mt-button  @click="seehos()" size="small"  style="position:relative;height: 50px; width: 200px;font-size: 20px"
-            type="primary"><b>全体医院组</b></mt-button></div>
-            <div >
-              <br>
-            <mt-button  @click="seesend()" size="small"  style="position:relative;height: 50px; width: 200px;font-size: 20px"
-            type="primary"><b>我发出的临时消息</b></mt-button></div><br>
-            <div >
-            <mt-button  @click="seereceive()" size="small"  style="position:relative;height: 50px; width: 200px;font-size: 20px"
-            type="primary"><b>我接收的临时消息</b></mt-button></div>
-        </mt-tab-container-item>
-      </mt-tab-container>
     <router-view></router-view>
   </div>
 </template>
@@ -64,7 +42,6 @@ export default {
   // inject:['reload'],
   data() {
     return {
-      selected1:this.$route.params.SELECTED1,
       critical1:[],
       tempcritical:[],
       critical1list:[],
@@ -74,6 +51,8 @@ export default {
     };
   },
   mounted() {
+    console.log();
+    this.getVideoUserList()
   },
   methods: {
     getVideoUserList(){
@@ -159,45 +138,6 @@ export default {
           alert('未安装视频通话软件');
         }
       );     
-    },
-    callcom(){
-      axios.post('/pushVideo',{
-        roomnumber:999,
-        type:7,
-        tag:['902']
-      }).then((response) => {
-        if(response.data.results == "发送成功"){
-
-          var scheme = 'com.tencent.trtc';
-          var roomnumber = Number(window.localStorage.getItem("VIDEOUSERID"));
-          console.log(roomnumber)
-          appAvailability.check(scheme,
-            function() {
-              var sApp = startApp.set({"application":"com.tencent.trtc"}, { 
-                "roomnumber":999,
-                "videoid":roomnumber
-              });
-              sApp.start(function() {
-              }, function(error) {
-                alert(error);
-              });
-            },
-            function() {
-              alert('未安装视频通话软件');
-            }
-            );
-        }else{
-          alert("无人在线")
-        }
-      }).catch(function(error){
-        console.log("error",error);
-      })
-    },
-    callsingle(){
-this.$router.push({name: 'D2'});
-    },
-    callgroup(){
-this.$router.push({name: 'D3'});
     },
     callall(){
       // console.log("111")
@@ -385,37 +325,11 @@ this.$router.push({name: 'D3'});
         console.log("error",error);
       })
     },
-    seeall(){
-      this.$router.push({name:'E1',params:{type:1,id:990}});
-    },
-    seeass(){
-      this.$router.push({name:'E1',params:{type:1,id:991}});
-    },
-    seecar(){
-      this.$router.push({name:'E1',params:{type:1,id:992}});
-    },
-    seehos(){
-      this.$router.push({name:'E1',params:{type:1,id:993}});
-    },
-    seesend(){
-      this.$router.push({name:'E1',params:{type:2,id:Number(window.localStorage.getItem("VIDEOUSERID"))}});
-    },
-    seereceive(){
-      this.$router.push({name:'E1',params:{type:3,id:Number(window.localStorage.getItem("VIDEOUSERID"))}});
-    },
+    
     returnA() {
-       if(window.localStorage.getItem('ROLECODE')=="R01"){
-        this.$router.push({name: '病人列表',params:{SELECTED:"沟通"}});
-        }else if(window.localStorage.getItem('ROLECODE')=="R02"){
-          this.$router.push({name:'转运列表',params:{SELECTED1:"沟通"}});
-        }else if(window.localStorage.getItem('ROLECODE')=="R03"){
-          this.$router.push({name:'医院病人列表',params:{SELECTED2:"沟通"}});
-        }else if(window.localStorage.getItem('ROLECODE')=="R04"){
-          this.$router.push({name:'专家病人列表',params:{SELECTED2:"沟通"}});
-        }else alert("无角色")
-    },
-
+        this.$router.push({name: 'D1',params:{SELECTED1:'1'}});
   },
+}
 };
 </script>
 

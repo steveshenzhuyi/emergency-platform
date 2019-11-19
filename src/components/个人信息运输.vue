@@ -13,7 +13,7 @@
         <mt-field label="手机" v-model="phone" disabled></mt-field>
         <mt-field label="邮箱" v-model="email" disabled></mt-field>
         <mt-field label="单位" v-model="company" disabled></mt-field>
-        <mt-field label="职称" v-model="title" disabled></mt-field>
+        <mt-field label="职务" v-model="title" disabled></mt-field>
         <hr>
         <div style="text-align: left; margin-top: 10px">角色：运输组</div>
         <mt-field label="所属小组" v-model="groupname" disabled></mt-field>
@@ -65,9 +65,9 @@ export default {
       axios.post('/getUserInfo',{
         userId: this.userId
       }).then((response) => {
-        this.title=response.data.results[0].TitleName;
-        this.name=response.data.results[0].Username;
-        this.company=response.data.results[0].DepartmentName;
+        this.title=response.data.results[0].TitleCode;
+        this.name=response.data.results[0].Name;
+        this.company=response.data.results[0].DepartmentCode;
         this.sex=response.data.results[0].Gender;
         this.Age=response.data.results[0].Age;
         this.phone=response.data.results[0].Phone;
@@ -88,6 +88,7 @@ export default {
       this.$router.push({name: '转运列表',params:{SELECTED1:"个人"}});
     },
     logout(){
+      window.localStorage.removeItem("PWD");
       window.JPush.cleanTags({ sequence: 1 },
         (result) => {
          this.$router.push({name:'Home'})
@@ -106,6 +107,7 @@ export default {
           this.pwd1 = ''
           this.pwd2 = ''
           this.showchangepwd = false
+          this.logout()
         }else{
           Toast("修改失败");
         }

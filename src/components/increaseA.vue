@@ -13,10 +13,11 @@
       <mt-button size="small" type="primary" plain>
         <img src="./icon/照相.png" height="35" width="35" slot="icon">
         拍照</mt-button>
-    </mt-cell> -->
+    </mt-cell> --> 
     <hr>
     <!-- <p style="text-align: left">个人信息</p> -->
-    <mt-button size="small" @click="getface()" style="margin-bottom:10px"><small>人脸识别拍照</small></mt-button>
+    <mt-button size="small" @click="getface()" style="margin-bottom:10px;margin-right: 10px"><small>人脸识别拍照</small></mt-button>
+    <mt-button size="small" @click="getAnEmergencyNum()" style="margin-bottom:10px"><small>获取紧急编号</small></mt-button>
     <div v-show='isface'><img v-gallery id="image" style="max-height: 200px; max-width: 90%;" ></img></div>
     <mt-button v-show='isface' type="primary" size="small" @click="uploadPicture()"style="margin-bottom:10px"><small>识别</small></mt-button>
       <mt-field label="姓名" v-model="pname"></mt-field>
@@ -59,6 +60,7 @@ export default {
     return {
       confidence:0,
       base64:'',
+      isem:false,
       faceid:'0',
       isface:false,
       iscamera:false,
@@ -91,7 +93,7 @@ export default {
       slots: [
           {
             flex: 1,
-            values: ['A型','B型', 'AB型', 'O型'],
+            values: ['A型','B型', 'AB型', 'O型','不明'],
             className: 'slot1',
           },
           { 
@@ -201,6 +203,10 @@ export default {
                   that.blood = "O型"
                   that.type = "Rh-"
                 }
+                else if(that.bloodType == 0){
+                  that.blood = "不明"
+                  that.type = ""
+                }
 
                 if(that.gender == 1){
                   that.gender1 = '男'
@@ -282,6 +288,10 @@ export default {
                   that.blood = "O型"
                   that.type = "Rh-"
                 }
+                else if(that.bloodType == 0){
+                  that.blood = "不明"
+                  that.type = ""
+                }
 
                 if(that.gender == 1){
                   that.gender1 = '男'
@@ -300,11 +310,19 @@ export default {
     onbloodChange(picker, values) {
        this.blood = values[0];
        this.type = values[1];
-       console.log(this.gender)
     },
     returnA() {
       this.$router.push({name: '病人列表',params:{SELECTED:"病人"}})
     },
+    getAnEmergencyNum(){
+  axios.get('/getAnEmergencyNum',{}).then((response) => {
+    this.isem = true
+    this.pname = '紧急'+String(response.data.results).substr(2)
+
+  }).catch(function(error){
+    console.log("error",error);
+  })
+},
     newPatient() {
       if(this.blood === "A型" && this.type === "Rh+") {
         this.bloodType = '1'
@@ -322,11 +340,20 @@ export default {
         this.bloodType = '7'
       }else if(this.blood === "O型" && this.type === "Rh-") {
         this.bloodType = '8'
+      }else if(this.blood === "不明") {
+        this.bloodType = '0'
       }
       if(this.gender!=1 && this.gender!=2)this.gender=0;
       if(this.pname == "" || this.pname == null){
         Toast('姓名不能为空');
       }else{
+        if(this.isem == false && this.iscamera == false){
+      axios.post('/newMember',{
+        name:this.pname
+      }).then((response) => {
+        this.memberId = response.data.results[0].memberId
+        var tempname = response.data.results[0].Name
+        this.pname = tempname.substring(0,1)+'*'+tempname.substring(2)
         axios.post('/newPatient',{
           groupId: this.groupId,
           inputUserId: this.inputUserId,
@@ -344,14 +371,47 @@ export default {
         }).then((response) => {
           console.log(response)
           if(response.data.results != "新建失败") {
+            var pid = response.data.results[0].PatientId
             Toast('创建成功');
-            this.$router.push({name: 'A1',params:{PATIENTID:response.data.results[0].PatientId,SELECTED1:"患者病历"}})
+            this.$router.push({name: 'A1',params:{PATIENTID:pid,SELECTED1:"1"}})
           }else {
             Toast('创建失败');
           }
         }).catch(function(error){
           console.log("error",error);
         });
+
+      }).catch(function(error){
+        console.log("error",error);
+      });
+    }else{
+      axios.post('/newPatient',{
+        groupId: this.groupId,
+        inputUserId: this.inputUserId,
+        gender: this.gender,
+        pname: this.pname,
+        age: this.age,
+        phone: this.phone,
+        bloodType: this.bloodType,
+        unit: this.unit,
+        position: this.position,
+        nation: this.nation,
+        email: this.email,
+        photoUrl: '',
+        memberId: this.memberId
+      }).then((response) => {
+        console.log(response)
+        if(response.data.results != "新建失败") {
+          var pid = response.data.results[0].PatientId
+          Toast('创建成功');
+          this.$router.push({name: 'A1',params:{PATIENTID:pid,SELECTED1:"1"}}) 
+          }else {
+            Toast('创建失败');
+          }
+      }).catch(function(error){
+        console.log("error",error);
+      });
+    }
       }
     }
   }

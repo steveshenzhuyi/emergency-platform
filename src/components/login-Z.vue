@@ -26,7 +26,7 @@
             <small style="color:grey">
             性别：{{item.Gender}}</small>
             <small style="color:grey;position:absolute;left:110px;">年龄：{{item.Age}}</small>
-            <small style="width:15em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
+            <small style="width:9em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
             color:grey;position:absolute;left:220px;">症状：{{item.Diagnose}}</small></div>
             <div>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
@@ -70,7 +70,7 @@
           <mt-field label="手机" v-model="Phone" disabled></mt-field>
           <mt-field label="邮箱" v-model="Email" disabled></mt-field>
           <mt-field label="单位" v-model="DepartmentName" disabled></mt-field>
-          <mt-field label="职称" v-model="TitleName" disabled></mt-field>
+          <mt-field label="职务" v-model="TitleName" disabled></mt-field>
           <!-- <div style="text-align: left; margin-top: 10px">角色：专家</div> -->
           <mt-field label="专长" v-model="Specific" disabled></mt-field><hr>
           <mt-button size="large" @click="showchangepwd=true">修改密码</mt-button><br>
@@ -228,9 +228,9 @@ export default {
       axios.post('/getUserInfo',{
         userId: this.userId
       }).then((response) => {
-        this.TitleName=response.data.results[0].TitleName;
-        this.Name=response.data.results[0].Username;
-        this.DepartmentName=response.data.results[0].DepartmentName;
+        this.TitleName=response.data.results[0].TitleCode;
+        this.Name=response.data.results[0].Name;
+        this.DepartmentName=response.data.results[0].DepartmentCode;
         this.Gender=response.data.results[0].Gender;
         this.Age=response.data.results[0].Age;
         this.Phone=response.data.results[0].Phone;
@@ -333,23 +333,10 @@ export default {
       }
     },
     phone(){
-      this.GLOBAL.changeVideoAlert(false)
-      var scheme = 'com.tencent.trtc';
-      appAvailability.check(scheme,
-        function() {
-          var sApp = startApp.set({"application":"com.tencent.trtc"
-        });
-        sApp.start(function() {
-          }, function(error) {
-            alert(error);
-          });
-        },
-        function() {
-          alert(scheme + ' is not available');
-        }
-      );     
+        this.$router.push({name:'D1',params:{SELECTED1:'1'}});
     },
     logout(){
+      window.localStorage.removeItem("PWD");
       window.JPush.cleanTags({ sequence: 1 },
         (result) => {
           console.log(result)
@@ -369,6 +356,7 @@ export default {
           this.pwd1 = ''
           this.pwd2 = ''
           this.showchangepwd = false
+          this.logout()
         }else{
           Toast("修改失败");
         }

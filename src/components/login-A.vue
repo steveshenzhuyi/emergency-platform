@@ -27,13 +27,14 @@
             <small style="color:grey">
             性别：{{item.Gender}}</small>
             <small style="color:grey;position:absolute;left:110px;">年龄：{{item.Age}}</small>
-            <small style="width:15em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
+            <small style="width:9em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
             color:grey;position:absolute;left:220px;">症状：{{item.Diagnose}}</small></div>
             <div>
             <small style="color:grey">医院：{{item.OrganizationName}}</small>
             <small style="color:grey;position:absolute;left:110px;">车辆：{{item.CarName}}</small>
-            <small style="color:grey;position:absolute;left:220px;">车号：{{item.CarId}}</small>
-            <small style="color:grey;position:absolute;left:330px;">{{item.Time}}</small>
+            <small style="color:grey;position:absolute;left:220px;">车号：{{item.CarId}}</small></div>
+            <div>
+            <small style="color:grey;">{{item.Time}}</small>
             </div></a>
         </div>
         <br><br>
@@ -62,7 +63,7 @@
       <mt-tab-container-item id="沟通">
         <mt-header fixed style="font-size:25px;height: 50px;" title="信息列表">
           <mt-button slot="left" @click="phone()"><small>视频通话</small></mt-button>
-          <mt-button slot="right" @click="oneClickNeedHelp()"><small>一键求助</small></mt-button>
+          <!-- <mt-button slot="right" @click="oneClickNeedHelp()"><small>一键求助</small></mt-button> -->
           <hr>
         </mt-header>
         <br><br>
@@ -93,7 +94,7 @@
         <mt-field label="年龄" v-model="Age" disabled></mt-field>
         <mt-field label="手机" v-model="Phone" disabled></mt-field>
         <mt-field label="邮箱" v-model="Email" disabled></mt-field>
-        <mt-field label="职称" v-model="TitleName" disabled></mt-field>
+        <mt-field label="职务" v-model="TitleName" disabled></mt-field>
         <mt-field label="科室" v-model="DepartmentName" disabled></mt-field><hr>
         <div style="text-align: left; margin-top: 10px">角色：现场组</div>
         <mt-field label="所属小组" v-model="GroupName" disabled></mt-field>
@@ -351,9 +352,9 @@ export default {
       axios.post('/getUserInfo',{
         userId: this.userId
       }).then((response) => {
-        this.TitleName=response.data.results[0].TitleName;
+        this.TitleName=response.data.results[0].TitleCode;
         this.Name=response.data.results[0].Name;
-        this.DepartmentName=response.data.results[0].DepartmentName;
+        this.DepartmentName=response.data.results[0].DepartmentCode;
         this.Gender=response.data.results[0].Gender;
         this.Age=response.data.results[0].Age;
         this.Phone=response.data.results[0].Phone;
@@ -466,7 +467,7 @@ export default {
     getpatient:function(index){
       console.log(index)
       this.$router.push({name: 'A1',
-      params:{PATIENTID:this.dataclass1[index].PatientId,STATUSNAME:this.dataclass1[index].StatusName,SELECTED1:"患者病历"}})
+      params:{PATIENTID:this.dataclass1[index].PatientId,STATUSNAME:this.dataclass1[index].StatusName,SELECTED1:"1"}})
     },
     //刷新各指定页面
     refreshPatient() {
@@ -552,6 +553,7 @@ export default {
       })
     },
     logout(){
+      window.localStorage.removeItem("PWD");
       window.JPush.cleanTags({ sequence: 1 },
         (result) => {
           console.log(result)
@@ -571,6 +573,7 @@ export default {
           this.pwd1 = ''
           this.pwd2 = ''
           this.showchangepwd = false
+          this.logout()
         }else{
           Toast("修改失败");
         }

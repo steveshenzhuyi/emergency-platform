@@ -102,15 +102,18 @@ export default {
           this.$router.push({name:'command',params:{SELECTED:"指挥",SELECTED1:'2'}});
        
     },
-    getVideo(index){
-      this.popupVisible = true
-      var video = document.getElementById("A1");
-      video.src = this.data3[index].MediaUrl
-    },
-    return1(){
-      this.popupVisible=false
-      var video = document.getElementById("A1");
-      video.src = ''
+    TOHI() {
+      var y = this.MessageDetail[1].indexOf("编号")
+      var patientID = this.MessageDetail[1].substring(y + 3, y + 8);
+       if(window.localStorage.getItem('ROLECODE')=="R01"){
+        this.$router.push({name: 'A1',params:{PATIENTID:patientID,SELECTED1:"5"}});
+        }else if(window.localStorage.getItem('ROLECODE')=="R02"){
+          this.$router.push({name:'T1',params:{PATIENTID:patientID,CARSTATUS:window.localStorage.getItem('CARSTATUS'),SELECTED:"实时地图"}});
+        }else if(window.localStorage.getItem('ROLECODE')=="R03"){
+          this.$router.push({name:'H1',params:{PATIENTID:patientID,SELECTED:"实时地图"}});
+        }else if(window.localStorage.getItem('ROLECODE')=="R04"){
+          this.$router.push({name:'Z1',params:{PATIENTID:patientID,SELECTED:"既往病历"}});
+        }else alert("无角色")
     }
 
   }
