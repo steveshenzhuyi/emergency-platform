@@ -217,10 +217,10 @@
         <hr>
         <div v-show="isShow">
           <div  align="center" style="height:30px">
-          <span style="float: left;">添加医嘱</span></div>
-          <mt-field placeholder="输入医嘱" v-model="doctortell" type="textarea" :disabled="!isovering" rows="5"></mt-field><hr>
-          <mt-button size="small" type="primary" style="float: right" v-show="isovering"
-          @click="save60()">确定</mt-button>
+          <span style="float: left;">医嘱</span></div>
+          <mt-field placeholder="输入医嘱" v-model="doctortell" type="textarea" rows="5" v-on:focus.native.capture="focus61()" v-on:blur.native.capture="blur61()"></mt-field><hr>
+          <mt-button size="small" type="primary" style="float: right" v-show="editing61" @click="save60()">确定</mt-button>
+          <mt-button  v-show="editing61" size="small" style="float: right; margin-right:10px;margin-top: 2px" @click="cancel61()">取消</mt-button>
         </div>
         <div v-show="isShow1" align="left">
           <div style="margin-top:10px;text-align: left"><b>已选医院：</b>
@@ -398,6 +398,7 @@
         editing42:false,
         editing43:false,
         editing5:false,
+        editing61:false,
         title1:'',
         bloodtype1:'',
         bloodtype2:'',
@@ -407,6 +408,7 @@
         tempjibing:'',
         tempyongyao:'',
         tempzhenduan:'',
+        tempyizhu:'',
         photoing:false,
         popupVisible1: false,
         popupVisible2: false,
@@ -435,7 +437,6 @@
         isShow100: false,
         istizheng: false,
         isothers:false,
-        isovering:false,
         settingclass:false,
         isshowcritical:false,
         setprofile:false,
@@ -866,6 +867,23 @@
       this.初步诊断 = this.tempzhenduan;
       this.editing5 = false;
       this.tempzhenduan = '';
+    },
+    focus61(){
+      this.editing61 = true;
+      this.tempyizhu = this.doctortell;
+    },
+    blur61(){
+      if(this.tempyizhu == this.doctortell){
+        this.editing61 = false;
+        this.tempyizhu = '';
+      }else{
+        this.editing61 = true;
+      }
+    },
+    cancel61(){
+      this.doctortell = this.tempyizhu;
+      this.editing61 = false;
+      this.tempyizhu = '';
     },
     focus6(){
       this.setprofile = true;
@@ -1430,7 +1448,6 @@
         this.isShow = true;
         this.isShow1 = false;
         this.isShow100 = false;
-        this.isovering = true;
       },
       gotohospital() {
         this.state = "待后送";
@@ -1866,15 +1883,15 @@
             }).then((response) => {
               if(response.data.results == "上传成功") {
                 Toast('处置完成');
-                this.isovering = false
+                this.editing61 = false
+                this.tempyizhu = ''
                 this.isShow3 = false
                 this.getpatientrecord()
               }
             })
 
           }
-        })
-        
+        })        
       },
       setclass() {
         var Class
