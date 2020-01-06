@@ -22,6 +22,8 @@ export default {
   },
   mounted(){
     this.backbutton()
+    this.checkversion()
+    window.localStorage.setItem("VIDEOUSERID",0)
     var that = this
     document.addEventListener("jpush.receiveNotification", function (event) {
       var alertContent = event.extras.type
@@ -88,6 +90,7 @@ export default {
 
   },
   methods: {
+
     backbutton(){
   var that=this
     document.addEventListener("deviceready",function(){
@@ -119,7 +122,6 @@ Toast({
         }, false);
     },false);
 },
-<<<<<<< HEAD
 checkversion(){
   axios.get('/getNewestVersion',{}).then((response) => {
     if(response.data.results[0].AppVersion != this.GLOBAL.nowversion) {
@@ -151,9 +153,6 @@ checkversion(){
     }
   })
 },
-<<<<<<< HEAD
-=======
->>>>>>> 2137f39155c985cc4cf9c3d42da9e81baac3cdbe
     reload() {
       this.isRouterAlive = false
       this.$nextTick(function() {
@@ -163,16 +162,5 @@ checkversion(){
   },
   components: {
   }
-=======
-reload() {
-  this.isRouterAlive = false
-  this.$nextTick(function() {
-    this.isRouterAlive = true
-  })
-}
-},
-components: {
-}
->>>>>>> d3bfda2c8899e4bc063a7dc72b2476c49f272918
 };
 </script>

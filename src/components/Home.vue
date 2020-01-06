@@ -49,7 +49,6 @@ export default {
   },
   methods: {
     check() {
-<<<<<<< HEAD
       console.log(this.userId)
       axios.post('/getUserGroup',{
         userId: this.userId
@@ -197,13 +196,6 @@ export default {
           })
         }
       })
-=======
-     if(this.pwd == '123'){
-      this.$router.push({name:'command',params:{SELECTED:"指挥",SELECTED1:'1'}});
-     }else{
-      Toast('密码错误');
-     }
->>>>>>> 2137f39155c985cc4cf9c3d42da9e81baac3cdbe
     },
     
   }
