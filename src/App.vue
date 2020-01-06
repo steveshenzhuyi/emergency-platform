@@ -91,8 +91,9 @@ export default {
   },
   methods: {
 
-    backbutton(){
+backbutton(){
   var that=this
+  // console.log("111")
     document.addEventListener("deviceready",function(){
         document.addEventListener("backbutton", function(){
       console.log(navigator)
@@ -111,9 +112,13 @@ Toast({
                 }else if(that.exitAppTicker == 1){
 //                     navigator.app.exitApp(); //退出app
  navigator.Backbutton.goHome(function() { //进入后台
+
                   // console.log('go home success');
+
               }, function() {
+
                   // console.log('go home fail');
+
               });
                 }  
 // //                 }else{
@@ -153,14 +158,14 @@ checkversion(){
     }
   })
 },
-    reload() {
-      this.isRouterAlive = false
-      this.$nextTick(function() {
-        this.isRouterAlive = true
-      })
-    }
-  },
-  components: {
-  }
+reload() {
+  this.isRouterAlive = false
+  this.$nextTick(function() {
+    this.isRouterAlive = true
+  })
+}
+},
+components: {
+}
 };
 </script>

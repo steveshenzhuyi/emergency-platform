@@ -48,6 +48,7 @@ export default {
     }
   },
   methods: {
+    //先判断用户的小组
     check() {
       console.log(this.userId)
       axios.post('/getUserGroup',{
@@ -197,7 +198,12 @@ export default {
         }
       })
     },
-    
+    hospital() {
+      this.$router.push({name: '医院病人列表'});
+    },
+    trans() {
+      this.$router.push({name: '转运列表'});
+    }
   }
 };
 </script>

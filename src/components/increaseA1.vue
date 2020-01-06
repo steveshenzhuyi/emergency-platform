@@ -414,7 +414,7 @@ newPatient() {
           if(response.data.results == "上传成功") {
             // alert("上报成功");
             Toast('成功上报指挥中心');
-            this.$router.push({name: 'KSA1',params:{PATIENTID:pid,SELECTED1:"患者病历"}})
+            this.$router.push({name: 'A2',params:{PATIENTID:pid,SELECTED1:"患者病历"}})
           }else{
             // alert("上报失败");
             Toast('上报失败');
