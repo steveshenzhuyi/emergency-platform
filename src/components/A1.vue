@@ -135,6 +135,19 @@
               </div>
           <hr>
           <div align="left" style="height:40px"><mt-button size="small" @click.native="popupVisible4 = true" style="width: 90px" type="primary" plain>特殊情况</mt-button></div>
+          <div align="center" style="height:30px"><span style="float: left;"><b>疾病分类</b></span></div>
+          <div align="left">
+            <small style="color:grey">{{timevalue3}}</small>
+            <mt-field type="textarea" placeholder="请输入内容" v-model="疾病分类" rows="3" v-on:focus.native.capture="focus51()" v-on:blur.native.capture="blur51()"></mt-field>
+          </div>
+          <div align="center" v-show="editing51" style="height: 35px">
+              <mt-button  v-show="editing51" size="small" type="primary" style="float: right;margin-top: 5px"
+              @click="save51()">保存</mt-button>
+             <mt-button  v-show="editing51" size="small" style="float: right; margin-right:10px;margin-top: 5px"
+              @click="cancel51()">取消</mt-button>
+              </div>
+          <hr>
+          <div align="left" style="height:40px"><mt-button size="small" @click.native="popupVisible6 = true" style="width: 90px" type="primary" plain>选择分类</mt-button></div>
           <div align="left" style="height:35px" @click="showpingfen1()"><span style="margin-top: 8px"><b>MEWS评分</b></span></div>
           <div v-show="showpingfen">
           <div align="left" style="height:30px">
@@ -337,11 +350,11 @@
         </mt-popup>
         <mt-popup v-model="popupVisible4"  position="bottom" closeOnClickModal="false" style="width:100%;height: 70%;overflow: auto;">
           <div align="left" style="">
-             <mt-checklist @change="checkon"
-            title="危急征象/情况指标（自动分级I级）"
-            v-model="critical1"
-            :options="critical1list">
-          </mt-checklist><br>
+            <mt-checklist @change="checkon"
+              title="危急征象/情况指标（自动分级I级）"
+              v-model="critical1"
+              :options="critical1list">
+            </mt-checklist><br>
           <mt-checklist @change="checkon"
             title="高风险/潜在危险情况（自动分级II级）"
             v-model="critical2"
@@ -357,6 +370,20 @@
         <mt-popup v-model="popupVisible5"  position="bottom" closeOnClickModal="false" style="width:100%;height: 70%;overflow: auto;">
           <div id="map-container" class="map-root" style="width:98%;height:440px;padding:1px;border:1px solid black;margin-top: 0px;">
           </div>
+        </mt-popup>
+        <mt-popup v-model="popupVisible6"  position="bottom" closeOnClickModal="false" style="width:100%;height: 70%;overflow: auto;">
+          <div align="left" style="">
+            <mt-checklist @change="checkon1"
+              title="疾病种类，可多选"
+              v-model="critical3"
+              :options="critical3list">
+            </mt-checklist>
+          </div>
+          <div align="left"><b>已选：{{tempcritical1}}</b></div>
+          <div align="center" style="height: 35px">
+              <mt-button  size="small" type="primary" style="float: right;margin: 5px 30px 15px"
+              @click="pluscritical1()">确定</mt-button>
+              </div>
         </mt-popup>
     <router-view></router-view>
   </div>
@@ -398,11 +425,13 @@
         editing42:false,
         editing43:false,
         editing5:false,
+        editing51:false,
         editing61:false,
         title1:'',
         bloodtype1:'',
         bloodtype2:'',
         tempzhusu:'',
+        tempjibingfenlei:'',
         tempxianbingshi:'',
         tempguomin:'',
         tempjibing:'',
@@ -415,6 +444,7 @@
         popupVisible3: false,
         popupVisible4:false,
         popupVisible5:false,
+        popupVisible6:false,
         useableDeviceList:[],
         testList:[],
         nowTime:'',
@@ -449,6 +479,7 @@
         timevalue42: '',
         timevalue43: '',
         timevalue2: '',
+        timevalue3: '',
         visible: false,
         state: '',
         StatusName: '',
@@ -464,6 +495,7 @@
         现病史: '',
         现病史图片:[],
         主诉: '',
+        疾病分类: '',
         主诉图片:[],
         过敏史: '',
         疾病史: '',
@@ -588,6 +620,12 @@
         {label:'创伤患者，有高危险性受伤机制',value:'创伤患者，有高危险性受伤机制'},
         {label:'其他分诊护士认为患者存在高风险，但不需紧急抢救或潜在危险情况',value:'其他高风险但不需紧急抢救或潜在危险情况'},
         ],
+        critical3list:[
+        {label:'急性上呼吸道感染',value:'感冒'},
+        {label:'皮肤破损、关节损伤',value:'外伤'},
+        {label:'腹痛、腹胀、腹泻等',value:'肠胃炎'},
+        {label:'鼻炎、中暑等',value:'其他'},
+        ],
         medicineList:[
         '拜新同30mg  1片 口服',
         '达喜500mg  1片 口服',
@@ -636,8 +674,11 @@
         awarescore:'',
         critical1:[],
         critical2:[],
+        critical3:[],
         tempcritical:'',
+        tempcritical1:'',
         criticalillness:0,
+        criticalillness1:0,
         hrclassflag:0,
         spclassflag:0,
         rrclassflag:0,
@@ -864,9 +905,26 @@
       }
     },
     cancel5(){
-      this.初步诊断 = this.tempzhenduan;
-      this.editing5 = false;
+      this.疾病分类 = this.tempzhenduan;
+      this.editing51 = false;
       this.tempzhenduan = '';
+    },
+    focus51(){
+      this.editing51 = true;
+      this.tempjibingfenlei = this.疾病分类;
+    },
+    blur51(){
+      if(this.tempjibingfenlei == this.疾病分类){
+        this.editing51 = false;
+        this.tempjibingfenlei = '';
+      }else{
+        this.editing51 = true;
+      }
+    },
+    cancel51(){
+      this.初步诊断 = this.tempjibingfenlei;
+      this.editing51 = false;
+      this.tempjibingfenlei = '';
     },
     focus61(){
       this.editing61 = true;
@@ -1283,11 +1341,31 @@
         this.tempcritical+=this.critical2[i]+' '
       }
       console.log(this.tempcritical)
-    },
-      onPatientlistChange(picker, values) {
-        this.level = values[0];
-        if(this.level == this.Classification || values[0]=="选择分级"){this.settingclass=false}
-          else this.settingclass=true
+      },
+    showcritical1(){
+        this.isshowcritical1 = !this.isshowcritical1
+      },
+    pluscritical1(){
+        console.log()
+        this.popupVisible6 = false
+        this.疾病分类+= this.tempcritical1
+        this.save51()
+        if(this.critical3.length>0)this.criticalillness1 =1
+            else this.criticalillness1 =0
+        this.autoClass()
+      },
+      checkon1: function(){
+      console.log(this.critical3)
+      this.tempcritical1 = ''
+      for (var i = 0; i < this.critical3.length; i++) {
+        this.tempcritical1+=this.critical3[i]+' '
+      }
+      console.log(this.tempcritical1)
+      },
+    onPatientlistChange(picker, values) {
+      this.level = values[0];
+      if(this.level == this.Classification || values[0]=="选择分级"){this.settingclass=false}
+        else this.settingclass=true
       },
     onScoreChange1(picker, values) {
       this.heartratescore = values[0];
@@ -1813,6 +1891,26 @@
           detail:this.初步诊断,
           operationCode: "P050",
           detail1: "初步诊断",
+          address: "1",
+          infoType: "1",
+          fileUrl: '' 
+        }).then((response) => {
+          if(response.data.results == "新建成功") {
+            this.editing5 = false;
+            this.tempzhenduan = '';
+            Toast('上传成功');
+            this.getpatientrecord()
+          }
+        })
+      },
+      save51() {
+        axios.post('/newPatientRecord',{
+          patientId:this.$route.params.PATIENTID,
+          inputUserId:window.localStorage.getItem('USERID'),
+          operator:window.localStorage.getItem('USERID'),
+          detail:this.疾病分类,
+          operationCode: "P051",
+          detail1: "疾病分类",
           address: "1",
           infoType: "1",
           fileUrl: '' 
