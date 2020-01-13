@@ -1174,6 +1174,7 @@
           this.初步诊断=''
           this.timevalue2=''
         }
+        //疾病分类
         this.dataCZ=this.patientrecord.P11
         for(var j=0; j<this.patientrecord.P11.length;j++) {
           if(this.patientrecord.P11[j].InfoType == 3) {
